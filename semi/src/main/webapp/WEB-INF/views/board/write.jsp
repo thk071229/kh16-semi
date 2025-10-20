@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<form action = "write" method = "post">
+<form action = "write" method = "post" autocomplete="off">
 	<input type = "hidden" name = "clubNo" value = "${clubNo}">
 	<label>
 	<input type = "checkbox" name = "boardNotice" value = "Y">
