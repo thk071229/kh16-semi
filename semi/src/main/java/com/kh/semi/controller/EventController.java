@@ -75,6 +75,15 @@ public class EventController {
 		return "redirect:detail?eventNo="+findDto.getEventNo();
 	}
 	
-	
+	// 삭제
+	@PostMapping("/delete")
+	private String delete(@RequestParam int eventNo) {
+		EventDto eventDto = eventDao.selectOne(eventNo);
+		//if(eventDto==null) throw new Exception();
+		eventDao.delete(eventNo);
+		return "redirect:list";
+	}
+		
+
 	
 }
