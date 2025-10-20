@@ -1,4 +1,4 @@
-package com.kh.mapper;
+package com.kh.semi.mapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -6,7 +6,8 @@ import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
-import com.kh.dto.ClubDto;
+import com.kh.semi.dto.ClubDto;
+
 
 @Component
 public class ClubMapper implements RowMapper<ClubDto>{
