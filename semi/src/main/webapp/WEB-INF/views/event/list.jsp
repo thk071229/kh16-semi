@@ -1,5 +1,48 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt"  uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+
+
+    <div class="container">
+    <div class="cell">
+	    <h1>정모 목록</h1>
+    </div>
     
-    <h1>정모 목록</h1>
+    <div class="cell">
+    	<table class="table">
+    		<tbody>
+				<c:forEach var="eventList" items="${eventDto}" varStatus="status">
+					<td>
+						<a href="detail?eventNo=${eventList.eventNo}">
+						${eventList.eventTitle}
+					</td>
+					<td>${eventList.eventWriter}</td>
+					<td>${eventList.eventClub}</td>
+				</c:forEach>
+    		</tbody>
+ 	
+    	</table>
+    
+    </div>
+    <div class="cell">
+	    <!--
+	    <a href="list?eventClub=${eventDto.eventClub}">소모임 홈</a>
+    	<a href="add?clubNo=${eventDto.eventClub}">신규정모 등록</a>
+    	-->
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    </div>

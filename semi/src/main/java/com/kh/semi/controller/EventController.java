@@ -25,8 +25,8 @@ public class EventController {
 	
 	// 등록
 	@GetMapping("/add")
-	public String add(Model model) {//@RequestParam int clubNo
-		//model.addAttribute("clubNo",clubNo);
+	public String add(Model model, @RequestParam int clubNo) {
+		model.addAttribute("clubNo",clubNo);
 		return "/WEB-INF/views/event/add.jsp";
 	}
 
