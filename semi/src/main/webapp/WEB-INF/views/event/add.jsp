@@ -21,4 +21,13 @@
 	<div>
 		<button type="button">등록</button>
 	</div>
+
 </form>
+
+    <div class="cell">
+	    <!-- 
+	    <a href="list?eventClub=${eventDto.eventClub}">소모임 홈</a>
+    	 -->
+    	<a href="list?clubNo=${eventDto.eventClub}">정모 목록</a>
+    </div>
+    
