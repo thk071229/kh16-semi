@@ -1,0 +1,8 @@
+        /*에디터의 외곽선을 .field 와 동일하게 변경*/
+        .note-editor {
+            border: 1px solid #b3b3b3 !important;
+        }
+        /*전체화면일 때 뒤가 비치지 않도록 변경*/
+        .note-editable {
+            background-color: white;
+        }
