@@ -10,10 +10,17 @@
 <div class="container">
 
     <div class="cell">
-    	<h1>정모 상세</h1>
+    	<h1>
+    		정모상세 : ${boardDto.boardTitle}
+    		<c:if test="${boardDto.boardEtime != null}">
+			(수정됨)
+			</c:if>
+		</h1>
     </div>
     
-     <hr>
+    <div class="cell">
+     	<hr>
+    </div>
     
     <div class="cell">
 		제목 : ${eventDto.eventTitle}
@@ -37,10 +44,15 @@
    		작성시간 : ${eventDto.eventWtime}
     </div>
     
-    <hr>
+    <div class="cell">
+     	<hr>
+    </div>
     
     <div class="cell">
-    <a href="list?clubNo=${eventDto.eventClub}">목록</a>
+    	<a href="list?clubNo=${eventDto.eventClub}">목록</a>
+    	<a href="add?clubNo=${eventDto.eventClub}">등록</a>
+    	<a href="edit?eventNo=${eventDto.eventNo}">수정</a>
+    	<a href="delete?eventNo=${eventDto.eventNo}">삭제</a>
     </div>
     
 </div>

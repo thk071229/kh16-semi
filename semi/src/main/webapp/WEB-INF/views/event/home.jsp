@@ -5,7 +5,9 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>	
 
-    <div class="container">
+
+<!-- --------------------------------------------- -->
+<div class="container">
     <div class="cell">
 	    <h1>정모 목록</h1>
     </div>
@@ -22,24 +24,13 @@
 					<td>${eventList.eventClub}</td>
 				</c:forEach>
     		</tbody>
- 	
     	</table>
-    
     </div>
+    
     <div class="cell">
 	    <a href="#">홈</a>
     </div>
-    
-    <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>	
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    </div>
+
+</div>
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>	
+  

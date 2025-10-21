@@ -5,6 +5,7 @@
 <form action="join" method="post" autocomplete="off">
 	
 	<div>
+	
 		<div>
 			<h1>회원가입 정보 입력</h1>
 		</div>
@@ -49,6 +50,7 @@
 		<div>
 			<button type="submit">회원가입</button>
 		</div>
+		
 	</div>
 	
 </form>
