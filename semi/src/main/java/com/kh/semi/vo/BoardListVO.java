@@ -15,7 +15,7 @@ public class BoardListVO {
 	private int boardNo;
 	private int boardClub;
 	private String boardWriter;
-	private String boardNotice;
+	private String boardNotice = "N";
 	private String boardTitle;
 	//private String boardContent; //데이터 용량 크니까 제외
 	private Timestamp boardWtime;
