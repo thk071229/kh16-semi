@@ -98,12 +98,12 @@ public class EventController {
 	}
 	
 	// 삭제
-	@PostMapping("/delete")
+	@RequestMapping("/delete")
 	public String delete(@RequestParam int eventNo) {
 		EventDto eventDto = eventDao.selectOne(eventNo);
 		if(eventDto==null) throw new TargetNotFoundException("존재하지 않는 이벤트번호");
 		eventDao.delete(eventNo);
-		return "redirect:list";
+		return "redirect:list?clubNo="+eventDto.getEventClub();
 	}
 		
 

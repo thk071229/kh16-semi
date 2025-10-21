@@ -48,10 +48,6 @@
 							</div>
 						</c:forEach>
 	</div>
-    
-    <div class="cell">
-	    <a href="#">홈</a>
-    </div>
 
 </div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>	
