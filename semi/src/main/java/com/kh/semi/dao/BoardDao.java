@@ -29,8 +29,7 @@ public class BoardDao {
 				+ "values (?, ?, ?, ?, ?, ?, systimestamp)";
 		Object[] params = {boardDto.getBoardNo(),boardDto.getBoardClub(), 
 				boardDto.getBoardWriter(), boardDto.getBoardNotice(), 
-				boardDto.getBoardTitle(), boardDto.getBoardContent(), 
-				boardDto.getBoardWtime()};
+				boardDto.getBoardTitle(), boardDto.getBoardContent()};
 		jdbcTemplate.update(sql, params);
 	}
 	
