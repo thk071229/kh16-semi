@@ -1,7 +1,5 @@
 package com.kh.semi.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -87,14 +85,6 @@ public class ClubController {
 		return "redirect:list";
 	}
 	
-	// 조회
-	@GetMapping("/list")
-	public String list(Model model, @ModelAttribute ClubDto clubDto) {
-		List<ClubDto> clubList = clubDao.selectList();
-		model.addAttribute("clubList", clubList);
-		return "/WEB-INF/views/club/list.jsp";
-	}
-	
 	// 상세
 	@GetMapping("/detail")
 	public String detail(@RequestParam int clubNo, Model model) {
@@ -104,4 +94,11 @@ public class ClubController {
 		model.addAttribute("clubDto", clubDto);
 		return "/WEB-INF/views/club/detail.jsp";
 	}
+	// 조회 -- pageVO 완성시 주석해제
+//		@GetMapping("/list")
+//		public String list(Model model, @ModelAttribute ClubDto clubDto) {
+//			List<ClubDto> clubList = clubDao.selectList(PageVO pageVO);
+//			model.addAttribute("clubList", clubList);
+//			return "/WEB-INF/views/club/list.jsp";
+//		}
 }
