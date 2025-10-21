@@ -4,28 +4,50 @@
 <%@ taglib prefix="fmt"  uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>	
-
+<style>
+    .event-box{
+    	background-color:#ecfbf8;
+    	border : 1px solid #d8f8f1;
+    	border-radius : 1em;
+    	padding : 0.5em;
+    }
+    .event-box:hover{
+    	background-color:#d8f8f1;
+    	border : 3px solid #d8f8f1;
+    }
+    .event-title{
+    	font-size:24px;
+    	font-weight:500;
+    	color:#005d5c;
+    }
+</style>
 
 <!-- --------------------------------------------- -->
 <div class="container">
     <div class="cell">
 	    <h1>정모 목록</h1>
-    </div>
-    
-    <div class="cell">
-    	<table class="table">
-    		<tbody>
-				<c:forEach var="eventList" items="${eventDto}" varStatus="status">
-					<td>
-						<a href="detail?eventNo=${eventList.eventNo}">
-						${eventList.eventTitle}
-					</td>
-					<td>${eventList.eventWriter}</td>
-					<td>${eventList.eventClub}</td>
-				</c:forEach>
-    		</tbody>
-    	</table>
-    </div>
+	</div>
+	<c:forEach var="eventList" items="${eventDto}" varStatus="status">
+						<div class="cell event-box w-50">
+							<div>
+								<a class="event-title" href="detail?eventNo=${eventList.eventNo}">
+									<label>${eventList.eventTitle}</label>
+								</a>
+							</div>
+							<div><i class="fa-solid fa-calendar"></i>
+								<label>
+									<fmt:formatDate value="${eventList.eventDate}" pattern="y년 M월 d일 H:mm" ></fmt:formatDate>
+								</label>
+							</div>
+							<div><i class="fa-solid fa-person"></i>
+								<label>${eventList.eventWriter}</label>
+							</div>
+							<div><i class="fa-solid fa-house"></i>
+								<label>${eventList.eventClub}</label>
+							</div>
+							</div>
+						</c:forEach>
+	</div>
     
     <div class="cell">
 	    <a href="#">홈</a>

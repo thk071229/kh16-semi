@@ -42,14 +42,14 @@ public class EventDao {
 	
 	// 조회 (기본)
 	public List<EventDto> selectList(){
-		String sql = "select * from event order by event_no desc";
+		String sql = "select * from event order by event_date desc";
 		return jdbcTemplate.query(sql, eventMapper);
 	}
 	
 	// 조회 (int clubNo)
 	public List<EventDto> selectList(int clubNo){
 		String sql = "select * from event where event_club = ? "
-		           		+ "order by event_no desc";
+		           		+ "order by event_date desc";
 		Object[] params= {clubNo};
 		return jdbcTemplate.query(sql, eventMapper, params);
 	}
@@ -59,7 +59,7 @@ public class EventDao {
 		public List<EventDto> selectListBefore(int clubNo){
 			String sql = "select * from event"
 							+" where event_club=? and event_date>sysdate"
-							+" order by event_no desc";
+							+" order by event_date desc";
 			Object[] params= {clubNo};
 			return jdbcTemplate.query(sql, eventMapper, params);
 		}
@@ -67,7 +67,7 @@ public class EventDao {
 		public List<EventDto> selectListAfter(int clubNo){
 			String sql = "select * from event"
 							+" where event_club=? and event_date<sysdate"
-							+" order by event_no desc";
+							+" order by event_date desc";
 			Object[] params= {clubNo};
 			return jdbcTemplate.query(sql, eventMapper, params);
 		}
