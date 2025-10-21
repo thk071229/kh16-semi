@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>	
+
 <h1>정모 추가</h1>
 <form action="/add" method="post" autocomplete="off">
 	
@@ -11,6 +13,9 @@
 	</div>
 	<div>
 		<input type="text" name="eventContent">
+	</div>
+	<div>
+		<input type="date" name="eventDate" >
 	</div>
 	<div>
 		<input type="text" name="eventRegionX">
@@ -30,4 +35,6 @@
     	 -->
     	<a href="list?clubNo=${eventDto.eventClub}">정모 목록</a>
     </div>
+    
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>	
     

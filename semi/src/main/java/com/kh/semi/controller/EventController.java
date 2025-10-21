@@ -56,7 +56,11 @@ public class EventController {
 	@RequestMapping("/list")
 	public String list(Model model,@RequestParam int clubNo) {
 		List<EventDto> eventDto = eventDao.selectList(clubNo);
-		model.addAttribute("eventDto", eventDto);		
+		List<EventDto> beforeDto = eventDao.selectListBefore(clubNo);
+		List<EventDto> afterDto = eventDao.selectListAfter(clubNo);
+		model.addAttribute("eventDto", eventDto);	
+		model.addAttribute("beforeDto", beforeDto);		
+		model.addAttribute("afterDto", afterDto);		
 		return "/WEB-INF/views/event/list.jsp";
 	}
 	
