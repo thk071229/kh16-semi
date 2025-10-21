@@ -30,7 +30,7 @@ public class MemberController {
 		memberDao.insert(memberDto);
 		return "redirect:joinFinish";
 	}
-	@RequestMapping("/joinFinish")
+	@PostMapping("/joinFinish")
 	public String joinFinish() {
 		//회원 관심 지역&카테고리 설정 페이지
 		return "/WEB-INF/views/member/joinFinish.jsp";
@@ -48,6 +48,7 @@ public class MemberController {
 		
 		boolean isLogin = findDto.getMemberPw().equals(memberDto.getMemberPw());
 		
+		//session에 원하는 요소 저장
 		if(isLogin) {
 			session.setAttribute("loginId", findDto.getMemberId());
 			session.setAttribute("loginLevel", findDto.getMemberLevel());
@@ -110,6 +111,46 @@ public class MemberController {
 		return "/WEB-INF/views/member/goodbye.jsp";
 	}
 	
+	//수정
+	//회원이 자기 자신의 정보 수정
+	@GetMapping("/edit")
+	public String edit(Model model, HttpSession session) {
+		String loginId = (String) session.getAttribute("loginId");
+		MemberDto memberDto = memberDao.selectOne(loginId);
+		model.addAttribute("memberDto", memberDto);
+		return "/WEB-INF/views/member/edit.jsp";
+	}
+	@PostMapping("/edit")
+	public String edit(@ModelAttribute MemberDto memberDto, HttpSession session) {
+		String loginId = (String) session.getAttribute("loginId");
+		MemberDto findDto= memberDao.selectOne(loginId);
+		boolean isValid = memberDto.getMemberId().equals(findDto.getMemberId());
+		//if(!isValid) {
+		//	return "redirect:에러페이지";
+		//}
+		
+		memberDto.setMemberId(loginId);
+		memberDao.updateMember(memberDto);
+		
+		return "redirect:mypage";
+	}
 	
+	//비밀번호 변경
+	@GetMapping("/password")
+	public String password() {
+		return "/WEB-INF/views/member/password.jsp";
+	}
+	@PostMapping("/password")
+	public String password(HttpSession session, 
+			@RequestParam String currentPw, @RequestParam String changePw) {
+		String loginId = (String) session.getAttribute("loginId");
+		MemberDto memberDto = memberDao.selectOne(loginId);
+		boolean isValid = memberDto.getMemberPw().equals(currentPw);
+		//if(isValid == false) return "redirect:password?error";
+		
+		memberDao.updateMemberPw(loginId, changePw);
+		
+		return "redirect:mypage";
+	}
 	
 }

@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <div>
 
 	<div>
@@ -19,6 +20,10 @@
 			<tr>
 				<th>이메일</th>
 				<td>${memberDto.memberEmail}</td>
+			</tr>
+			<tr>
+				<th>성별</th>
+				<td>${memberDto.memberGender}포인트</td>
 			</tr>
 			<tr>
 				<th>생년월일</th>
@@ -39,13 +44,13 @@
 		</table>
 	</div>
 	<div>
-		<a href="#">비밀번호 변경</a>
+		<a href="password">비밀번호 변경</a>
 	</div>
 	<div>
-		<a href="#">내 정보 수정</a>
+		<a href="edit">내 정보 수정</a>
 	</div>
 	<div>
-		<a href="#">회원 탈퇴</a>
+		<a href="drop">회원 탈퇴</a>
 	</div>
 
 </div>
