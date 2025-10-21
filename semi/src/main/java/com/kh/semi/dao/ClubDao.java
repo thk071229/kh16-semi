@@ -6,7 +6,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.semi.dto.ClubDto;
+import com.kh.semi.mapper.ClubListMapper;
 import com.kh.semi.mapper.ClubMapper;
+import com.kh.semi.vo.ClubListVO;
 
 @Repository
 public class ClubDao {
@@ -16,6 +18,8 @@ public class ClubDao {
 	private JdbcTemplate jdbcTemplate;
 	@Autowired
 	private ClubMapper clubMapper;
+	@Autowired
+	private ClubListMapper clubListMapper;
 
 	//등록
 	public int sequence() {
@@ -46,17 +50,35 @@ public class ClubDao {
 		List<ClubDto> list = jdbcTemplate.query(sql, clubMapper, params);
 		return list.isEmpty() ? null : list.get(0);
 	}
-	//목록(전체)
-	public List<ClubDto> selectList() {
-		String sql = "select * from club order by club_no desc";
-		return jdbcTemplate.query(sql, clubMapper);
-	}
+	//지역과 카테고리에 따른 목록 및 검색 조회
+	// - pageVO 완성 시 주석 해제 
+//	public List<ClubListVO> selectList(PageVO pageVO){
+//		if(pageVO.isList()){//목록
+//			String sql = "select * from ("
+//							+ "select rownum rn, TMP.* from("
+//								+ "select * from club_list"
+//								+ "order by club_no desc"
+//								+ ") TMP"
+//								+ ") where rn between ? and ?";
+//			Object[] params = {pageVO.getBegin(), pageVO.getEnd()};
+//			return jdbcTemplate.query(sql, clubListMapper, params);
+//		}
+//		else {//검색
+//			String sql = "select * from ("
+//					+ "select rownum rn, TMP.* from("
+//						+ "select * from club_list "
+//						+ "where instr(#1, ?) > 0 "
+//						+ "order by club_no desc"
+//						+ ") TMP"
+//						+ ") where rn between ? and ?";
+//			sql = sql.replace("#1", pageVO.getColumn());
+//			Object[] params = {pageVO.getKeyword(), pageVO.getBegin(), pageVO.getEnd()};
+//			return jdbcTemplate.query(sql, clubListMapper, params);
+//		}
+//	}
 	
-	public List<ClubDto> selectList(String column, String keyword) {
-		String sql = "select * from club where instr(#1, ?) order by club_no desc";
-		sql = sql.replace("#1", column);
-		Object[] params = {keyword};
-		return jdbcTemplate.query(sql, clubMapper, params);
-	}
+	
+	
+	
 	
 }
