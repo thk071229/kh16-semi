@@ -7,29 +7,29 @@
     
     
 <!-- --------------------------------------------- -->
-<div class="container">
+<div class="container w-800">
 
     <div class="cell">
     	<h1>
-    		정모상세 : ${boardDto.boardTitle}
-    		<c:if test="${boardDto.boardEtime != null}">
+    		정모상세 : ${eventDto.eventTitle}
+    		<c:if test="${eventDto.eventEtime != null}">
 			(수정됨)
 			</c:if>
-		</h1>
+			</h1>
+			<div class="cell">
+    	<label>작성일</label>
+    	<fmt:formatDate value="${eventDto.eventWtime}" pattern="M월 d일 H:mm" ></fmt:formatDate>
+    </div>
+		
     </div>
     
     <div class="cell">
      	<hr>
     </div>
-    
+
     <div class="cell">
-		제목 : ${eventDto.eventTitle}
-    </div>
-    <div class="cell">
-   		작성자 : ${eventDto.eventWriter}
-    </div>
-    <div class="cell">
-   		시간 : ${eventDto.eventDate}
+    	<i class="fa-solid fa-calendar"></i>
+    	<fmt:formatDate value="${eventDto.eventDate}" pattern="y년 M월 d일 H:mm" ></fmt:formatDate>
     </div>
      <div class="cell">
    		내용 : ${eventDto.eventContent}
@@ -40,9 +40,7 @@
     <div class="cell">
    		y좌표 : ${eventDto.eventRegionY}
     </div>
-    <div class="cell">
-   		작성시간 : ${eventDto.eventWtime}
-    </div>
+
     
     <div class="cell">
      	<hr>
