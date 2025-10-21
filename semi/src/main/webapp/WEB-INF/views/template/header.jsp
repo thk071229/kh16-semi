@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%-- 디자인 파일 불러오기 --%>
-<link rel="stylesheet" type="text/css" href="/css/commons.css">
 <%-- font-awesome css --%>
 <link rel ="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
 <a href = "/">
