@@ -1,109 +1,151 @@
-/* 색깔 팔레트 /
-/
+/* 색깔 팔레트 
+
 #사용법
 속성:var(--팔레트색깔이름)
 (예시)
 color:var(--ink);
-/
-:root{
-/ Spring pastel palette /
---bg: #F6FBF9;
---surface: #FFFFFF;
---muted: #F0F6F4;
---primary: #7FC8A9; / soft mint /
---primary-600: #64B698;
---accent: #FFD6A5; / warm peach /
---accent-600: #FFBF86;
---ink: #233238;
---subtle: #6B7B7D;
---danger: #FF7A7A;
---glass: rgba(255,255,255,0.6);
---shadow: 0 6px 18px rgba(35,50,56,0.08);
---radius: 12px;
---radius-sm: 8px;
---max-width: 1100px;
---container-padding: 20px;
---font-sans: "Inter", "Noto Sans KR", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+*/
+
+:root {
+    --bg: #F6FBF9;
+  --surface: #FFFFFF;
+  --muted: #F0F6F4;
+  --primary: #7FC8A9; /* soft mint */
+  --primary-600: #64B698;
+  --accent: #FFD6A5; /* warm peach */
+  --accent-600: #FFBF86;
+  --ink: #233238;
+  --subtle: #6B7B7D;
+  --danger: #FF7A7A;
+  --glass: rgba(255,255,255,0.6);
+  --shadow: 0 6px 18px rgba(35,50,56,0.08);
+  --radius: 12px;
+  --radius-sm: 8px;
+  --max-width: 1100px;
+  --container-padding: 20px;
+  --font-sans: "Inter", "Noto Sans KR", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
 }
-/ 수업시간에 쓰던 색깔 팔레트 */
-.red { color: #d63031; }
-.orange { color: #e17055; }
-.yellow { color: #fdcb6e; }
-.green { color: #00b894; }
-.blue { color: #0984e3; }
-.purple { color: #6c5ce7; }
-.black { color: #2d3436; }
-.gray { color: #636e72; }
-.white { color: white; }
+
+/* 수업시간에 쓰던 색깔 팔레트 */
+.red { color: #d63031 !important; }
+.orange { color: #e17055 !important; }
+.yellow { color: #fdcb6e !important; }
+.green { color: #00b894 !important; }
+.blue { color: #0984e3 !important; }
+.purple { color: #6c5ce7 !important; }
+.black { color: #2d3436 !important; }
+.gray { color: #636e72 !important; }
+.white { color: white !important; }
 
 /* container */
-.container{
-max-width:var(--max-width);
-margin:0 auto;
-padding:var(--container-padding);
+.container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--container-padding);
 }
 
 /* cell */
 .cell {
-margin: 10px 0;
+    margin: 10px 0;
 }
 
-/* 로고(assets 폴더 생성 후 svg 저장필요) /
-/
-#사용법
+/* 로고*/
 
-SS
-
-*/
-.logo{
-width:44px;
-height:44px;
-border-radius:10px;
-background:linear-gradient(135deg,var(--primary),var(--accent));
-display:flex;
-align-items:center;
-justify-content:center;
-color:white;
-font-weight:700;
-box-shadow:var(--shadow);
+.logo {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    box-shadow: var(--shadow);
 }
-/* 메뉴 /
-/
-#사용법
 
-
-홈
-모임
-상품
-마이페이지
-
-*/
-.nav{
-margin-left:20px;
-display:flex;
-gap:12px;
-align-items:center;
+/* Header */
+.header{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:14px 0;
 }
-.nav a{ text-decoration:none; color:var(--subtle); padding:8px 10px; border-radius:8px; font-weight:600; font-size:14px;}
-.nav a:hover{ background:var(--muted); color:var(--ink)}
-/* 버튼(사용법은 기존과 동일) /
-.btn{
-display:inline-flex;
-align-items:center;
-gap:8px;
-padding:10px 14px;
-border-radius:10px;
-border:none;
-cursor:pointer;
-font-weight:700;
-letter-spacing:0.2px;
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  text-decoration:none;
+  color:var(--ink);
 }
-/ 민트색 /
-.btn-primary{ background:var(--primary); color:white; box-shadow:0 8px 20px rgba(127,200,169,0.18); }
-/ 투명 /
-.btn-ghost{ background:transparent; border:1px solid rgba(35,50,56,0.06); color:var(--ink); }
-/ 주황 */
-.btn-accent{ background:var(--accent); color:var(--ink); }
+
+/* 메뉴 */
+.nav {
+    margin-left: 20px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.nav a {
+    text-decoration: none;
+    color: var(--subtle);
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.nav a:hover {
+    background: var(--muted);
+    color: var(--ink)
+}
+
+/* Hero / main */
+.hero{
+  margin:18px 0;
+  padding:24px;
+  background:linear-gradient(180deg, rgba(127,200,169,0.12), rgba(255,214,165,0.06));
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  display:flex;
+  gap:24px;
+  align-items:center;
+  justify-content:space-between;
+}
+.hero .title{ font-size:22px; font-weight:700; }
+.hero .subtitle{ color:var(--subtle); margin-top:6px; }
+
+
+/* 버튼(사용법은 기존과 동일) */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 8px 20px rgba(127, 200, 169, 0.18);
+}
+
+.btn-ghost {
+    background: transparent;
+    border: 1px solid rgba(35, 50, 56, 0.06);
+    color: var(--ink);
+}
+
+.btn-accent {
+    background: var(--accent);
+    color: var(--ink);
+}
 
 /* 배치옵션 */
 .w-25 { width:25% !important; }
@@ -192,77 +234,84 @@ letter-spacing:0.2px;
 .me-45 { margin-right: 45px !important; }
 .me-50 { margin-right: 50px !important; }
 
-/* 정렬 스타일 */
-.left { text-align: left !important; }
-.center { text-align: center !important; }
-.right { text-align: right !important; }
-
-/* 표 /
+/* 표 */
 .table {
-/ border: 1px solid #636e72; /
-border-collapse: collapse;
-font-size: 16px;
-font-weight: 400 !important;
+    /* border: 1px solid #636e72; */
+    border-collapse: collapse;
+    font-size: 16px;
+    font-weight: 400 !important;
+}
+.table > thead > tr > th, 
+.table > thead > tr > td,
+.table > tbody > tr > th, 
+.table > tbody > tr > td,
+.table > tfoot > tr > th, 
+.table > tfoot > tr > td {
+    /* border: 1px solid #636e72; */
+    font-size: inherit; /* 가장 가까운 외부영역의 규칙을 따라라! (지금은 table) */
+    font-weight: inherit; /* 가장 가까운 외부영역의 규칙을 따라라! (지금은 table) */
+    text-align: center;
+    padding: 0.25em;
 }
 
-/*
-.table > thead > tr > th,
-.table > thead > tr > td,
-.table > tbody > tr > th,
-.table > tbody > tr > td,
-.table > tfoot > tr > th,
-.table > tfoot > tr > td {
-/ border: 1px solid #636e72; /
-font-size: inherit; / 가장 가까운 외부영역의 규칙을 따라라! (지금은 table) /
-font-weight: inherit; / 가장 가까운 외부영역의 규칙을 따라라! (지금은 table) /
-text-align: center;
-padding: 0.25em;
-} 
-*/
+/* 확장 스타일 1번 - 테두리가 있는 테이블 */
+.table.table-border,
+.table.table-border > thead > tr > th, 
+.table.table-border > thead > tr > td,
+.table.table-border > tbody > tr > th, 
+.table.table-border > tbody > tr > td,
+.table.table-border > tfoot > tr > th, 
+.table.table-border > tfoot > tr > td
+{
+    border: 1px solid #636e72;
+}
 
 /* input */
-.input, textarea{ padding:10px; border-radius:8px; border:1px solid rgba(35,50,56,0.06); background:var(--muted); width:100%; }
+.input,
+textarea {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(35, 50, 56, 0.06);
+    background: var(--muted);
+    width: 100%;
+}
 
 /* 수업시간에 사용하던 field */
 .field {
-outline: none; /* 기본 강조효과 제거 */
-font-size: 16px; /* 기본 글자크기 지정 */
-padding: 0.5em 0.75em;
-border: 1px solid #636e72;
-border-radius: 0.1em;
+    outline: none;
+    /* 기본 강조효과 제거 */
+    font-size: 16px;
+    /* 기본 글자크기 지정 */
+    padding: 0.5em 0.75em;
+    border: 1px solid #636e72;
+    border-radius: 0.1em;
 }
+
 .field:focus {
-border-color: #313739;
+    border-color: #313739;
 }
+
 textarea.field {
-resize: vertical;
+    resize: vertical;
 }
 
-/* Search /
-/
-#사용법
-
-
-
-검색
-로그인
-
-*/
-.search{
-margin-left:auto;
-display:flex;
-gap:8px;
-align-items:center;
-}
-.search input{
-border:1px solid #E6F0EE;
-background:var(--glass);
-padding:10px 12px;
-border-radius:10px;
-min-width:220px;
+/* Search */
+.search {
+    margin-left: auto;
+    display: flex;
+    gap: 8px;
+    align-items: center;
 }
 
-		/*
+.search input {
+    border: 1px solid #E6F0EE;
+    background: var(--glass);
+    padding: 10px 12px;
+    border-radius: 10px;
+    min-width: 220px;
+}
+
+/*
         float box 디자인
         - float 는 좌/우 원하는 곳에 손쉽게 배치하는 속성
         - 일반 디자인과는 어울리기가 힘듦
@@ -270,42 +319,47 @@ min-width:220px;
         - 가상의 영역을 선택하여 실제 영역처럼 사용 (가상 선택자)
         - ::before 는 시작 지점
         - ::after 는 종료 지점
-        */
-        .float-box > .float-left {
-            float: left;
-        }
-        .float-box > .float-right {
-            float: right;
-        }
-        .float-box::after {
-            content: "";
-            display: block;
-            clear: both;
-        }
-        /*Flexible 디자인*/
-    .flex-box {
-        display: flex;
-        flex-direction: row;
-    }
-    .inline-flex-box {
-        display: inline-flex;
-        flex-direction: row;
-    }
+*/
+.float-box>.float-left {
+    float: left;
+}
 
-    /*세로형 배치를 원할 경우*/
-    .flex-box.flex-vertical , 
-    .inline-flex-box.flex-vertical {
-        flex-direction: column;
-    }
-    /*플렉스 배치 내에서 나머지를 모두 차지*/
-    .flex-box > .flex-fill , 
-    .inline-flex-box > .flex-fill {
-        flex-grow:  1;
-    }
-    /*크기가 충분할 경우 정가운데 배치*/
-    .flex-box.flex-center , 
-    .inline-flex-box.flex-center {
-        justify-content: center;
-        align-items: center;
-    }
+.float-box>.float-right {
+    float: right;
+}
 
+.float-box::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+/*Flexible 디자인*/
+.flex-box {
+    display: flex;
+    flex-direction: row;
+}
+
+.inline-flex-box {
+    display: inline-flex;
+    flex-direction: row;
+}
+
+/*세로형 배치를 원할 경우*/
+.flex-box.flex-vertical,
+.inline-flex-box.flex-vertical {
+    flex-direction: column;
+}
+
+/*플렉스 배치 내에서 나머지를 모두 차지*/
+.flex-box>.flex-fill,
+.inline-flex-box>.flex-fill {
+    flex-grow: 1;
+}
+
+/*크기가 충분할 경우 정가운데 배치*/
+.flex-box.flex-center,
+.inline-flex-box.flex-center {
+    justify-content: center;
+    align-items: center;
+}
