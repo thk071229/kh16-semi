@@ -4,10 +4,49 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>  
     
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>	    
-    
-    
+ <!-- -------------------------------------- -->
+<!-- JQuery cdn -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<!-- kakaomap cdn  -->
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8e8665a62573621467f321f74eb7cae4&libraries=services"></script>
+
 <!-- --------------------------------------------- -->
+<style>
+	.kakao-map {
+		width: 100%;
+		height: 300px;
+	}
+</style>
+<!-- -------------------------------------- -->	
+<script type="text/javascript">
+	$(function(){
+		var container = document.querySelector('.kakao-map');
+		var regionX = $(".regionX").val();
+		var regionY = $(".regionY").val();
+		var location = new kakao.maps.LatLng(regionY, regionX);
+		
+		console.log(regionX);
+		console.log(regionY);
+		
+		var option = {
+			center : location,
+			level : 2  
+		};
+		var map = new kakao.maps.Map(container, option);
+		var marker = new kakao.maps.Marker({
+			position : location,
+			clickable:true
+		});
+		marker.setMap(map);
+	});
+</script>
+<!-- -------------------------------------- -->	
 <div class="container w-800">
+
+<!-- -hidden 으로 정보 전달--- -->	
+<input type="hidden" value="${eventDto.eventRegionX}" class="regionX" readonly>
+<input type="hidden" value="${eventDto.eventRegionY}" class="regionY" readonly>
+
 
     <div class="cell">
     	<h1>
@@ -34,13 +73,10 @@
      <div class="cell">
    		내용 : ${eventDto.eventContent}
     </div>
-    <div class="cell">
-   		x좌표 : ${eventDto.eventRegionX}
-    </div>
-    <div class="cell">
-   		y좌표 : ${eventDto.eventRegionY}
-    </div>
-
+	<div class="cell">
+		<label>상세 위치</label>
+		<div class="kakao-map w-100"></div>
+	</div>
     
     <div class="cell">
      	<hr>
