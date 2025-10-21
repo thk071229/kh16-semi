@@ -53,7 +53,7 @@ public class BoardDao {
 			String sql = "select * from ("
 					+ "select rownum rn, TMP.* from ("
 					+ "select * from board_list where board_club = ? "
-					+ "order by board_no asc"
+					+ "order by board_no desc"
 					+ ")TMP "
 					+ ")where rn between ? and ?";
 			
