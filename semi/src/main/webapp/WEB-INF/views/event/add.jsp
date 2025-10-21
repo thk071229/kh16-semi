@@ -88,20 +88,6 @@
 
 						history.push(marker);
 
-						//인포윈도우 추가
-						// 템플릿을 불러와서 설정
-						var origin = $("#info-template").text();
-						var div = $("<div>").html(origin);
-						div.find(".content").text(address);
-						var infoText = div.html(); //가짜 div 내부의 내용을 불러와서 infoText에 저장
-						var info = new kakao.maps.InfoWindow({
-							position: location,
-							content: infoText,
-							removable: true,// x버튼을 표시
-						});
-						kakao.maps.event.addListener(marker, "click", function () {
-							info.open(map, marker); // 클릭하면 마커 표시
-						})
 					}
 				});
 			});
