@@ -1,5 +1,6 @@
 package com.kh.semi.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import com.kh.semi.dto.BoardDto;
 import com.kh.semi.dto.ClubDto;
 import com.kh.semi.error.TargetNotFoundException;
 import com.kh.semi.vo.BoardListVO;
+import com.kh.semi.vo.PageVO;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -63,29 +65,52 @@ public class BoardController {
 		return "/WEB-INF/views/board/detail.jsp";
 	}
 	
-	//게시글 목록 조회 매핑(페이지x)
+	//게시글 목록 조회 매핑(페이지 구현) - 해당 모임의 게시글만 가져오므로 clubNo 필수
 	@RequestMapping("/list")
-	public String list(Model model, @RequestParam(required=false) String column, 
-			@RequestParam(required=false) String keyword, 
-			@RequestParam int clubNo) {
-		
+	public String list(Model model, @ModelAttribute PageVO pageVO, @RequestParam int clubNo) {//변수 대신 VO 불러옴
 		ClubDto clubDto = clubDao.selectOne(clubNo);
-		if(clubDto == null){
-		 throw new TargetNotFoundException("존재하지 않는 모임입니다");
-		}
+		if(clubDto == null) throw new TargetNotFoundException("존재하지 않는 모임입니다");
 		
-		List<BoardListVO> boardList;
-		boolean isSearch = column != null && keyword != null;
-		if(isSearch) {
-			boardList = boardDao.selectList(column, keyword, clubNo);
-		}
-		else {	
-			boardList = boardDao.selectList(clubNo);
-		}
-			model.addAttribute("clubNo", clubNo);
-			model.addAttribute("boardList", boardList);
+		List<BoardListVO> boardList = boardDao.selectListWithPaging(pageVO, clubNo); //전체글
+			//검색이든 목록이든 pageVO를 불러와서 한번에 처리하도록 DAO에 pageVO사용하는 메소드 생성
+			//model.addAttribute("boardList", boardDao.selectList(column, keyword))
+			//검색 결과 넣어주고
+		List<BoardListVO> boardNoticeList = boardDao.selectListNotice(pageVO, clubNo); //공지글
+		List<BoardListVO> result = new ArrayList<>(); //새로운 arrayList를 만들어서 두 리스트를 모두 추가
+		result.addAll(boardNoticeList);
+		result.addAll(boardList);
+		model.addAttribute("boardList", result);
+		model.addAttribute("noticeCount", boardNoticeList.size()); //공지사항 개수를 전달(배경색 칠하기 용)
+		int dataCount = boardDao.count(pageVO, clubNo); //dao에 있는 count 메소드에서 검색일경우/목록일 경우 처리
+		//총 게시글 수는 컨트롤러에서 설정해야함
+		pageVO.setDataCount(dataCount);//pageVO에 dataCount값 설정해준다
+		model.addAttribute("clubNo", clubNo);
+		model.addAttribute("pageVO", pageVO); //화면에 전달	
 		return "/WEB-INF/views/board/list.jsp";
 	}
+	//게시글 목록 조회 매핑(페이지x)
+//	@RequestMapping("/list")
+//	public String list(Model model, @RequestParam(required=false) String column, 
+//			@RequestParam(required=false) String keyword, 
+//			@RequestParam int clubNo) {
+//		
+//		ClubDto clubDto = clubDao.selectOne(clubNo);
+//		if(clubDto == null){
+//		 throw new TargetNotFoundException("존재하지 않는 모임입니다");
+//		}
+//		
+//		List<BoardListVO> boardList;
+//		boolean isSearch = column != null && keyword != null;
+//		if(isSearch) {
+//			boardList = boardDao.selectList(column, keyword, clubNo);
+//		}
+//		else {	
+//			boardList = boardDao.selectList(clubNo);
+//		}
+//			model.addAttribute("clubNo", clubNo);
+//			model.addAttribute("boardList", boardList);
+//		return "/WEB-INF/views/board/list.jsp";
+//	}
 	
 	//게시글 목록 조회 매핑(selectListWithPaging 구현 후)
 	
@@ -94,10 +119,12 @@ public class BoardController {
 	public String edit(@RequestParam int boardNo, Model model) {
 		BoardDto boardDto = boardDao.selectOne(boardNo);
 		if(boardDto == null) throw new TargetNotFoundException("존재하지 않는 게시글"); //임시 Exception --> 추후 TargetNotfoundException + error 페이지 만들어서 수정
+		model.addAttribute("boardDto", boardDto);
 		return "/WEB-INF/views/board/edit.jsp";
 	}
 	@PostMapping("/edit")
 	public String edit(@ModelAttribute BoardDto boardDto, @RequestParam int boardNo) {
+		boardDao.update(boardDto);
 		return "redirect:detail?boardNo="+boardDto.getBoardNo();
 	}
 	

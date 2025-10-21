@@ -19,7 +19,6 @@ public class PageVO {
 	//검색항목, 검색어-기본값 : null(안써도 됨)
 	private int dataCount; //총 데이터(게시글) 개수
 	private int blockSize = 10;//표시할 블록 개수
-
 	//계산이 가능하도록 Getter 메소드 추가 생성
 	public boolean isSearch() {
 		return column != null && keyword != null;

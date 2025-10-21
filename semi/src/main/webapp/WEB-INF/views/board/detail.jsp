@@ -26,6 +26,7 @@
 		<a href="list?clubNo=${boardDto.boardClub}">목록으로</a>
 		<a href="edit?boardNo=${boardDto.boardNo}">수정하기</a>
 		<a href="delete?boardNo=${boardDto.boardNo}">삭제하기</a>
+		<a href="write?clubNo=${boardDto.boardClub}">새 글 등록</a>
 	</div>
 </div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

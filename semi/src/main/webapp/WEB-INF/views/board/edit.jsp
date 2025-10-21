@@ -7,8 +7,8 @@
 	 <input type = "checkbox" name = "boardNotice" value = "Y" ${boardDto.boardNotice == 'Y' ? 'checked' : ''}>
 	 <span>공지사항으로 등록</span>
 	 <input type = "hidden" name = "boardNo" value = "${boardDto.boardNo}">
-	 <input type = "text" name = "boardTitle" placeholder = "제목을 입력하세요">
-	 <textarea name = "boardContent" rows="5" placeholder = "내용을 입력하세요"></textarea>
+	 <input type = "text" name = "boardTitle" placeholder = "제목을 입력하세요" value = "${boardDto.boardTitle}">
+	 <textarea name = "boardContent" rows="5" placeholder = "내용을 입력하세요">${boardDto.boardContent}</textarea>
 	 <button type = "submit">수정</button>
 </form>
 </div>
