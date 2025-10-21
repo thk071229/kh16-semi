@@ -6,28 +6,29 @@ import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
-import com.kh.semi.dto.BoardDto;
-
+import com.kh.semi.vo.BoardListVO;
+//list 조회를 위한 Mapper
 @Component
-public class BoardMapper implements RowMapper<BoardDto>{
+public class BoardListMapper implements RowMapper<BoardListVO>{
 
 	@Override
-	public BoardDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+	public BoardListVO mapRow(ResultSet rs, int rowNum) throws SQLException {
 		
-		return BoardDto.builder()
+		return BoardListVO.builder()
 				.boardNo(rs.getInt("board_no"))
 				.boardClub(rs.getInt("board_club"))
-				.boardWriter(rs.getString("board_writer"))
 				.boardNotice(rs.getString("board_notice"))
 				.boardTitle(rs.getString("board_title"))
-				.boardContent(rs.getString("board_content")) 
+				.boardWriter(rs.getString("board_writer"))
 				.boardWtime(rs.getTimestamp("board_wtime"))
 				.boardEtime(rs.getTimestamp("board_etime"))
 				.boardRead(rs.getInt("board_read"))
 				.boardLike(rs.getInt("board_like"))
 				.boardComment(rs.getInt("board_comment"))
+				.memberId(rs.getString("member_id"))
+				.memberNickname(rs.getString("member_nickname"))
+				.memberLevel(rs.getString("member_level"))
 				.build();
-
 	}
 
 }

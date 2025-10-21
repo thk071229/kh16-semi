@@ -43,29 +43,29 @@ public class ClubController {
 	public String edit(Model model, HttpSession session, @RequestParam int clubNo) {
 		// 1. 로그인 확인
 		String loginId = (String)session.getAttribute("loginId");
-//		if(loginId == null) throw new TargetNotFoundException("존재하지 않는 회원");
+		//if(loginId == null) throw new TargetNotFoundException("존재하지 않는 회원");
 		
 		// 2. 모임 존재 확인
 		ClubDto clubDto = clubDao.selectOne(clubNo);
-//		if(clubDto == null) throw new TartgetNotFoundException("존재하지 않는 모임");
+		//if(clubDto == null) throw new TartgetNotFoundException("존재하지 않는 모임");
 		
 		// 3. 권한 확인
-//		if(loginId.equals(clubDto.getClubFounder()) == false) throw new unauthorizationException("권한 부족");
+		//if(loginId.equals(clubDto.getClubFounder()) == false) throw new unauthorizationException("권한 부족");
 		model.addAttribute("clubDto", clubDto);
 		return "/WEB-INF/views/club/edit.jsp";
 	}
 	@PostMapping("/edit")
 	public String edit(@ModelAttribute ClubDto clubDto, HttpSession session) {
 		// 1. 로그인 확인
-				String loginId = (String)session.getAttribute("loginId");
-//				if(loginId == null) throw new TargetNotFoundException("존재하지 않는 회원");
+		String loginId = (String)session.getAttribute("loginId");
+		//if(loginId == null) throw new TargetNotFoundException("존재하지 않는 회원");
 				
-				// 2. 모임 존재 확인
-				ClubDto origin = clubDao.selectOne(clubDto.getClubNo());
-//				if(origin == null) throw new TartgetNotFoundException("존재하지 않는 모임");
+		// 2. 모임 존재 확인
+		ClubDto origin = clubDao.selectOne(clubDto.getClubNo());
+		//if(origin == null) throw new TartgetNotFoundException("존재하지 않는 모임");
 				
-				// 3. 권한 확인
-//				if(loginId.equals(clubDto.getClubFounder()) == false) throw new unauthorizationException("권한 부족");
+		// 3. 권한 확인
+		//if(loginId.equals(clubDto.getClubFounder()) == false) throw new unauthorizationException("권한 부족");
 		clubDao.update(clubDto);
 		return "redirect:detail?clubNo=" + clubDto.getClubNo();
 	}
@@ -75,14 +75,14 @@ public class ClubController {
 	public String delete(@ModelAttribute ClubDto clubDto, HttpSession session) {
 		// 1. 로그인 확인
 		String loginId = (String)session.getAttribute("loginId");
-//		if(loginId == null) throw new TargetNotFoundException("존재하지 않는 회원");
+		//if(loginId == null) throw new TargetNotFoundException("존재하지 않는 회원");
 		
 		// 2. 모임 존재 확인
 		ClubDto origin = clubDao.selectOne(clubDto.getClubNo());
-//		if(origin == null) throw new TartgetNotFoundException("존재하지 않는 모임");
+		//if(origin == null) throw new TartgetNotFoundException("존재하지 않는 모임");
 		
 		// 3. 권한 확인
-//		if(loginId.equals(origin.getClubFounder()) == false) throw new unauthorizationException("권한 부족");
+		//if(loginId.equals(origin.getClubFounder()) == false) throw new unauthorizationException("권한 부족");
 		clubDao.delete(clubDto.getClubNo());
 		return "redirect:list";
 	}
@@ -99,7 +99,7 @@ public class ClubController {
 	@GetMapping("/detail")
 	public String detail(@RequestParam int clubNo, Model model) {
 		ClubDto clubDto = clubDao.selectOne(clubNo);
-//		if(clubDto == null) throw TargetNotFoundException("존재하지 않는 소모임");
+		//if(clubDto == null) throw TargetNotFoundException("존재하지 않는 소모임");
 		
 		model.addAttribute("clubDto", clubDto);
 		return "/WEB-INF/views/club/detail.jsp";

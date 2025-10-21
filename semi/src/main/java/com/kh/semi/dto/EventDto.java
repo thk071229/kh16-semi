@@ -17,6 +17,7 @@ public class EventDto {
 	private String eventContent;
 	private double eventRegionX;
 	private double eventRegionY;
+	private Timestamp eventDate;
 	private Timestamp eventWtime;
 	private Timestamp eventEtime;
 	
