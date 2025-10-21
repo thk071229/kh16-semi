@@ -35,12 +35,13 @@ public class EventController {
 
 	@PostMapping("/add")
 	public String add(@ModelAttribute EventDto eventDto, HttpSession session) {
+
 		String loginId = (String) session.getAttribute("loginId");
 		eventDto.setEventWriter(loginId); // 로그인 ID -> 작성자 등록
 		
 		int eventNo = eventDao.sequence(); // 시퀀스 번호 생성 및 등록
 		eventDto.setEventNo(eventNo);
-		
+
 		eventDao.insert(eventDto); // 등록
 		return "redirect:detail?eventNo="+eventNo;
 	}
