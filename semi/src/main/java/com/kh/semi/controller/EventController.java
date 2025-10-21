@@ -62,6 +62,7 @@ public class EventController {
 		if(eventDto==null) throw new TargetNotFoundException("존재하지 않는 소모임");
 		List<EventDto> beforeDto = eventDao.selectListBefore(clubNo);
 		List<EventDto> afterDto = eventDao.selectListAfter(clubNo);
+		model.addAttribute("clubNo",clubNo);
 		model.addAttribute("eventDto", eventDto);	
 		model.addAttribute("beforeDto", beforeDto);		
 		model.addAttribute("afterDto", afterDto);		

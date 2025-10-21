@@ -27,6 +27,10 @@
 <!-- ------------------------------------ -->
 <div class="container w-800">
 
+	<div class="cell">
+		<a href="add?clubNo=${clubNo}">신규 정모 등록</a>
+	</div>
+	
 	<div class="cell mt-40">
 		<div class="flex-box">
 			<!-- 진행중 정모 목록 -->
