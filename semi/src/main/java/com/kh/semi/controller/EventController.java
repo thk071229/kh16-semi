@@ -82,15 +82,18 @@ public class EventController {
 
 	// 수정
 	@GetMapping("/edit")
-	public String edit() {
+	public String edit(Model model, @RequestParam int eventNo) {
+		EventDto eventDto = eventDao.selectOne(eventNo);
+		if(eventDto==null) throw new TargetNotFoundException("존재하지 않는 정모 정보");
+		model.addAttribute("eventDto", eventDto);
 		return "/WEB-INF/views/event/edit.jsp";
 	}
 	
 	@PostMapping("/edit")
 	public String edit(@ModelAttribute EventDto eventDto) {
 		EventDto findDto = eventDao.selectOne(eventDto.getEventNo());
-		if(eventDto==null) throw new TargetNotFoundException("존재하지 않는 이벤트");
-		eventDao.update(findDto);
+		if(findDto==null) throw new TargetNotFoundException("존재하지 않는 이벤트");
+		eventDao.update(eventDto);
 		return "redirect:detail?eventNo="+findDto.getEventNo();
 	}
 	
