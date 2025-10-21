@@ -3,19 +3,42 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
+<!-- -------------------------------------- -->
+<!-- moment CDN-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/locale/ko.min.js"></script>
 
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
-<!-- jquery cdn -->
+<!-- lightpick CDN-->
+    <link href="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/css/lightpick.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/lightpick.min.js"></script>
+
+<!-- JQuery cdn -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-	<!-- kakaomap cdn  :: 기존 코드에서 &libraries=services 추가-->
-	<script type="text/javascript"
-		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8e8665a62573621467f321f74eb7cae4&libraries=services"></script>
-<script type="text/javascript">
+<!-- kakaomap cdn  -->
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8e8665a62573621467f321f74eb7cae4&libraries=services"></script>
+<!-- -------------------------------------- -->
+<style>
+	.kakao-map {
+		width: 100%;
+		height: 300px;
+	}
+</style>
+<!-- -------------------------------------- -->	
+	<script type="text/javascript">
 		$(function () {
+			
+			// datepicker 관련
+			var picker1 = new Lightpick({
+				field:document.querySelector("[name=eventDate]"),
+				singleDate:true,
+				format:'YYYY-MM-DD HH:mm:ss',
+				time : true
+			});
+			
+			//-------------------------------------
+			
 			// 생성한 마커의 정보를 저장할 공간 (마커가 여러개인 경우)
 			var history = [];
-
-
 
 			//지도 생성 코드
 			var container = document.querySelector('.kakao-map');
@@ -38,26 +61,16 @@
 
 				//[2] 주소가 있다면, 카카오에서 제공하는 장소검색 도구의 도움을 받아 처리
 				var geocoder = new kakao.maps.services.Geocoder();
-
-				//geocoder.addressSearch(주소, 검색 후 실행코드); // 예약 = callback함수
 				geocoder.addressSearch(address, function (result, status) {
-					//console.log(arguments); // 함수에 들어오는 모든 인자 목록을 조회
-					// - result = 0, 1, 2 값이 들어오는데, 0을 실제 데이터 배열
-					// - status = 1에 해당하는 검색결과 ( "OK" or "ZERO_RESULT") 둘 중 하나의 값을 가짐
-
-					// if(staus == "OK"){
 					if (status == kakao.maps.services.Status.OK) {
 						console.log(result[0]);
 						console.log("경도 : " + result[0].x); // 첫번째 값의 x좌표 : 경도
 						console.log("위도 : " + result[0].y); // 첫번째 값의 y좌표 : 위도
-						
 						$("[name=eventRegionX]").val(result[0].x);
 						$("[name=eventRegionY]").val(result[0].y);
 
 						var location = new kakao.maps.LatLng(result[0].y, result[0].x); // 위치 정보 생성
-						//map.setCenter(lovation);
 						map.panTo(location);
-
 
 						//마커 이미지 설정
 						var imageSrc = "https://cdn-icons-png.flaticon.com/512/535/535239.png";
@@ -81,13 +94,11 @@
 						var div = $("<div>").html(origin);
 						div.find(".content").text(address);
 						var infoText = div.html(); //가짜 div 내부의 내용을 불러와서 infoText에 저장
-
 						var info = new kakao.maps.InfoWindow({
 							position: location,
 							content: infoText,
 							removable: true,// x버튼을 표시
 						});
-
 						kakao.maps.event.addListener(marker, "click", function () {
 							info.open(map, marker); // 클릭하면 마커 표시
 						})
@@ -104,51 +115,52 @@
         </div>
     </script>
 <!-- ------------------------구분선---------------------->
-<div class="container">
-	<div class="cell">
+<div class="container w-600">
+	<div class="cell w-100">
 		<h1>정모 추가</h1>
 	</div>
 	
-	<form action="/add" method="post" autocomplete="off">
-	<input type="password" name="eventClub" value="${club_no}" readonly>
-
+	<form action="add" method="post" autocomplete="off">
+	<input type="hidden" name="eventClub" value="${clubNo}">
+	
 		<div class="cell">
-			<input type="text" class="field" name="eventTitle">
+			<label>정모이름</label>
+			<input type="text" class="field w-100" name="eventTitle">
 		</div>
 		<div class="cell">
-			<input type="text" class="field" name="eventContent">
+			<label>상세내용</label>
+			<input type="text" class="field  w-100" name="eventContent">
 		</div>
 		<div class="cell">
-			<input type="date" class="field" name="eventDate">
+			<label>정모일시</label>
+			<input type="text" class="field w-100" name="eventDate">
 		</div>
 		
 		<!-- 주소 검색을 통해 위도 경도값 저장 -->
-		<div class="cell">
+		<div class="cell w-100">
+			<label>정모위치</label>
 			<div class="flex-box">
-				<input type="text" class="field w-100 address-input" placeholder="주소 또는 키워드 입력">
-				<button class="btn btn-positive ms-10 address-search-btn">
+				<input type="text" class="field w-100 address-input" placeholder="주소(시군구/읍면동) 입력 ">
+				<button type="button" class="btn btn-positive ms-10 address-search-btn">
 					<i class="fa-solid fa-magnifying-glass"></i>
 				</button>
 			</div>
 		</div>
-<!-- 		<div class="cell"> -->
-<!-- 			<div class="kakao-map w-100"></div> -->
-<!-- 		</div> -->
 		<div class="cell">
-			<input type="text" class="field" name="eventRegionX" readonly>
-			<input type="text" class="field" name="eventRegionY" readonly>
+			<div class="kakao-map w-100"></div>
+		</div>
+		<div class="cell flex-box w-100">
+			<input type="text" class="field w-50 center" name="eventRegionX" placeholder="경도 좌표" readonly style="border:0 solid white;">
+			<input type="text" class="field w-50 center" name="eventRegionY" placeholder="위도 좌표" readonly style="border:0 solid white;">
 		</div>
 		
 		<div class="cell">
-			<button class="btn" type="button">등록</button>
+			<button class="btn" type="submit">등록</button>
 		</div>
 
 	</form>
 
 	<div class="cell">
-		<!-- 
-	    <a href="list?eventClub=${eventDto.eventClub}">소모임 홈</a>
-    	 -->
 		<a href="list?clubNo=${eventDto.eventClub}">정모 목록</a>
 	</div>
 

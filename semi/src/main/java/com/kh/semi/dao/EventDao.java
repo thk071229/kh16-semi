@@ -27,13 +27,14 @@ public class EventDao {
 	// 등록
 	public void insert(EventDto eventDto) {
 		String sql = "insert into event "
-				+ "(event_no, event_club,event_writer,event_title,event_content,event_region_x,event_rigion_y) "
-				+ "values(?,?,?,?,?,?,?)";
+				+ "(event_no, event_club, event_writer,event_title,event_content,event_date,event_region_x,event_region_y) "
+				+ "values(?,?,?,?,?,?,?,?)";
 		Object[] params = {eventDto.getEventNo()
 						,eventDto.getEventClub()
 						,eventDto.getEventWriter()
 						,eventDto.getEventTitle()
 						,eventDto.getEventContent()
+						,eventDto.getEventDate()
 						,eventDto.getEventRegionX()
 						,eventDto.getEventRegionY()
 					};
@@ -42,14 +43,14 @@ public class EventDao {
 	
 	// 조회 (기본)
 	public List<EventDto> selectList(){
-		String sql = "select * from event order by event_no desc";
+		String sql = "select * from event order by event_date desc";
 		return jdbcTemplate.query(sql, eventMapper);
 	}
 	
 	// 조회 (int clubNo)
 	public List<EventDto> selectList(int clubNo){
 		String sql = "select * from event where event_club = ? "
-		           		+ "order by event_no desc";
+		           		+ "order by event_date desc";
 		Object[] params= {clubNo};
 		return jdbcTemplate.query(sql, eventMapper, params);
 	}
@@ -59,7 +60,7 @@ public class EventDao {
 		public List<EventDto> selectListBefore(int clubNo){
 			String sql = "select * from event"
 							+" where event_club=? and event_date>sysdate"
-							+" order by event_no desc";
+							+" order by event_date desc";
 			Object[] params= {clubNo};
 			return jdbcTemplate.query(sql, eventMapper, params);
 		}
@@ -67,7 +68,7 @@ public class EventDao {
 		public List<EventDto> selectListAfter(int clubNo){
 			String sql = "select * from event"
 							+" where event_club=? and event_date<sysdate"
-							+" order by event_no desc";
+							+" order by event_date desc";
 			Object[] params= {clubNo};
 			return jdbcTemplate.query(sql, eventMapper, params);
 		}
@@ -91,10 +92,10 @@ public class EventDao {
 	//수정
 	public boolean update(EventDto eventDto) {
 		String sql = "update event "
-						+ "set event_title=?, event_content=?, event_region_x=?, event_region_y=?, event_etime=systimestamp "
+						+ "set event_title=?, event_content=?, event_date=?, event_region_x=?, event_region_y=?, event_etime=systimestamp "
 						+ "where event_no=?";
 		Object[] params = {
-				eventDto.getEventTitle(), eventDto.getEventContent(),
+				eventDto.getEventTitle(), eventDto.getEventContent(), eventDto.getEventDate(),
 				eventDto.getEventRegionX(),eventDto.getEventRegionY(),
 				eventDto.getEventNo()};
 		return jdbcTemplate.update(sql,params)>0;

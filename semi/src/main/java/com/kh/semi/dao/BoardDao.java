@@ -11,6 +11,7 @@ import com.kh.semi.dto.BoardDto;
 import com.kh.semi.mapper.BoardListMapper;
 import com.kh.semi.mapper.BoardMapper;
 import com.kh.semi.vo.BoardListVO;
+import com.kh.semi.vo.PageVO;
 
 @Repository
 public class BoardDao {
@@ -47,33 +48,91 @@ public class BoardDao {
 	}
 	
 	//게시글 전체 조회 + 검색(페이지 사용) - PageVO 생성 후 if 문으로 구현
-//	public List<BoardListVO> selectListWithPaging(PageVO pageVO){
-//	}
+	public List<BoardListVO> selectListWithPaging(PageVO pageVO, int clubNo){
+		if(pageVO.isList()) {//목록이라면
+			String sql = "select * from ("
+					+ "select rownum rn, TMP.* from ("
+					+ "select * from board_list where board_club = ? "
+					+ "order by board_no asc"
+					+ ")TMP "
+					+ ")where rn between ? and ?";
+			
+			Object[] params = {clubNo, pageVO.getBegin(), pageVO.getEnd()};
+			//모듈화 전처럼 begin, end 변수를 만들어서 사용하는게 아니라
+			//pageVO에서 getter 메소드를 만들어서 불러온다
+			return jdbcTemplate.query(sql, boardListMapper, params);
+		}
+		else {//검색이라면 
+				//- pageVO를 사용하므로 직접 컬럼, 키워드 변수를 만들지말고 VO에서 불러온다
+			Set<String> allowList = Set.of("board_title", "board_writer");
+			if(!allowList.contains(pageVO.getColumn())) return List.of();
+			String sql = "select * from ("
+					+ "select rownum rn, TMP.* from ("
+					+ "select * from board_list "
+					+ "where instr(#1, ?) > 0 and board_club = ? "
+					+ "order by #1 asc, board_no desc"
+					+ ")TMP "
+					+ ")where rn between ? and ?";
+			
+			
+			sql = sql.replace("#1", pageVO.getColumn());
+			Object[] params = {pageVO.getKeyword(), clubNo, pageVO.getBegin(), pageVO.getEnd()};
+			return jdbcTemplate.query(sql, boardListMapper, params);
+		}
+	}
+	
+	//공지사항 조회 메소드
+	public List<BoardListVO> selectListNotice(PageVO pageVO, int clubNo){
+		if(pageVO.isList()) {
+			String sql = "select *from board_list where board_notice = 'Y' and board_club = ?"
+					+ "order by board_no desc";
+			Object[] params = {clubNo};
+		return jdbcTemplate.query(sql, boardListMapper, params);
+		}
+		else {
+			String sql = "select * from board_list where board_notice = 'Y' "
+					+ "and instr (#1, ?) > 0 and board_club = ?"
+					+ "order by board_no desc";
+			sql = sql.replace("#1", pageVO.getColumn());
+			Object[] params = {pageVO.getKeyword(), clubNo};
+		return jdbcTemplate.query(sql, boardListMapper, params);	
+		}
+	}
+	
+	//게시글 카운트 메소드
+	public int count(PageVO pageVO, int clubNo) { //if문을 사용해서 합친다 - int로 반환
+		// 컨트롤러에서 pageVO만을 전달해서 불러올수있도록
+	if(pageVO.isList()) { //목록일 경우
+	String sql = "select count(*) from board_list where board_club = ?";
+	Object[] params = {clubNo};
+	return jdbcTemplate.queryForObject(sql, int.class, params);
+	}
+	else { //검색일 경우
+	String sql = "select count(*) from board_list where instr (#1, ?) > 0 and board_club = ?";
+	sql = sql.replace("#1", pageVO.getColumn());
+	Object[] params = {pageVO.getKeyword(), clubNo};
+	return jdbcTemplate.queryForObject(sql, int.class, params);
+	}
+	}
 	
 	//게시글 전체 조회(페이지 x)
-	public List<BoardListVO> selectList(int clubNo){ //clubNo : parameter 에서 받아올 값의 변수명
-		String sql = "select * from board_list where board_club = ? order by board_no desc";
-		Object[] params = {clubNo};
-		return jdbcTemplate.query(sql, boardListMapper, params);
-	}
-	//게시글 검색 조회(페이지 x)
-	public List<BoardListVO> selectList(String column, String keyword, int clubNo){
-	Set<String> allowList = Set.of("board_title", "board_writer");
-	if(!allowList.contains(column)) return List.of();
-	
-	String sql = "select * from board_list where board_club = ? and instr(#1, ?) > 0 "
-			+ "order by #1 asc, board_no desc";
-	sql= sql.replace("#1", column);
-	Object[] params = {clubNo, keyword};
-	return jdbcTemplate.query(sql, boardListMapper, params);
-	}
-	
-	//게시글 전체 조회(임시)
-//	public List<BoardDto> selectList(int clubNo) {
-//		String sql = "select * from board where board_club = ? order by board_no desc";
+//	public List<BoardListVO> selectList(int clubNo){ //clubNo : parameter 에서 받아올 값의 변수명
+//		String sql = "select * from board_list where board_club = ? order by board_no desc";
 //		Object[] params = {clubNo};
-//		return jdbcTemplate.query(sql, boardMapper, params);
+//		return jdbcTemplate.query(sql, boardListMapper, params);
 //	}
+	//게시글 검색 조회(페이지 x)
+//	public List<BoardListVO> selectList(String column, String keyword, int clubNo){
+//	Set<String> allowList = Set.of("board_title", "board_writer");
+//	if(!allowList.contains(column)) return List.of();
+//	
+//	String sql = "select * from board_list where board_club = ? and instr(#1, ?) > 0 "
+//			+ "order by #1 asc, board_no desc";
+//	sql= sql.replace("#1", column);
+//	Object[] params = {clubNo, keyword};
+//	return jdbcTemplate.query(sql, boardListMapper, params);
+//	}
+	
 
 	//게시글 수정
 	public boolean update(BoardDto boardDto) {
