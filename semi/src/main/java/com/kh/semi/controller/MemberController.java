@@ -9,8 +9,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.semi.dao.MemberCategoryDao;
 import com.kh.semi.dao.MemberDao;
+import com.kh.semi.dao.MemberRegionDao;
+import com.kh.semi.dto.MemberCategoryDto;
 import com.kh.semi.dto.MemberDto;
+import com.kh.semi.dto.MemberRegionDto;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -19,6 +23,10 @@ import jakarta.servlet.http.HttpSession;
 public class MemberController {
 	@Autowired
 	private MemberDao memberDao;
+	@Autowired
+	private MemberCategoryDao memberCategoryDao;
+	@Autowired
+	private MemberRegionDao memberRegionDao;
 	
 	//회원가입
 	@GetMapping("/join")
@@ -28,12 +36,27 @@ public class MemberController {
 	@PostMapping("/join")
 	public String join(@ModelAttribute MemberDto memberDto) {
 		memberDao.insert(memberDto);
-		return "redirect:joinFinish";
+		return "redirect:joinFinish?memberId=" + memberDto.getMemberId();
+	}
+	//회원 가입 후 관심 지역 & 관심 카테고리 등록
+	@GetMapping("/joinFinish")
+	public String joinFinish(@RequestParam String memberId, Model model) {
+		//회원 ID를 다음 단계에서 사용하도록 JSP에 전달
+		model.addAttribute("memberId", memberId);
+		return "/WEB-INF/views/member/joinFinish.jsp";
 	}
 	@PostMapping("/joinFinish")
-	public String joinFinish() {
-		//회원 관심 지역&카테고리 설정 페이지
-		return "/WEB-INF/views/member/joinFinish.jsp";
+	public String joinFinish(
+			@ModelAttribute MemberRegionDto memberRegionDto,
+			@ModelAttribute MemberCategoryDto memberCategoryDto) {
+		//region 테이블에서 regionNo를 받아오는 작업이 필요한가?
+		
+		
+		//관심 지역 & 카테고리 등록 처리
+		memberRegionDao.insert(memberRegionDto);
+		memberCategoryDao.insert(memberCategoryDto);
+		
+		return "redirect:/";
 	}
 
 	//로그인
