@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>  
     
-    
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>	    
     
     
 <!-- --------------------------------------------- -->
@@ -20,6 +20,9 @@
     </div>
     <div class="cell">
    		작성자 : ${eventDto.eventWriter}
+    </div>
+    <div class="cell">
+   		시간 : ${eventDto.eventDate}
     </div>
      <div class="cell">
    		내용 : ${eventDto.eventContent}
@@ -41,3 +44,5 @@
     </div>
     
 </div>
+
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>	

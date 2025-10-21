@@ -43,18 +43,31 @@ public class EventController {
 	}
 	
 	
+	// 정모게시글 전체
+	@RequestMapping("/home")
+	public String list(Model model) {
+		List<EventDto> eventDto = eventDao.selectList();
+		model.addAttribute("eventDto", eventDto);
+		return "/WEB-INF/views/event/home.jsp";
+	}
+	
+	
 	// 정모게시글 목록
 	@RequestMapping("/list")
-	private String list(Model model,@RequestParam int clubNo) {
+	public String list(Model model,@RequestParam int clubNo) {
 		List<EventDto> eventDto = eventDao.selectList(clubNo);
-		model.addAttribute("eventDto", eventDto);		
+		List<EventDto> beforeDto = eventDao.selectListBefore(clubNo);
+		List<EventDto> afterDto = eventDao.selectListAfter(clubNo);
+		model.addAttribute("eventDto", eventDto);	
+		model.addAttribute("beforeDto", beforeDto);		
+		model.addAttribute("afterDto", afterDto);		
 		return "/WEB-INF/views/event/list.jsp";
 	}
 	
 	
 	// 정모게시글 상세
 	@RequestMapping("/detail")
-	private String detail(Model model, @RequestParam int eventNo) {
+	public String detail(Model model, @RequestParam int eventNo) {
 		EventDto eventDto = eventDao.selectOne(eventNo);
 		//if(eventDto==null) throw Exception();
 		model.addAttribute("eventDto", eventDto);
@@ -63,12 +76,12 @@ public class EventController {
 
 	// 수정
 	@GetMapping("/edit")
-	private String edit() {
+	public String edit() {
 		return "/WEB-INF/views/event/edit.jsp";
 	}
 	
 	@PostMapping("/edit")
-	private String edit(@ModelAttribute EventDto eventDto) {
+	public String edit(@ModelAttribute EventDto eventDto) {
 		EventDto findDto = eventDao.selectOne(eventDto.getEventNo());
 		//if(findDto==null) throw new Exception();
 		eventDao.update(findDto);
@@ -77,7 +90,7 @@ public class EventController {
 	
 	// 삭제
 	@PostMapping("/delete")
-	private String delete(@RequestParam int eventNo) {
+	public String delete(@RequestParam int eventNo) {
 		EventDto eventDto = eventDao.selectOne(eventNo);
 		//if(eventDto==null) throw new Exception();
 		eventDao.delete(eventNo);

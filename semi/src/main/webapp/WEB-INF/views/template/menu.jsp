@@ -12,7 +12,7 @@
 	<i class="fa-solid fa-star"></i>
 	<span>추천 모임</span>
 	</a>
-	<a href="/event/list">
+	<a href="/event/home">
 	<i class="fa-solid fa-calendar-days"></i>
 	<span>정모 일정</span>
 	</a>
