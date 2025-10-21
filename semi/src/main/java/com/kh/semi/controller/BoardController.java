@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.semi.dao.BoardDao;
+import com.kh.semi.dao.ClubDao;
 import com.kh.semi.dto.BoardDto;
+import com.kh.semi.dto.ClubDto;
+import com.kh.semi.error.TargetNotFoundException;
 import com.kh.semi.vo.BoardListVO;
 
 import jakarta.servlet.http.HttpSession;
@@ -20,18 +23,20 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/board")
 public class BoardController {
-	
+
 	@Autowired
 	private BoardDao boardDao;
+	@Autowired
+	private ClubDao clubDao;
 	
 	//게시글 등록 매핑
 	@GetMapping("/write")
 	public String write(@RequestParam int clubNo, Model model) {
 		//clubNo 존재여부 검증 코드 추가
-		//ClubDto clubDto = clubDao.selectOne(clubNo);
-		//if(clubDto == null){
-		// throw new RuntimeException("존재하지 않는 모임입니다");
-		//}
+		ClubDto clubDto = clubDao.selectOne(clubNo);
+		if(clubDto == null){
+		 throw new TargetNotFoundException("존재하지 않는 모임입니다");
+		}
 		model.addAttribute("clubNo", clubNo);
 		return "/WEB-INF/views/board/write.jsp";
 	}
@@ -45,12 +50,16 @@ public class BoardController {
 		
 		boardDto.setBoardClub(clubNo);
 		
+		boardDao.insert(boardDto);
+		
 		return "redirect:detail?boardNo="+boardNo;
 	}
 	
 	//게시글 상세 조회 매핑
 	@RequestMapping("/detail")
 	public String detail(@RequestParam int boardNo, Model model) {
+		BoardDto boardDto = boardDao.selectOne(boardNo);
+		model.addAttribute("boardDto", boardDto);
 		return "/WEB-INF/views/board/detail.jsp";
 	}
 	
@@ -59,6 +68,12 @@ public class BoardController {
 	public String list(Model model, @RequestParam(required=false) String column, 
 			@RequestParam(required=false) String keyword, 
 			@RequestParam int clubNo) {
+		
+		ClubDto clubDto = clubDao.selectOne(clubNo);
+		if(clubDto == null){
+		 throw new TargetNotFoundException("존재하지 않는 모임입니다");
+		}
+		
 		List<BoardListVO> boardList;
 		boolean isSearch = column != null && keyword != null;
 		if(isSearch) {
@@ -67,6 +82,7 @@ public class BoardController {
 		else {	
 			boardList = boardDao.selectList(clubNo);
 		}
+			model.addAttribute("clubNo", clubNo);
 			model.addAttribute("boardList", boardList);
 		return "/WEB-INF/views/board/list.jsp";
 	}
@@ -77,7 +93,7 @@ public class BoardController {
 	@GetMapping("/edit")
 	public String edit(@RequestParam int boardNo, Model model) {
 		BoardDto boardDto = boardDao.selectOne(boardNo);
-		if(boardDto == null) throw new RuntimeException("존재하지 않는 게시글"); //임시 Exception --> 추후 TargetNotfoundException + error 페이지 만들어서 수정
+		if(boardDto == null) throw new TargetNotFoundException("존재하지 않는 게시글"); //임시 Exception --> 추후 TargetNotfoundException + error 페이지 만들어서 수정
 		return "/WEB-INF/views/board/edit.jsp";
 	}
 	@PostMapping("/edit")
@@ -89,8 +105,11 @@ public class BoardController {
 	@RequestMapping("/delete")
 	public String delete(@RequestParam int boardNo) {
 		BoardDto boardDto = boardDao.selectOne(boardNo);
-		if(boardDto == null) throw new RuntimeException("존재하지 않는 게시글");
+		if(boardDto == null) throw new TargetNotFoundException("존재하지 않는 게시글");
+		int clubNo = boardDto.getBoardClub();
+		ClubDto clubDto = clubDao.selectOne(clubNo);
 		boardDao.delete(boardNo);
-		return "redirect:list";
+		
+		return "redirect:list?clubNo="+clubDto.getClubNo();
 	}
 }
