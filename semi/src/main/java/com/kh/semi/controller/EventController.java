@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.semi.dao.EventDao;
 import com.kh.semi.dto.EventDto;
+import com.kh.semi.error.TargetNotFoundException;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -26,6 +27,8 @@ public class EventController {
 	// 등록
 	@GetMapping("/add")
 	public String add(Model model, @RequestParam int clubNo) {
+		List<EventDto> eventDto = eventDao.selectList(clubNo);
+		if(eventDto==null) throw new TargetNotFoundException("존재하지 않는 소모임");
 		model.addAttribute("clubNo",clubNo);
 		return "/WEB-INF/views/event/add.jsp";
 	}
@@ -56,6 +59,7 @@ public class EventController {
 	@RequestMapping("/list")
 	public String list(Model model,@RequestParam int clubNo) {
 		List<EventDto> eventDto = eventDao.selectList(clubNo);
+		if(eventDto==null) throw new TargetNotFoundException("존재하지 않는 소모임");
 		List<EventDto> beforeDto = eventDao.selectListBefore(clubNo);
 		List<EventDto> afterDto = eventDao.selectListAfter(clubNo);
 		model.addAttribute("eventDto", eventDto);	
@@ -69,7 +73,7 @@ public class EventController {
 	@RequestMapping("/detail")
 	public String detail(Model model, @RequestParam int eventNo) {
 		EventDto eventDto = eventDao.selectOne(eventNo);
-		//if(eventDto==null) throw Exception();
+		if(eventDto==null) throw new TargetNotFoundException("존재하지 않는 이벤트번호");
 		model.addAttribute("eventDto", eventDto);
 		return "/WEB-INF/views/event/detail.jsp";
 	}
@@ -83,7 +87,7 @@ public class EventController {
 	@PostMapping("/edit")
 	public String edit(@ModelAttribute EventDto eventDto) {
 		EventDto findDto = eventDao.selectOne(eventDto.getEventNo());
-		//if(findDto==null) throw new Exception();
+		if(eventDto==null) throw new TargetNotFoundException("존재하지 않는 이벤트");
 		eventDao.update(findDto);
 		return "redirect:detail?eventNo="+findDto.getEventNo();
 	}
@@ -92,7 +96,7 @@ public class EventController {
 	@PostMapping("/delete")
 	public String delete(@RequestParam int eventNo) {
 		EventDto eventDto = eventDao.selectOne(eventNo);
-		//if(eventDto==null) throw new Exception();
+		if(eventDto==null) throw new TargetNotFoundException("존재하지 않는 이벤트번호");
 		eventDao.delete(eventNo);
 		return "redirect:list";
 	}
