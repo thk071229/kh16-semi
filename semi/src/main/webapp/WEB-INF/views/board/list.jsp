@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <style>
-	table {
+	.table {
 		border : 1px solid black;
 	}
 </style>
@@ -13,7 +13,7 @@
 <h1>리스트</h1>
 </div>
 <div class="cell">
-<table>
+<table class="table">
 	<thead>
 		<tr>
 			<th>글번호</th>
@@ -26,16 +26,23 @@
 	</thead>
 	<tbody>
 		<c:forEach var = "boardDto" items = "${boardList}">
+		<tr>
 		<td>${boardDto.boardNo}</td>
 		<td><a href="detail?boardNo=${boardDto.boardNo}">${boardDto.boardTitle}</a></td>
 		<td>${boardDto.boardWriter}</td>
 		<td>${boardDto.boardRead}</td>
 		<td>${boardDto.boardLike}</td>
 		<td>${boardDto.boardWriteTime}</td>
+		</tr>
 		</c:forEach>
 	</tbody>
 </table>
 </div>
+<!-- 페이지 내비게이터 영역 -->
+<div class="cell">
+<jsp:include page="/WEB-INF/views/template/pagination.jsp"></jsp:include>	
+</div>
+
 <div class="cell">
 	<a href = "write?clubNo=${clubNo}">새 글 등록</a>
 </div>
