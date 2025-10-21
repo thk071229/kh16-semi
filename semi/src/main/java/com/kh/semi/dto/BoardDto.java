@@ -21,7 +21,9 @@ public class BoardDto {
 	private Timestamp boardWtime;
 	private Timestamp boardEtime;
 	private int boardRead;
-
+	private int boardLike;
+	private int boardComment;
+	
 	//내가 추가한 게터 메소드
 	//EL에서 ${boardDto.boardWriteTime}으로 부를 수 있는 메소드를 생성
 		public String getBoardWriteTime() {

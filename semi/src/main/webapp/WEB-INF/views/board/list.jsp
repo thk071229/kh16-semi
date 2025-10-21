@@ -8,10 +8,11 @@
 		border : 1px solid black;
 	}
 </style>
-<hr>
-
+<div class="container w-700">
+<div class="cell">
 <h1>리스트</h1>
-
+</div>
+<div class="cell">
 <table>
 	<thead>
 		<tr>
@@ -33,5 +34,6 @@
 		</c:forEach>
 	</tbody>
 </table>
-<hr>
+</div>
+</div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

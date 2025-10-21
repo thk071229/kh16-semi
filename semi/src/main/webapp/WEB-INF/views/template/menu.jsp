@@ -32,3 +32,4 @@
 	<i class="fa-solid fa-right-to-bracket"></i>
 	<span>로그인</span>
 	</a>
+	<hr>

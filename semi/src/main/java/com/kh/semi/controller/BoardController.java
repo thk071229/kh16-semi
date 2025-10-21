@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.semi.dao.BoardDao;
 import com.kh.semi.dto.BoardDto;
+import com.kh.semi.vo.BoardListVO;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -53,11 +54,20 @@ public class BoardController {
 		return "/WEB-INF/views/board/detail.jsp";
 	}
 	
-	//게시글 목록 조회 매핑(임시)
+	//게시글 목록 조회 매핑(페이지x)
 	@RequestMapping("/list")
-	public String list(Model model, @RequestParam int clubNo) {
-		List<BoardDto> boardList = boardDao.selectList(clubNo);
-		model.addAttribute("boardList", boardList);
+	public String list(Model model, @RequestParam(required=false) String column, 
+			@RequestParam(required=false) String keyword, 
+			@RequestParam int clubNo) {
+		List<BoardListVO> boardList;
+		boolean isSearch = column != null && keyword != null;
+		if(isSearch) {
+			boardList = boardDao.selectList(column, keyword, clubNo);
+		}
+		else {	
+			boardList = boardDao.selectList(clubNo);
+		}
+			model.addAttribute("boardList", boardList);
 		return "/WEB-INF/views/board/list.jsp";
 	}
 	
