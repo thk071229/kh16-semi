@@ -9,6 +9,7 @@ import com.kh.semi.dto.ClubDto;
 import com.kh.semi.mapper.ClubListMapper;
 import com.kh.semi.mapper.ClubMapper;
 import com.kh.semi.vo.ClubListVO;
+import com.kh.semi.vo.PageVO;
 
 @Repository
 public class ClubDao {
@@ -51,31 +52,30 @@ public class ClubDao {
 		return list.isEmpty() ? null : list.get(0);
 	}
 	//지역과 카테고리에 따른 목록 및 검색 조회
-	// - pageVO 완성 시 주석 해제 
-//	public List<ClubListVO> selectList(PageVO pageVO){
-//		if(pageVO.isList()){//목록
-//			String sql = "select * from ("
-//							+ "select rownum rn, TMP.* from("
-//								+ "select * from club_list"
-//								+ "order by club_no desc"
-//								+ ") TMP"
-//								+ ") where rn between ? and ?";
-//			Object[] params = {pageVO.getBegin(), pageVO.getEnd()};
-//			return jdbcTemplate.query(sql, clubListMapper, params);
-//		}
-//		else {//검색
-//			String sql = "select * from ("
-//					+ "select rownum rn, TMP.* from("
-//						+ "select * from club_list "
-//						+ "where instr(#1, ?) > 0 "
-//						+ "order by club_no desc"
-//						+ ") TMP"
-//						+ ") where rn between ? and ?";
-//			sql = sql.replace("#1", pageVO.getColumn());
-//			Object[] params = {pageVO.getKeyword(), pageVO.getBegin(), pageVO.getEnd()};
-//			return jdbcTemplate.query(sql, clubListMapper, params);
-//		}
-//	}
+	public List<ClubListVO> selectList(PageVO pageVO){
+		if(pageVO.isList()){//목록
+			String sql = "select * from ("
+							+ "select rownum rn, TMP.* from("
+								+ "select * from club_list"
+								+ "order by club_no desc"
+								+ ") TMP"
+								+ ") where rn between ? and ?";
+			Object[] params = {pageVO.getBegin(), pageVO.getEnd()};
+			return jdbcTemplate.query(sql, clubListMapper, params);
+		}
+		else {//검색
+			String sql = "select * from ("
+					+ "select rownum rn, TMP.* from("
+						+ "select * from club_list "
+						+ "where instr(#1, ?) > 0 "
+						+ "order by club_no desc"
+						+ ") TMP"
+						+ ") where rn between ? and ?";
+			sql = sql.replace("#1", pageVO.getColumn());
+			Object[] params = {pageVO.getKeyword(), pageVO.getBegin(), pageVO.getEnd()};
+			return jdbcTemplate.query(sql, clubListMapper, params);
+		}
+	}
 	
 	
 	
