@@ -10,7 +10,7 @@
 	</div>
 	
 	<div>
-	<!-- 프로필 이미지 -->
+		<img src="/member/profile?memberId=${memberDto.memberId}" width="200" height="200">
 	</div>
 	
 	<div>

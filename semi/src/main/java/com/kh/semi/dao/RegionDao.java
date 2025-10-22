@@ -1,6 +1,7 @@
 package com.kh.semi.dao;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -23,6 +24,13 @@ public class RegionDao {
 	  Object[] params = {regionName};
 	  List<RegionDto> list = jdbcTemplate.query(sql, regionMapper, params);
 	  return list.isEmpty() ? null : list.get(0);
+	}
+	//번호로 조회
+	public String selectNameByNo(int regionNo) {
+		String sql = "select region_name from region "
+						+ "where region_no = ?";
+		Object[] params = {regionNo};
+		return jdbcTemplate.queryForObject(sql, String.class, params);
 	}
 
 	// 시퀀스 생성

@@ -1,14 +1,16 @@
 package com.kh.semi.dao;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.semi.dto.CategoryDto;
+import com.kh.semi.dto.RegionDto;
 import com.kh.semi.mapper.CategoryMapper;
-import com.kh.semi.vo.PageVO;
+
 
 @Repository
 public class CategoryDao {
@@ -39,39 +41,6 @@ public class CategoryDao {
 		String sql = "select * from category "
 						+ "order by category_no asc";
 		return jdbcTemplate.query(sql, categoryMapper);
-	}
-	
-	// 카테고리 조회 & 검색(페이지 형태)
-	public List<CategoryDto> selectListWithPaging(PageVO pageVO){
-		//목록이라면
-		if(pageVO.isList()) { 
-			String sql = "select * from ("
-								+ "select rownum rn, TMP.* from("
-								+ "select * from category order by category_no asc"
-							+ ") TMP where rn between ? and ?";
-			Object[] params = {
-					pageVO.getBegin(), pageVO.getEnd()
-			};
-			
-			return jdbcTemplate.query(sql, categoryMapper, params);
-		}
-		//검색이라면
-		else {
-			String sql = "select * from ("
-								+ "select rownum rm, TMP.* from("
-									+ "select * from category "
-									+ "where instr(#1, ?)>0 "
-									+ "order by category_no asc"
-								+ ") TMP) where rm between ? and ?";
-			sql = sql.replace("#1", pageVO.getColumn());
-			Object[] params = {
-					pageVO.getKeyword(), 
-					pageVO.getBegin(), 
-					pageVO.getEnd()
-			};
-			
-			return jdbcTemplate.query(sql, categoryMapper, params);
-		}
 	}
 	
 	//수정

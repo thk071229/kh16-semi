@@ -8,7 +8,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.semi.dto.MemberCategoryDto;
+import com.kh.semi.mapper.MemberCategoryListMapper;
 import com.kh.semi.mapper.MemberCategoryMapper;
+import com.kh.semi.vo.MemberCategoryListVO;
 
 
 @Repository
@@ -17,6 +19,8 @@ public class MemberCategoryDao {
 	private JdbcTemplate jdbcTemplate;
 	@Autowired
 	private MemberCategoryMapper memberCategoryMapper;
+	@Autowired
+	private MemberCategoryListMapper memberCategoryListMapper;
 	
 	//등록
 	public void insert(MemberCategoryDto memberCategoryDto) {
@@ -34,6 +38,15 @@ public class MemberCategoryDao {
 	public List<MemberCategoryDto> selectList(){
 		String sql = "select * from member_category order by member_id asc";
 		return jdbcTemplate.query(sql, memberCategoryMapper);
+	}
+	//회원에게 보여줄 때 사용할 조회 메소드
+	public List<MemberCategoryListVO> selectVOList(String memberId){
+		String sql = "select * from member_category_list "
+							+ "where member_id=? "
+						+ "order by category_no asc";
+		Object[] params = {memberId};
+		
+		return jdbcTemplate.query(sql, memberCategoryListMapper, params);
 	}
 	
 	//pk 로 조회
