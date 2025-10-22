@@ -16,11 +16,11 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <!-- kakaomap cdn  -->
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8e8665a62573621467f321f74eb7cae4&libraries=services"></script>
-<!-- summernote -->
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
-	<link rel="stylesheet" type="/summernote/custom-summernote.css">
-	<script src="/summernote/custom-summernote.js"></script>  
+<!-- summernote 에디터 적용(cdn 및 js 파일, css 파일) -->
+	<link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
+	<link rel  ="stylesheet" type="text/css" href="/summernote/custom-summernote.css">
+	<script src = "/summernote/custom-summernote.js"></script>   
 <!-- -------------------------------------- -->
 <style>
 	.kakao-map {
@@ -138,58 +138,67 @@
     </script>
 <!-- ------------------------구분선---------------------->
 <div class="container w-800">
-	<div class="cell w-100">
+	<div class="cell w-100 center">
 		<h1>정모 추가</h1>
 	</div>
 	
 	<form action="add" method="post" autocomplete="off">
 	<input type="hidden" name="eventClub" value="${clubNo}">
-		<div class="flex-box">
+
 			<div class="cell">
-				<div class="cell">
-					<label>정모이름</label>
-					<input type="text" class="field w-100" name="eventTitle">
+
+				<div class="flex-box">
+					<div class="cell">
+						<div class="cell w-100">
+							<label>정모이름</label><br>
+							<input type="text" class="field" name="eventTitle">
+						</div>
+						<div class="cell w-100">
+							<label>정원(최대인원)</label><br>
+							<input type="number" class="field" name="eventMaxPeople">
+						</div>
+						<div class="cell w-100">
+							<label>정모일시</label><br>
+							<input type="text" class="field" name="eventDate">
+						</div>
+						<!-- 주소 검색을 통해 위도 경도값 저장 -->
+						<div class="cell w-100">
+							<label>정모위치</label>
+							<div class="flex-box">
+								<input type="text" class="field w-100 address-input" placeholder="주소(시군구/읍면동) 입력 ">
+								<button type="button" class="btn btn-positive ms-10 address-search-btn">
+									<i class="fa-solid fa-magnifying-glass"></i>
+								</button>
+							</div>
+						</div>
+						
+					</div>
+						<div class="flex-fill ms-20">
+							<div class="cell">
+								<label style="color:gray;">검색 후, 상세주소를 지도에 클릭해주세요</label>
+								<div class="kakao-map w-100"></div>
+							</div>
+							<div class="cell flex-box w-100">
+								<input type="hidden" class="field w-50 center" name="eventRegionX" placeholder="경도 좌표" readonly style="border:0 solid white; font-size:8;">
+								<input type="hidden" class="field w-50 center" name="eventRegionY" placeholder="위도 좌표" readonly style="border:0 solid white; font-size:8;">
+							</div>
+						</div>	
 				</div>
+				
 				<div class="cell">
-					<label>내용 *</label>
+					<label>내용</label>
 					<textarea class="summernote-editor" name="boardContent"></textarea>
 				</div>
-				<div class="cell">
-					<label>정모일시</label>
-					<input type="text" class="field w-100" name="eventDate">
-				</div>
-				<!-- 주소 검색을 통해 위도 경도값 저장 -->
-				<div class="cell w-100">
-					<label>정모위치</label>
-					<div class="flex-box">
-						<input type="text" class="field w-100 address-input" placeholder="주소(시군구/읍면동) 입력 ">
-						<button type="button" class="btn btn-positive ms-10 address-search-btn">
-							<i class="fa-solid fa-magnifying-glass"></i>
-						</button>
-					</div>
-				</div>
-			</div>
-			<div class="cell ms-10 flex-fill map-field">
-				<div class="cell">
-					<div class="kakao-map w-100"></div>
-				</div>
-				<div class="cell flex-box w-100">
-					<input type="text" class="field w-50 center" name="eventRegionX" placeholder="경도 좌표" readonly style="border:0 solid white; font-size:8;">
-					<input type="text" class="field w-50 center" name="eventRegionY" placeholder="위도 좌표" readonly style="border:0 solid white; font-size:8;">
-				</div>
-			</div>
+				<div class="cell center">
+					<button class="btn w-100 center" type="submit">
+						등록
+					</button>
+				</div>		
 		</div>
+		</form>
+</div>
+
 	
 
-		<div class="cell">
-			<button class="btn w-100 center" type="submit">
-				<label>등록</label>
-			</button>
-		</div>
-
-	</form>
-
-
-</div>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
