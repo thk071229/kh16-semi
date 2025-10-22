@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
-import com.kh.semi.dto.EventDto;
 import com.kh.semi.vo.EventListVO;
 
 @Component

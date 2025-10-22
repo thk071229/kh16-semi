@@ -46,7 +46,7 @@
 								<label>${eventList.eventWriter}</label>
 							</div>
 							<div class="ms-20"><i class="fa-solid fa-house"></i>
-								<label>${eventList.eventClub}</label>
+								<label>${eventList.clubName}</label>
 							</div>
 							<div class="ms-20"><i class="fa-solid fa-house"></i>
 								<label>${eventList.eventAddress}</label>

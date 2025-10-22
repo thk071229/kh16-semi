@@ -7,7 +7,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.semi.dto.EventDto;
+import com.kh.semi.mapper.EventListMapper;
 import com.kh.semi.mapper.EventMapper;
+import com.kh.semi.vo.EventListVO;
 
 @Repository
 public class EventDao {
@@ -16,7 +18,8 @@ public class EventDao {
 	private JdbcTemplate jdbcTemplate;
 	@Autowired
 	private EventMapper eventMapper;
-
+	@Autowired
+	private EventListMapper eventListMapper;
 	
 	// 시퀀스 번호 생성
 	public int sequence() {
@@ -46,11 +49,11 @@ public class EventDao {
 	}
 	
 	// 조회 (기본)
-	public List<EventDto> selectList(){
-		String sql = "select * from event order by event_date desc";
-		return jdbcTemplate.query(sql, eventMapper);
+	public List<EventListVO> selectList(){
+		String sql = "select * from event_list order by event_date desc";
+		return jdbcTemplate.query(sql, eventListMapper);
 	}
-	
+
 	// 조회 (int clubNo)
 	public List<EventDto> selectList(int clubNo){
 		String sql = "select * from event where event_club = ? "
@@ -59,22 +62,31 @@ public class EventDao {
 		return jdbcTemplate.query(sql, eventMapper, params);
 	}
 	
+	// 조회 (int clubNo)
+	public List<EventListVO> selectListWithClub(int clubNo){
+		String sql = "select * from event_list where event_club = ? "
+		           		+ "order by event_date desc";
+		Object[] params= {clubNo};
+		return jdbcTemplate.query(sql, eventListMapper, params);
+	}
+	
+	
 	
 	/// 조회 - 진행중(현재시각전)
-		public List<EventDto> selectListBefore(int clubNo){
-			String sql = "select * from event"
+		public List<EventListVO> selectListBefore(int clubNo){
+			String sql = "select * from event_list"
 							+" where event_club=? and event_date>sysdate"
 							+" order by event_date desc";
 			Object[] params= {clubNo};
-			return jdbcTemplate.query(sql, eventMapper, params);
+			return jdbcTemplate.query(sql, eventListMapper, params);
 		}
 	/// 조회 - 완료(현재시각후)
-		public List<EventDto> selectListAfter(int clubNo){
-			String sql = "select * from event"
+		public List<EventListVO> selectListAfter(int clubNo){
+			String sql = "select * from event_list"
 							+" where event_club=? and event_date<sysdate"
 							+" order by event_date desc";
 			Object[] params= {clubNo};
-			return jdbcTemplate.query(sql, eventMapper, params);
+			return jdbcTemplate.query(sql, eventListMapper, params);
 		}
 	
 	

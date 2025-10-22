@@ -57,7 +57,7 @@
 									<label>${beforeList.eventWriter}</label>
 								</div>
 								<div class="ms-20"><i class="fa-solid fa-house"></i>
-									<label>${beforeList.eventClub}</label>
+									<label>${beforeList.clubName}</label>
 								</div>
 								<div class="ms-20"><i class="fa-solid fa-house"></i>
 									<label>${beforeList.eventAddress}</label>
@@ -92,7 +92,7 @@
 											<label>${afterList.eventWriter}</label>
 										</div>
 										<div class="ms-20"><i class="fa-solid fa-house"></i>
-											<label>${afterList.eventClub}</label>
+											<label>${afterList.clubName}</label>
 										</div>
 										<div class="ms-20"><i class="fa-solid fa-house"></i>
 											<label>${afterList.eventAddress}</label>
@@ -128,7 +128,7 @@
 								<label>${eventList.eventWriter}</label>
 							</div>
 							<div class="ms-20"><i class="fa-solid fa-house"></i>
-								<label>${eventList.eventClub}</label>
+								<label>${eventList.clubName}</label>
 							</div>
 							<div class="ms-20"><i class="fa-solid fa-house"></i>
 								<label>${eventList.eventAddress}</label>
