@@ -45,35 +45,37 @@
 <input type="hidden" value="${eventDto.eventRegionY}" class="regionY" readonly>
 
 
-    <div class="cell">
+    <div class="cell center"> 
     	<h1>
-    		정모상세 : ${eventDto.eventTitle}
+    		${eventDto.eventTitle}
     		<c:if test="${eventDto.eventEtime != null}">
 				<span style="font-size:18;">(수정 :
 					<fmt:formatDate value="${eventDto.eventEtime}" pattern="M/d H:mm" ></fmt:formatDate>
 				 )</span>
 			</c:if>
-			</h1>
-			<div class="cell">
-    	<label>작성일</label>
-    	<fmt:formatDate value="${eventDto.eventWtime}" pattern="M월 d일 H:mm" ></fmt:formatDate>
-    </div>
-		
-    </div>
+		</h1>
+	</div>
+	<div class="flex-box">
+		<div class="cell w-75">
+	    	<i class="fa-solid fa-calendar"></i>
+	    	<fmt:formatDate value="${eventDto.eventDate}" pattern="y년 M월 d일 H:mm" ></fmt:formatDate>
+	    	<label> / 작성일</label>
+	    	<fmt:formatDate value="${eventDto.eventWtime}" pattern="M월 d일 H:mm" ></fmt:formatDate>
+	    </div>
+	    <div class="cell flex-fill">
+	    	참여인원 : 참여자 / ${eventDto.eventMaxPeople}
+	    </div>
+	</div>	
     
-    <div class="cell">
-     	<hr>
-    </div>
 
-    <div class="cell">
-    	<i class="fa-solid fa-calendar"></i>
-    	<fmt:formatDate value="${eventDto.eventDate}" pattern="y년 M월 d일 H:mm" ></fmt:formatDate>
-    </div>
      <div class="cell">
-   		내용 : ${eventDto.eventContent}
+     	<hr>
+     	<br>
+   		${eventDto.eventContent}
+   		<br>
+   		<hr>
     </div>
 	<div class="cell">
-		<label>상세 위치</label>
 		<div class="kakao-map w-100"></div>
 	</div>
     
@@ -81,7 +83,7 @@
      	<hr>
     </div>
     
-    <div class="cell">
+    <div class="cell center">
     	<a class="btn btn-ghost" href="list?clubNo=${eventDto.eventClub}">목록</a>
     	<a class="btn btn-primary" href="add?clubNo=${eventDto.eventClub}">등록</a>
     	<a class="btn btn-accent" href="edit?eventNo=${eventDto.eventNo}">수정</a>
