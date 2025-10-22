@@ -182,9 +182,9 @@
 					<label>내용</label>
 					<textarea class="summernote-editor" name="eventContent" required></textarea>
 				</div>
-				<div class="cell center">
-					<button class="btn w-100 center" type="submit">
-						등록
+				<div class="cell">
+					<button class="btn btn-primary w-100" type="submit">
+						<span class="center">등록</span>
 					</button>
 				</div>		
 		</div>

@@ -29,21 +29,24 @@
 	</div>
 	<c:forEach var="eventList" items="${eventDto}" varStatus="status">
 						<div class="cell event-box w-50">
-							<div>
+							<div class="mb-10">
 								<a class="event-title" href="detail?eventNo=${eventList.eventNo}">
 									<label>${eventList.eventTitle}</label>
 								</a>
 							</div>
-							<div><i class="fa-solid fa-calendar"></i>
+							<div class="ms-20"><i class="fa-solid fa-calendar"></i>
 								<label>
 									<fmt:formatDate value="${eventList.eventDate}" pattern="y년 M월 d일 H:mm" ></fmt:formatDate>
 								</label>
 							</div>
-							<div><i class="fa-solid fa-person"></i>
+							<div class="ms-20"><i class="fa-solid fa-person"></i>
 								<label>${eventList.eventWriter}</label>
 							</div>
-							<div><i class="fa-solid fa-house"></i>
+							<div class="ms-20"><i class="fa-solid fa-house"></i>
 								<label>${eventList.eventClub}</label>
+							</div>
+							<div class="ms-20"><i class="fa-solid fa-house"></i>
+								<label>${eventList.eventAddress}</label>
 							</div>
 							</div>
 						</c:forEach>
