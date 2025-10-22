@@ -20,6 +20,10 @@
     	font-weight:500;
     	color:#005d5c;
     }
+    .event-link{
+    	text-decoration:none;
+    	color:black;
+    }
 </style>
 
 <!-- --------------------------------------------- -->
@@ -29,10 +33,9 @@
 	</div>
 	<c:forEach var="eventList" items="${eventDto}" varStatus="status">
 						<div class="cell event-box w-50">
-							<div class="mb-10">
-								<a class="event-title" href="detail?eventNo=${eventList.eventNo}">
+						<a class="event-link" href="detail?eventNo=${eventList.eventNo}">
+							<div class="mb-10 event-title">
 									<label>${eventList.eventTitle}</label>
-								</a>
 							</div>
 							<div class="ms-20"><i class="fa-solid fa-calendar"></i>
 								<label>
@@ -48,6 +51,7 @@
 							<div class="ms-20"><i class="fa-solid fa-house"></i>
 								<label>${eventList.eventAddress}</label>
 							</div>
+							</a>
 							</div>
 						</c:forEach>
 	</div>
