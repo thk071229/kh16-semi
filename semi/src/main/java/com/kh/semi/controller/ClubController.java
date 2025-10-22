@@ -69,7 +69,7 @@ public class ClubController {
 		if(loginId == null) throw new TargetNotFoundException("존재하지 않는 회원");
 		
 		// 2. 모임 존재 확인
-		ClubDto clubDto = clubDao.selectOne(clubNo);
+		ClubListVO clubDto = clubDao.selectOneFromClubList(clubNo);
 		if(clubDto == null) throw new TargetNotFoundException("존재하지 않는 모임");
 		
 		// 3. 권한 확인

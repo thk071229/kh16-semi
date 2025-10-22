@@ -31,8 +31,6 @@
                     <option value="N">누구나 바로 가입 (N)</option>
                 </select>
             </div>
-            
-            
 	
             <div class="cell">
                 <select class="input w-100" name="clubCategory">
