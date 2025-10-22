@@ -1,8 +1,14 @@
 package com.kh.semi.controller;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +23,7 @@ import com.kh.semi.dao.ClubDao;
 import com.kh.semi.dto.BoardDto;
 import com.kh.semi.dto.ClubDto;
 import com.kh.semi.error.TargetNotFoundException;
+import com.kh.semi.service.AttachmentService;
 import com.kh.semi.vo.BoardListVO;
 import com.kh.semi.vo.PageVO;
 
@@ -30,6 +37,8 @@ public class BoardController {
 	private BoardDao boardDao;
 	@Autowired
 	private ClubDao clubDao;
+	@Autowired
+	private AttachmentService attachmentService;
 	
 	//게시글 등록 매핑
 	@GetMapping("/write")
@@ -124,7 +133,7 @@ public class BoardController {
 	
 	//게시글 목록 조회 매핑(selectListWithPaging 구현 후)
 	
-	//게시글 수정 매핑
+	//게시글 수정 화면 매핑
 	@GetMapping("/edit")
 	public String edit(@RequestParam int boardNo, Model model) {
 		BoardDto boardDto = boardDao.selectOne(boardNo);
@@ -132,23 +141,86 @@ public class BoardController {
 		model.addAttribute("boardDto", boardDto);
 		return "/WEB-INF/views/board/edit.jsp";
 	}
-	@PostMapping("/edit")
-	public String edit(@ModelAttribute BoardDto boardDto, @RequestParam int boardNo) {
-		
-		
-		boardDao.update(boardDto);
-		return "redirect:detail?boardNo="+boardDto.getBoardNo();
-	}
-	
-	//게시글 삭제 매핑
-	@RequestMapping("/delete")
-	public String delete(@RequestParam int boardNo) {
+//	기존 게시글 수정 매핑
+//	@PostMapping("/edit")
+//	public String edit(@ModelAttribute BoardDto boardDto, @RequestParam int boardNo) {
+//		boardDao.update(boardDto);
+//		return "redirect:detail?boardNo="+boardDto.getBoardNo();
+//	}
+	//변경된 수정 처리 매핑
+		@PostMapping("/edit")
+		public String edit(@ModelAttribute BoardDto boardDto, @RequestParam long boardNo) {
+			//기존 글 정보 조회
+			BoardDto beforeDto = boardDao.selectOne(boardDto.getBoardNo());
+			if(beforeDto == null) throw new TargetNotFoundException("존재하지 않는 게시글");
+			
+			//기존 글과 변경될 글의 이미지 번호 차이를 구하기 위한 코드
+			
+			//수정 전 첨부파일 번호
+			Set<Integer> before = new HashSet<>(); //정렬이 필요하지 않으니까 HashSet사용
+			Document beforeDocument = Jsoup.parse(beforeDto.getBoardContent()); //이전 글의 본문에 있는 내용 불러오기
+			Elements beforeElements = beforeDocument.select(".custom-image");
+			for(Element element : beforeElements) { //element = img 태그
+				int attachmentNo = Integer.parseInt(element.attr("data-pk"));
+				before.add(attachmentNo); //set에 저장
+			}
+			//수정 후 첨부파일 번호
+			Set<Integer> after = new HashSet<>();
+			Document afterDocument = Jsoup.parse(boardDto.getBoardContent());
+			Elements afterElements = afterDocument.select(".custom-image");
+			for(Element element : afterElements) { //element = img 태그
+				int attachmentNo = Integer.parseInt(element.attr("data-pk"));
+				after.add(attachmentNo); //set에 저장
+			}
+			
+			//삭제할 첨부파일 번호 (before에만 있는 이미지 번호)
+			Set<Integer> minus = new HashSet<>(before);
+			minus.removeAll(after);
+			
+			//minus에 들어있는 번호가 '기존에 있었지만 사라진 이미지 번호'
+			for(int attachmentNo : minus) {//minus에서 attachmentNo를 추출
+				attachmentService.delete(attachmentNo);
+			}
+			
+			boardDao.update(boardDto);
+			
+			return "redirect:detail?boardNo="+boardDto.getBoardNo();
+		}
+	//기존 게시글 삭제 매핑
+//	@RequestMapping("/delete")
+//	public String delete(@RequestParam int boardNo) {
+//		BoardDto boardDto = boardDao.selectOne(boardNo);
+//		if(boardDto == null) throw new TargetNotFoundException("존재하지 않는 게시글");
+//		int clubNo = boardDto.getBoardClub();
+//		ClubDto clubDto = clubDao.selectOne(clubNo);
+//		boardDao.delete(boardNo);
+//		
+//		return "redirect:list?clubNo="+clubDto.getClubNo();
+//	}
+		//변경된 삭제(글 내부의 이미지를 지운 뒤 글 삭제)
+		@RequestMapping("/delete")
+		public String delete(@RequestParam int boardNo) {
+		//글 정보를 불러온다
 		BoardDto boardDto = boardDao.selectOne(boardNo);
-		if(boardDto == null) throw new TargetNotFoundException("존재하지 않는 게시글");
+		if(boardDto == null) throw new TargetNotFoundException("존재하지 않는 글");
 		int clubNo = boardDto.getBoardClub();
-		ClubDto clubDto = clubDao.selectOne(clubNo);
+		ClubDto clubDto = clubDao.selectOne(clubNo);		
+		//글 본문에 포함된 모든 <img>를 찾아서 해당하는 이미지의 글번호를 삭제
+		//- summernote가 만든 html 형식의 글에서 원하는 항목을 탐색(Jsoup 사용)
+		Document document = Jsoup.parse(boardDto.getBoardContent());
+		Elements elements = document.select(".custom-image"); //<img>를 찾고
+		for(Element element : elements) { //하나씩 반복하며
+			//파일 번호 추출
+			/*String src = element.attr("src"); //src 추출
+			int equal = src.lastIndexOf("="); //= 의 위치를 찾아서
+			int attachmentNo = Integer.parseInt(src.substring(equal + 1));*/
+			int attachmentNo = Integer.parseInt(element.attr("data-pk"));
+			attachmentService.delete(attachmentNo);
+		}
+		//글 삭제
 		boardDao.delete(boardNo);
 		
 		return "redirect:list?clubNo="+clubDto.getClubNo();
-	}
+		}
+	
 }
