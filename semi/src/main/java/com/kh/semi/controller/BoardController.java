@@ -71,6 +71,9 @@ public class BoardController {
 		ClubDto clubDto = clubDao.selectOne(clubNo);
 		if(clubDto == null) throw new TargetNotFoundException("존재하지 않는 모임입니다");
 		
+		//부모 파라미터 세팅
+		pageVO.putParentParams("clubNo", clubNo);
+		
 		List<BoardListVO> boardList = boardDao.selectListWithPaging(pageVO, clubNo); //전체글
 			//검색이든 목록이든 pageVO를 불러와서 한번에 처리하도록 DAO에 pageVO사용하는 메소드 생성
 			//model.addAttribute("boardList", boardDao.selectList(column, keyword))
@@ -84,7 +87,11 @@ public class BoardController {
 		int dataCount = boardDao.count(pageVO, clubNo); //dao에 있는 count 메소드에서 검색일경우/목록일 경우 처리
 		//총 게시글 수는 컨트롤러에서 설정해야함
 		pageVO.setDataCount(dataCount);//pageVO에 dataCount값 설정해준다
-		model.addAttribute("clubNo", clubNo);
+		
+		//ListRestController에서 필요한 type 변수를 직접 설정하여 화면에 전달
+		model.addAttribute("type", "board");
+		//부모 파라미터를 parentParams 라는 이름으로 화면에 전달
+		model.addAttribute("parentParams", clubNo);
 		model.addAttribute("pageVO", pageVO); //화면에 전달	
 		return "/WEB-INF/views/board/list.jsp";
 	}

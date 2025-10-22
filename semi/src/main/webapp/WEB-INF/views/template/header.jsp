@@ -12,15 +12,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/locale/ko.min.js"></script>
 
 <div class="container w-100">
-<div class="cell flex-box">
+<div class="cell w-100 flex-box">
 <!-- 로고 이미지 -->
-<div class="cell">
+<div class="cell left">
 <a href = "/">
 <img src = "https://dummyimage.com/100x50/000/fff&text=Main+logo">
 </a>
 </div>
 <!-- 검색 -->
-<div class="cell right flex-fill">
+<div class="cell w-50 right flex-fill">
 <form action = "#" method = "post" autocomplete="off">
 <button>
 	<span>강남구</span>

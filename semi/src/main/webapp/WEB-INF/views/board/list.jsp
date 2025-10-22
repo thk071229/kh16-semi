@@ -40,7 +40,7 @@
 </div>
 <!-- 페이지 내비게이터 영역 -->
 <div class="cell">
-<jsp:include page="/WEB-INF/views/template/pagination.jsp"></jsp:include>	
+<jsp:include page="/WEB-INF/views/template/pagination-more.jsp"></jsp:include>	
 </div>
 
 <div class="cell">
