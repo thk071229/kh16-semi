@@ -63,7 +63,7 @@ public class ClubDao {
 		if(pageVO.isList()){//목록
 			String sql = "select * from ("
 							+ "select rownum rn, TMP.* from("
-								+ "select * from club_list"
+								+ "select * from club_list "
 								+ "order by club_no desc"
 								+ ") TMP"
 								+ ") where rn between ? and ?";
@@ -82,6 +82,13 @@ public class ClubDao {
 			Object[] params = {pageVO.getKeyword(), pageVO.getBegin(), pageVO.getEnd()};
 			return jdbcTemplate.query(sql, clubListMapper, params);
 		}
+	}
+	// clubList에서 객체를 뽑아내기 위한 메소드
+	public ClubListVO selectOneFromClubList(int clubNo){
+		String sql = "select * from club_list where club_no = ?";
+		Object[] params = {clubNo};
+		List<ClubListVO> list = jdbcTemplate.query(sql, clubListMapper, params);
+		return list.isEmpty() ? null : list.get(0);
 	}
 	
 	
