@@ -49,7 +49,9 @@
     	<h1>
     		정모상세 : ${eventDto.eventTitle}
     		<c:if test="${eventDto.eventEtime != null}">
-			(수정됨)
+				<span style="font-size:18;">(수정 :
+					<fmt:formatDate value="${eventDto.eventEtime}" pattern="M/d H:mm" ></fmt:formatDate>
+				 )</span>
 			</c:if>
 			</h1>
 			<div class="cell">

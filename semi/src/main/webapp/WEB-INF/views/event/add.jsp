@@ -4,16 +4,9 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <!-- -------------------------------------- -->
-<!-- moment CDN-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/locale/ko.min.js"></script>
-
 <!-- lightpick CDN-->
     <link href="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/css/lightpick.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/lightpick.min.js"></script>
-
-<!-- JQuery cdn -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <!-- kakaomap cdn  -->
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8e8665a62573621467f321f74eb7cae4&libraries=services"></script>
 <!-- summernote 에디터 적용(cdn 및 js 파일, css 파일) -->
@@ -143,7 +136,7 @@
 	</div>
 	
 	<form action="add" method="post" autocomplete="off">
-	<input type="hidden" name="eventClub" value="${clubNo}">
+	<input type="hidden" name="eventClub" value="${clubNo}" required>
 
 			<div class="cell">
 
@@ -151,21 +144,21 @@
 					<div class="cell">
 						<div class="cell w-100">
 							<label>정모이름</label><br>
-							<input type="text" class="field" name="eventTitle">
+							<input type="text" class="field" name="eventTitle" required>
 						</div>
 						<div class="cell w-100">
 							<label>정원(최대인원)</label><br>
-							<input type="number" class="field" name="eventMaxPeople">
+							<input type="number" class="field" name="eventMaxPeople" required>
 						</div>
 						<div class="cell w-100">
 							<label>정모일시</label><br>
-							<input type="text" class="field" name="eventDate">
+							<input type="text" class="field" name="eventDate" required>
 						</div>
 						<!-- 주소 검색을 통해 위도 경도값 저장 -->
 						<div class="cell w-100">
 							<label>정모위치</label>
 							<div class="flex-box">
-								<input type="text" class="field w-100 address-input" placeholder="주소(시군구/읍면동) 입력 ">
+								<input type="text" name="eventAddress" class="field w-100 address-input" placeholder="주소(시군구/읍면동) 입력 " required>
 								<button type="button" class="btn btn-positive ms-10 address-search-btn">
 									<i class="fa-solid fa-magnifying-glass"></i>
 								</button>
@@ -179,15 +172,15 @@
 								<div class="kakao-map w-100"></div>
 							</div>
 							<div class="cell flex-box w-100">
-								<input type="hidden" class="field w-50 center" name="eventRegionX" placeholder="경도 좌표" readonly style="border:0 solid white; font-size:8;">
-								<input type="hidden" class="field w-50 center" name="eventRegionY" placeholder="위도 좌표" readonly style="border:0 solid white; font-size:8;">
+								<input type="hidden" name="eventRegionX" readonly>
+								<input type="hidden" name="eventRegionY" readonly>
 							</div>
 						</div>	
 				</div>
 				
 				<div class="cell">
 					<label>내용</label>
-					<textarea class="summernote-editor" name="boardContent"></textarea>
+					<textarea class="summernote-editor" name="eventContent" required></textarea>
 				</div>
 				<div class="cell center">
 					<button class="btn w-100 center" type="submit">

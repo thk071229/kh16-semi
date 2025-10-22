@@ -20,6 +20,8 @@ public class EventMapper implements RowMapper<EventDto>{
 		eventDto.setEventWriter(rs.getString("event_writer"));
 		eventDto.setEventTitle(rs.getString("event_title"));
 		eventDto.setEventContent(rs.getString("event_content"));
+		eventDto.setEventMaxPeople(rs.getInt("event_max_people"));
+		eventDto.setEventAddress(rs.getString("event_address"));
 		eventDto.setEventRegionX(rs.getDouble("event_region_x"));
 		eventDto.setEventRegionY(rs.getDouble("event_region_y"));
 		eventDto.setEventDate(rs.getTimestamp("event_date"));
