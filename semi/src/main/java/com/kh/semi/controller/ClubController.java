@@ -11,10 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.semi.dao.CategoryDao;
 import com.kh.semi.dao.ClubDao;
 import com.kh.semi.dao.ClubMemberDao;
+import com.kh.semi.dto.CategoryDto;
 import com.kh.semi.dto.ClubDto;
-import com.kh.semi.dto.ClubMemberDto;
 import com.kh.semi.error.TargetNotFoundException;
 import com.kh.semi.error.UnauthorizationException;
 import com.kh.semi.service.ClubService;
@@ -33,26 +34,25 @@ public class ClubController {
 	private ClubMemberDao clubMemberDao;
 	@Autowired
 	private ClubService clubService;
-//	@Autowired
-//	private CategoryDao categoryDao;
+	@Autowired
+	private CategoryDao categoryDao;
 	
 	//소모임 등록
 	@GetMapping("/add")
-	public String add() {
+	public String add(Model model) {
+		 List<CategoryDto> categoryList = categoryDao.selectList(); 
+		 model.addAttribute("categoryList", categoryList);
 		return "/WEB-INF/views/club/add.jsp";
 	}
 	@PostMapping("/add")
 	public String add(@ModelAttribute ClubDto clubDto, HttpSession session, 
-			@RequestParam String regionName,Model model) {
+			@RequestParam String regionName) {
 		String loginId = (String)session.getAttribute("loginId");
 		if(loginId == null) {//로그인중이 아니면 로그인 페이지로 이동
 			return "/WEB-INF/views/member/login.jsp";
 		}
 		clubDto.setClubLeader(loginId);
 		clubService.createClub(clubDto, regionName);
-		
-//	    List<CategoryDto> categoryList = categoryDao.selectAll(); // 또는 categorySertvice.getList()
-//	    model.addAttribute("categoryList", categoryList);
 		
 		return "redirect:addFinish";
 	}
