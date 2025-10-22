@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 public class ClubListVO {
 
 	public int clubNo;
-	public String clubFounder;
+	public String clubLeader;
 	public String clubName;
 	public int clubRegion;
 	public int clubCategory;

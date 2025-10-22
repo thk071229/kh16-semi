@@ -28,8 +28,9 @@ public class ClubDao {
 		return jdbcTemplate.queryForObject(sql, int.class);
 	}
 	public void insert(ClubDto clubDto) {
-		String sql = "insert into club(club_no, club_founder, club_name, club_introduce, club_open) values(?,?,?,?,?)";
-		Object[] params = {clubDto.getClubNo(), clubDto.getClubFounder(), clubDto.getClubName(), clubDto.getClubIntroduce(), clubDto.getClubOpen()};
+		String sql = "insert into club(club_no, club_leader, club_name, club_introduce, club_open, club_region, club_category) values(?,?,?,?,?,?,?)";
+		Object[] params = {clubDto.getClubNo(), clubDto.getClubLeader(), clubDto.getClubName(), 
+				clubDto.getClubIntroduce(), clubDto.getClubOpen(),clubDto.getClubRegion(), clubDto.getClubCategory()};
 		jdbcTemplate.update(sql, params);
 	}
 	//삭제
@@ -39,12 +40,18 @@ public class ClubDao {
 		return jdbcTemplate.update(sql, params) > 0;
 	}
 	//수정
-	public boolean update(ClubDto clubDto) {
-		String sql = "update club set club_founder = ?, club_name = ?, club_introduce = ?, club_open = ? where club_no = ?";
-		Object[] params = {clubDto.getClubFounder(), clubDto.getClubName(), clubDto.getClubIntroduce(), clubDto.getClubOpen(), clubDto.getClubNo()};
+	public boolean update(ClubDto clubDto) {//
+		String sql = "update club set club_name = ?, club_introduce = ?, club_open = ? where club_no = ?";
+		Object[] params = {clubDto.getClubName(), clubDto.getClubIntroduce(), clubDto.getClubOpen(), clubDto.getClubNo()};
 		return jdbcTemplate.update(sql, params) > 0;
 	}
-	//상세
+	//모임장 위임을 위한 메소드
+	public boolean changeClubLeader(int clubNo, String newLeader){
+		String sql = "update club set club_leader = ? where club_no = ?";
+		Object[] params = {newLeader, clubNo};
+		return jdbcTemplate.update(sql, params) > 0;
+	}
+	
 	public ClubDto selectOne(int clubNo) {
 		String sql = "select * from club where club_no = ?";
 		Object[] params = {clubNo};
