@@ -84,7 +84,12 @@
     <groupId>jakarta.servlet.jsp.jstl</groupId>
     <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
 </dependency>
-
+		<!--jsoup 이용을 위한 의존성-->
+		<dependency>
+    		<groupId>org.jsoup</groupId>
+    		<artifactId>jsoup</artifactId>
+    		<version>1.21.2</version>
+		</dependency>
 	</dependencies>
 
 	<build>
