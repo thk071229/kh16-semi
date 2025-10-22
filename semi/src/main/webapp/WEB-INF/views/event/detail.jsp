@@ -82,10 +82,10 @@
     </div>
     
     <div class="cell">
-    	<a href="list?clubNo=${eventDto.eventClub}">목록</a>
-    	<a href="add?clubNo=${eventDto.eventClub}">등록</a>
-    	<a href="edit?eventNo=${eventDto.eventNo}">수정</a>
-    	<a href="delete?eventNo=${eventDto.eventNo}">삭제</a>
+    	<a class="btn btn-ghost" href="list?clubNo=${eventDto.eventClub}">목록</a>
+    	<a class="btn btn-primary" href="add?clubNo=${eventDto.eventClub}">등록</a>
+    	<a class="btn btn-accent" href="edit?eventNo=${eventDto.eventNo}">수정</a>
+    	<a class="btn btn-accent" href="delete?eventNo=${eventDto.eventNo}">삭제</a>
     </div>
     
 </div>
