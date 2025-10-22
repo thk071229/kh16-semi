@@ -25,9 +25,6 @@
 		var regionY = $(".regionY").val();
 		var location = new kakao.maps.LatLng(regionY, regionX);
 		
-		console.log(regionX);
-		console.log(regionY);
-		
 		var option = {
 			center : location,
 			level : 2  
