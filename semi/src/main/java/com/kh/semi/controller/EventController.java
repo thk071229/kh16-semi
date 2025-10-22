@@ -23,7 +23,7 @@ public class EventController {
 
 	@Autowired
 	private EventDao eventDao;
-	
+
 	// 등록
 	@GetMapping("/add")
 	public String add(Model model, @RequestParam int clubNo) {
