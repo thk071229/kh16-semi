@@ -16,6 +16,7 @@ public class ClubMapper implements RowMapper<ClubDto>{
 	public ClubDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 		ClubDto clubDto = new ClubDto();
 		clubDto.setClubNo(rs.getInt("club_no"));
+		clubDto.setClubLeader(rs.getString("club_leader"));
 		clubDto.setClubName(rs.getString("club_name"));
 		clubDto.setClubIntroduce(rs.getString("club_introduce"));
 		clubDto.setClubRegion(rs.getInt("club_region"));

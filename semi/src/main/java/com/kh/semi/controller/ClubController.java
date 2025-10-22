@@ -17,6 +17,7 @@ import com.kh.semi.dto.ClubDto;
 import com.kh.semi.dto.ClubMemberDto;
 import com.kh.semi.error.TargetNotFoundException;
 import com.kh.semi.error.UnauthorizationException;
+import com.kh.semi.service.ClubService;
 import com.kh.semi.vo.ClubListVO;
 import com.kh.semi.vo.PageVO;
 
@@ -30,6 +31,10 @@ public class ClubController {
 	private ClubDao clubDao;
 	@Autowired
 	private ClubMemberDao clubMemberDao;
+	@Autowired
+	private ClubService clubService;
+//	@Autowired
+//	private CategoryDao categoryDao;
 	
 	//소모임 등록
 	@GetMapping("/add")
@@ -37,22 +42,18 @@ public class ClubController {
 		return "/WEB-INF/views/club/add.jsp";
 	}
 	@PostMapping("/add")
-	public String add(@ModelAttribute ClubDto clubDto, HttpSession session) {
+	public String add(@ModelAttribute ClubDto clubDto, HttpSession session, 
+			@RequestParam String regionName,Model model) {
 		String loginId = (String)session.getAttribute("loginId");
 		if(loginId == null) {//로그인중이 아니면 로그인 페이지로 이동
 			return "/WEB-INF/views/member/login.jsp";
 		}
-		clubDto.setClubFounder(loginId);
+		clubDto.setClubLeader(loginId);
+		clubService.createClub(clubDto, regionName);
 		
-		clubDao.insert(clubDto);
+//	    List<CategoryDto> categoryList = categoryDao.selectAll(); // 또는 categorySertvice.getList()
+//	    model.addAttribute("categoryList", categoryList);
 		
-		//소모임 개설 시 club_member_role에 '모임장'으로 등록
-		int newClubNo = clubDto.getClubNo();
-		ClubMemberDto clubMemberDto = new ClubMemberDto();
-		clubMemberDto.setClubNo(newClubNo);
-		clubMemberDto.setClubMember(loginId);
-		clubMemberDto.setClubMemberRole("모임장");
-		clubMemberDao.insert(clubMemberDto);
 		return "redirect:addFinish";
 	}
 	@GetMapping("/addFinish")
@@ -72,7 +73,7 @@ public class ClubController {
 		if(clubDto == null) throw new TargetNotFoundException("존재하지 않는 모임");
 		
 		// 3. 권한 확인
-		if(loginId.equals(clubDto.getClubFounder()) == false) throw new UnauthorizationException("권한 부족");
+		if(loginId.equals(clubDto.getClubLeader()) == false) throw new UnauthorizationException("권한 부족");
 		model.addAttribute("clubDto", clubDto);
 		return "/WEB-INF/views/club/edit.jsp";
 	}
@@ -87,7 +88,7 @@ public class ClubController {
 		if(origin == null) throw new TargetNotFoundException("존재하지 않는 모임");
 				
 		// 3. 권한 확인
-		if(loginId.equals(clubDto.getClubFounder()) == false) throw new UnauthorizationException("권한 부족");
+		if(loginId.equals(clubDto.getClubLeader()) == false) throw new UnauthorizationException("권한 부족");
 		clubDao.update(clubDto);
 		return "redirect:detail?clubNo=" + clubDto.getClubNo();
 	}
@@ -104,7 +105,7 @@ public class ClubController {
 		if(origin == null) throw new TargetNotFoundException("존재하지 않는 모임");
 		
 		// 3. 권한 확인
-		if(loginId.equals(origin.getClubFounder()) == false) throw new UnauthorizationException("권한 부족");
+		if(loginId.equals(origin.getClubLeader()) == false) throw new UnauthorizationException("권한 부족");
 		clubDao.delete(clubDto.getClubNo());
 		return "redirect:list";
 	}

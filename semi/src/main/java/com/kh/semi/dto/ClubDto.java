@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class ClubDto {
 	private int clubNo;
-	private String clubFounder;//개설자 아이디(member_id)
+	private String clubLeader;//모임장(member_id)
 	private String clubName;
 	private String clubIntroduce;
 	private int clubRegion;

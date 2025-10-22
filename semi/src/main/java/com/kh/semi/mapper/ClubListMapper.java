@@ -16,7 +16,7 @@ public class ClubListMapper implements RowMapper<ClubListVO>{
 		
 		return ClubListVO.builder()
 				.clubNo(rs.getInt("club_no"))
-				.clubFounder(rs.getString("club_founder"))
+				.clubLeader(rs.getString("club_leader"))
 				.clubName(rs.getString("club_name"))
 				.clubRegion(rs.getInt("club_region"))
 				.clubCategory(rs.getInt("club_category"))

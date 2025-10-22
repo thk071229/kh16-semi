@@ -21,4 +21,11 @@ public class ClubMemberDao {
 		Object[] params = {clubMemberDto.getClubNo(), clubMemberDto.getClubMember(), clubMemberDto.getClubMemberRole()};
 		jdbcTemplate.update(sql, params);
 	}
+	// 클럽 회원 등급 변경
+	public boolean updateRole(ClubMemberDto clubMemberDto){
+	  String sql = "update club_member set club_member_role = ? where club_no = ? and member_id = ?";
+	  Object[] params = {clubMemberDto.getClubMemberRole(), clubMemberDto.getClubNo(), clubMemberDto.getClubMember()};
+	  return jdbcTemplate.update(sql, params) > 0;
+	}
+	//
 }
