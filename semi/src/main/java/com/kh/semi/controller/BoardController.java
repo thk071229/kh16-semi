@@ -82,6 +82,7 @@ public class BoardController {
 		List<BoardListVO> result = new ArrayList<>(); //새로운 arrayList를 만들어서 두 리스트를 모두 추가
 		result.addAll(boardNoticeList);
 		result.addAll(boardList);
+		
 		model.addAttribute("boardList", result);
 		model.addAttribute("noticeCount", boardNoticeList.size()); //공지사항 개수를 전달(배경색 칠하기 용)
 		int dataCount = boardDao.count(pageVO, clubNo); //dao에 있는 count 메소드에서 검색일경우/목록일 경우 처리
@@ -90,8 +91,10 @@ public class BoardController {
 		
 		//ListRestController에서 필요한 type 변수를 직접 설정하여 화면에 전달
 		model.addAttribute("type", "board");
-		//부모 파라미터를 parentParams 라는 이름으로 화면에 전달
-		model.addAttribute("parentParams", clubNo);
+		//부모 파라미터의 "key" 값을 parentParamsKey 라는 이름으로 화면에 전달
+		model.addAttribute("parentParamsKey", "clubNo");
+		//부모 파라미터의 값을 parentParams 라는 이름으로 화면에 전달
+		model.addAttribute("clubNo", clubNo);
 		model.addAttribute("pageVO", pageVO); //화면에 전달	
 		return "/WEB-INF/views/board/list.jsp";
 	}
@@ -131,6 +134,8 @@ public class BoardController {
 	}
 	@PostMapping("/edit")
 	public String edit(@ModelAttribute BoardDto boardDto, @RequestParam int boardNo) {
+		
+		
 		boardDao.update(boardDto);
 		return "redirect:detail?boardNo="+boardDto.getBoardNo();
 	}

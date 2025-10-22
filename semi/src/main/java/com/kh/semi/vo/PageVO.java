@@ -23,8 +23,29 @@ public class PageVO {
 	private int dataCount; //총 데이터(게시글) 개수
 	private int blockSize = 10;//표시할 블록 개수
 	//부모 파라미터 저장하기 위한 필드 생성
-	private Map<String, Integer> parentParams = new HashMap<>();
+	private Map<String, Integer> parentParams;
 	
+	//외부에서 호출하기 위한 게터메소드
+	public Map<String, Integer> getParentParams(){
+		if(parentParams == null) {
+			parentParams = new HashMap<>();
+		}
+		return parentParams;
+	}
+	public int getParentParamsValue(){
+		Integer result = 0;
+		if(parentParams == null || parentParams.isEmpty()) {
+			return result;
+		}
+		for(String key : parentParams.keySet()) {
+			Integer value = parentParams.get(key);
+			if(value != null) { //value가 존재할 경우
+				result = value;
+				return (int)result;
+			}
+		} 
+		return result;
+	}
 	//계산이 가능하도록 Getter 메소드 추가 생성
 	public boolean isSearch() {
 		return column != null && keyword != null;
@@ -116,11 +137,11 @@ public class PageVO {
 	
 	//parentParams에 key, value 값을 넣기 위한 getter 메소드
 	public void putParentParams(String key, Integer value) {
-		parentParams.put(key, value);
+		getParentParams().put(key, value);
 	}
 	
 	//parentParams에 담긴 key, value 값을 String으로 변환하는 메소드
-	public String getParentParams() {
+	public String getParentParamsToString() {
 		if(parentParams == null || parentParams.isEmpty()) {
 			return "";
 		}
