@@ -24,5 +24,8 @@
 	<button type = "submit">등록</button>
 </form>
 </div>
+<div class ="cell">
+  <a href="list?clubNo=${clubNo}">목록으로</a>
+</div>
 </div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
