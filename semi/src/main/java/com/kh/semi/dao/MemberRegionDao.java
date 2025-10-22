@@ -1,6 +1,5 @@
 package com.kh.semi.dao;
 
-import java.beans.Transient;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.semi.dto.MemberRegionDto;
+import com.kh.semi.mapper.MemberRegionListMapper;
 import com.kh.semi.mapper.MemberRegionMapper;
+import com.kh.semi.vo.MemberRegionListVO;
 
 @Repository
 public class MemberRegionDao {
@@ -17,6 +18,8 @@ public class MemberRegionDao {
 	private JdbcTemplate jdbcTemplate;
 	@Autowired
 	private MemberRegionMapper memberRegionMapper;
+	@Autowired
+	private MemberRegionListMapper memberRegionListMapper;
 	
 	//등록
 	public void insert(MemberRegionDto memberRegionDto) {
@@ -35,6 +38,14 @@ public class MemberRegionDao {
 	public List<MemberRegionDto> selectList() {
 		String sql = "select * from member_region";
 		return jdbcTemplate.query(sql, memberRegionMapper);
+	}
+	//회원에게 보여줄 때 사용할 조회 메소드
+	public List<MemberRegionListVO> selectVOList(String memberId){
+		String sql = "select * from member_region_list "
+							+ "where member_id=? "
+						+ "order by region_no asc";
+		Object[] params = {memberId};
+		return jdbcTemplate.query(sql, memberRegionListMapper, params);
 	}
 	
 	//id와 regionType으로 조회

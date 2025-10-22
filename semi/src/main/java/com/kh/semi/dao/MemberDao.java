@@ -26,7 +26,7 @@ public class MemberDao {
 							+ "member_email, member_gender, member_birth,"
 							+ "member_point, member_level, member_join"
 						+ ") "
-						+ "values(?,?, ?, ?, ?, ?, ?, ?, systimestamp);";
+						+ "values(?,?, ?, ?, ?, ?, ?, ?, systimestamp)";
 		Object[] params = {
 				memberDto.getMemberId(), memberDto.getMemberPw(), memberDto.getMemberNickname(), 
 				memberDto.getMemberEmail(), memberDto.getMemberGender(), memberDto.getMemberBirth(),

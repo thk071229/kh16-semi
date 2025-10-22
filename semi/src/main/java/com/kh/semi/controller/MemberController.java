@@ -15,12 +15,15 @@ import com.kh.semi.dao.CategoryDao;
 import com.kh.semi.dao.MemberCategoryDao;
 import com.kh.semi.dao.MemberDao;
 import com.kh.semi.dao.MemberRegionDao;
+import com.kh.semi.dao.RegionDao;
 import com.kh.semi.dto.CategoryDto;
 import com.kh.semi.dto.MemberCategoryDto;
 import com.kh.semi.dto.MemberDto;
 import com.kh.semi.dto.MemberRegionDto;
 import com.kh.semi.error.TargetNotFoundException;
 import com.kh.semi.service.MemberService;
+import com.kh.semi.vo.MemberCategoryListVO;
+import com.kh.semi.vo.MemberRegionListVO;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -37,7 +40,8 @@ public class MemberController {
 	private MemberService memberService;
 	@Autowired
 	private CategoryDao categoryDao;
-	
+	@Autowired
+	private RegionDao regionDao;
 	//회원가입
 	@GetMapping("/join")
 	public String join() {
@@ -69,6 +73,7 @@ public class MemberController {
 		
 		
 		//관심 지역 & 카테고리 등록 처리
+		//memberCategoryDto.setMemberId(memberId);
 		//memberRegionDao.insert(memberRegionDto);
 		
 		memberCategoryDto.setMemberId(memberId);
@@ -123,7 +128,14 @@ public class MemberController {
 	public String mypage(Model model, HttpSession session) {
 		String loginId = (String)session.getAttribute("loginId");
 		MemberDto memberDto = memberDao.selectOne(loginId);
+		
+		//회원이 선택한 선호지역 리스트
+		List<MemberRegionListVO>regionList = memberRegionDao.selectVOList(loginId);
+		//회원이 선택한 카테고리 리스트
+		List<MemberCategoryListVO>categoryList = memberCategoryDao.selectVOList(loginId);
 		model.addAttribute("memberDto", memberDto);
+		model.addAttribute("regionList", regionList);
+		model.addAttribute("categoryList", categoryList);
 		return "/WEB-INF/views/member/mypage.jsp";
 	}
 	
@@ -164,10 +176,10 @@ public class MemberController {
 	public String edit(@ModelAttribute MemberDto memberDto, HttpSession session) {
 		String loginId = (String) session.getAttribute("loginId");
 		MemberDto findDto= memberDao.selectOne(loginId);
-		boolean isValid = memberDto.getMemberId().equals(findDto.getMemberId());
-		//if(!isValid) {
-		//	return "redirect:에러페이지";
-		//}
+		boolean isValid = memberDto.getMemberPw().equals(findDto.getMemberPw());
+		if(!isValid) {//비밀번호 불일치
+			return "redirect:edit?error";
+		}
 		
 		memberDto.setMemberId(loginId);
 		memberDao.updateMember(memberDto);
@@ -186,11 +198,23 @@ public class MemberController {
 		String loginId = (String) session.getAttribute("loginId");
 		MemberDto memberDto = memberDao.selectOne(loginId);
 		boolean isValid = memberDto.getMemberPw().equals(currentPw);
-		//if(isValid == false) return "redirect:password?error";
+		if(isValid == false) return "redirect:password?error";
 		
 		memberDao.updateMemberPw(loginId, changePw);
 		
 		return "redirect:mypage";
+	}
+	
+	//첨부파일을 반환하는 매핑
+	@GetMapping("/profile")
+	public String profile(@RequestParam String memberId) {
+		try {
+			int attachmentNo = memberDao.findAttachment(memberId);
+			return "redirect:/attachment/download?attachmentNo="+attachmentNo;
+		}
+		catch(Exception e) {
+			return "redirect:/images/error/no-image.png";
+		}
 	}
 	
 }
