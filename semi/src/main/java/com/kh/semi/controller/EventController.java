@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.kh.semi.dao.EventDao;
 import com.kh.semi.dto.EventDto;
 import com.kh.semi.error.TargetNotFoundException;
+import com.kh.semi.vo.EventListVO;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -50,7 +51,7 @@ public class EventController {
 	// 정모게시글 전체
 	@RequestMapping("/home")
 	public String list(Model model) {
-		List<EventDto> eventDto = eventDao.selectList();
+		List<EventListVO> eventDto = eventDao.selectList();
 		model.addAttribute("eventDto", eventDto);
 		return "/WEB-INF/views/event/home.jsp";
 	}
@@ -59,10 +60,10 @@ public class EventController {
 	// 정모게시글 목록
 	@RequestMapping("/list")
 	public String list(Model model,@RequestParam int clubNo) {
-		List<EventDto> eventDto = eventDao.selectList(clubNo);
+		List<EventListVO> eventDto = eventDao.selectListWithClub(clubNo);
 		if(eventDto==null) throw new TargetNotFoundException("존재하지 않는 소모임");
-		List<EventDto> beforeDto = eventDao.selectListBefore(clubNo);
-		List<EventDto> afterDto = eventDao.selectListAfter(clubNo);
+		List<EventListVO> beforeDto = eventDao.selectListBefore(clubNo);
+		List<EventListVO> afterDto = eventDao.selectListAfter(clubNo);
 		model.addAttribute("clubNo",clubNo);
 		model.addAttribute("eventDto", eventDto);	
 		model.addAttribute("beforeDto", beforeDto);		
