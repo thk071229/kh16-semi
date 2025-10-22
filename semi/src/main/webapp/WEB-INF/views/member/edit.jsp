@@ -38,11 +38,11 @@
 			</button>
 		</div>
 		
-<%-- 		<c:if test="${param.error != null}">
+		<c:if test="${param.error != null}">
 			<div>
 				<h3>비밀번호가 일치하지 않습니다</h3>
 			</div>
-		</c:if> --%>
+		</c:if>
 		
 	</div>
 </form>

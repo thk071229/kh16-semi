@@ -27,10 +27,10 @@
 	</div>
 	
 	<!--  로그인 실패 오류 메시지 -->
-	<%-- <c:if test="${param.error != null}">
+	<c:if test="${param.error != null}">
 		<div>
 			<h2>입력하신 정보가 일치하지 않습니다</h2>
 		</div>
-	</c:if> --%>
+	</c:if>
 </div>
 </form>    
