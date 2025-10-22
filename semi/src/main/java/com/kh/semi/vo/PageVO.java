@@ -1,5 +1,8 @@
 package com.kh.semi.vo;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +22,9 @@ public class PageVO {
 	//검색항목, 검색어-기본값 : null(안써도 됨)
 	private int dataCount; //총 데이터(게시글) 개수
 	private int blockSize = 10;//표시할 블록 개수
+	//부모 파라미터 저장하기 위한 필드 생성
+	private Map<String, Integer> parentParams = new HashMap<>();
+	
 	//계산이 가능하도록 Getter 메소드 추가 생성
 	public boolean isSearch() {
 		return column != null && keyword != null;
@@ -28,6 +34,39 @@ public class PageVO {
 		return column == null || keyword == null;
 	}
 	
+	//더보기 pagination에서 사용할 페이지 계산 게터 메소드
+	public int getMorePage() {
+		return page + 1;
+	}
+	//더보기 pagination에서 사용할 size 계산 게터 메소드
+	public String getSearchParamsInMore() {
+	  int totalSize = size * page;
+	  if (page < getTotalPage()) {
+	        totalSize += size;  
+	    }
+
+	    if (totalSize > dataCount) {
+	        totalSize = dataCount;
+	    }
+
+	    if (isSearch()) {
+	        return "&size=" + totalSize + "&column=" + column + "&keyword=" + keyword;
+	    } else {
+	        return "&size=" + totalSize;
+	    }
+	}
+	//ajax에서 size 값 가져오기 위한 게터메소드
+	public int getTotalSize() {
+	    int totalSize = size * page;
+	    if (page < getTotalPage()) {
+	        totalSize += size;
+	    }
+	    if (totalSize > dataCount) {
+	        totalSize = dataCount;
+	    }
+	    return totalSize;
+	}
+
 	public String getSearchParams() {//목록 or 검색 여부에 따라 주소에 추가될 파라미터를 반환
 	if(isSearch()) {//검색일때 - size 및 컬럼, 키워드 반환
 		return "&size="+size+"&column="+column+"&keyword="+keyword;
@@ -73,5 +112,25 @@ public class PageVO {
 	}
 	public boolean isLastCount() {
 		return getEnd() >= getDataCount();
+	}
+	
+	//parentParams에 key, value 값을 넣기 위한 getter 메소드
+	public void putParentParams(String key, Integer value) {
+		parentParams.put(key, value);
+	}
+	
+	//parentParams에 담긴 key, value 값을 String으로 변환하는 메소드
+	public String getParentParams() {
+		if(parentParams == null || parentParams.isEmpty()) {
+			return "";
+		}
+		String result = "";
+		for(String key : parentParams.keySet()) {
+			Integer value = parentParams.get(key);
+			if(value != null) {
+				result += "&" + key + "=" + value;
+			}
+		}
+		return result;
 	}
 }
