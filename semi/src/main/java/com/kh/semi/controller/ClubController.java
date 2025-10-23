@@ -16,6 +16,7 @@ import com.kh.semi.dao.ClubDao;
 import com.kh.semi.dao.ClubMemberDao;
 import com.kh.semi.dto.CategoryDto;
 import com.kh.semi.dto.ClubDto;
+import com.kh.semi.dto.ClubMemberDto;
 import com.kh.semi.error.TargetNotFoundException;
 import com.kh.semi.error.UnauthorizationException;
 import com.kh.semi.service.ClubService;
@@ -119,15 +120,6 @@ public class ClubController {
 		return "redirect:list";
 	}
 	
-	// 상세
-	@GetMapping("/detail")
-	public String detail(@RequestParam int clubNo, Model model) {
-		ClubDto clubDto = clubDao.selectOne(clubNo);
-		if(clubDto == null) throw new TargetNotFoundException("존재하지 않는 소모임");
-		
-		model.addAttribute("clubDto", clubDto);
-		return "/WEB-INF/views/club/detail.jsp";
-	}
 	@GetMapping("/list")
 		public String list(Model model, @ModelAttribute PageVO pageVO) {
 			List<ClubListVO> clubList = clubDao.selectListWithPaging(pageVO);
@@ -138,11 +130,16 @@ public class ClubController {
 	@GetMapping("/home")
 	public String home(HttpSession session, @RequestParam int clubNo,Model model) {
 		String loginId = (String)session.getAttribute("loginId");
-		if(loginId == null) throw new TargetNotFoundException("로그인이 필요합니다");
 		
 		ClubDto clubDto = clubDao.selectOne(clubNo);
 		if(clubDto == null) throw new TargetNotFoundException("존재하지 않는 소모임");
 		model.addAttribute("clubDto", clubDto);
+		
+		//필요없을듯?
+		ClubMemberDto clubMemberDto = clubMemberDao.selectOne(clubNo);
+		if(clubMemberDto == null) throw new TargetNotFoundException("존재하지 않는 소모임");
+		model.addAttribute("clubMemberDto", clubMemberDto);
+		
 		return "/WEB-INF/views/club/home.jsp";
 	}
 }

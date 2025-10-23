@@ -1,5 +1,7 @@
 package com.kh.semi.dao;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -27,5 +29,11 @@ public class ClubMemberDao {
 	  Object[] params = {clubMemberDto.getClubMemberRole(), clubMemberDto.getClubNo(), clubMemberDto.getClubMember()};
 	  return jdbcTemplate.update(sql, params) > 0;
 	}
-	//
+	// 조회
+	public ClubMemberDto selectOne(int clubNo) {
+		String sql = "select * from club_member where club_no = ?";
+		Object[] params = {clubNo};
+		List<ClubMemberDto> list = jdbcTemplate.query(sql, clubMemberMapper, params);
+		return list.isEmpty() ? null : list.get(0);
+	}
 }
