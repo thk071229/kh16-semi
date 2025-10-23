@@ -1,5 +1,6 @@
 package com.kh.semi.controller;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.semi.dao.EventDao;
 import com.kh.semi.dto.EventDto;
@@ -35,6 +37,15 @@ public class EventController {
 	@Autowired
 	private AttachmentService attachmentService;
 	
+	
+	// 정모게시글 전체
+	@RequestMapping("/home")
+	public String list(Model model) {
+		List<EventListVO> eventDto = eventDao.selectList();
+		model.addAttribute("eventDto", eventDto);
+		return "/WEB-INF/views/event/home.jsp";
+	}
+	
 	// 등록
 	@GetMapping("/add")
 	public String add(Model model, @RequestParam int clubNo) {
@@ -45,25 +56,31 @@ public class EventController {
 	}
 
 	@PostMapping("/add")
-	public String add(@ModelAttribute EventDto eventDto, HttpSession session) {
-
+	public String add(@ModelAttribute EventDto eventDto, HttpSession session,
+								@RequestParam MultipartFile attach) throws IllegalStateException, IOException {
 		String loginId = (String) session.getAttribute("loginId");
 		eventDto.setEventWriter(loginId); // 로그인 ID -> 작성자 등록
-		
 		int eventNo = eventDao.sequence(); // 시퀀스 번호 생성 및 등록
 		eventDto.setEventNo(eventNo);
-
 		eventDao.insert(eventDto); // 등록
+		
+		if(attach.isEmpty()==false) {//첨부파일이 있으면
+			int attachmentNo = attachmentService.save(attach);
+			eventDao.connect(eventNo, attachmentNo);
+		}
+		
 		return "redirect:detail?eventNo="+eventNo;
 	}
-	
-	
-	// 정모게시글 전체
-	@RequestMapping("/home")
-	public String list(Model model) {
-		List<EventListVO> eventDto = eventDao.selectList();
-		model.addAttribute("eventDto", eventDto);
-		return "/WEB-INF/views/event/home.jsp";
+	/// 대표이미지를 반환하는 매핑
+	@GetMapping("image")
+	public String image(@RequestParam int eventNo) {
+		try {
+			int attachmentNo = eventDao.findAttachment(eventNo);
+			return "redirect:/attachment/download?attachmentNo="+attachmentNo;
+		}
+		catch(Exception e) {
+			return "redirect:/images/error/no-image.png";
+		}
 	}
 	
 	
@@ -152,6 +169,12 @@ public class EventController {
 				int attachmentNo = Integer.parseInt(element.attr("data-pk"));
 				attachmentService.delete(attachmentNo);
 			}
+			// 정모 대표이미지 삭제
+			//try {
+				int attachmentNo = eventDao.findAttachment(eventNo);
+				attachmentService.delete(attachmentNo);
+			//}
+			//catch(Exception e) {}
 		eventDao.delete(eventNo);
 		return "redirect:list?clubNo="+eventDto.getEventClub();
 	}

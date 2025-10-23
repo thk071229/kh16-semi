@@ -117,5 +117,19 @@ public class EventDao {
 				eventDto.getEventNo()};
 		return jdbcTemplate.update(sql,params)>0;
 		}
-			
+		
+	/// 정모 대표이미지 기능
+	public void connect(int eventNo, int attachmentNo) {
+		String sql = "insert into event_image(event_no, attachment_no) values(?,?)";
+		Object[] params = {eventNo, attachmentNo};
+		jdbcTemplate.update(sql,params);
+	}
+	
+	/// 이벤트(정모)번호로 이미지 번호를 찾아내는 구문
+	public int findAttachment(int eventNo) {
+		String sql ="select attachment_no from event_image where event_no=?";
+		Object[] params = {eventNo};
+		return jdbcTemplate.queryForObject(sql, int.class, params);
+	}
+	
 	}

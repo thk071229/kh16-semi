@@ -61,13 +61,7 @@ public class EventRestController {
 		eventAttendeeVO.setCount(count);
 		return eventAttendeeVO;
 	}
-	
-	// 임시 이미지 업로드
-	@PostMapping("/temp")
-	public int temp(@RequestParam MultipartFile attach) throws IllegalStateException, IOException {
-		if(attach.isEmpty()) throw new TargetNotFoundException("파일이 업로드 되지 않았습니다");
-		return attachmentService.save(attach);
-	}
+
 	
 
 }
