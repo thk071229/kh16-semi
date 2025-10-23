@@ -17,7 +17,7 @@
             </div>
 
             <div class="cell">
-                <textarea class="w-100" name="clubIntroduce" rows="5" placeholder="모임 소개"></textarea>
+                <textarea class="w-100" name="clubIntroduce" rows="5" placeholder="모임 소개">${clubDto.clubIntroduce}</textarea>
             </div>
 
             <div class="cell">
