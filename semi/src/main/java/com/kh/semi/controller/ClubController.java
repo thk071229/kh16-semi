@@ -72,6 +72,7 @@ public class ClubController {
 		ClubListVO clubDto = clubDao.selectOneFromClubList(clubNo);
 		if(clubDto == null) throw new TargetNotFoundException("존재하지 않는 모임");
 		
+		
 		// 3. 권한 확인
 		if(loginId.equals(clubDto.getClubLeader()) == false) throw new UnauthorizationException("권한 부족");
 		model.addAttribute("clubDto", clubDto);
@@ -129,8 +130,15 @@ public class ClubController {
 	}
 	@GetMapping("/list")
 		public String list(Model model, @ModelAttribute PageVO pageVO) {
-			List<ClubListVO> clubList = clubDao.selectList(pageVO);
+			List<ClubListVO> clubList = clubDao.selectListWithPaging(pageVO);
 			model.addAttribute("clubList", clubList);
 			return "/WEB-INF/views/club/list.jsp";
 		}
+	//소모임 Home으로 이동
+	@GetMapping("/home")
+	public String home(HttpSession session) {
+		String loginId = (String)session.getAttribute("loginId");
+		if(loginId == null) throw new TargetNotFoundException("로그인이 필요합니다");
+		return "/WEB-INF/views/club/home.jsp";
+	}
 }

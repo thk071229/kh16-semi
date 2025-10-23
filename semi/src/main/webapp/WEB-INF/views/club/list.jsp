@@ -23,7 +23,7 @@
                 <tbody>
                 <c:forEach var="clubListVO" items="${clubList}">
                     <tr>
-                        <td><a href="detail?clubNo=${clubListVO.clubNo}">${clubListVO.clubName}</a></td>
+                        <td><a href="home?clubNo=${clubListVO.clubNo}">${clubListVO.clubName}</a></td>
                         <td>${clubListVO.regionName}</td>
                         <td>${clubListVO.categoryName}</td>
                     </tr>
@@ -31,14 +31,12 @@
                 </tbody>
             </table>
         </div>
+        
         <!-- 페이지 네비게이터 -->
         <div class="cell">
-            <span>페이지 네비게이터</span>
+            <jsp:include page="/WEB-INF/views/template/pagination-num.jsp"></jsp:include>
         </div>
-        <!-- 검색창 -->
-        <div class="flex-box">
-            <input type="text" class="field w-100">
-        </div>
+        
     </div>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
