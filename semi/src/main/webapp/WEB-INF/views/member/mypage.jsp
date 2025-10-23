@@ -25,7 +25,7 @@
 			</tr>
 			<tr>
 				<th>성별</th>
-				<td>${memberDto.memberGender}포인트</td>
+				<td>${memberDto.memberGender}</td>
 			</tr>
 			<tr>
 				<th>생년월일</th>
@@ -45,6 +45,8 @@
 			</tr>
 		</table>
 	</div>
+	
+	<!-- 선호 지역 목록 -->
 	<div>
 		<h2>선호하는 지역</h2>
 		<table border="1" width="500">
@@ -55,7 +57,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="memberRegionListVO" items="regionList">
+				<c:forEach var="memberRegionListVO" items="${regionList}">
 				<tr>
 					<td>
 					${memberRegionListVO.regionType}
@@ -69,17 +71,27 @@
 		</table>
 	</div>
 	<div>
+		<a href="editRegion">선호지역 수정</a>
+	</div>
+	
+	<!-- 선호 카테고리 목록 -->
+	<div>
 		<h2>선호하는 카테고리</h2>
 		<table border="1" width="500">
 			<tr>
 				<th>카테고리 이름</th>
 			</tr>
-			<c:forEach var="memberCategoryVO" items="categoryList">
-				<td>
-					${memberCategotyVO.categoryName}
-				</td>
+			<c:forEach var="memberCategoryVO" items="${categoryList}">
+				<tr>
+					<td>
+					${memberCategoryVO.categoryName}
+					</td>
+				</tr>
 			</c:forEach>
 		</table>
+	</div>
+	<div>
+		<a href="editCategory">카테고리 수정</a>
 	</div>
 	<div>
 		<a href="password">비밀번호 변경</a>

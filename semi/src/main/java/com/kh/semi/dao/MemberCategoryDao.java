@@ -48,6 +48,14 @@ public class MemberCategoryDao {
 		
 		return jdbcTemplate.query(sql, memberCategoryListMapper, params);
 	}
+	//선호하는 카테고리 하나만 아이디로 조회
+	public MemberCategoryDto selectById(String memberId) {
+		String sql = "select * from member_category where member_id=?";
+		Object[] params = {memberId};
+		
+		List<MemberCategoryDto> list =  jdbcTemplate.query(sql, memberCategoryMapper, params);
+		return list.isEmpty() ? null : list.get(0);
+	}
 	
 	//pk 로 조회
 	public MemberCategoryDto selectOne(String memberId, int categoryNo) {
@@ -92,6 +100,20 @@ public class MemberCategoryDao {
 	    		memberCategoryDto.getMemberId(), memberCategoryDto.getCategoryNo()
 	    };
 	    return jdbcTemplate.update(insertSql, insertParams) > 0;
+	}
+	
+	//여러개 수정
+	@Transactional
+	public void updateCategories(String memberId, List<Integer> newCategoryNos) {
+	    // 1. 기존 선택 삭제
+	    String deleteSql = "delete from member_category where member_id=?";
+	    jdbcTemplate.update(deleteSql, memberId);
+
+	    // 2. 새로운 선택 insert
+	    String insertSql = "insert into member_category (member_id, category_no) values (?, ?)";
+	    for (Integer categoryNo : newCategoryNos) {
+	        jdbcTemplate.update(insertSql, memberId, categoryNo);
+	    }
 	}
 	
 	//삭제

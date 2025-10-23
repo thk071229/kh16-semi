@@ -19,7 +19,7 @@ public class MemberMapper implements RowMapper<MemberDto>{
 					.memberNickname(rs.getString("member_nickname"))
 					.memberEmail(rs.getString("member_email"))
 					.memberGender(rs.getString("member_gender"))
-					.memberBirth(rs.getTimestamp("member_birth"))
+					.memberBirth(rs.getDate("member_birth"))
 					.memberPoint(rs.getInt("member_point"))
 					.memberLevel(rs.getString("member_level"))
 					.memberJoin(rs.getTimestamp("member_join"))
