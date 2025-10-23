@@ -161,21 +161,21 @@
 					<div class="cell">
 						<div class="cell w-100">
 							<label>정모이름</label><br>
-							<input type="text" class="field" name="eventTitle" value="${eventDto.eventTitle}">
+							<input type="text" class="input" name="eventTitle" value="${eventDto.eventTitle}">
 						</div>
 						<div class="cell w-100">
 							<label>정원(최대인원)</label><br>
-							<input type="number" class="field" name="eventMaxPeople" value="${eventDto.eventMaxPeople}">
+							<input type="number" class="input" name="eventMaxPeople" value="${eventDto.eventMaxPeople}">
 						</div>
 						<div class="cell w-100">
 							<label>정모일시</label><br>
-							<input type="text" class="field" name="eventDate" value="${eventDto.eventDate}">
+							<input type="text" class="input" name="eventDate" value="${eventDto.eventDate}">
 						</div>
 						<!-- 주소 검색을 통해 위도 경도값 저장 -->
 						<div class="cell w-100">
 							<label>정모위치</label>
 							<div class="flex-box">
-								<input type="text" name="eventAddress" class="field w-100 address-input" name="eventAddress" placeholder="주소(시군구/읍면동) 입력" value="${eventDto.eventAddress}">
+								<input type="text" name="eventAddress" class="input w-100 address-input" name="eventAddress" placeholder="주소(시군구/읍면동) 입력" value="${eventDto.eventAddress}">
 								<button type="button" class="btn btn-positive ms-10 address-search-btn">
 									<i class="fa-solid fa-magnifying-glass"></i>
 								</button>
