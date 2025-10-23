@@ -30,11 +30,14 @@
 
 <!-- ------------------------------------ -->
 <div class="container w-800">
-
-	<div class="cell">
-		<a class="btn btn-primary" href="add?clubNo=${clubNo}">신규 등록</a>
-	</div>
 	
+		<div class="cell left">
+			<a class="btn btn-ghost" href="/club/home?clubNo=${clubNo}">메인</a>
+			<a class="btn btn-ghost" href="/board/list?clubNo=${clubNo}">게시판</a>
+			<a class="btn btn-primary" href="/event/add?clubNo=${clubNo}">신규 등록</a>
+		</div>
+
+
 	<div class="cell mt-40">
 		<div class="flex-box">
 			<!-- 진행중 정모 목록 -->
@@ -47,6 +50,7 @@
 							<a class="event-link"href="detail?eventNo=${beforeList.eventNo}">
 								<div class="mb-10 event-title">
 										<label>${beforeList.eventTitle}</label>
+										<label style="font-size:16px;">(참여인원/${beforeList.eventMaxPeople})</label>
 								</div>
 								<div class="ms-20"><i class="fa-solid fa-calendar"></i>
 									<label>
@@ -54,16 +58,13 @@
 									</label>
 								</div>
 								<div class="ms-20"><i class="fa-solid fa-person"></i>
-									<label>${beforeList.eventWriter}</label>
+									<label>${beforeList.memberNickname}</label>
 								</div>
 								<div class="ms-20"><i class="fa-solid fa-house"></i>
 									<label>${beforeList.clubName}</label>
 								</div>
 								<div class="ms-20"><i class="fa-solid fa-house"></i>
 									<label>${beforeList.eventAddress}</label>
-								</div>
-								<div class="ms-20"><i class="fa-solid fa-person"></i>
-									<label>참여자 / ${beforeList.eventMaxPeople}</label>
 								</div>
 							</a>
 							</div>
@@ -82,6 +83,7 @@
 								<a class="event-link" href="detail?eventNo=${afterList.eventNo}">
 										<div class="mb-10 event-title">
 											<label>${afterList.eventTitle}</label>
+											<label style="font-size:16px;">(참여인원/${afterList.eventMaxPeople})</label>
 										</div>
 										<div class="ms-20"><i class="fa-solid fa-calendar"></i>
 											<label>
@@ -89,16 +91,13 @@
 											</label>
 										</div>
 										<div class="ms-20"><i class="fa-solid fa-person"></i>
-											<label>${afterList.eventWriter}</label>
+											<label>${afterList.memberNickname}</label>
 										</div>
 										<div class="ms-20"><i class="fa-solid fa-house"></i>
 											<label>${afterList.clubName}</label>
 										</div>
 										<div class="ms-20"><i class="fa-solid fa-house"></i>
 											<label>${afterList.eventAddress}</label>
-										</div>
-										<div class="ms-20"><i class="fa-solid fa-person"></i>
-											<label>참여자 / ${afterList.eventMaxPeople}</label>
 										</div>
 									</a>
 								</div>
@@ -118,6 +117,7 @@
 							<a class="event-link"href="detail?eventNo=${eventList.eventNo}">
 							<div class="mb-10 event-title">
 								<label>${eventList.eventTitle}</label>
+								<label style="font-size:16px;">(참여인원/${beforeList.eventMaxPeople})</label>
 							</div>
 							<div class="ms-20"><i class="fa-solid fa-calendar"></i>
 								<label>
@@ -125,16 +125,13 @@
 								</label>
 							</div>
 							<div class="ms-20"><i class="fa-solid fa-person"></i>
-								<label>${eventList.eventWriter}</label>
+								<label>${eventList.memberNickname}</label>
 							</div>
 							<div class="ms-20"><i class="fa-solid fa-house"></i>
 								<label>${eventList.clubName}</label>
 							</div>
 							<div class="ms-20"><i class="fa-solid fa-house"></i>
 								<label>${eventList.eventAddress}</label>
-							</div>
-							<div class="ms-20"><i class="fa-solid fa-person"></i>
-								<label>참여자 / ${eventList.eventMaxPeople}</label>
 							</div>
 							</a>
 							</div>

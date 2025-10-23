@@ -17,8 +17,13 @@ public class EventListVO {
 	private int eventMaxPeople;
 	private String eventAddress;
 	private Timestamp eventDate;
+	// From club_list Table
 	private String clubName;
-	
-	
+	private int clubRegion;
+	private String regionName;
+	private int clubCategory;
+	private String categoryName;
+	// From member Table
+	private String memberNickname;
 	
 }
