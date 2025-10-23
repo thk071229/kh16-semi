@@ -184,15 +184,16 @@ public class BoardController {
 		ClubDto clubDto = clubDao.selectOne(clubNo);		
 		//글 본문에 포함된 모든 <img>를 찾아서 해당하는 이미지의 글번호를 삭제
 		//- summernote가 만든 html 형식의 글에서 원하는 항목을 탐색(Jsoup 사용)
+		
 		Document document = Jsoup.parse(boardDto.getBoardContent());
 		Elements elements = document.select(".custom-image"); //<img>를 찾고
-		for(Element element : elements) { //하나씩 반복하며
-			//파일 번호 추출
-			/*String src = element.attr("src"); //src 추출
-			int equal = src.lastIndexOf("="); //= 의 위치를 찾아서
-			int attachmentNo = Integer.parseInt(src.substring(equal + 1));*/
-			int attachmentNo = Integer.parseInt(element.attr("data-pk"));
-			attachmentService.delete(attachmentNo);
+			for(Element element : elements) { //하나씩 반복하며
+				//파일 번호 추출
+				/*String src = element.attr("src"); //src 추출
+				int equal = src.lastIndexOf("="); //= 의 위치를 찾아서
+				int attachmentNo = Integer.parseInt(src.substring(equal + 1));*/
+				int attachmentNo = Integer.parseInt(element.attr("data-pk"));
+				attachmentService.delete(attachmentNo);
 		}
 		//글 삭제
 		boardDao.delete(boardNo);

@@ -21,6 +21,7 @@
 			<th>작성자</th>
 			<th>조회수</th>
 			<th>좋아요</th>
+			<th>댓글</th>
 			<th>작성일</th>
 		</tr>
 	</thead>
@@ -32,6 +33,7 @@
 		<td>${boardDto.boardWriter}</td>
 		<td>${boardDto.boardRead}</td>
 		<td>${boardDto.boardLike}</td>
+		<td>${boardDto.boardComment}</td>
 		<td>${boardDto.boardWriteTime}</td>
 		</tr>
 		</c:forEach>
@@ -40,7 +42,7 @@
 </div>
 <!-- 페이지 내비게이터 영역 -->
 <div class="cell">
-<jsp:include page="/WEB-INF/views/template/pagination-more.jsp"></jsp:include>	
+<jsp:include page="/WEB-INF/views/template/pagination-num.jsp"></jsp:include>	
 </div>
 
 <div class="cell">
