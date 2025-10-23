@@ -118,7 +118,8 @@ public class EventController {
 	}
 	
 	@PostMapping("/edit")
-	public String edit(@ModelAttribute EventDto eventDto) {
+	public String edit(@ModelAttribute EventDto eventDto,
+							@RequestParam MultipartFile attach) throws IllegalStateException, IOException {
 		EventDto beforeDto = eventDao.selectOne(eventDto.getEventNo());
 		if(beforeDto==null) throw new TargetNotFoundException("존재하지 않는 이벤트");
 		
@@ -152,6 +153,15 @@ public class EventController {
 			attachmentService.delete(attachmentNo);
 		}
 		
+		//// 대표이미지 수정 메소드
+		if(attach.isEmpty()==false) {//첨부파일이 있으면
+			int beforeAttachmentNo = eventDao.findAttachment(eventDto.getEventNo());
+			attachmentService.delete(beforeAttachmentNo);
+			int afterAttachmentNo = attachmentService.save(attach);
+			eventDao.connect(eventDto.getEventNo(), afterAttachmentNo);
+		}
+		
+		
 		eventDao.update(eventDto);
 		return "redirect:detail?eventNo="+eventDto.getEventNo();
 	}
@@ -170,11 +180,11 @@ public class EventController {
 				attachmentService.delete(attachmentNo);
 			}
 			// 정모 대표이미지 삭제
-			//try {
+			try {
 				int attachmentNo = eventDao.findAttachment(eventNo);
 				attachmentService.delete(attachmentNo);
-			//}
-			//catch(Exception e) {}
+			}
+			catch(Exception e) {}
 		eventDao.delete(eventNo);
 		return "redirect:list?clubNo="+eventDto.getEventClub();
 	}

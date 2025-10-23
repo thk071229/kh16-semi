@@ -165,8 +165,8 @@
 							</div>
 						</div>
 						<div class="cell">
-                   			<label>프로필 이미지</label>
-                    		<input class="field w-100" type="file" name="attach" accept="image/*">
+                   			<label>대표 이미지</label>
+                    		<input class="input w-100" type="file" name="attach" accept="image/*">
                 		</div>
 					</div>
 						<div class="flex-fill ms-20">
@@ -187,7 +187,7 @@
 				</div>
 				<div class="cell">
 					<button class="btn btn-primary w-100" type="submit">
-						<span class="center">등록</span>
+						<span class="center">수정</span>
 					</button>
 				</div>		
 		</div>

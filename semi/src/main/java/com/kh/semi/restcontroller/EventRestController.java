@@ -1,18 +1,14 @@
 package com.kh.semi.restcontroller;
 
-import java.io.IOException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.semi.dao.EventAttendeeDao;
-import com.kh.semi.error.TargetNotFoundException;
+import com.kh.semi.dao.EventDao;
 import com.kh.semi.service.AttachmentService;
 import com.kh.semi.vo.EventAttendeeVO;
 
@@ -22,6 +18,9 @@ import jakarta.servlet.http.HttpSession;
 @RestController
 @RequestMapping("/rest/event")
 public class EventRestController {
+	
+	@Autowired
+	private EventDao eventDao;
 	
 	@Autowired
 	private EventAttendeeDao eventAttendeeDao;
@@ -62,6 +61,5 @@ public class EventRestController {
 		return eventAttendeeVO;
 	}
 
-	
 
 }
