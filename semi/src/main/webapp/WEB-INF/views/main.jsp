@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <!-- header -->
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>	
+<div class = "container">
 <hr>
 <h1>메인 페이지</h1>
 <h2>소모임 - 우리동네 취미 모임</h2>
@@ -21,5 +22,6 @@
 <img src = "https://dummyimage.com/600x300/000/fff&text=club_3">
 <h4><button type = "button">더보기</button></h4>
 <hr>
+</div>
 <!-- footer -->
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>	
