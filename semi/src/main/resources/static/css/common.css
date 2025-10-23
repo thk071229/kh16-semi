@@ -153,6 +153,7 @@ body{
 .btn{
   display:inline-flex;
   align-items:center;
+  justify-content: center;
   gap:8px;
   padding:10px 14px;
   border-radius:10px;
@@ -160,9 +161,19 @@ body{
   cursor:pointer;
   font-weight:700;
   letter-spacing:0.2px;
+  text-decoration: none;
+  text-align: center;
 }
-.btn-primary{ background:var(--primary); color:white; box-shadow:0 8px 20px rgba(127,200,169,0.18); }
-.btn-ghost{ background:transparent; border:1px solid rgba(35,50,56,0.06); color:var(--ink); }
+.btn-primary{ 
+	background:var(--primary); 
+	color:white; 
+	box-shadow:0 8px 20px rgba(127,200,169,0.18); 
+}
+.btn-ghost{ 
+	background:transparent; 
+	border:1px solid rgba(35,50,56,0.06); 
+	color:var(--ink); 
+}
 .btn-accent{ background:var(--accent); color:var(--ink); }
 .btn:hover {
     /* filter: brightness(90%); */
@@ -184,7 +195,7 @@ body{
     /* 기본 글자크기 지정 */
     padding: 0.5em 0.75em;
     border: 1px solid #636e72;
-    border-radius: 0.1em;
+    border-radius: 0.2em;
 }
 .field:focus {
     border-color: #313739;
@@ -387,3 +398,62 @@ textarea.field {
 .left{text-align: left !important;}
 .center{text-align: center !important;}
 .right{text-align: right !important;}
+
+/* 
+HTML의 기본 배치방식을 무시하고 내가 원하는 방식으로 위치를 지정 
+- static : 연관배치, 위치조정 불가
+- relative : 연관배치, 미세조정 가능
+- absolute : 절대배치, 문서의 절대적인 위치에 배치
+- fixed : 절대배치, 뷰포트(viewport)의 절대적인 위치에 배치
+- relative, absolute, fixed는 위치를 직접 지정할 수 있다 
+- top : 상단에서 얼만큼 떨어져있는지를 표시
+- left : 좌측...
+- bottom : 하단...
+- right : 우측...
+*/
+.fullscreen {
+    position: fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* 입력창 검사 성공/실패에 대한 디자인(+JS) */
+.field.success {
+    border-color: #70a1ff !important;
+}
+.field.fail, 
+.field.fail2 
+{
+    border-color: #e17055 !important;
+}
+
+/* 기본적으로 피드백은 모두 숨김 처리 */
+.success-feedback,
+.fail-feedback,
+.fail2-feedback
+{
+    display: none;
+}
+/* 성공 피드백 디자인 */
+.success-feedback {
+    color: #70a1ff;
+}
+/* 실패 피드백 디자인 */
+.fail-feedback,
+.fail2-feedback
+{
+    color: #e17055;
+}
+/* 검사에 성공한 입력창 뒤에 있는 성공 피드백을 표시 */
+.field.success ~ .success-feedback {
+    display: block;
+}
+/* 검사에 실패한 입력창 뒤에 있는 실패 피드백을 표시 */
+.field.fail ~ .fail-feedback,
+.field.fail2 ~ .fail2-feedback
+ {
+    display: block;
+}
