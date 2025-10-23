@@ -7,6 +7,7 @@
 <div class="container w-600">
         <form action="edit" method="post" autocomplete="off">
             <input type="hidden" name="clubNo" value="${clubDto.clubNo}">
+            <input type="hidden" name="clubCategory" value="${clubDto.clubCategory}">
             
             <div class="cell center">
                 <h1 class="mt-20">모임 정보 수정</h1>
@@ -21,7 +22,7 @@
             </div>
 
             <div class="cell">
-                <input class="input w-100" name="regionName" value="${clubDto.regionName}" readonly>
+                <input class="input w-100" name="regionName" value="${clubList.regionName}" readonly>
             </div>
 
             <div class="cell">

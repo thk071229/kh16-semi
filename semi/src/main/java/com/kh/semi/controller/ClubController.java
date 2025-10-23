@@ -70,12 +70,15 @@ public class ClubController {
 		if(loginId == null) throw new TargetNotFoundException("존재하지 않는 회원");
 		
 		// 2. 모임 존재 확인
-		ClubListVO clubDto = clubDao.selectOneFromClubList(clubNo);
-		if(clubDto == null) throw new TargetNotFoundException("존재하지 않는 모임");
-		
+		ClubListVO clubList = clubDao.selectOneFromClubList(clubNo);
+		if(clubList == null) throw new TargetNotFoundException("존재하지 않는 모임");
 		
 		// 3. 권한 확인
-		if(loginId.equals(clubDto.getClubLeader()) == false) throw new UnauthorizationException("권한 부족");
+		if(loginId.equals(clubList.getClubLeader()) == false) throw new UnauthorizationException("권한 부족");
+		model.addAttribute("clubList", clubList);
+		
+		ClubDto clubDto = clubDao.selectOne(clubNo);
+		
 		model.addAttribute("clubDto", clubDto);
 		return "/WEB-INF/views/club/edit.jsp";
 	}
@@ -88,6 +91,8 @@ public class ClubController {
 		// 2. 모임 존재 확인
 		ClubDto origin = clubDao.selectOne(clubDto.getClubNo());
 		if(origin == null) throw new TargetNotFoundException("존재하지 않는 모임");
+		
+		clubDto.setClubLeader(origin.getClubLeader());
 				
 		// 3. 권한 확인
 		if(loginId.equals(clubDto.getClubLeader()) == false) throw new UnauthorizationException("권한 부족");
