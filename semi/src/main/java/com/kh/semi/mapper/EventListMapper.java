@@ -22,7 +22,15 @@ public class EventListMapper implements RowMapper<EventListVO>{
 		eventListVO.setEventMaxPeople(rs.getInt("event_max_people"));
 		eventListVO.setEventAddress(rs.getString("event_address"));
 		eventListVO.setEventDate(rs.getTimestamp("event_date"));
+		// From club_list Table
 		eventListVO.setClubName(rs.getString("club_name"));
+		eventListVO.setClubRegion(rs.getInt("club_region"));
+		eventListVO.setRegionName(rs.getString("region_name"));
+		eventListVO.setClubCategory(rs.getInt("club_category"));
+		eventListVO.setCategoryName(rs.getString("club_category"));
+		// From member Table
+		eventListVO.setMemberNickname(rs.getString("member_nickname"));
+		
 		return eventListVO;
 	}
 
