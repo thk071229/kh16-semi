@@ -86,7 +86,7 @@ public class BoardController {
 	public String list(Model model, @ModelAttribute PageVO pageVO, @RequestParam int clubNo) {//변수 대신 VO 불러옴
 		ClubDto clubDto = clubDao.selectOne(clubNo);
 		if(clubDto == null) throw new TargetNotFoundException("존재하지 않는 모임입니다");
-		
+		model.addAttribute("clubDto",clubDto);
 		//부모 파라미터 세팅
 		pageVO.putParentParams("clubNo", clubNo);
 		

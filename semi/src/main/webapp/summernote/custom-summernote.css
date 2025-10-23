@@ -6,3 +6,8 @@
         .note-editable {
             background-color: white;
         }
+        .note-editable p {
+			  margin: 0;
+			  padding: 0;
+		}
+        

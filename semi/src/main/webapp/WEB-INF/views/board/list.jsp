@@ -10,7 +10,7 @@
 </style>
 <div class="container w-700">
 <div class="cell">
-<h1>리스트</h1>
+<h1>${clubDto.clubName} 의 게시판</h1>
 </div>
 <div class="cell">
 <table class="table">
@@ -47,6 +47,7 @@
 
 <div class="cell">
 	<a href = "write?clubNo=${clubNo}">새 글 등록</a>
+	<a href = "/club/home?clubNo=${clubNo}">모임 화면으로</a>
 </div>
 </div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
