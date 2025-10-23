@@ -20,8 +20,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.semi.dao.BoardDao;
 import com.kh.semi.dao.ClubDao;
+import com.kh.semi.dao.MemberDao;
 import com.kh.semi.dto.BoardDto;
 import com.kh.semi.dto.ClubDto;
+import com.kh.semi.dto.MemberDto;
 import com.kh.semi.error.TargetNotFoundException;
 import com.kh.semi.service.AttachmentService;
 import com.kh.semi.vo.BoardListVO;
@@ -37,6 +39,9 @@ public class BoardController {
 	private BoardDao boardDao;
 	@Autowired
 	private ClubDao clubDao;
+	@Autowired
+	private MemberDao memberDao;
+	
 	@Autowired
 	private AttachmentService attachmentService;
 	
@@ -70,6 +75,8 @@ public class BoardController {
 	@RequestMapping("/detail")
 	public String detail(@RequestParam int boardNo, Model model) {
 		BoardDto boardDto = boardDao.selectOne(boardNo);
+		MemberDto memberDto = memberDao.selectOne(boardDto.getBoardWriter());
+		model.addAttribute("memberDto", memberDto);
 		model.addAttribute("boardDto", boardDto);
 		return "/WEB-INF/views/board/detail.jsp";
 	}
@@ -98,40 +105,15 @@ public class BoardController {
 		//총 게시글 수는 컨트롤러에서 설정해야함
 		pageVO.setDataCount(dataCount);//pageVO에 dataCount값 설정해준다
 		
-		//ListRestController에서 필요한 type 변수를 직접 설정하여 화면에 전달
-		model.addAttribute("type", "board");
-		//부모 파라미터의 "key" 값을 parentParamsKey 라는 이름으로 화면에 전달
-		model.addAttribute("parentParamsKey", "clubNo");
-		//부모 파라미터의 값을 parentParams 라는 이름으로 화면에 전달
 		model.addAttribute("clubNo", clubNo);
 		model.addAttribute("pageVO", pageVO); //화면에 전달	
+		//나중에 ajax 더보기 기능 구현할때
+		//ListRestController에서 필요한 type 변수를 직접 설정하여 화면에 전달
+		//model.addAttribute("type", "board");
+		//부모 파라미터의 "key" 값을 parentParamsKey 라는 이름으로 화면에 전달
+		//model.addAttribute("parentParamsKey", "clubNo");
 		return "/WEB-INF/views/board/list.jsp";
 	}
-	//게시글 목록 조회 매핑(페이지x)
-//	@RequestMapping("/list")
-//	public String list(Model model, @RequestParam(required=false) String column, 
-//			@RequestParam(required=false) String keyword, 
-//			@RequestParam int clubNo) {
-//		
-//		ClubDto clubDto = clubDao.selectOne(clubNo);
-//		if(clubDto == null){
-//		 throw new TargetNotFoundException("존재하지 않는 모임입니다");
-//		}
-//		
-//		List<BoardListVO> boardList;
-//		boolean isSearch = column != null && keyword != null;
-//		if(isSearch) {
-//			boardList = boardDao.selectList(column, keyword, clubNo);
-//		}
-//		else {	
-//			boardList = boardDao.selectList(clubNo);
-//		}
-//			model.addAttribute("clubNo", clubNo);
-//			model.addAttribute("boardList", boardList);
-//		return "/WEB-INF/views/board/list.jsp";
-//	}
-	
-	//게시글 목록 조회 매핑(selectListWithPaging 구현 후)
 	
 	//게시글 수정 화면 매핑
 	@GetMapping("/edit")
@@ -141,12 +123,7 @@ public class BoardController {
 		model.addAttribute("boardDto", boardDto);
 		return "/WEB-INF/views/board/edit.jsp";
 	}
-//	기존 게시글 수정 매핑
-//	@PostMapping("/edit")
-//	public String edit(@ModelAttribute BoardDto boardDto, @RequestParam int boardNo) {
-//		boardDao.update(boardDto);
-//		return "redirect:detail?boardNo="+boardDto.getBoardNo();
-//	}
+
 	//변경된 수정 처리 매핑
 		@PostMapping("/edit")
 		public String edit(@ModelAttribute BoardDto boardDto, @RequestParam long boardNo) {

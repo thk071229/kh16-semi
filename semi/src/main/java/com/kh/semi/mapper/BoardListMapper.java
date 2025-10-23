@@ -28,6 +28,10 @@ public class BoardListMapper implements RowMapper<BoardListVO>{
 				.memberId(rs.getString("member_id"))
 				.memberNickname(rs.getString("member_nickname"))
 				.memberLevel(rs.getString("member_level"))
+				.clubNo(rs.getInt("club_no"))
+				.clubName(rs.getString("club_name"))
+				.regionName(rs.getString("region_name"))
+				.categoryName(rs.getString("category_name"))
 				.build();
 	}
 

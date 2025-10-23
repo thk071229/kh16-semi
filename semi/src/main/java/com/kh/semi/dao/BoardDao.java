@@ -99,7 +99,7 @@ public class BoardDao {
 		}
 	}
 	
-	//게시글 카운트 메소드
+	//게시글 카운트 메소드(클럽 내에서 페이지별로 보여주기 위함)
 	public int count(PageVO pageVO, int clubNo) { //if문을 사용해서 합친다 - int로 반환
 		// 컨트롤러에서 pageVO만을 전달해서 불러올수있도록
 	if(pageVO.isList()) { //목록일 경우
@@ -114,25 +114,6 @@ public class BoardDao {
 	return jdbcTemplate.queryForObject(sql, int.class, params);
 	}
 	}
-	
-	//게시글 전체 조회(페이지 x)
-//	public List<BoardListVO> selectList(int clubNo){ //clubNo : parameter 에서 받아올 값의 변수명
-//		String sql = "select * from board_list where board_club = ? order by board_no desc";
-//		Object[] params = {clubNo};
-//		return jdbcTemplate.query(sql, boardListMapper, params);
-//	}
-	//게시글 검색 조회(페이지 x)
-//	public List<BoardListVO> selectList(String column, String keyword, int clubNo){
-//	Set<String> allowList = Set.of("board_title", "board_writer");
-//	if(!allowList.contains(column)) return List.of();
-//	
-//	String sql = "select * from board_list where board_club = ? and instr(#1, ?) > 0 "
-//			+ "order by #1 asc, board_no desc";
-//	sql= sql.replace("#1", column);
-//	Object[] params = {clubNo, keyword};
-//	return jdbcTemplate.query(sql, boardListMapper, params);
-//	}
-	
 
 	//게시글 수정
 	public boolean update(BoardDto boardDto) {
@@ -149,9 +130,23 @@ public class BoardDao {
 		Object[] params = {boardNo};
 		return jdbcTemplate.update(sql, params) > 0;
 	}
-	//게시글 좋아요
-	//게시글 좋아요 조회
-	//공지사항 조회
-	//게시글 수 조회
+	
+	//게시글 좋아요 수 갱신
+	public boolean updateBoardLike(int boardLike, int boardNo) {
+		String sql = "update board set board_like = ? where board_no = ?";
+		Object[] params = {boardLike, boardNo};
+		return jdbcTemplate.update(sql, params) > 0;
+	}
+	
+	public boolean updateBoardLike(int boardNo) {
+		String sql = "update board "
+				+ "set board_like = "
+				+ "(select count(*) "
+				+ "from board_like where board_no =?) "
+				+ "where board_no = ?";
+		Object[] params = {boardNo, boardNo};
+		return jdbcTemplate.update(sql, params) > 0;
+	}
+	
 	
 }
