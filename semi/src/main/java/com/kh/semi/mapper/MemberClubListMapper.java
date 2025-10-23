@@ -16,7 +16,7 @@ public class MemberClubListMapper implements RowMapper<MemberClubListVO>{
 		return MemberClubListVO.builder()
 					.memberId(rs.getString("member_id"))
 					.clubNo(rs.getInt("club_no"))
-					.categoryName(rs.getString("club_name"))
+					.clubName(rs.getString("club_name"))
 					.clubCategory(rs.getInt("club_category"))
 					.clubRegion(rs.getInt("club_region"))
 					.categoryName(rs.getString("category_name"))

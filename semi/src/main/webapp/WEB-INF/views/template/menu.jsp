@@ -2,10 +2,11 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <hr>
-<h1>상단 메뉴</h1>
+<!-- <h1>상단 메뉴</h1> -->
 <!-- 로그인 여부에 따라 다른 메뉴들을 표시 -->
 <!-- 일단 비회원 화면만 구현 -->
-	<a href="/">
+<nav class="nav">	
+    <a href="/">
 	<i class="fa-solid fa-house"></i>
 	<span>홈</span>
 	</a>
@@ -40,5 +41,10 @@
 	<i class="fa-solid fa-right-from-bracket"></i>
 	<span>로그아웃</span>
 	</a>
+	<a href="/member/mypage">
+	<i class="fa-solid fa-user"></i>
+	<span>마이페이지</span>
+	</a>
 	</c:if>
+</nav>
 	<hr>

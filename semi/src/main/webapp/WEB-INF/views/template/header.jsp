@@ -12,26 +12,29 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/locale/ko.min.js"></script>
 
 <div class="container w-100">
-<div class="cell w-100 flex-box">
-<!-- 로고 이미지 -->
-<div class="cell left">
-<a href = "/">
-<img src = "https://dummyimage.com/100x50/000/fff&text=Main+logo">
-</a>
-</div>
-<!-- 검색 -->
-<div class="cell w-50 right flex-fill">
-<form action = "#" method = "post" autocomplete="off">
-<button>
-	<span>강남구</span>
-</button>
-<input type = "text" name = "category_name" placeholder = "찾고 싶은 모임을 검색해보세요! (ex 러닝, 독서)">
-<button type = "submit">
-	<i class="fa-solid fa-magnifying-glass"></i>
-</button>
-</form>
-</div>
-</div>
+    <header class="header">
+        <a class="brand" href="/">
+        <!-- 로고 이미지 -->
+        <div class="logo">SS</div>
+        <div class="cell">
+            <div style="font-weight:800">Somoim Spring</div>
+            <div style="font-size:12px;color:var(--subtle)">모임/커뮤니티 플랫폼 예시</div>
+        </div>
+        </a>
+        <form action="#" method="post" autocomplete="off">
+        <div class="cell w-50 right flex-fill">
+            <div class="search">
+                <button class="btn btn-primary">
+                    강남구
+                </button>
+                <input type = "text" name = "category_name" placeholder = "찾고 싶은 모임을 검색해보세요! (ex 러닝, 독서)">
+                <button type="submit" class="btn btn-ghost">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
+        </div>
+        </form>
+    </header>  
 <!-- 상단 메뉴 -->
 <jsp:include page="/WEB-INF/views/template/menu.jsp"></jsp:include>	
 </div>

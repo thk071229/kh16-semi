@@ -22,6 +22,12 @@ public class MemberRegionDao {
 	private MemberRegionListMapper memberRegionListMapper;
 	
 	//등록
+	// 시퀀스 생성
+	public int sequence(){
+	  String sql = "select region_seq.nextval from dual";
+	  return jdbcTemplate.queryForObject(sql, int.class);
+	}
+	
 	public void insert(MemberRegionDto memberRegionDto) {
 		String sql = "insert into member_region ("
 						+ "member_id, region_no, region_type"
