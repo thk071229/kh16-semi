@@ -94,8 +94,9 @@
 <!-- -hidden 으로 정보 전달--- -->	
 <input type="hidden" value="${eventDto.eventRegionX}" class="regionX" readonly>
 <input type="hidden" value="${eventDto.eventRegionY}" class="regionY" readonly>
-
-
+	<div>
+		<a class="btn btn-ghost w-25 center" href="list?clubNo=${eventDto.eventClub}"> ◀ 목록</a>
+ 	</div>
     <div class="cell center"> 
     	<h1>
     		${eventDto.eventTitle}
@@ -138,10 +139,10 @@
     </div>
     
     <div class="cell center">
-    	<a class="btn btn-ghost" href="list?clubNo=${eventDto.eventClub}">목록</a>
-    	<a class="btn btn-primary" href="add?clubNo=${eventDto.eventClub}">등록</a>
-    	<a class="btn btn-accent" href="edit?eventNo=${eventDto.eventNo}">수정</a>
-    	<a class="btn btn-accent" href="delete?eventNo=${eventDto.eventNo}">삭제</a>
+    	
+    	<a class="btn btn-primary w-25" href="add?clubNo=${eventDto.eventClub}">등록</a>
+    	<a class="btn btn-accent w-25" href="edit?eventNo=${eventDto.eventNo}">수정</a>
+    	<a class="btn btn-accent w-25" href="delete?eventNo=${eventDto.eventNo}">삭제</a>
     </div>
     
 </div>
