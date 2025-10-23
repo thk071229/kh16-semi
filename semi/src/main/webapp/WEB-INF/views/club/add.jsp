@@ -6,7 +6,7 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <div class="container w-600">
-        <form action="add" method="post" autocomplete="off">
+        <form action="add" method="post" autocomplete="off" enctype="multipart/form-data">
             
             <div class="cell center">
                 <h1 class="mt-20">모임 개설</h1>
@@ -43,6 +43,11 @@
 
             <div class="cell">
                 <button type="submit" class="btn btn-primary w-100">모임 만들기</button>
+            </div>
+            <%-- 대표 사진 추가 --%>
+            <div class= "cell">
+            	<label>대표 사진</label>
+            	<input class="input w-100" type="file" name="attach" accept="image/*">
             </div>
             
         </form>

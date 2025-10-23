@@ -28,6 +28,18 @@
 				</a>
 				</c:if>
 				
+				<%-- 대표사진 영역(없으면 기본 이미지 사용 --%>
+				<div class="cell">
+					<c:choose>
+						<c:when test="${clubDto.clubProfile != null}">
+							<img src="/attachment/download?attachmentNo=${clubDto.clubProfile}">
+						</c:when>
+						<c:otherwise>
+							<img src="/images/error/no-image.png">
+						</c:otherwise>
+					</c:choose>
+				</div>
+				
         	</div>
         </div>
 
@@ -50,26 +62,35 @@
         	<div class="flex-box">
             <h2 class="flex-fill">모인 멤버</h2>
             <c:if test="${loginId == clubDto.clubLeader}">
-        	<a href="#">
+        	<a href="#"><%-- 관리페이지 이동 예정 --%>
         	<i class="fa-solid fa-users fa-2x mt-25"></i>관리
         	</a>
         	</c:if>
         	</div>
         </div>
         
-        <form action="join" method="post" autocomplete="off">
-        <div class="cell">
-        		<input type="hidden" name="clubNo" value="${clubDto.clubNo}">
-                <button type="submit" class="btn btn-primary w-100">참여하기</button>
-            </div>
-        </form>
+        <%-- 1. 로그인 했고, 모임에 가입하지 않았을 경우 --%>
+        <c:if test="${loginId != null && clubMemberDto == null}">
+	        <form action="/clubMember/join" method="post" autocomplete="off">
+		        <div class="cell">
+		        		<input type="hidden" name="clubNo" value="${clubDto.clubNo}">
+		                <button type="submit" class="btn btn-primary w-100">참여하기</button>
+		        </div>
+	        </form>
+        </c:if>
         
-        <form action="drop" method="post" autocomplete="off">
-        <div class="cell">
-        		<input type="hidden" name="clubNo" value="${clubDto.clubNo}">
-                <button type="submit" class="btn red w-100">탈퇴하기</button>
-            </div>
-        </form>
+        <%-- 2. 모임에 가입한 경우 (clubMemberDto가 null이 아님) --%>
+        <c:if test="${clubMemberDto != null}">
+	        <%-- 단, 모임장은 탈퇴 버튼 숨김 (모임 삭제나 위임만 가능) --%>
+	        <c:if test="${loginId != clubDto.clubLeader}">
+		        <form action="/clubMember/drop" method="post" autocomplete="off">
+			        <div class="cell">
+			        		<input type="hidden" name="clubNo" value="${clubDto.clubNo}">
+			                <button type="submit" class="btn red w-100">탈퇴하기</button>
+			        </div>
+		        </form>
+	        </c:if>
+        </c:if>
 
     </div>
 

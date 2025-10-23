@@ -17,4 +17,5 @@ public class ClubDto {
 	private int clubCategory;
 	private String clubOpen;
 	private Timestamp clubJoin;
+	private Integer clubProfile;//null이 나올 수 있기 때문
 }

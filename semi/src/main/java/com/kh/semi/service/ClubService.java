@@ -1,8 +1,11 @@
 package com.kh.semi.service;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.semi.dao.ClubDao;
 import com.kh.semi.dao.ClubMemberDao;
@@ -20,11 +23,19 @@ public class ClubService {
 	private ClubMemberDao clubMemberDao;
 	@Autowired
 	private RegionService regionService;
+	@Autowired
+	private AttachmentService attachmentService;
 	
 	@Transactional
-	public void createClub(ClubDto clubDto, String regionName){
+	public void createClub(ClubDto clubDto, String regionName, MultipartFile attach) throws IllegalStateException, IOException{
 		  int regionNo = regionService.createRegion(regionName);
 		  clubDto.setClubRegion(regionNo);
+		  
+		  // 3. (신규) 파일 저장 로직
+		  if(attach != null && !attach.isEmpty()) { // 파일이 있다면
+		      int attachmentNo = attachmentService.save(attach); // 파일 저장
+		      clubDto.setClubProfile(attachmentNo); // DTO에 번호 세팅
+		 }
 		  // 시퀀스 생성
 		  int clubNo = clubDao.sequence();
 		  clubDto.setClubNo(clubNo);
@@ -67,4 +78,22 @@ public class ClubService {
 		  boolean success3 = clubMemberDao.updateRole(newLeaderDto);
 		  if(!success3) throw new TargetNotFoundException("변경 실패");
 }
+	@Transactional
+	public void updateClub(ClubDto clubDto, MultipartFile attach) throws IllegalStateException, IOException {//api확인 후 수정 메소드도 추가해야 할듯
+		if(attach != null && attach.isEmpty() == false) {//새 파일을 첨부한 경우 
+			// 1. 기존 파일 삭제
+			ClubDto origin = clubDao.selectOne(clubDto.getClubNo());
+			if(origin.getClubProfile() != null) {
+				attachmentService.delete(origin.getClubProfile());
+			}
+			// 2. 새 파일 저장
+			int attachmentNo = attachmentService.save(attach);
+			clubDto.setClubProfile(attachmentNo);
+		}
+		else {//새 파일을 첨부하지 않은 경우
+			ClubDto origin = clubDao.selectOne(clubDto.getClubNo());
+			clubDto.setClubProfile(origin.getClubProfile());
+		}
+		clubDao.update(clubDto);
+	}
 }
