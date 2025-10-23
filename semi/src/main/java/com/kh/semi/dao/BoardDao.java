@@ -126,7 +126,7 @@ public class BoardDao {
 	
 	//게시글 삭제
 	public boolean delete(int boardNo) {
-		String sql = "delete board where board_no = ?";
+		String sql = "delete from board where board_no = ?";
 		Object[] params = {boardNo};
 		return jdbcTemplate.update(sql, params) > 0;
 	}
@@ -148,5 +148,10 @@ public class BoardDao {
 		return jdbcTemplate.update(sql, params) > 0;
 	}
 	
-	
+	//게시글 댓글 수 갱신
+	public boolean updateBoardReply(int boardComment, int boardNo) {
+		String sql = "update board set board_comment = ? where board_no = ?";
+		Object[] params = {boardComment, boardNo};
+		return jdbcTemplate.update(sql, params) > 0;
+	}
 }

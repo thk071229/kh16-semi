@@ -7,7 +7,6 @@ $(function () {
             }
         }
     });
-    //[name=boardContent]를 summernote로 변환
     $(".summernote-editor").summernote({
         //높이 옵션
         height: 250,
@@ -48,7 +47,7 @@ $(function () {
 				$.ajax({
 					processData:false,
 					contentType:false,
-					url:"/rest/board/temps",
+					url:"/rest/image/temps",
 					method:"post",
 					data:form,
 					success:function(response){ //response == List<Integer>

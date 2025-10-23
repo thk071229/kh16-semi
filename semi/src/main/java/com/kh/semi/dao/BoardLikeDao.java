@@ -33,7 +33,7 @@ public class BoardLikeDao {
 	}
 	//좋아요 삭제(취소)
 	public boolean delete(String memberId, int boardNo) {
-		String sql = "delete board_like "
+		String sql = "delete from board_like "
 				+ "where member_id = ? and board_no = ?";
 		Object[] params = {memberId, boardNo};
 		return jdbcTemplate.update(sql, params) > 0;
