@@ -187,7 +187,7 @@
 				</div>
 				<div class="cell">
 					<button class="btn btn-primary w-100" type="submit">
-						<span class="center">수정</span>
+						<span class="center">등록</span>
 					</button>
 				</div>		
 		</div>

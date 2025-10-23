@@ -5,7 +5,42 @@
   <!-- jquery cdn -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-    
+  <!-- kakaomap cdn  -->
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8e8665a62573621467f321f74eb7cae4&libraries=services"></script>
+  
+  <!-- -------------------------------------- -->	
+  <script type="text/javascript">
+  	$(function(){
+  		var container = document.querySelector(".kakao-map");
+  		var option = {
+  				center: new kakao.maps.LatLng(37.5665, 126.9780),
+  		        level: 7
+  		}
+  		var map = new kakao.maps.Map(container, option);
+  		var clubNo = $(".clubNo").val();
+  		console.log("전송되는 clubNo", clubNo);
+  		$.ajax({
+  			url:"/rest/event/locations",
+  			method:"get",
+  			data : {clubNo : clubNo},
+  			success : function(list){
+  				//console.log("서버 응답 확인용1:", list);
+  				list.forEach(function(response){
+  					//console.log("서버 응답 확인용2:", response);
+  					//console.log("서버 응답 확인용3:", response.eventRegionY);
+  					//console.log("서버 응답 확인용3:", response.eventRegionX);
+  					var markerPosition  = new kakao.maps.LatLng(response.eventRegionY, response.eventRegionX); 
+  					var marker = new kakao.maps.Marker({
+  	                    position: markerPosition,
+  	                    map: map
+  	                });
+  					marker.setMap(map);
+  				})
+  			}
+  		});
+  	});
+  </script>
+  <!-- -------------------------------------- -->	
     <style>
     .event-box{
     	background-color:#ecfbf8;
@@ -26,10 +61,17 @@
     	text-decoration:none;
     	color:black;
     }
+   	.kakao-map {
+		width: 100%;
+		height: 300px;
+	}
     </style>
 
 <!-- ------------------------------------ -->
 <div class="container w-800">
+	
+		<input type="hidden" class="clubNo" value="${clubNo}">
+	
 	
 	<div class="cell left">
 		<a class="btn btn-ghost" href="/club/home?clubNo=${clubNo}">메인</a>
@@ -37,6 +79,11 @@
 		<a class="btn btn-primary" href="/event/add?clubNo=${clubNo}">신규 등록</a>
 	</div>
 
+	<div class="cell">
+		<label style="color:gray;">우리 소모임의 정모 History</label>
+		<div class="kakao-map w-100"></div>
+	</div>
+	
 
 	<div class="cell mt-40">
 		<div class="flex-box">

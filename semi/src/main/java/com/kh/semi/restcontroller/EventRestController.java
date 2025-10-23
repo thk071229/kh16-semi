@@ -1,5 +1,7 @@
 package com.kh.semi.restcontroller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.semi.dao.EventAttendeeDao;
 import com.kh.semi.dao.EventDao;
+import com.kh.semi.dto.EventDto;
 import com.kh.semi.service.AttachmentService;
 import com.kh.semi.vo.EventAttendeeVO;
 
@@ -61,5 +64,9 @@ public class EventRestController {
 		return eventAttendeeVO;
 	}
 
-
+	// 전체 정모 좌표 출력
+	@GetMapping("/locations")
+	public List<EventDto> Location(@RequestParam int clubNo){
+		return eventDao.selectList(clubNo);
+	}
 }
