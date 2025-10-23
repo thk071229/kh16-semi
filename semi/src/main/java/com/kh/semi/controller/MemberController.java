@@ -20,6 +20,7 @@ import com.kh.semi.dto.CategoryDto;
 import com.kh.semi.dto.MemberCategoryDto;
 import com.kh.semi.dto.MemberDto;
 import com.kh.semi.dto.MemberRegionDto;
+import com.kh.semi.dto.RegionDto;
 import com.kh.semi.error.TargetNotFoundException;
 import com.kh.semi.service.MemberService;
 import com.kh.semi.vo.MemberCategoryListVO;
@@ -50,7 +51,7 @@ public class MemberController {
 	@PostMapping("/join")
 	public String join(@ModelAttribute MemberDto memberDto) {
 		memberDao.insert(memberDto);
-		return "redirect:/joinFinish?memberId=" + memberDto.getMemberId();
+		return "redirect:joinFinish?memberId=" + memberDto.getMemberId();
 	}
 	//회원 가입 후 관심 지역 & 관심 카테고리 등록
 	@GetMapping("/joinFinish")
@@ -67,14 +68,13 @@ public class MemberController {
 	public String joinFinish(
 			@RequestParam String memberId,
 			@ModelAttribute MemberRegionDto memberRegionDto,
+			@ModelAttribute RegionDto regionDto,
 			@ModelAttribute MemberCategoryDto memberCategoryDto) {
-		
-		//region 테이블에서 regionNo를 받아오는 작업이 필요한가?
-		
-		
+				
 		//관심 지역 & 카테고리 등록 처리
-		//memberCategoryDto.setMemberId(memberId);
-		//memberRegionDao.insert(memberRegionDto);
+		//regionDto에서 지역 번호를 꺼내서 넣음
+		memberRegionDto.setRegionNo(regionDto.getRegionNo());
+		memberRegionDto.setMemberId(memberId);
 		
 		memberCategoryDto.setMemberId(memberId);
 		memberCategoryDao.insert(memberCategoryDto);
@@ -186,6 +186,80 @@ public class MemberController {
 		
 		return "redirect:mypage";
 	}
+	
+	//선호지역 수정
+	/*
+	 * @GetMapping("/editRegion") public String editRegion(Model model, HttpSession
+	 * session) { String loginId = (String)session.getAttribute("loginId");
+	 * List<MemberRegionListVO>regionList = memberRegionDao.selectVOList(loginId);
+	 * model.addAttribute("regionList", regionList); return
+	 * "/WEB-INF/views/member/editRegion.jsp"; }
+	 * 
+	 * @PostMapping("/editRegion") public String
+	 * editRegion(@ModelAttribute("regions") MemberRegionDto[] memberRegions,
+	 * 
+	 * @RequestParam("oldRegionNo") int[] oldRegionNos, HttpSession session) { //
+	 * memberRegionDto와 수정 전의 regionNo를 배열로 받아온다 String loginId = (String)
+	 * session.getAttribute("loginId");
+	 * 
+	 * for (int i = 0; i < memberRegions.length; i++) {
+	 * memberRegions[i].setMemberId(loginId);
+	 * memberRegionDao.update(memberRegions[i], oldRegionNos[i]); }
+	 * 
+	 * return "redirect:/mypage"; }
+	 * 
+	 * //카테고리 수정
+	 * 
+	 * @GetMapping("/editCategory") public String editCategory(Model model,
+	 * HttpSession session) { String loginId = (String)
+	 * session.getAttribute("loginId");
+	 * 
+	 * // 회원이 선택한 카테고리 List<MemberCategoryListVO> categoryList =
+	 * memberCategoryDao.selectVOList(loginId); // 전체 카테고리 List<CategoryDto>
+	 * allCategoryList = categoryDao.selectList();
+	 * 
+	 * model.addAttribute("categoryList", categoryList);
+	 * model.addAttribute("allCategoryList", allCategoryList);
+	 * 
+	 * return "/WEB-INF/views/member/editCategory.jsp"; }
+	 * 
+	 * // POST – 수정 처리
+	 * 
+	 * @PostMapping("/editCategory") public String
+	 * editCategory(@RequestParam("categoryNos") List<Integer> categoryNos,
+	 * HttpSession session) { String loginId = (String)
+	 * session.getAttribute("loginId"); memberCategoryDao.updateCategories(loginId,
+	 * categoryNos); return "redirect:/mypage"; }
+	 */
+	
+	@GetMapping("/editCategory")
+	public String editCategory(Model model, HttpSession session) {
+		//사용자 아이디 전달
+		String loginId = (String) session.getAttribute("loginId");
+		model.addAttribute("loginId", loginId);
+		
+		//category list를 다음 단계에서 사용하도록 JSP에 전달
+		List<CategoryDto>categoryList = categoryDao.selectList();
+		model.addAttribute("categoryList", categoryList);
+		
+		//사용자의 선호 카테고리 조회해서 전달
+		MemberCategoryDto memberCategoryDto = memberCategoryDao.selectById(loginId);
+		model.addAttribute("oldMemberCategoryDto", memberCategoryDto);
+		
+		return "/WEB-INF/views/member/editCategory.jsp";
+	}
+	
+	@PostMapping("/editCategory")
+	public String editCategory(@ModelAttribute CategoryDto categoryDto, HttpSession session) {
+		String loginId = (String)session.getAttribute("loginId");
+		MemberCategoryDto memberCategoryDto = memberCategoryDao.selectById(loginId);
+		int oldCategoryNo = memberCategoryDto.getCategoryNo();
+		memberCategoryDto.setCategoryNo(categoryDto.getCategoryNo());
+		memberCategoryDao.update(memberCategoryDto, oldCategoryNo);
+		
+		return "redirect:mypage";
+	}
+	
 	
 	//비밀번호 변경
 	@GetMapping("/password")

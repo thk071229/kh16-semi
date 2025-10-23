@@ -30,7 +30,7 @@ public class MemberDao {
 		Object[] params = {
 				memberDto.getMemberId(), memberDto.getMemberPw(), memberDto.getMemberNickname(), 
 				memberDto.getMemberEmail(), memberDto.getMemberGender(), memberDto.getMemberBirth(),
-				memberDto.getMemberPoint(), memberDto.getMemberLevel(), memberDto.getMemberJoin()
+				memberDto.getMemberPoint(), memberDto.getMemberLevel()
 				};
 		jdbcTemplate.update(sql, params);
 	}
