@@ -31,11 +31,11 @@
 <!-- ------------------------------------ -->
 <div class="container w-800">
 	
-		<div class="cell left">
-			<a class="btn btn-ghost" href="/club/home?clubNo=${clubNo}">메인</a>
-			<a class="btn btn-ghost" href="/board/list?clubNo=${clubNo}">게시판</a>
-			<a class="btn btn-primary" href="/event/add?clubNo=${clubNo}">신규 등록</a>
-		</div>
+	<div class="cell left">
+		<a class="btn btn-ghost" href="/club/home?clubNo=${clubNo}">메인</a>
+		<a class="btn btn-ghost" href="/board/list?clubNo=${clubNo}">게시판</a>
+		<a class="btn btn-primary" href="/event/add?clubNo=${clubNo}">신규 등록</a>
+	</div>
 
 
 	<div class="cell mt-40">
@@ -78,9 +78,9 @@
 						<h1>종료</h1>
 					</div>
 					
-						<c:forEach var="afterList" items="${afterDto}" varStatus="status">
-							<div class="cell event-box">
-								<a class="event-link" href="detail?eventNo=${afterList.eventNo}">
+					<c:forEach var="afterList" items="${afterDto}" varStatus="status">
+						<div class="cell event-box">
+							<a class="event-link" href="detail?eventNo=${afterList.eventNo}">
 										<div class="mb-10 event-title">
 											<label>${afterList.eventTitle}</label>
 											<label style="font-size:16px;">(참여인원/${afterList.eventMaxPeople})</label>
@@ -99,45 +99,47 @@
 										<div class="ms-20"><i class="fa-solid fa-house"></i>
 											<label>${afterList.eventAddress}</label>
 										</div>
-									</a>
-								</div>
-						</div>
-						</c:forEach>
-				</div>
+							</a>
+					</div>
+				</c:forEach>
+			</div>
+						
 		</div>
+	</div>
 			<hr>
 
 	<!-- 기본 전체 목록 -->
 	<div>
-	<div class="cell center">
-		<h1>전체 정모 목록</h1>
-	</div>
-	<c:forEach var="eventList" items="${eventDto}" varStatus="status">
-						<div class="cell event-box">
-							<a class="event-link"href="detail?eventNo=${eventList.eventNo}">
-							<div class="mb-10 event-title">
-								<label>${eventList.eventTitle}</label>
-								<label style="font-size:16px;">(참여인원/${beforeList.eventMaxPeople})</label>
-							</div>
-							<div class="ms-20"><i class="fa-solid fa-calendar"></i>
-								<label>
-									<fmt:formatDate value="${eventList.eventDate}" pattern="y년 M월 d일 H:mm" ></fmt:formatDate>
-								</label>
-							</div>
-							<div class="ms-20"><i class="fa-solid fa-person"></i>
-								<label>${eventList.memberNickname}</label>
-							</div>
-							<div class="ms-20"><i class="fa-solid fa-house"></i>
-								<label>${eventList.clubName}</label>
-							</div>
-							<div class="ms-20"><i class="fa-solid fa-house"></i>
-								<label>${eventList.eventAddress}</label>
-							</div>
-							</a>
-							</div>
-						</c:forEach>
+		<div class="cell center">
+			<h1>전체 정모 목록</h1>
+		</div>
+		
+		<c:forEach var="eventList" items="${eventDto}" varStatus="status">
+			<div class="cell event-box">
+				<a class="event-link"href="detail?eventNo=${eventList.eventNo}">
+					<div class="mb-10 event-title">
+						<label>${eventList.eventTitle}</label>
+						<label style="font-size:16px;">(참여인원/${beforeList.eventMaxPeople})</label>
+					</div>
+					<div class="ms-20"><i class="fa-solid fa-calendar"></i>
+						<label>
+							<fmt:formatDate value="${eventList.eventDate}" pattern="y년 M월 d일 H:mm" ></fmt:formatDate>
+						</label>
+					</div>
+					<div class="ms-20"><i class="fa-solid fa-person"></i>
+						<label>${eventList.memberNickname}</label>
+					</div>
+					<div class="ms-20"><i class="fa-solid fa-house"></i>
+						<label>${eventList.clubName}</label>
+					</div>
+					<div class="ms-20"><i class="fa-solid fa-house"></i>
+						<label>${eventList.eventAddress}</label>
+					</div>
+				</a>
+			</div>
+		</c:forEach>
 	</div>
 		
-	</div>
+</div>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

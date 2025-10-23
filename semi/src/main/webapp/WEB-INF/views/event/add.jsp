@@ -135,7 +135,7 @@
 		<h1>정모 추가</h1>
 	</div>
 	
-	<form action="add" method="post" autocomplete="off">
+	<form action="add" method="post" autocomplete="off"  enctype="multipart/form-data" >
 	<input type="hidden" name="eventClub" value="${clubNo}" required>
 
 			<div class="cell">
@@ -164,7 +164,10 @@
 								</button>
 							</div>
 						</div>
-						
+						<div class="cell">
+                   			<label>대표 이미지</label>
+                    		<input class="input w-100" type="file" name="attach" accept="image/*">
+                		</div>
 					</div>
 						<div class="flex-fill ms-20">
 							<div class="cell">
@@ -184,7 +187,7 @@
 				</div>
 				<div class="cell">
 					<button class="btn btn-primary w-100" type="submit">
-						<span class="center">등록</span>
+						<span class="center">수정</span>
 					</button>
 				</div>		
 		</div>
