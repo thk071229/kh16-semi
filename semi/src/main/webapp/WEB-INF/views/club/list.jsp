@@ -23,7 +23,7 @@
                 <tbody>
                 <c:forEach var="clubListVO" items="${clubList}">
                     <tr>
-                        <td>${clubListVO.clubName}</td>
+                        <td><a href="detail?clubNo=${clubListVO.clubNo}">${clubListVO.clubName}</a></td>
                         <td>${clubListVO.regionName}</td>
                         <td>${clubListVO.categoryName}</td>
                     </tr>
