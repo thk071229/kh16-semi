@@ -46,30 +46,29 @@
 	</div>
 	<!-- 가입한 소모임 목록 -->
 	<div>
-		<h1>가입한 소모임 목록</h1>
+		<h2>${memberDto.memberId}님의 가입 모임</h2>
 	</div>
 	<div>
-		<table>
-			<thead>
-				<tr>
-					<th>소모임 이름</th>
-					<th>카테고리</th>
-				</tr>
-			</thead>
-			<tbody>
-			<!-- 
-				<c:forEach var="memberClubListVO" items="${clubList}">
+		<table border="1" width="500">
+			<tr>
+				<th>소모임 이름</th>
+				<th>활동 지역</th>
+				<th>카테고리</th>
+			</tr>
+			<c:forEach var="memberClubListVO" items="${clubList}">
 				<tr>
 					<td>
-						<a href="/club/detail?clubNo=${memberClubListVO.clubNo}">${memberClubListVO.clubName}</a>
-					<td>
-					<td>
-						${memberClubListVO.categoryName}
-					<td>
+						${memberClubListVO.clubName}
+						<%-- 
+						<a href="/club/detail?clubNo=${memberClubListVO.clubNo}">
+							${memberClubListVO.clubName}
+						</a>
+						--%>
+					</td>
+					<td>${memberClubListVO.regionName}</td>
+					<td>${memberClubListVO.categoryName}</td>
 				</tr>
-				</c:forEach>
-			 -->
-			</tbody>
+			</c:forEach>
 		</table>
 	</div>
 	<div>

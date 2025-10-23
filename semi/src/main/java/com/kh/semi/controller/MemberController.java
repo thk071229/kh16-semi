@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.semi.dao.CategoryDao;
+import com.kh.semi.dao.ClubDao;
 import com.kh.semi.dao.MemberCategoryDao;
 import com.kh.semi.dao.MemberDao;
 import com.kh.semi.dao.MemberRegionDao;
@@ -19,11 +20,10 @@ import com.kh.semi.dao.RegionDao;
 import com.kh.semi.dto.CategoryDto;
 import com.kh.semi.dto.MemberCategoryDto;
 import com.kh.semi.dto.MemberDto;
-import com.kh.semi.dto.MemberRegionDto;
-import com.kh.semi.dto.RegionDto;
 import com.kh.semi.error.TargetNotFoundException;
 import com.kh.semi.service.MemberService;
 import com.kh.semi.vo.MemberCategoryListVO;
+import com.kh.semi.vo.MemberClubListVO;
 import com.kh.semi.vo.MemberRegionListVO;
 
 import jakarta.servlet.http.HttpSession;
@@ -43,6 +43,10 @@ public class MemberController {
 	private CategoryDao categoryDao;
 	@Autowired
 	private RegionDao regionDao;
+	@Autowired
+	private ClubDao clubDao;
+	
+	
 	//회원가입
 	@GetMapping("/join")
 	public String join() {
@@ -67,14 +71,11 @@ public class MemberController {
 	@PostMapping("/joinFinish")
 	public String joinFinish(
 			@RequestParam String memberId,
-			@ModelAttribute MemberRegionDto memberRegionDto,
-			@ModelAttribute RegionDto regionDto,
 			@ModelAttribute MemberCategoryDto memberCategoryDto) {
 				
 		//관심 지역 & 카테고리 등록 처리
 		//regionDto에서 지역 번호를 꺼내서 넣음
-		memberRegionDto.setRegionNo(regionDto.getRegionNo());
-		memberRegionDto.setMemberId(memberId);
+		
 		
 		memberCategoryDto.setMemberId(memberId);
 		memberCategoryDao.insert(memberCategoryDto);
@@ -133,9 +134,13 @@ public class MemberController {
 		List<MemberRegionListVO>regionList = memberRegionDao.selectVOList(loginId);
 		//회원이 선택한 카테고리 리스트
 		List<MemberCategoryListVO>categoryList = memberCategoryDao.selectVOList(loginId);
+		//회원이 가입한 소모임 리스트
+		List<MemberClubListVO>clubList = clubDao.selectClubList(loginId);
+		
 		model.addAttribute("memberDto", memberDto);
 		model.addAttribute("regionList", regionList);
 		model.addAttribute("categoryList", categoryList);
+		model.addAttribute("clubList", clubList);
 		return "/WEB-INF/views/member/mypage.jsp";
 	}
 	

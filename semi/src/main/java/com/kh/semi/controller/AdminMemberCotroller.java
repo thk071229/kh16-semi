@@ -1,5 +1,7 @@
 package com.kh.semi.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,10 +11,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.semi.dao.ClubDao;
 import com.kh.semi.dao.MemberDao;
 import com.kh.semi.dto.MemberDto;
 import com.kh.semi.error.TargetNotFoundException;
 import com.kh.semi.service.AttachmentService;
+import com.kh.semi.vo.MemberClubListVO;
 import com.kh.semi.vo.PageVO;
 
 @Controller
@@ -22,6 +26,8 @@ public class AdminMemberCotroller {
 	private MemberDao memberDao;
 	@Autowired
 	private AttachmentService attachmentService;
+	@Autowired
+	private ClubDao clubDao;
 	
 	
 	//조회
@@ -36,8 +42,13 @@ public class AdminMemberCotroller {
 	public String detail(@RequestParam String memberId, Model model) {
 		MemberDto memberDto = memberDao.selectOne(memberId);
 		if(memberDto == null) throw new TargetNotFoundException("존재하지 않는 회원");
+		
+		//회원 정보를 Jsp에 전달
 		model.addAttribute("memberDto", memberDto);
-		//##### 클럽 리스트 추가 필요
+		//회원이 가입한 소모임 리스트를 Jsp에 전달
+		List<MemberClubListVO> clubList = clubDao.selectClubList(memberId);
+		model.addAttribute("clubList", clubList);
+		
 		return "/WEB-INF/views/admin/member/detail.jsp";
 	}
 	

@@ -1,6 +1,7 @@
 package com.kh.semi.dao;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -8,7 +9,9 @@ import org.springframework.stereotype.Repository;
 import com.kh.semi.dto.ClubDto;
 import com.kh.semi.mapper.ClubListMapper;
 import com.kh.semi.mapper.ClubMapper;
+import com.kh.semi.mapper.MemberClubListMapper;
 import com.kh.semi.vo.ClubListVO;
+import com.kh.semi.vo.MemberClubListVO;
 import com.kh.semi.vo.PageVO;
 
 @Repository
@@ -21,6 +24,8 @@ public class ClubDao {
 	private ClubMapper clubMapper;
 	@Autowired
 	private ClubListMapper clubListMapper;
+	@Autowired
+	private MemberClubListMapper memberClubListMapper;
 
 	//등록
 	public int sequence() {
@@ -58,6 +63,21 @@ public class ClubDao {
 		List<ClubDto> list = jdbcTemplate.query(sql, clubMapper, params);
 		return list.isEmpty() ? null : list.get(0);
 	}
+	
+	public int count(PageVO pageVO) {
+		if(pageVO.isList()) {
+			String sql = "select count(*) from club";
+			return jdbcTemplate.queryForObject(sql, int.class);
+		}
+		else {
+			String sql ="select count(*) from club "
+					+ "where instr(#1, ?) > 0";
+			sql = sql.replace("#1", pageVO.getColumn());
+			Object[] params = {pageVO.getKeyword()};
+			return jdbcTemplate.queryForObject(sql, int.class, params);
+		}
+	}
+	
 	//지역과 카테고리에 따른 목록 및 검색 조회
 	public List<ClubListVO> selectListWithPaging(PageVO pageVO){
 		if(pageVO.isList()){//목록
@@ -89,6 +109,12 @@ public class ClubDao {
 		Object[] params = {clubNo};
 		List<ClubListVO> list = jdbcTemplate.query(sql, clubListMapper, params);
 		return list.isEmpty() ? null : list.get(0);
+	}
+	// 회원의 아이디로 가입한 club의 목록을 조회하고 club의 정보를 보여주기 위한 메소드
+	public List<MemberClubListVO> selectClubList(String memberId) {
+		String sql = "select * from member_club_list where member_id=?";
+		Object[] params = {memberId};
+		return jdbcTemplate.query(sql, memberClubListMapper, params);
 	}
 	
 	

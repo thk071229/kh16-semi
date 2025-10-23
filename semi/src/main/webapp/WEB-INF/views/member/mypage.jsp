@@ -93,6 +93,35 @@
 	<div>
 		<a href="editCategory">카테고리 수정</a>
 	</div>
+	
+	<!-- 가입한 소모임 목록  -->
+	<div>
+		<h2>${memberDto.memberId}님의 가입 모임</h2>
+	</div>
+	<div>
+		<table border="1" width="500">
+			<tr>
+				<th>소모임 이름</th>
+				<th>활동 지역</th>
+				<th>카테고리</th>
+			</tr>
+			<c:forEach var="memberClubListVO" items="${clubList}">
+				<tr>
+					<td>
+						${memberClubListVO.clubName}
+						<%-- 
+						<a href="/club/detail?clubNo=${memberClubListVO.clubNo}">
+							${memberClubListVO.clubName}
+						</a>
+						--%>
+					</td>
+					<td>${memberClubListVO.regionName}</td>
+					<td>${memberClubListVO.categoryName}</td>
+				</tr>
+			</c:forEach>
+		</table>
+	</div>
+
 	<div>
 		<a href="password">비밀번호 변경</a>
 	</div>
