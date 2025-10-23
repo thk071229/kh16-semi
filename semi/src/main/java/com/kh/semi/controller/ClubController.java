@@ -136,9 +136,13 @@ public class ClubController {
 		}
 	//소모임 Home으로 이동
 	@GetMapping("/home")
-	public String home(HttpSession session) {
+	public String home(HttpSession session, @RequestParam int clubNo,Model model) {
 		String loginId = (String)session.getAttribute("loginId");
 		if(loginId == null) throw new TargetNotFoundException("로그인이 필요합니다");
+		
+		ClubDto clubDto = clubDao.selectOne(clubNo);
+		if(clubDto == null) throw new TargetNotFoundException("존재하지 않는 소모임");
+		model.addAttribute("clubDto", clubDto);
 		return "/WEB-INF/views/club/home.jsp";
 	}
 }
