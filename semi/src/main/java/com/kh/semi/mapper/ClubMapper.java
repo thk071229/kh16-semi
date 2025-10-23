@@ -23,6 +23,7 @@ public class ClubMapper implements RowMapper<ClubDto>{
 		clubDto.setClubCategory(rs.getInt("club_category"));
 		clubDto.setClubOpen(rs.getString("club_open"));
 		clubDto.setClubJoin(rs.getTimestamp("club_join"));
+		clubDto.setClubProfile(rs.getObject("club_profile", Integer.class));
 		return clubDto;
 	}
 
