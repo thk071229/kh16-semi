@@ -28,6 +28,11 @@ public class BoardListVO {
 	private String memberNickname;
 	private String memberLevel;
 	
+	private int clubNo;
+	private String clubName;
+	private String regionName;
+	private String categoryName;
+	
 	//내가 추가한 게터 메소드
 		//EL에서 ${boardDto.boardWriteTime}으로 부를 수 있는 메소드를 생성
 			public String getBoardWriteTime() {
