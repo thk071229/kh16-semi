@@ -19,6 +19,7 @@ import com.kh.semi.dto.ClubDto;
 import com.kh.semi.dto.ClubMemberDto;
 import com.kh.semi.error.TargetNotFoundException;
 import com.kh.semi.error.UnauthorizationException;
+import com.kh.semi.service.AttachmentService;
 import com.kh.semi.service.ClubService;
 import com.kh.semi.vo.ClubListVO;
 import com.kh.semi.vo.PageVO;
@@ -37,6 +38,8 @@ public class ClubController {
 	private ClubService clubService;
 	@Autowired
 	private CategoryDao categoryDao;
+	@Autowired
+	private AttachmentService attachmentService;
 	
 	//소모임 등록
 	@GetMapping("/add")
@@ -141,5 +144,33 @@ public class ClubController {
 		model.addAttribute("clubMemberDto", clubMemberDto);
 		
 		return "/WEB-INF/views/club/home.jsp";
+	}
+	
+	@PostMapping("/join")
+	public String insert(@ModelAttribute ClubMemberDto clubMemberDto, 
+			HttpSession session, @RequestParam int clubNo, Model model) {
+		String loginId = (String)session.getAttribute("loginId");
+		if(loginId == null) throw new TargetNotFoundException("로그인이 필요합니다");
+		
+		ClubDto findDto = clubDao.selectOne(clubNo);
+		if(findDto == null) throw new TargetNotFoundException("이미 가입한 소모임입니다");
+		
+		model.addAttribute("clubDto", findDto);
+		clubMemberDto.setClubNo(findDto.getClubNo());
+		clubMemberDto.setClubMember(loginId);
+		clubMemberDto.setClubMemberRole("일반회원");
+		clubMemberDao.insert(clubMemberDto);
+		return "redirect:list";
+	}
+	@PostMapping("/drop")
+	public String drop(Model model, @RequestParam int clubNo, HttpSession session) {
+		String loginId = (String)session.getAttribute("loginId");
+		if(loginId == null) throw new TargetNotFoundException("로그인이 필요합니다");
+		
+		ClubMemberDto clubMemberDto = clubMemberDao.selectByClubMember(clubNo, loginId);
+		model.addAttribute("clubMemberDto", clubMemberDto);
+		boolean success = clubMemberDao.delete(clubNo, loginId);
+		if(!success) throw new TargetNotFoundException("탈퇴에 실패하였습니다");
+		return "redirect:list";
 	}
 }

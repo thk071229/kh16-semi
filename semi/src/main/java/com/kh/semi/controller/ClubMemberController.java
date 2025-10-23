@@ -19,7 +19,7 @@ public class ClubMemberController {
 	@Autowired
 	private ClubMemberDao clubMemberDao;
 	
-	@GetMapping("/insert")
+	@GetMapping("/join")
 	public String insert(@ModelAttribute ClubMemberDto clubMemberDto, HttpSession session) {
 		String loginId = (String)session.getAttribute("loginId");
 		if(loginId == null) throw new TargetNotFoundException("로그인이 필요합니다");

@@ -56,12 +56,20 @@
         	</c:if>
         	</div>
         </div>
-        <form action="join" method="get" autocomplete="off">
+        
+        <form action="join" method="post" autocomplete="off">
         <div class="cell">
+        		<input type="hidden" name="clubNo" value="${clubDto.clubNo}">
                 <button type="submit" class="btn btn-primary w-100">참여하기</button>
             </div>
         </form>
-
+        
+        <form action="drop" method="post" autocomplete="off">
+        <div class="cell">
+        		<input type="hidden" name="clubNo" value="${clubDto.clubNo}">
+                <button type="submit" class="btn red w-100">탈퇴하기</button>
+            </div>
+        </form>
 
     </div>
 
