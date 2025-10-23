@@ -37,6 +37,57 @@
 		marker.setMap(map);
 	});
 </script>
+<!-- 정모 참여(eventAttendee) 관련 작업 -->	
+<!-- 정모 참여 확인 -->
+<script type="text/javascript">
+	$(function(){
+		// 파라미터 읽는 코드
+		var params = new URLSearchParams(location.search);
+		var eventNo = params.get("eventNo");
+		$.ajax({
+			url:"/rest/event/check?eventNo="+eventNo,
+			method:"get",
+			success : function(response) {
+				if (response.attend) {
+					$("#event-attendee").removeClass("fa-square fa-square-check").addClass("fa-square-check");
+					$("#event-attendee-count").text(response.count);
+					console.log(response);
+				} else {
+					$("#event-attendee").removeClass("fa-square fa-square-check").addClass("fa-square");
+					$("#event-attendee-count").text(response.count);
+					console.log(response);
+					}
+				}
+			})
+		});
+</script>
+<c:if
+	test="${sessionScope.loginId != null}">
+	<!-- 참여 관련 처리 -->
+	<script type="text/javascript">
+		$(function() {
+			//버튼을 누르면 서버의 /rest/event/action으로 신호를 전송
+			$("#event-attendee").on("click",function() {
+						var params = new URLSearchParams(location.search);
+						var eventNo = params.get("eventNo");
+						$.ajax({
+							url : "/rest/event/action?eventNo="+ eventNo,
+							method : "get",
+							success : function(response) {
+								if (response.attend) {
+									$("#event-attendee").removeClass("fa-square fa-square-check").addClass("fa-square-check");
+									$("#event-attendee-count").text(response.count);
+								} else {//좋아요가 해제되었다면
+									$("#event-attendee").removeClass("fa-square fa-square-check").addClass("fa-square");
+									$("#event-attendee-count").text(response.count);
+									}
+								}
+						});
+				});
+		});
+	</script>
+</c:if>
+
 <!-- -------------------------------------- -->	
 <div class="container w-800">
 
@@ -63,17 +114,20 @@
 	    	<label> / 작성일</label>
 	    	<fmt:formatDate value="${eventDto.eventWtime}" pattern="M월 d일 H:mm" ></fmt:formatDate>
 	    </div>
-	    <div class="cell flex-fill">
-	    	참여인원 : 참여자 / ${eventDto.eventMaxPeople}
-	    </div>
+	    <div class="flex-fill">
+		    <div class="cell" style="font-size:20px">
+		    	인원 : <span id="event-attendee-count">?</span> / ${eventDto.eventMaxPeople}
+				<i id="event-attendee" class="fa-regular fa-square fa-2x"></i>
+			</div>
+		</div>
 	</div>	
     
 
      <div class="cell">
      	<hr>
-     	<br>
+
    		${eventDto.eventContent}
-   		<br>
+
    		<hr>
     </div>
 	<div class="cell">
