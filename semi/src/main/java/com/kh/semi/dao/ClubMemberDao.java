@@ -36,4 +36,18 @@ public class ClubMemberDao {
 		List<ClubMemberDto> list = jdbcTemplate.query(sql, clubMemberMapper, params);
 		return list.isEmpty() ? null : list.get(0);
 	}
+	// 특정 모임(clubNo)에 특정 회원(memberId)이 있는지 확인
+	public ClubMemberDto selectByClubMember(int clubNo, String memberId) {
+	    String sql = "select * from club_member where club_no = ? AND club_member = ?";
+	    Object[] params = {clubNo, memberId}; 
+	    
+	    List<ClubMemberDto> list = jdbcTemplate.query(sql, clubMemberMapper, params);
+	    return list.isEmpty() ? null : list.get(0);
+	}
+	// 모임 탈퇴 메소드
+	public boolean delete(int clubNo, String memberId) {
+		String sql ="delete from club_member where club_no = ? and club_member = ?";
+		Object[] params = {clubNo, memberId};
+		return jdbcTemplate.update(sql, params) > 0;
+	}
 }
