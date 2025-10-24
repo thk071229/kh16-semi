@@ -5,6 +5,18 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
+<script type="text/javascript">
+	$(function(){
+		$(".check-club-delete").on("click", function(e){
+			e.preventDefault();
+			var isConfirm = confirm("정말 삭제하시겠습니까?");
+			if(isConfirm){
+				window.location.href = $(this).attr("href");
+			}
+		});
+		
+	});
+</script>
 <div class="container w-800">
 		<%-- 메뉴 바 --%>
 		<div class="cell">
@@ -23,7 +35,7 @@
         		<a href="edit?clubNo=${clubDto.clubNo}">
 					<i class="fa-solid fa-pen-to-square fa-2x mt-30 me-10"></i>
 				</a>
-				<a href="delete?clubNo=${clubDto.clubNo}">
+				<a href="delete?clubNo=${clubDto.clubNo}" class="check-club-delete">
 					<i class="fa-solid fa-trash-can fa-2x mt-30"></i>
 				</a>
 				</c:if>
@@ -62,7 +74,7 @@
         	<div class="flex-box">
             <h2 class="flex-fill">모인 멤버</h2>
             <c:if test="${loginId == clubDto.clubLeader}">
-        	<a href="#"><%-- 관리페이지 이동 예정 --%>
+        	<a href="/clubMember/list?${clubDto.clubNo}"><%-- 관리페이지 이동 예정 --%>
         	<i class="fa-solid fa-users fa-2x mt-25"></i>관리
         	</a>
         	</c:if>
@@ -86,7 +98,7 @@
 		        <form action="/clubMember/drop" method="post" autocomplete="off">
 			        <div class="cell">
 			        		<input type="hidden" name="clubNo" value="${clubDto.clubNo}">
-			                <button type="submit" class="btn red w-100">탈퇴하기</button>
+			                <button type="submit" class="btn red w-100 club-delete">탈퇴하기</button>
 			        </div>
 		        </form>
 	        </c:if>
