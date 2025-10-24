@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class MemberCategoryListVO {
-	String memberId;
-	int categoryNo;
-	String categoryName;
+	private String memberId;
+	private int categoryNo;
+	private String categoryName;
 }

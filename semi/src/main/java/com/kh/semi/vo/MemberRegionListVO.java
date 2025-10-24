@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class MemberRegionListVO {
-	String memberId;
-	int regionNo;
-	String regionType;
-	String regionName;
-	String regionDepth1;
-	String regionDepth2;
+	private String memberId;
+	private int regionNo;
+	private String regionType;
+	private String regionName;
+	private String regionDepth1;
+	private String regionDepth2;
 }
