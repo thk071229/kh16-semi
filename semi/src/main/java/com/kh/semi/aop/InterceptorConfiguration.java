@@ -28,7 +28,7 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 							"/board/**", 
 							//좋아요 못누르도록 차단
 							"/rest/image/**", "/rest/board/action", "/rest/reply/**")
-					.excludePathPatterns("/board/list*", "/board/detail*",
+					.excludePathPatterns("/board/list*",
 										"/rest/reply/list", "rest/reply/check")
 					.order(1);
 		//회원의 회원가입 페이지 접근 차단 인터셉터

@@ -30,6 +30,11 @@ public class BoardReadInterceptor implements HandlerInterceptor{
 		//1. 작성자 본인의 조회 수 증가 처리 차단
 		BoardDto boardDto = boardDao.selectOne(boardNo);
 		if(boardDto == null) throw new TargetNotFoundException("존재하지 않는 게시글");
+		//비회원의 조회 수 증가 차단
+		//- 현재 detail 페이지 주소로 들어가면 interceptor로 차단은 되지만 조회수는 증가됨
+		if(loginId == null) {
+			return true; //조회 수 증가x
+		}
 		//로그인이 되어있고, 게시글 작성자가 탈퇴하지 않았을때
 		if(loginId != null && boardDto.getBoardWriter() != null) {
 			//본인 글 이라면 (작성자 = 사용자)
