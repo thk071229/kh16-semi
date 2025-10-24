@@ -170,8 +170,10 @@ public class EventController {
 		
 		//// 대표이미지 수정 메소드
 		if(attach.isEmpty()==false) {//첨부파일이 있으면
-			int beforeAttachmentNo = eventDao.findAttachment(eventDto.getEventNo());
-			attachmentService.delete(beforeAttachmentNo);
+			Integer beforeAttachmentNo = eventDao.findAttachment(eventDto.getEventNo());
+			if(beforeAttachmentNo !=null) {
+				attachmentService.delete(beforeAttachmentNo);
+			}
 			int afterAttachmentNo = attachmentService.save(attach);
 			eventDao.connect(eventDto.getEventNo(), afterAttachmentNo);
 		}

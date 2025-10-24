@@ -150,7 +150,7 @@
 <!-- ------------------------구분선---------------------->
 <div class="container w-800">
 	<div class="cell w-100 center">
-		<h1>정모 추가</h1>
+		<h1>정모 수정</h1>
 	</div>
 	
 	<form action="edit" method="post" autocomplete="off" enctype="multipart/form-data" >
