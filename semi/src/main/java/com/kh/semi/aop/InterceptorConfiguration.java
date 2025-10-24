@@ -22,6 +22,9 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 	@Autowired
 	private EventOwnerInterceptor eventOwnerInterceptor;
 	
+	@Autowired
+	private ClubJoinCheckInterceptor clubJoinCheckInterceptor;
+	
 	@Override
 	//인터셉터 등록 메소드
 	public void addInterceptors(InterceptorRegistry registry) {
@@ -55,5 +58,11 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 					.addPathPatterns("/board/detail");
 					//.order(순서)
 					//추후에 맨 마지막 순서로 변경
+		
+		// 가입한 소모임 정모만 등록 가능
+		registry.addInterceptor(clubJoinCheckInterceptor)
+				.addPathPatterns("/event/add","/board/write");
+		
+		
 	}
 }
