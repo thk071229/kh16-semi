@@ -200,6 +200,7 @@
 	</div>
 	
 	<form action="add" method="post" autocomplete="off" class="check-form" enctype="multipart/form-data" >
+	<input type="hidden" name="clubNo" value="${param.clubNo}">
 	<input type="hidden" name="eventClub" value="${clubNo}" >
 	<input type="hidden" class="clubRegionName" value="${clubRegionName}" >
 
