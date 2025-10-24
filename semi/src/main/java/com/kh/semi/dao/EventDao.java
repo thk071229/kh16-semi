@@ -89,8 +89,7 @@ public class EventDao {
 			Object[] params= {clubNo};
 			return jdbcTemplate.query(sql, eventListMapper, params);
 		}
-	
-	
+
 	// 상세조회
 	public EventDto selectOne(int eventNo) {
 		String sql ="select * from event where event_no=?";
