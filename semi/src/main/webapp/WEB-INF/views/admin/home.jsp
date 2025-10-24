@@ -2,24 +2,97 @@
     pageEncoding="UTF-8"%>
 <!-- header -->
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>	
-<hr>
-<h1>메인 페이지</h1>
-<h2>소모임 - 우리동네 취미 모임</h2>
-<h4>소개글</h4>
-<label>
-<i class="fa-solid fa-location-dot"></i>
-서울시 강남구(header에 있는 button-span value 불러오기) 근처 모임
-</label>
-<!-- 추후 table로 구현  -->
-<h4>활동이 활발한 모임</h4>
-<img src = "https://dummyimage.com/600x300/000/fff&text=club_1">
-<h4><button type = "button">더보기</button></h4>
-<h4>내 근처에서 시작되는 정모</h4>
-<img src = "https://dummyimage.com/600x300/000/fff&text=club_2">
-<h4><button type = "button">더보기</button></h4>
-<h4>카테고리 별 모임</h4>
-<img src = "https://dummyimage.com/600x300/000/fff&text=club_3">
-<h4><button type = "button">더보기</button></h4>
-<hr>
+
+<style>
+/* category-list.jsp 전용 스타일 */
+
+.page-header {
+  text-align: center;
+  margin: 30px 0 40px;
+  color: var(--ink);
+}
+
+/* 신규 추가 버튼 */
+.add-btn {
+  display: inline-block;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 600;
+  padding: 10px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  box-shadow: 0 6px 12px rgba(127,200,169,0.15);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.add-btn:hover {
+  background: var(--primary-600);
+  transform: translateY(-2px);
+}
+
+/* 테이블 */
+.table-wrapper {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+  margin-top: 25px;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+.table th, .table td {
+  border: 1px solid #dcdcdc;
+  padding: 10px 12px;
+  text-align: center;
+}
+
+.table th {
+  background: var(--muted);
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.table tr:hover {
+  background: rgba(127,200,169,0.08);
+}
+</style>
+
+<div class="container">
+	
+	<div class="cell">
+		<h1 class="page-header">관리자 페이지</h1>
+	</div>
+	
+	<div class="table-wrapper">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>항목</th>
+					<th>기능</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>회원</td>
+					<td><a href="/admin/member/list" class="member-link">회원 검색</a></td>
+				</tr>
+				<tr>
+					<td>모임</td>
+					<td><a href="/admin/club/list" class="member-link">소모임 목록</a></td>
+				</tr>
+				<tr>
+					<td>카테고리</td>
+					<td><a href="/admin/category/list" class="member-link">회원 목록</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+</div>
 <!-- footer -->
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>	

@@ -98,7 +98,7 @@
 			<label>관심 카테고리</label>
 		</div>
 		<div class="mt-20">
-    	<select class="field" name="categoryNo">
+    	<select class="search-input" name="categoryNo">
         	<c:forEach items="${categoryList}" var="categoryDto" >
             	<option value="${categoryDto.categoryNo}">${categoryDto.categoryName}</option>
         	</c:forEach>
@@ -109,17 +109,17 @@
 	<div class="cell">
 		<label>관심 지역</label><br>
 							<div class="cell flex-box flex-fill">
-								<select class="field ms-10" name="regionType">
+								<select class="search-input ms-10" name="regionType">
 									<option value="">선택</option>
 									<option>집</option>
 									<option>직장</option>
 									<option>관심지역</option>
 								</select> 
 								<div class="cell">
-									<input type="text" name="regionName" class="ms-10 field address-input" placeholder="주소(시군구/읍면동) 입력 " required>
+									<input type="text" name="regionName" class="ms-10 search-input address-input" placeholder="주소(시군구/읍면동) 입력 " required>
 								</div>
 								<div class="cell">
-									<button type="button" class="btn btn-positive ms-10 address-search-btn">
+									<button type="button" class="btn btn-primary ms-10 address-search-btn">
 										<i class="fa-solid fa-magnifying-glass"></i>
 									</button>
 								</div>
