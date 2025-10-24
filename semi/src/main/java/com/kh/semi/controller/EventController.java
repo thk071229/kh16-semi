@@ -19,10 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.semi.dao.ClubDao;
 import com.kh.semi.dao.EventDao;
 import com.kh.semi.dto.EventDto;
 import com.kh.semi.error.TargetNotFoundException;
 import com.kh.semi.service.AttachmentService;
+import com.kh.semi.vo.ClubListVO;
 import com.kh.semi.vo.EventListVO;
 
 import jakarta.servlet.http.HttpSession;
@@ -34,6 +36,9 @@ public class EventController {
 	@Autowired
 	private EventDao eventDao;
 
+	@Autowired
+	private ClubDao clubDao;
+	
 	@Autowired
 	private AttachmentService attachmentService;
 	
@@ -91,7 +96,12 @@ public class EventController {
 		if(eventDto==null) throw new TargetNotFoundException("존재하지 않는 소모임");
 		List<EventListVO> beforeDto = eventDao.selectListBefore(clubNo);
 		List<EventListVO> afterDto = eventDao.selectListAfter(clubNo);
+		
+		// 클럽리스트를 불러와서 거기서 클럽 regionName을 추출
+		ClubListVO clubList = clubDao.selectOneFromClubList(clubNo);
+		
 		model.addAttribute("clubNo",clubNo);
+		model.addAttribute("clubRegionName",clubList.getRegionName());
 		model.addAttribute("eventDto", eventDto);	
 		model.addAttribute("beforeDto", beforeDto);		
 		model.addAttribute("afterDto", afterDto);		
@@ -104,6 +114,8 @@ public class EventController {
 	public String detail(Model model, @RequestParam int eventNo) {
 		EventDto eventDto = eventDao.selectOne(eventNo);
 		if(eventDto==null) throw new TargetNotFoundException("존재하지 않는 이벤트번호");
+		//int attachmentNo = eventDao.findAttachment(eventNo);
+		//model.addAttribute("attachmentNo", attachmentNo);
 		model.addAttribute("eventDto", eventDto);
 		return "/WEB-INF/views/event/detail.jsp";
 	}

@@ -97,32 +97,36 @@
 	<div>
 		<a class="btn btn-ghost w-25 center" href="list?clubNo=${eventDto.eventClub}"> ◀ 목록</a>
  	</div>
-    <div class="cell center"> 
-    	<h1>
-    		${eventDto.eventTitle}
-    		<c:if test="${eventDto.eventEtime != null}">
-				<span style="font-size:18;">(수정 :
-					<fmt:formatDate value="${eventDto.eventEtime}" pattern="M/d H:mm" ></fmt:formatDate>
-				 )</span>
-			</c:if>
-		</h1>
-	</div>
-	<div class="flex-box">
-		<div class="cell w-75">
-	    	<i class="fa-solid fa-calendar"></i>
-	    	<fmt:formatDate value="${eventDto.eventDate}" pattern="y년 M월 d일 H:mm" ></fmt:formatDate>
-	    	<label> / 작성일</label>
-	    	<fmt:formatDate value="${eventDto.eventWtime}" pattern="M월 d일 H:mm" ></fmt:formatDate>
-	    </div>
-	    <div class="flex-fill">
-		    <div class="cell" style="font-size:20px">
-		    	인원 : <span id="event-attendee-count">?</span> / ${eventDto.eventMaxPeople}
-				<i id="event-attendee" class="fa-regular fa-square fa-2x"></i>
+ 			<div class="cell center"> 
+		    	<h1>
+		    		${eventDto.eventTitle}
+		    		<c:if test="${eventDto.eventEtime != null}">
+						<span style="font-size:18;">(수정 :
+							<fmt:formatDate value="${eventDto.eventEtime}" pattern="M/d H:mm" ></fmt:formatDate>
+						 )</span>
+					</c:if>
+				</h1>
 			</div>
-		</div>
-	</div>	
-    
+ 			<div class="float-box">
+				<div class="cell float-left">
+			    	<i class="fa-solid fa-calendar"></i>
+			    	<fmt:formatDate value="${eventDto.eventDate}" pattern="y년 M월 d일 H:mm" ></fmt:formatDate>
+			    	<label> / 작성일</label>
+			    	<fmt:formatDate value="${eventDto.eventWtime}" pattern="M월 d일 H:mm" ></fmt:formatDate>
+			    </div>
+			    <div class="float-right">
+				    <div class="cell" style="font-size:18px">
+				    	인원 : <span id="event-attendee-count">?</span> / ${eventDto.eventMaxPeople}
+					</div>
+				</div>
+				<div class="cell float-right" >
+					<i id="event-attendee" class="fa-regular fa-square fa-2x "></i>
+				</div>
+			</div>	
 
+
+ 	
+ 	
      <div class="cell">
      	<hr>
 

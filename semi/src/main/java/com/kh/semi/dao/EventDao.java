@@ -3,6 +3,7 @@ package com.kh.semi.dao;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -130,6 +131,6 @@ public class EventDao {
 		String sql ="select attachment_no from event_image where event_no=?";
 		Object[] params = {eventNo};
 		return jdbcTemplate.queryForObject(sql, int.class, params);
-	}
-	
-	}
+		}
+
+}
