@@ -14,6 +14,7 @@ public class EventListVO {
 	private int eventClub;
 	private String eventWriter;
 	private String eventTitle;
+	private int eventAttend;
 	private int eventMaxPeople;
 	private String eventAddress;
 	private Timestamp eventDate;

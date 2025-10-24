@@ -56,6 +56,9 @@ public class EventController {
 	public String add(Model model, @RequestParam int clubNo) {
 		List<EventDto> eventDto = eventDao.selectList(clubNo);
 		if(eventDto==null) throw new TargetNotFoundException("존재하지 않는 소모임");
+		// 클럽리스트를 불러와서 거기서 클럽 regionName을 추출
+		ClubListVO clubList = clubDao.selectOneFromClubList(clubNo);
+		model.addAttribute("clubRegionName",clubList.getRegionName());
 		model.addAttribute("clubNo",clubNo);
 		return "/WEB-INF/views/event/add.jsp";
 	}
@@ -99,9 +102,9 @@ public class EventController {
 		
 		// 클럽리스트를 불러와서 거기서 클럽 regionName을 추출
 		ClubListVO clubList = clubDao.selectOneFromClubList(clubNo);
+		model.addAttribute("clubRegionName",clubList.getRegionName());
 		
 		model.addAttribute("clubNo",clubNo);
-		model.addAttribute("clubRegionName",clubList.getRegionName());
 		model.addAttribute("eventDto", eventDto);	
 		model.addAttribute("beforeDto", beforeDto);		
 		model.addAttribute("afterDto", afterDto);		
