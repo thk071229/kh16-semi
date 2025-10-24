@@ -11,21 +11,21 @@
 	</div>
 	
 	<div class="cell w-100 center">
-		<input type="text" name="memberId" placeholder="ID" class="field w-30" required>
+		<input type="text" name="memberId" placeholder="ID" class="input w-30" required>
 	</div >
 	<div class="cell w-100 center">
-		<input type="password" name="memberPw" placeholder="Password" class="field w-30" required>
+		<input type="password" name="memberPw" placeholder="Password" class="input w-30" required>
 	</div>
-	<div class="cell w-100 center">
+	<div class="cell w-100 center mb-50">
 		<button class="btn btn-primary w-30" type="submit">로그인</button>
 	</div>
 	
 	<!-- 아이디 비밀번호 찾기 페이지 -->
-	<div>
-		<a href="#">아이디를 잊으셨나요?</a>
+	<div class="cell center">
+		<a href="#" class="btn btn-common">아이디를 잊으셨나요?</a>
 	</div>
-	<div>
-		<a href="#">비밀번호 찾기</a>
+	<div class="cell center">
+		<a href="#" class="btn btn-common">비밀번호 찾기</a>
 	</div>
 	
 	<!--  로그인 실패 오류 메시지 -->
