@@ -11,6 +11,41 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/locale/ko.min.js"></script>
 
+<style>
+/* header 검색창 영역 */
+.header-search {
+  margin-left: auto; /* 오른쪽 끝으로 */
+  display: flex;
+  align-items: center;
+}
+
+/* form 자체 정렬 */
+.search-form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+
+/* 버튼 */
+.search-btn {
+  background: var(--primary);
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.search-btn:hover {
+  background: var(--primary-600);
+  transform: translateY(-1px);
+}
+
+</style>
+
 <div class="container w-100">
     <header class="header">
         <a class="brand" href="/">
@@ -21,19 +56,20 @@
             <div style="font-size:12px;color:var(--subtle)">모임/커뮤니티 플랫폼 예시</div>
         </div>
         </a>
-        <form action="#" method="post" autocomplete="off">
-        <div class="cell w-50 right flex-fill">
-            <div class="search">
-                <button class="btn btn-primary">
-                    강남구
-                </button>
-                <input type = "text" name = "category_name" placeholder = "찾고 싶은 모임을 검색해보세요! (ex 러닝, 독서)">
-                <button type="submit" class="btn btn-ghost">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </button>
-            </div>
-        </div>
-        </form>
+        <!-- 헤더 내 검색 영역 -->
+		<div class="header-search">
+		  <form action="/search" method="get" autocomplete="off">
+		    <input
+		      type="text"
+		      name="keyword"
+		      class="search-input"
+		      placeholder="검색어를 입력하세요"
+		      required
+		    >
+		    <button type="submit" class="search-btn">검색</button>
+		  </form>
+		</div>
+
     </header>  
 <!-- 상단 메뉴 -->
 <jsp:include page="/WEB-INF/views/template/menu.jsp"></jsp:include>	

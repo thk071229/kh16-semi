@@ -1,7 +1,7 @@
 package com.kh.semi.dto;
 
-import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,7 +15,7 @@ public class MemberDto {
 	private String memberNickname;
 	private String memberEmail;
 	private String memberGender;
-	private Date memberBirth;
+	private LocalDate memberBirth;
 	private int memberPoint;
 	private String memberLevel;
 	private Timestamp memberJoin;

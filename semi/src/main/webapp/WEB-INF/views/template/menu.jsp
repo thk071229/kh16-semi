@@ -45,6 +45,10 @@
 	<i class="fa-solid fa-user"></i>
 	<span>마이페이지</span>
 	</a>
+	<a href="/admin/home">
+	<i class="fa-solid fa-user-tie"></i>
+	<span>관리자페이지</span>
+	</a>
 	</c:if>
 </nav>
 	<hr>

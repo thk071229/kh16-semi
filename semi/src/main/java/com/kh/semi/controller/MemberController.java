@@ -46,6 +46,11 @@ public class MemberController {
 	@Autowired
 	private ClubDao clubDao;
 	
+	//이용약관 동의
+	@GetMapping("/agree")
+	public String agree() {
+		return "/WEB-INF/views/member/agree.jsp";
+	}
 	
 	//회원가입
 	@GetMapping("/join")
