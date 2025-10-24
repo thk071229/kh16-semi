@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class CategoryDto {
-	int categoryNo;
-	String categoryName;
+	private int categoryNo;
+	private String categoryName;
 }
