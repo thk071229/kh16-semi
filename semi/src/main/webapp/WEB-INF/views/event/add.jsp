@@ -53,6 +53,16 @@
 				// 지오코더 서비스 생성(주소검색)
 				var geocoder = new kakao.maps.services.Geocoder();
 				
+				// clubRegion에 설정된 정보를 검색해서 지도 중심으로 설정
+				var address = $(".clubRegionName").val();
+				geocoder.addressSearch(address, function(result, status) {
+					if (status == kakao.maps.services.Status.OK && result.length > 0) {
+						var center = new kakao.maps.LatLng(result[0].y,result[0].x);
+						map.setCenter(center);
+					}
+				});
+				
+				
 			// [1] 주소 검색시, 마커 설정 + 좌표 저장
 			$(".address-search-btn").on("click", function () {
 				//[1-0] 추가) 마커 초기화
@@ -136,7 +146,8 @@
 	</div>
 	
 	<form action="add" method="post" autocomplete="off"  enctype="multipart/form-data" >
-	<input type="hidden" name="eventClub" value="${clubNo}" required>
+	<input type="hidden" name="eventClub" value="${clubNo}" >
+	<input type="hidden" class="clubRegionName" value="${clubRegionName}" >
 
 			<div class="cell">
 

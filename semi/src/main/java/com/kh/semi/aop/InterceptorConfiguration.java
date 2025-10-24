@@ -1,0 +1,50 @@
+package com.kh.semi.aop;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+@Configuration //설정 파일로 등록
+public class InterceptorConfiguration implements WebMvcConfigurer{
+	@Autowired
+	private MemberLoginInterceptor memberLoginInterceptor;
+	
+	@Autowired
+	private MemberJoinInterceptor memberJoinInterceptor;
+	
+	@Autowired
+	private BoardReadInterceptor boardReadInterceptor;
+	
+	@Autowired
+	private BoardOwnerInterceptor boardOwnerInterceptor;
+	
+	@Override
+	//인터셉터 등록 메소드
+	public void addInterceptors(InterceptorRegistry registry) {
+		//비회원 접근 차단 인터셉터(현재 board 관련 주소만 막아둠)
+		registry.addInterceptor(memberLoginInterceptor)
+					.addPathPatterns(
+							"/board/**", 
+							//좋아요 못누르도록 차단
+							"/rest/image/**", "/rest/board/action", "/rest/reply/**")
+					.excludePathPatterns("/board/list*", "/board/detail*",
+										"/rest/reply/list", "rest/reply/check")
+					.order(1);
+		//회원의 회원가입 페이지 접근 차단 인터셉터
+		registry.addInterceptor(memberJoinInterceptor)
+					.addPathPatterns("/member/join*")
+					.order(2);
+		
+		//게시글 수정 및 삭제 접근 차단 인터셉터
+		registry.addInterceptor(boardOwnerInterceptor)
+					.addPathPatterns("/board/edit", "/board/delete");
+					//.order(순서)
+		
+		//조회 수 중복방지 인터셉터
+		registry.addInterceptor(boardReadInterceptor)
+					.addPathPatterns("/board/detail");
+					//.order(순서)
+					//추후에 맨 마지막 순서로 변경
+	}
+}
