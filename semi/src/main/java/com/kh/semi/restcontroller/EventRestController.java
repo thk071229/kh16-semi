@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kh.semi.dao.EventAttendeeDao;
 import com.kh.semi.dao.EventDao;
 import com.kh.semi.dto.EventDto;
+import com.kh.semi.error.UnauthorizationException;
 import com.kh.semi.service.AttachmentService;
 import com.kh.semi.vo.EventAttendeeVO;
 
@@ -49,6 +50,12 @@ public class EventRestController {
 	@GetMapping("/action")
 	public EventAttendeeVO action(HttpSession session, @RequestParam int eventNo) {
 		String loginId = (String)session.getAttribute("loginId");
+		
+		// 참가인원이 최대값보다 클 때
+			EventDto eventDto = eventDao.selectOne(eventNo);
+			int currentAttend = eventDto.getEventAttend();
+			int maxAttend = eventDto.getEventMaxPeople();
+			if(currentAttend > maxAttend) throw new UnauthorizationException("참가 인원이 최대값을 초과했습니다");
 		
 		EventAttendeeVO eventAttendeeVO=new EventAttendeeVO();
 		if(eventAttendeeDao.check(loginId, eventNo)) { // 좋아요를 누른 이력이 있으면
