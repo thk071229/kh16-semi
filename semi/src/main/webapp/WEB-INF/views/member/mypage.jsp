@@ -126,6 +126,62 @@
 
 </style>
 
+<!-- 프로필 변경 코드 -->
+<script type="text/javascript">
+	$(function(){
+		//이미지의 최초 주소를 불러와서 저장한다
+		var origin = $(".image-profile").attr("src");
+		
+		//$(".profile-change-btn").on("click", function(){
+		$("#profile-input").on("input", function(){
+			//선택된 파일을 구해와서
+			//var list = document.querySelector(".profile-input").files;//JS
+			var list = $("#profile-input").prop("files");//jQuery
+			if(list.length == 0) return;
+			
+			//비동기 통신으로 전송
+			//- ajax도 form처럼 아무말 안하면 urlencoded 방식으로 전송(key=value)
+			//- 파일은 multipart 방식으로 보내야 하기 때문에 기본 설정을 제거
+			//- processData, contentType을 제거하고 FormData를 생성해서 전달
+			var form = new FormData();//<form> 역할
+			//form.append("이름", 값);
+			form.append("attach", list[0]);
+			
+			$.ajax({
+				processData : false,//multipart로 보내기 위해 미리 정의된 전처리 제거
+				contentType : false,//multipart로 보내기 위해 미리 정의된 MIME 타입을 제거
+				url:"/rest/member/profile",
+				method:"post",
+				data: form,
+				success:function(response){
+					//origin에 시간을 붙여서 src를 재설정
+					//(중요) 브라우저의 캐싱을 우회하기 위하여 시간을 파라미터로 첨부
+					//var newOrigin = origin + "&t=" + new Date().getTime();
+					//$(".image-profile").attr("src", newOrigin);
+					var newOrigin = "/member/profile?memberId=${memberDto.memberId}&t=" + new Date().getTime();
+    				$(".image-profile").attr("src", newOrigin);
+   					origin = newOrigin; // origin도 갱신
+				}
+			});
+		});
+		
+		//삭제 버튼을 누르면 물어본 뒤 확인을 눌렀을 경우 삭제 진행
+		$(".profile-delete-btn").on("click", function(){
+			var choice = window.confirm("정말 삭제하시겠습니까?\n삭제 후 복구할 수 없습니다");
+			if(choice == false) return;
+			
+			$.ajax({
+				url:"/rest/member/delete",
+				method:"post",
+				success:function(){
+					var newOrigin = origin + "&t=" + new Date().getTime();
+					$(".image-profile").attr("src", newOrigin);
+				}
+			});
+		});
+	});
+</script>
+
 <div class="container">
   <div class="cell center">
     <h2 style="color: var(--subtle);">${memberDto.memberId}님의 정보</h2>
@@ -135,7 +191,7 @@
     <!-- 프로필 -->
     <div class="profile-card">
       <div class="profile-wrapper">
-        <img src="/member/profile?memberId=${memberDto.memberId}" alt="프로필 이미지">
+        <img src="/member/profile?memberId=${memberDto.memberId}" alt="프로필 이미지"  class="image-profile">
         <label for="profile-input">변경</label>
         <input type="file" id="profile-input" style="display:none">
       </div>
