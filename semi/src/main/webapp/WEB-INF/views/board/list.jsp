@@ -11,6 +11,7 @@
 		
 	/*프로필 사진 wrapper 디자인*/
 	.writer-profile-wrapper {
+		margin-left:5px;
 		width : 600px;
 	}
 	.writer-profile {
@@ -43,12 +44,16 @@
 	}
 	
 	.board-title {
+		margin-left:5px;
 		font-size:25px;
+   		align-items: center; /* 세로 중앙 정렬 */
+    	gap: 8px; /* 뱃지와 제목 사이 간격 */
 	}
 	
 	.board-title-link{
 		text-decoration:none;
 		color:black;
+		text-align:center;
 		<%-- transition 속성:애니메이션 효과를 줄 수 있다
 		display:inline-block;
 		transition-property : color, transform;
@@ -64,10 +69,12 @@
 	
 	.board-count {
 		display:flex;
+		align-items:center;
 	}
 	
 	.board-count > i {
-		margin-right : 5px;
+		margin-left:10px;
+		margin-right:5px;
 	}
 	
 	.board-count > span {
@@ -77,18 +84,41 @@
 	.board-list hr {
 		border: none;
     	height: 0.5px;
-    	background-color: #EEEEEE;
+    	background-color: #ccc;
 	}
 	
+	    /*뱃지(Badge) 스타일*/
+       
+        /*공지 표시용*/
+        .badge {
+		    padding: 4px 10px;
+		    font-size: 13px;
+		    font-weight: 600;
+		    color: #fff;
+		    background-color: #ff4d4f;
+		    border-radius: 6px;
+		    letter-spacing: 0.3px;
+		    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+         }
+        
+        /*모임장 표시용*/
+        .badge2 {
+        padding-left:10px;
+        color:#6cb7f4;
+        }
+        
+        .notice:hover {
+        	background-color : #F0F6F4;
+        }
 </style>
-<div class="container w-700">
-<div class="cell center mt-20 mb-20">
-<label class="club-title">${clubDto.clubName} 의 게시판</label>
-</div>
 
+<div class="container w-700">
+<div class="cell mt-20 mb-20">
+	<label class="club-title">${clubDto.clubName} 의 게시판</label>
+</div>
+<c:forEach var = "boardDto" items = "${boardList}" varStatus = "status">
 <div class="cell w-600 mb-20">
-<div class="board-list">
-	<c:forEach var = "boardDto" items = "${boardList}">
+<div class="board-list ${status.index < noticeCount ? 'notice' : ''}">
 	<div>
 		<div class= "writer-profile-wrapper flex-box flex-center">
 			<div class="writer-profile">
@@ -96,22 +126,30 @@
 			</div>
 			<div class="board-info-wrapper flex-box flex-vertical flex-fill">
 				<div class="board-writer-nickname flex-box">
-					<label>${boardDto.memberNickname}
-					<span class="badge">작성자</span>
-					</label>
+					<label>${boardDto.memberNickname}</label>
+					<c:if test = "${clubDto.clubLeader == boardDto.boardWriter}">
+					<span class="badge2">모임장</span>
+					</c:if>
 				</div>
 				<div class = "board-info gray flex-box">
-					<c:if test = "${boardDto.boardNotice == 'Y'}">
-					<label class="board-type">공지</label>
-					</c:if>
-					<label class="board-type">자유게시판</label>
+					<c:choose>
+					<c:when test = "${boardDto.boardNotice == 'Y'}">
+						<label class="board-type">공지</label>
+					</c:when>
+					<c:otherwise>
+						<label class="board-type">자유게시판</label>
+					</c:otherwise>
+					</c:choose>
 					<div class="write-time ms-20">${boardDto.boardWriteTime}</div>
 				</div>
 			</div>
 		</div>
 	</div>
 		<!-- 제목 영역 -->
-		<div class="board-title mt-20 mb-20">
+		<div class="board-title inline-flex-box mt-20 mb-20">
+			<c:if test = "${boardDto.boardNotice == 'Y'}">
+				<span class="badge">공지</span>
+			</c:if>
 			<a href="detail?boardNo=${boardDto.boardNo}" class="board-title-link">${boardDto.boardTitle}</a>
 		</div>
 		<!-- 기타 정보 영역 -->
@@ -124,11 +162,11 @@
 				<span>${boardDto.boardComment}</span>
 		</div>
 		<hr>
-	</c:forEach>
 	</div>
 </div>
+</c:forEach>
 <!-- 페이지 내비게이터 영역 -->
-<div class="cell mt-20 mb-20">
+<div class="cell center mt-20 mb-20">
 <jsp:include page="/WEB-INF/views/template/pagination-num.jsp"></jsp:include>	
 </div>
 

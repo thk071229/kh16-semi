@@ -30,6 +30,7 @@ public class BoardListVO {
 	
 	private int clubNo;
 	private String clubName;
+	private String clubLeader;
 	private String regionName;
 	private String categoryName;
 	
