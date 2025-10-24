@@ -7,6 +7,10 @@
 	#board-like {
 	cursor : pointer;
 	}
+	.reply-list-wrapper {
+	padding:10px;
+	display:flex;
+	}
 	.reply-writer-profile {
 	width:100px;
 	height:100px;
@@ -139,9 +143,12 @@
 				method:"POST",
 				data:{replyTarget : boardNo},
 				success:function(response){
+					//댓글이 달리지 않은 경우 아무것도 하지 않음
+					if(response.length == 0){
+						return;
+					}
 					//댓글 영역 청소
 					$(".reply-list-wrapper").empty();
-					
 					//댓글 화면 생성
 					for(var i = 0; i < response.length; i ++){//response = List<ReplyListVO>
 						var reply = response[i];
@@ -314,7 +321,10 @@
 	</span>
 </div>
 	
-	<div class="reply-list-wrapper">댓글 목록 영역</div>
+	<div class="reply-list-wrapper">
+		<h3>아직 등록된 댓글이 없습니다</h3>
+	</div>
+	
 	<!-- 댓글 작성 영역(추후에 로그인 여부에 따라서 분리) -->
 	<div class="reply-write-wrapper mt-30">
 		<div class="cell">

@@ -75,8 +75,12 @@ public class BoardController {
 	@RequestMapping("/detail")
 	public String detail(@RequestParam int boardNo, Model model) {
 		BoardDto boardDto = boardDao.selectOne(boardNo);
-		MemberDto memberDto = memberDao.selectOne(boardDto.getBoardWriter());
-		model.addAttribute("memberDto", memberDto);
+		if(boardDto == null) throw new TargetNotFoundException("존재하지 않는 게시글");
+		if(boardDto.getBoardWriter() != null) { //작성자가 존재할 때만 memberDto에 추가
+			MemberDto memberDto = memberDao.selectOne(boardDto.getBoardWriter());
+			model.addAttribute("memberDto", memberDto);
+		}
+		model.addAttribute("boardNo", boardNo);
 		model.addAttribute("boardDto", boardDto);
 		return "/WEB-INF/views/board/detail.jsp";
 	}
