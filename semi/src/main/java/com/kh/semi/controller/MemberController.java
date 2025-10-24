@@ -1,5 +1,6 @@
 package com.kh.semi.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.semi.dao.CategoryDao;
 import com.kh.semi.dao.ClubDao;
@@ -21,11 +23,14 @@ import com.kh.semi.dto.CategoryDto;
 import com.kh.semi.dto.MemberCategoryDto;
 import com.kh.semi.dto.MemberDto;
 import com.kh.semi.error.TargetNotFoundException;
+import com.kh.semi.service.AttachmentService;
+import com.kh.semi.service.EmailService;
 import com.kh.semi.service.MemberService;
 import com.kh.semi.vo.MemberCategoryListVO;
 import com.kh.semi.vo.MemberClubListVO;
 import com.kh.semi.vo.MemberRegionListVO;
 
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -45,7 +50,16 @@ public class MemberController {
 	private RegionDao regionDao;
 	@Autowired
 	private ClubDao clubDao;
+	@Autowired
+	private AttachmentService attachmentService;
+	@Autowired
+	private EmailService emailService;
 	
+	//이용약관 동의
+	@GetMapping("/agree")
+	public String agree() {
+		return "/WEB-INF/views/member/agree.jsp";
+	}
 	
 	//회원가입
 	@GetMapping("/join")
@@ -53,8 +67,15 @@ public class MemberController {
 		return "/WEB-INF/views/member/join.jsp";
 	}
 	@PostMapping("/join")
-	public String join(@ModelAttribute MemberDto memberDto) {
+	public String join(@ModelAttribute MemberDto memberDto, 
+			@RequestParam MultipartFile attach) throws IllegalStateException, IOException, MessagingException {
 		memberDao.insert(memberDto);
+		if(attach.isEmpty() == false) {//첨부파일이 비어있지 않다면(=있으면)
+			int attachmentNo = attachmentService.save(attach);
+			memberDao.connect(memberDto.getMemberId(), attachmentNo);
+		}
+		//가입 환영 메일 발송
+		emailService.sendWelcomeMail(memberDto);
 		return "redirect:joinFinish?memberId=" + memberDto.getMemberId();
 	}
 	//회원 가입 후 관심 지역 & 관심 카테고리 등록
@@ -136,6 +157,9 @@ public class MemberController {
 		List<MemberCategoryListVO>categoryList = memberCategoryDao.selectVOList(loginId);
 		//회원이 가입한 소모임 리스트
 		List<MemberClubListVO>clubList = clubDao.selectClubList(loginId);
+		//회원이 작성한 정모 리스트 ( 구현중)
+		//List<MemberClubListVO>eventList = eventDao.select-----(loginId);
+		
 		
 		model.addAttribute("memberDto", memberDto);
 		model.addAttribute("regionList", regionList);
@@ -273,13 +297,13 @@ public class MemberController {
 	}
 	@PostMapping("/password")
 	public String password(HttpSession session, 
-			@RequestParam String currentPw, @RequestParam String changePw) {
+			@RequestParam String currentPw, @RequestParam String memberPw) {
 		String loginId = (String) session.getAttribute("loginId");
 		MemberDto memberDto = memberDao.selectOne(loginId);
 		boolean isValid = memberDto.getMemberPw().equals(currentPw);
 		if(isValid == false) return "redirect:password?error";
 		
-		memberDao.updateMemberPw(loginId, changePw);
+		memberDao.updateMemberPw(loginId, memberPw);
 		
 		return "redirect:mypage";
 	}

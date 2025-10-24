@@ -26,7 +26,7 @@
 	<i class="fa-solid fa-clock-rotate-left"></i>
 	<span>최근 본 모임</span>
 	</a>
-	<a href="/member/join">
+	<a href="/member/agree">
 	<i class="fa-solid fa-user-plus"></i>
 	<span>회원 가입</span>
 	</a>
@@ -44,6 +44,10 @@
 	<a href="/member/mypage">
 	<i class="fa-solid fa-user"></i>
 	<span>마이페이지</span>
+	</a>
+	<a href="/admin/home">
+	<i class="fa-solid fa-user-tie"></i>
+	<span>관리자페이지</span>
 	</a>
 	</c:if>
 </nav>

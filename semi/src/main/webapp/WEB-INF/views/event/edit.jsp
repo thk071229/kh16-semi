@@ -26,6 +26,60 @@
 	}
 </style>
 <!-- -------------------------------------- -->	
+<script type="text/javascript">
+	$(function(){
+		var state = {
+				eventTitleValid:false,
+				eventContentValid:false,
+				eventMaxPeopleValid:false,
+				eventDateValid:false,
+				eventAddressValid:false,
+				ok : function(){
+					return
+					this.eventTitleValid &&
+					this.eventContentValid &&
+					this.eventMaxPeopleValid &&
+					this.eventDateValid &&
+					this.eventAddressValid
+				}
+		}
+		// 항목검사
+        $("[name=eventTitle]").on("blur", function () {
+            var regex = /^[^!@#$%^&*]+$/;
+            var valid = regex.test($(this).val());
+            $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+            state.eventTitleValid = valid;
+        });
+        $("[name=eventMaxPeople]").on("blur", function () {
+            var valid =$(this).val() > 0 && $(this).val() <= 200;
+            $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+            state.eventMaxPeopleValid = valid;
+        });
+        $("[name=eventContent]").on("blur", function () {
+            var valid = $(this).val().length > 0;
+            $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+            state.bookGenreValid = valid;
+        });
+        $("[name=eventDate]").on("blur", function () {
+            var valid = $(this).val().length > 0;
+            $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+            state.eventDateValid = valid;
+        });
+        $("[name=eventAddress]").on("blur", function () {
+            var valid = $(this).val().length > 0;
+            $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+            state.eventAddressValid = valid;
+        });
+        
+        // 폼검사
+        $(".check-form").on("submit", function () {
+            $(this).find("[name]").trigger("blur"); // blur 강제발생
+            return state.ok();
+        });
+
+	});
+</script>
+<!-- -------------------------------------- -->	
 	<script type="text/javascript">
 		$(function () {
 			
@@ -150,10 +204,10 @@
 <!-- ------------------------구분선---------------------->
 <div class="container w-800">
 	<div class="cell w-100 center">
-		<h1>정모 추가</h1>
+		<h1>정모 수정</h1>
 	</div>
 	
-	<form action="edit" method="post" autocomplete="off" enctype="multipart/form-data" >
+	<form action="edit" method="post" autocomplete="off" class="check-form" enctype="multipart/form-data" >
 	<input type="hidden" name="eventNo" value="${eventDto.eventNo}">
 			<div class="cell">
 
@@ -162,20 +216,28 @@
 						<div class="cell w-100">
 							<label>정모이름</label><br>
 							<input type="text" class="input" name="eventTitle" value="${eventDto.eventTitle}">
+								<div class="success-feedback">올바른 입력입니다</div>
+                    			<div class="fail-feedback">필수 항목이며, 특수문자는 사용이 불가합니다</div>
 						</div>
 						<div class="cell w-100">
 							<label>정원(최대인원)</label><br>
 							<input type="number" class="input" name="eventMaxPeople" value="${eventDto.eventMaxPeople}">
+								<div class="success-feedback">올바른 입력입니다</div>
+                    			<div class="fail-feedback">정원은 1 ~ 200명 이내입니다</div>
 						</div>
 						<div class="cell w-100">
 							<label>정모일시</label><br>
 							<input type="text" class="input" name="eventDate" value="${eventDto.eventDate}">
+								<div class="success-feedback">올바른 입력입니다</div>
+                    			<div class="fail-feedback">필수 항목입니다</div>
 						</div>
 						<!-- 주소 검색을 통해 위도 경도값 저장 -->
 						<div class="cell w-100">
 							<label>정모위치</label>
 							<div class="flex-box">
 								<input type="text" name="eventAddress" class="input w-100 address-input" name="eventAddress" placeholder="주소(시군구/읍면동) 입력" value="${eventDto.eventAddress}">
+									<div class="success-feedback"></div>
+                    				<div class="fail-feedback">필수 항목</div>
 								<button type="button" class="btn btn-positive ms-10 address-search-btn">
 									<i class="fa-solid fa-magnifying-glass"></i>
 								</button>
@@ -201,6 +263,8 @@
 				<div class="cell">
 					<label>내용</label>
 					<textarea class="summernote-editor" name="eventContent" required>${eventDto.eventContent}</textarea>
+					<div class="success-feedback">올바른 입력입니다</div>
+                    <div class="fail-feedback">필수 항목입니다</div>
 				</div>
 				<div class="cell center">
 					<button class="btn w-100 center" type="submit">

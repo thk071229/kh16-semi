@@ -29,6 +29,7 @@ color:var(--ink);
 
 /* 수업시간에 쓰던 색깔 팔레트 */
 .red { color: #d63031 !important; }
+.warn {color: #e17055 !important;}
 .orange { color: #e17055 !important; }
 .yellow { color: #fdcb6e !important; }
 .green { color: #00b894 !important; }
@@ -110,13 +111,34 @@ body{
   gap:8px;
   align-items:center;
 }
-.search input{
-  height: 40px; 
-  border:1px solid #E6F0EE;
-  background:var(--glass);
-  padding:0 12px;
-  border-radius:10px;
-  min-width:220px;
+/* form 자체 정렬 */
+.search-form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* input: 기존 카테고리 추가 input 디자인 그대로 */
+.search-input {
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 15px;
+  width: 220px; /* header에 어울리는 적정 너비 */
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(127,200,169,0.2);
+  outline: none;
+}
+
+.search-input::placeholder {
+  color: #aaa;
+  font-size: 15px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .search .btn {
   height: 40px;          /* input 높이와 맞추기 */
@@ -184,6 +206,28 @@ body{
     /* filter: brightness(90%); */
     filter: brightness(0.9);
 }
+
+.member-link {
+  color: var(--primary);
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.member-link:hover {
+  color: #69b894;
+  text-decoration: underline;
+}
+.link {
+  color: #fdcb6e;
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.link:hover {
+  color: #FFBF86;
+  text-decoration: underline;
+}
+
 
 
 /* Lists */
@@ -473,23 +517,6 @@ HTML의 기본 배치방식을 무시하고 내가 원하는 방식으로 위치
     border-color: #e17055 !important;
 }
 
-/* 기본적으로 피드백은 모두 숨김 처리 */
-.success-feedback,
-.fail-feedback,
-.fail2-feedback
-{
-    display: none;
-}
-/* 성공 피드백 디자인 */
-.success-feedback {
-    color: #70a1ff;
-}
-/* 실패 피드백 디자인 */
-.fail-feedback,
-.fail2-feedback
-{
-    color: #e17055;
-}
 /* 검사에 성공한 입력창 뒤에 있는 성공 피드백을 표시 */
 .input.success ~ .success-feedback {
     display: block;
@@ -500,3 +527,25 @@ HTML의 기본 배치방식을 무시하고 내가 원하는 방식으로 위치
  {
     display: block;
 }
+
+/* 입력창 검사 성공/실패에 대한 디자인(+JS) */
+.search-input.success {
+    border-color: #70a1ff !important;
+}
+.search-input.fail, 
+.search-input.fail2 
+{
+    border-color: #e17055 !important;
+}
+/* 검사에 성공한 입력창 뒤에 있는 성공 피드백을 표시 */
+.search-input.success ~ .success-feedback {
+    display: block;
+}
+/* 검사에 실패한 입력창 뒤에 있는 실패 피드백을 표시 */
+.search-input.fail ~ .fail-feedback,
+.search-input.fail2 ~ .fail2-feedback
+ {
+    display: block;
+}
+
+

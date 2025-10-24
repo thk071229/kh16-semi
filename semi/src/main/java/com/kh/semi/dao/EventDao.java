@@ -89,8 +89,7 @@ public class EventDao {
 			Object[] params= {clubNo};
 			return jdbcTemplate.query(sql, eventListMapper, params);
 		}
-	
-	
+
 	// 상세조회
 	public EventDto selectOne(int eventNo) {
 		String sql ="select * from event where event_no=?";
@@ -127,10 +126,14 @@ public class EventDao {
 	}
 	
 	/// 이벤트(정모)번호로 이미지 번호를 찾아내는 구문
-	public int findAttachment(int eventNo) {
+	public Integer findAttachment(int eventNo) {
 		String sql ="select attachment_no from event_image where event_no=?";
 		Object[] params = {eventNo};
-		return jdbcTemplate.queryForObject(sql, int.class, params);
+		try {
+			return jdbcTemplate.queryForObject(sql, int.class, params);
+			} catch(Exception e){
+				return null;
+			}
 		}
 
 	/// 이벤트 참여자 수 갱신

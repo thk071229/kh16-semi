@@ -74,7 +74,7 @@
         	<div class="flex-box">
             <h2 class="flex-fill">모인 멤버</h2>
             <c:if test="${loginId == clubDto.clubLeader}">
-        	<a href="/clubMember/list?${clubDto.clubNo}"><%-- 관리페이지 이동 예정 --%>
+        	<a href="/clubMember/list?clubNo=${clubDto.clubNo}"><%-- 관리페이지 이동 예정 --%>
         	<i class="fa-solid fa-users fa-2x mt-25"></i>관리
         	</a>
         	</c:if>

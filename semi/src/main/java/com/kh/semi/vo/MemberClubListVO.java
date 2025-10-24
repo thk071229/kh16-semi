@@ -7,11 +7,11 @@ import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class MemberClubListVO {
-	String memberId;
-	int clubNo;
-	String clubName;
-	int clubCategory;
-	int clubRegion;
-	String categoryName;
-	String regionName;
+	private String memberId;
+	private int clubNo;
+	private String clubName;
+	private int clubCategory;
+	private int clubRegion;
+	private String categoryName;
+	private String regionName;
 }

@@ -19,6 +19,12 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 	@Autowired
 	private BoardOwnerInterceptor boardOwnerInterceptor;
 	
+	@Autowired
+	private EventOwnerInterceptor eventOwnerInterceptor;
+	
+	@Autowired
+	private ClubJoinCheckInterceptor clubJoinCheckInterceptor;
+	
 	@Override
 	//인터셉터 등록 메소드
 	public void addInterceptors(InterceptorRegistry registry) {
@@ -26,6 +32,8 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 		registry.addInterceptor(memberLoginInterceptor)
 					.addPathPatterns(
 							"/board/**", 
+							// 로그인해야 접속 가능
+							"/event/detail/**","/event/add/**","/event/edit/**",
 							//좋아요 못누르도록 차단
 							"/rest/image/**", "/rest/board/action", "/rest/reply/**")
 					.excludePathPatterns("/board/list*",
@@ -41,10 +49,20 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 					.addPathPatterns("/board/edit", "/board/delete");
 					//.order(순서)
 		
+		//정모내역(글) 수정 및 삭제 접근 차단 인터셉터
+		registry.addInterceptor(eventOwnerInterceptor)
+					.addPathPatterns("/event/edit", "/event/delete");
+		
 		//조회 수 중복방지 인터셉터
 		registry.addInterceptor(boardReadInterceptor)
 					.addPathPatterns("/board/detail");
 					//.order(순서)
 					//추후에 맨 마지막 순서로 변경
+		
+		// 가입한 소모임 정모만 등록 가능
+		registry.addInterceptor(clubJoinCheckInterceptor)
+				.addPathPatterns("/event/add","/board/write");
+		
+		
 	}
 }

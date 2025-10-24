@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.semi.dao.ClubDao;
 import com.kh.semi.dao.ClubMemberDao;
+import com.kh.semi.dao.MemberDao;
 import com.kh.semi.dto.ClubDto;
 import com.kh.semi.dto.ClubMemberDto;
+import com.kh.semi.dto.MemberDto;
 import com.kh.semi.error.TargetNotFoundException;
+import com.kh.semi.error.UnauthorizationException;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -25,6 +28,8 @@ public class ClubMemberController {
 	private ClubMemberDao clubMemberDao;
 	@Autowired
 	private ClubDao clubDao;
+	@Autowired
+	private MemberDao memberDao;
 	
 	@PostMapping("/join")
 	public String insert(@ModelAttribute ClubMemberDto clubMemberDto, 
@@ -52,7 +57,7 @@ public class ClubMemberController {
 		// 가입했으면 모임 목록이 아닌, 해당 모임 홈으로 이동
 		return "redirect:/club/home?clubNo=" + clubNo;
 	}
-		//탈퇴
+	//탈퇴 - 가입중인 회원의 탈퇴
 	@PostMapping("/drop")
 	public String drop(HttpSession session, @RequestParam int clubNo) {
 		String loginId = (String)session.getAttribute("loginId");
@@ -65,10 +70,37 @@ public class ClubMemberController {
 		// 탈퇴했으면 모임 목록 페이지로 이동
 		return "redirect:/club/list";
 	}
+	//회원 제명 기능
+	@PostMapping("/delete")
+	public String delete(HttpSession session, @RequestParam int clubNo, @RequestParam String memberId) {
+		String loginId = (String)session.getAttribute("loginId");
+		if(loginId == null) throw new TargetNotFoundException("로그인이 필요합니다");
+		
+		ClubDto clubDto = clubDao.selectOne(clubNo);
+		if(clubDto == null) throw new TargetNotFoundException("존재하지 않는 소모임입니다");
+		
+		String leaderId = clubDto.getClubLeader();
+		
+		if(loginId.equals(leaderId) == false) throw new UnauthorizationException("모임장만 가능합니다");
+		if(memberId.equals(leaderId)) throw new UnauthorizationException("모임장은 자신을 제명할 수 없습니다");
+		
+		clubMemberDao.delete(clubNo, memberId);
+		return "redirect:list?clubN0=" + clubNo;
+	}
 	
 	@GetMapping("/list")
-	public String list() {
-		return "/WEB-INF/clubMember/list.jsp";
+	public String list(@RequestParam int clubNo, @RequestParam String memberId, Model model) {
+		MemberDto memberDto = memberDao.selectOne(memberId);
+		if(memberDto == null) throw new TargetNotFoundException("존재하지 않는 회원");
+		model.addAttribute("memberDto", memberDto);
+		
+		ClubDto clubDto = clubDao.selectOne(clubNo);
+		if(clubDto == null) throw new TargetNotFoundException("존재하지 않는 소모임");
+		
+		ClubMemberDto clubMemberDto = clubMemberDao.selectOne(clubNo);
+		if(clubMemberDto == null) throw new TargetNotFoundException("존재하지 않는 소모임");
+		model.addAttribute("clubMemberDto", clubMemberDto);
+		return "/WEB-INF/views/clubMember/list.jsp";
 	}
 	
 }
