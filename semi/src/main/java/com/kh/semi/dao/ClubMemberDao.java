@@ -45,9 +45,11 @@ public class ClubMemberDao {
 	    return list.isEmpty() ? null : list.get(0);
 	}
 	//소모임에 가입되어 있는 전체 회원 목록 조회 메소드
-//	public List<ClubMemberDto> selectList(){
-//		
-//	}
+	public List<ClubMemberDto> selectList(int clubNo){
+		String sql = "select * from club_member where club_no = ? order by club_member_role asc";
+		Object[] params = {clubNo};
+		return jdbcTemplate.query(sql, clubMemberMapper, params);
+	}
 	// 모임 탈퇴 메소드
 	public boolean delete(int clubNo, String memberId) {
 		String sql ="delete from club_member where club_no = ? and club_member = ?";
