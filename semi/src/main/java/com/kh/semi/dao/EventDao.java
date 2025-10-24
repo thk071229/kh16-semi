@@ -133,4 +133,10 @@ public class EventDao {
 		return jdbcTemplate.queryForObject(sql, int.class, params);
 		}
 
+	/// 이벤트 참여자 수 갱신
+	public boolean updateEventAttend(int eventAttend, int eventNo) {
+		String sql = "update event set event_attend = ? where event_no = ?";
+		Object[] params = {eventAttend, eventNo};
+		return jdbcTemplate.update(sql,params)>0;
+	}
 }

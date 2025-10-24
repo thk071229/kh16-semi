@@ -36,7 +36,7 @@
 			<a class="event-link" href="detail?eventNo=${eventList.eventNo}">
 					<div class="mb-10 event-title">
 						<label>${eventList.eventTitle}</label>
-						<label style="font-size:16px;">(참여인원/${eventList.eventMaxPeople})</label>
+						<label style="font-size:16px;">(${eventList.eventAttend}/${eventList.eventMaxPeople})</label>
 					</div>
 					<div class="ms-20"><i class="fa-solid fa-calendar"></i>
 						<label>

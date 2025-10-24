@@ -15,6 +15,7 @@ public class EventDto {
 	private String eventWriter;
 	private String eventTitle;
 	private String eventContent;
+	private int eventAttend;
 	private int eventMaxPeople;
 	private String eventAddress;
 	private double eventRegionX;

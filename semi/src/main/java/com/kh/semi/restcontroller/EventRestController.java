@@ -60,6 +60,7 @@ public class EventRestController {
 			eventAttendeeVO.setAttend(true);
 		}
 		int count = eventAttendeeDao.countByEventNo(eventNo);
+		eventDao.updateEventAttend(count, eventNo);
 		eventAttendeeVO.setCount(count);
 		return eventAttendeeVO;
 	}

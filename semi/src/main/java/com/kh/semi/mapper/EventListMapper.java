@@ -19,6 +19,7 @@ public class EventListMapper implements RowMapper<EventListVO>{
 		eventListVO.setEventClub(rs.getInt("event_club"));
 		eventListVO.setEventWriter(rs.getString("event_writer"));
 		eventListVO.setEventTitle(rs.getString("event_title"));
+		eventListVO.setEventAttend(rs.getInt("event_attend"));
 		eventListVO.setEventMaxPeople(rs.getInt("event_max_people"));
 		eventListVO.setEventAddress(rs.getString("event_address"));
 		eventListVO.setEventDate(rs.getTimestamp("event_date"));

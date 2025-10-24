@@ -134,7 +134,7 @@
 						<a class="event-link" href="detail?eventNo=${beforeList.eventNo}">
 							<div class="mb-10 event-title">
 								<label>${beforeList.eventTitle}</label> <label
-									style="font-size: 16px;">(참여인원/${beforeList.eventMaxPeople})</label>
+									style="font-size: 16px;">(${beforeList.eventAttend}/${beforeList.eventMaxPeople})</label>
 							</div>
 							<div class="ms-20">
 								<i class="fa-solid fa-calendar"></i> <label> <fmt:formatDate
@@ -167,7 +167,7 @@
 						<a class="event-link" href="detail?eventNo=${afterList.eventNo}">
 							<div class="mb-10 event-title">
 								<label>${afterList.eventTitle}</label> <label
-									style="font-size: 16px;">(참여인원/${afterList.eventMaxPeople})</label>
+									style="font-size: 16px;">(${afterList.eventAttend}/${afterList.eventMaxPeople})</label>
 							</div>
 							<div class="ms-20">
 								<i class="fa-solid fa-calendar"></i> <label> <fmt:formatDate
@@ -203,7 +203,7 @@
 				<a class="event-link" href="detail?eventNo=${eventList.eventNo}">
 					<div class="mb-10 event-title">
 						<label>${eventList.eventTitle}</label> <label
-							style="font-size: 16px;">(참여인원/${beforeList.eventMaxPeople})</label>
+							style="font-size: 16px;">(${beforeList.eventAttend}/${beforeList.eventMaxPeople})</label>
 					</div>
 					<div class="ms-20">
 						<i class="fa-solid fa-calendar"></i> <label> <fmt:formatDate
