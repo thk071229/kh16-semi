@@ -157,6 +157,9 @@ public class MemberController {
 		List<MemberCategoryListVO>categoryList = memberCategoryDao.selectVOList(loginId);
 		//회원이 가입한 소모임 리스트
 		List<MemberClubListVO>clubList = clubDao.selectClubList(loginId);
+		//회원이 작성한 정모 리스트 ( 구현중)
+		//List<MemberClubListVO>eventList = eventDao.select-----(loginId);
+		
 		
 		model.addAttribute("memberDto", memberDto);
 		model.addAttribute("regionList", regionList);
