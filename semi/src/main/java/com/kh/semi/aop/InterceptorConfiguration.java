@@ -19,6 +19,9 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 	@Autowired
 	private BoardOwnerInterceptor boardOwnerInterceptor;
 	
+	@Autowired
+	private EventOwnerInterceptor eventOwnerInterceptor;
+	
 	@Override
 	//인터셉터 등록 메소드
 	public void addInterceptors(InterceptorRegistry registry) {
@@ -26,6 +29,8 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 		registry.addInterceptor(memberLoginInterceptor)
 					.addPathPatterns(
 							"/board/**", 
+							// 로그인해야 접속 가능
+							"/event/detail/**","/event/add/**","/event/edit/**",
 							//좋아요 못누르도록 차단
 							"/rest/image/**", "/rest/board/action", "/rest/reply/**")
 					.excludePathPatterns("/board/list*", "/board/detail*",
@@ -40,6 +45,10 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 		registry.addInterceptor(boardOwnerInterceptor)
 					.addPathPatterns("/board/edit", "/board/delete");
 					//.order(순서)
+		
+		//정모내역(글) 수정 및 삭제 접근 차단 인터셉터
+		registry.addInterceptor(eventOwnerInterceptor)
+					.addPathPatterns("/event/edit", "/event/delete");
 		
 		//조회 수 중복방지 인터셉터
 		registry.addInterceptor(boardReadInterceptor)
