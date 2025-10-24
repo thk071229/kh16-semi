@@ -26,7 +26,7 @@
 	<i class="fa-solid fa-clock-rotate-left"></i>
 	<span>최근 본 모임</span>
 	</a>
-	<a href="/member/join">
+	<a href="/member/agree">
 	<i class="fa-solid fa-user-plus"></i>
 	<span>회원 가입</span>
 	</a>

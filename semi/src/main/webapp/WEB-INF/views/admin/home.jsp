@@ -87,7 +87,7 @@
 				</tr>
 				<tr>
 					<td>카테고리</td>
-					<td><a href="/admin/category/list" class="member-link">회원 목록</a></td>
+					<td><a href="/admin/category/list" class="member-link">카테고리 목록</a></td>
 				</tr>
 			</tbody>
 		</table>

@@ -4,20 +4,20 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <form action="login" method="post" autocomplete="off">
-<div class=container>
+<div class="container w-300">
 
-	<div class="title center">
-		로그인
+	<div class="cell center">
+     	<h2 style="color: var(--subtle);">로그인</h2>
 	</div>
 	
-	<div class="cell w-100 center">
-		<input type="text" name="memberId" placeholder="ID" class="search-input w-30" required>
+	<div class="cell center">
+		<input type="text" name="memberId" placeholder="ID" class="search-input w-100" required>
 	</div >
-	<div class="cell w-100 center">
-		<input type="password" name="memberPw" placeholder="Password" class="search-input w-30" required>
+	<div class="cell center">
+		<input type="password" name="memberPw" placeholder="Password" class="search-input w-100" required>
 	</div>
-	<div class="cell w-100 center mb-50">
-		<button class="btn btn-primary w-30" type="submit">로그인</button>
+	<div class="cell center mb-50">
+		<button class="btn btn-primary w-100" type="submit">로그인</button>
 	</div>
 	
 	<!--  로그인 실패 오류 메시지 -->
@@ -29,10 +29,10 @@
 	
 	<!-- 아이디 비밀번호 찾기 페이지 -->
 	<div class="cell center mt-50">
-		<a href="#" class="btn btn-common">아이디를 잊으셨나요?</a>
+		<a href="#" class="link">아이디를 잊으셨나요?</a>
 	</div>
 	<div class="cell center">
-		<a href="#" class="btn btn-common">비밀번호 찾기</a>
+		<a href="#" class="link">비밀번호 찾기</a>
 	</div>
 	
 	

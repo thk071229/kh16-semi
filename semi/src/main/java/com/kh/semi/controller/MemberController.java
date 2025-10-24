@@ -297,13 +297,13 @@ public class MemberController {
 	}
 	@PostMapping("/password")
 	public String password(HttpSession session, 
-			@RequestParam String currentPw, @RequestParam String changePw) {
+			@RequestParam String currentPw, @RequestParam String memberPw) {
 		String loginId = (String) session.getAttribute("loginId");
 		MemberDto memberDto = memberDao.selectOne(loginId);
 		boolean isValid = memberDto.getMemberPw().equals(currentPw);
 		if(isValid == false) return "redirect:password?error";
 		
-		memberDao.updateMemberPw(loginId, changePw);
+		memberDao.updateMemberPw(loginId, memberPw);
 		
 		return "redirect:mypage";
 	}
