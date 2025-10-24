@@ -154,4 +154,11 @@ public class BoardDao {
 		Object[] params = {boardComment, boardNo};
 		return jdbcTemplate.update(sql, params) > 0;
 	}
+	
+	//게시글 조회 수 증가 처리
+	public boolean updateBoardRead(int boardNo) {
+		String sql = "update board set board_read = board_read + 1 where board_no = ?";
+		Object[] params = {boardNo};
+		return jdbcTemplate.update(sql, params) > 0;
+	}
 }
