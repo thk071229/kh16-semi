@@ -1,6 +1,7 @@
 package com.kh.semi.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,6 @@ import com.kh.semi.dto.ClubDto;
 import com.kh.semi.dto.ClubMemberDto;
 import com.kh.semi.error.TargetNotFoundException;
 import com.kh.semi.error.UnauthorizationException;
-import com.kh.semi.service.AttachmentService;
 import com.kh.semi.service.ClubService;
 import com.kh.semi.vo.ClubListVO;
 import com.kh.semi.vo.PageVO;
@@ -50,7 +50,10 @@ public class ClubController {
 			ClubDto clubDto = clubDao.selectOne(clubNo);
 			if(clubDto == null) throw new TargetNotFoundException("존재하지 않는 소모임");
 			model.addAttribute("clubDto", clubDto);
-			
+			//+추가 클럽멤버 정보 수정
+			List<ClubMemberDto> list = clubMemberDao.selectList(clubNo);
+					
+			model.addAttribute("clubMember", list);
 			if(loginId != null) {
 				ClubMemberDto clubMemberDto = clubMemberDao.selectByClubMember(clubNo, loginId);
 				model.addAttribute("clubMemberDto", clubMemberDto); 
