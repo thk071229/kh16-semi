@@ -69,7 +69,7 @@
         <div class="cell">
             <h2>모임장</h2>
         </div>
-
+		<
         <div class="cell">
         	<div class="flex-box">
             <h2 class="flex-fill">모인 멤버</h2>
@@ -78,6 +78,18 @@
         	<i class="fa-solid fa-users fa-2x mt-25"></i>관리
         	</a>
         	</c:if>
+        	<c:forEach var = "clubList" items = "${clubMember}">
+        		<div class="club-member-wrapper flex-box">
+        		<div class="club-member-profile left">
+					<img src = "/member/profile?memberId=${clubList.clubMember}">
+				</div>
+				<div class="club-member-nickname">
+					<label>
+						${clubList.clubMember}
+					</label>
+				</div>
+				</div>
+        	</c:forEach>
         	</div>
         </div>
         
