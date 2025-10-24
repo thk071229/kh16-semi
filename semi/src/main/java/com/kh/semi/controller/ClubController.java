@@ -63,7 +63,7 @@ public class ClubController {
 	public String add(Model model, HttpSession session) {
 		String loginId = (String)session.getAttribute("loginId");
 		if(loginId == null) {//로그인중이 아니면 로그인 페이지로 이동
-			return "/WEB-INF/views/member/login.jsp";
+			return "redirect:/member/login";
 		}
 		
 		 List<CategoryDto> categoryList = categoryDao.selectList(); 
