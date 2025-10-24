@@ -462,3 +462,41 @@ HTML의 기본 배치방식을 무시하고 내가 원하는 방식으로 위치
  {
     display: block;
 }
+
+/* 입력창 검사 성공/실패에 대한 디자인(+JS) input 추가*/
+.input.success {
+    border-color: #70a1ff !important;
+}
+.input.fail, 
+.input.fail2 
+{
+    border-color: #e17055 !important;
+}
+
+/* 기본적으로 피드백은 모두 숨김 처리 */
+.success-feedback,
+.fail-feedback,
+.fail2-feedback
+{
+    display: none;
+}
+/* 성공 피드백 디자인 */
+.success-feedback {
+    color: #70a1ff;
+}
+/* 실패 피드백 디자인 */
+.fail-feedback,
+.fail2-feedback
+{
+    color: #e17055;
+}
+/* 검사에 성공한 입력창 뒤에 있는 성공 피드백을 표시 */
+.input.success ~ .success-feedback {
+    display: block;
+}
+/* 검사에 실패한 입력창 뒤에 있는 실패 피드백을 표시 */
+.input.fail ~ .fail-feedback,
+.input.fail2 ~ .fail2-feedback
+ {
+    display: block;
+}
