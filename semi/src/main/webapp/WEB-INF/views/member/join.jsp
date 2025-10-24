@@ -8,17 +8,11 @@
 <script src="/js/join.js"></script> </head>
 <form action="join" method="post" enctype="multipart/form-data" autocomplete="off">
 	
-	<div class="container">
+	<div class="container w-300">
 	
 		<div class="cell center">
 			<h1 style="color: var(--subtle);">회원가입 정보 입력</h1>
 		</div>
-		
-		<div class="cell center">
-            <div class="progressbar">
-                <div class="guage"></div>
-            </div>
-        </div>
 
         <div class="page">
             <div class="flex-box">
@@ -37,7 +31,7 @@
 
             <div class="cell center">
                 <label>아이디 <i class="fa-solid fa-asterisk warn"></i></label>
-                <input type="text" name="memberId" class="search-input w-30">
+                <input type="text" name="memberId" class="search-input w-100">
                 <div class="success-feedback">멋진 아이디입니다!</div>
                 <div class="fail-feedback">아이디는 알파벳 소문자로 시작하며 숫자를 포함해 8~20자로 작성하세요</div>
                 <div class="fail2-feedback">아이디가 이미 사용중입니다</div>
@@ -70,13 +64,13 @@
                     <i class="fa-solid fa-asterisk warn"></i>
                     <i class="fa-solid fa-eye-slash" id="password-show"></i>
                 </label>
-                <input type="password" name="memberPw" class="search-input w-30">
+                <input type="password" name="memberPw" class="search-input w-100">
                 <div class="success-feedback">비밀번호가 올바른 형식입니다</div>
                 <div class="fail-feedback">알파벳 대/소문자, 숫자, 특수문자를 반드시 포함하여 8 ~16자로 작성하세요</div>
             </div>
             <div class="cell center">
                 <label>비밀번호 확인 <i class="fa-solid fa-asterisk warn"></i></label>
-                <input type="password" id="password-check" class="search-input w-30">
+                <input type="password" id="password-check" class="search-input w-100">
                 <div class="success-feedback">비밀번호가 일치합니다</div>
                 <div class="fail-feedback">비밀번호가 일치하지 않습니다</div>
             </div> 
@@ -104,7 +98,7 @@
 
             <div class="cell center">
                 <label>닉네임 <i class="fa-solid fa-asterisk warn"></i></label>
-                <input type="text" name="memberNickname" class="search-input w-30">
+                <input type="text" name="memberNickname" class="search-input w-100">
                 <div class="success-feedback">멋진 닉네임입니다!</div>
                 <div class="fail-feedback">한글 또는 숫자 2~10글자로 작성하세요</div>
                 <div class="fail2-feedback">닉네임이 이미 사용중입니다</div>
@@ -187,13 +181,13 @@
 
             <div class="cell center">
                 <label>생년월일</label>
-                <input type="date" name="memberBirth" class="search-input w-30">
+                <input type="date" name="memberBirth" class="search-input w-100">
                 <div class="fail-feedback">올바른 날짜 형식이 아닙니다</div>
                 <div class="fail2-feedback">미래의 날짜는 설정할 수 없습니다</div>
             </div>
             <div class="cell center">
             	<label>성별</label>
-				<select name="memberGender" class="search-input w-30">
+				<select name="memberGender" class="search-input w-100">
 					<option value="남">남</option>
 					<option value="여">여</option>
 				</select> 
@@ -222,7 +216,7 @@
 
             <div class="cell center">
                 <label>프로필 이미지</label>
-                <input type="file" name="attach" class="search-input w-30" accept="image/*">
+                <input type="file" name="attach" class="search-input w-100" accept="image/*">
             </div>
             <div class="cell center">
                 <img class="img-preview" src="/images/error/no-image.png" width="200">

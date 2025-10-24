@@ -217,6 +217,16 @@ body{
   color: #69b894;
   text-decoration: underline;
 }
+.link {
+  color: #fdcb6e;
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.link:hover {
+  color: #FFBF86;
+  text-decoration: underline;
+}
 
 
 
