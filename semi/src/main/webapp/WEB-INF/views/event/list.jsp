@@ -77,13 +77,23 @@
 .event-box {
 	background-color: #ecfbf8;
 	border: 1px solid #d8f8f1;
-	border-radius: 1em;
+	border-radius: 1.5em;
 	padding: 0.5em;
+	
+	align-items: center;
 }
 
+.event-box.event-ing {
+	background-color: #d5fef5;
+}
+.event-box.event-end {
+	background-color: #cacaca;
+}
+
+
 .event-box:hover {
-	background-color: #d8f8f1;
-	border: 3px solid #d8f8f1;
+	filter: brightness(95%);
+	outline : 2px solid #d8f8f1;
 }
 
 .event-title {
@@ -132,7 +142,7 @@
 				
 				<c:forEach var="beforeList" items="${beforeDto}" varStatus="status">
 					<a class="event-link" href="detail?eventNo=${beforeList.eventNo}">
-						<div class="cell event-box flex-box">
+						<div class="cell event-box event-ing flex-box">
 							<div>
 								<c:choose>
 								    <c:when test="${beforeList.attachmentNo != null}">
@@ -156,15 +166,15 @@
 									</label>
 								</div>
 								<div class="ms-20">
-									<i class="fa-solid fa-person"></i>
-									<label>${beforeList.memberNickname}</label>
-								</div>
-								<div class="ms-20">
 									<i class="fa-solid fa-house"></i>
 									<label>${beforeList.clubName}</label>
 								</div>
 								<div class="ms-20">
-									<i class="fa-solid fa-house"></i>
+									<i class="fa-solid fa-person"></i>
+									<label>${beforeList.memberNickname}</label>
+								</div>
+								<div class="ms-20">
+									<i class="fa-solid fa-location-dot"></i>
 									<label>${beforeList.eventAddress}</label>
 								</div>
 							</div>
@@ -182,7 +192,7 @@
 
 				<c:forEach var="afterList" items="${afterDto}" varStatus="status">
 					<a class="event-link" href="detail?eventNo=${afterList.eventNo}">
-						<div class="cell event-box flex-box">
+						<div class="cell event-box event-end flex-box">
 							<div>
 								<c:choose>
 								    <c:when test="${afterList.attachmentNo != null}">
@@ -206,15 +216,15 @@
 									</label>
 								</div>
 								<div class="ms-20">
-									<i class="fa-solid fa-person"></i>
-									<label>${afterList.memberNickname}</label>
-								</div>
-								<div class="ms-20">
 									<i class="fa-solid fa-house"></i>
 									<label>${afterList.clubName}</label>
 								</div>
 								<div class="ms-20">
-									<i class="fa-solid fa-house"></i>
+									<i class="fa-solid fa-person"></i>
+									<label>${afterList.memberNickname}</label>
+								</div>
+								<div class="ms-20">
+									<i class="fa-solid fa-location-dot"></i>
 									<label>${afterList.eventAddress}</label>
 								</div>
 							</div>
@@ -258,13 +268,14 @@
 							</label>
 						</div>
 						<div class="ms-20">
-							<i class="fa-solid fa-person"></i> <label>${eventList.memberNickname}</label>
-						</div>
-						<div class="ms-20">
 							<i class="fa-solid fa-house"></i> <label>${eventList.clubName}</label>
 						</div>
 						<div class="ms-20">
-							<i class="fa-solid fa-house"></i> <label>${eventList.eventAddress}</label>
+							<i class="fa-solid fa-person"></i> <label>${eventList.memberNickname}</label>
+						</div>
+
+						<div class="ms-20">
+							<i class="fa-solid fa-location-dot"></i> <label>${eventList.eventAddress}</label>
 						</div>
 					</div>
 				</div>
