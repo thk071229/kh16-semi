@@ -31,6 +31,8 @@ public class EventListMapper implements RowMapper<EventListVO>{
 		eventListVO.setCategoryName(rs.getString("club_category"));
 		// From member Table
 		eventListVO.setMemberNickname(rs.getString("member_nickname"));
+		// From event_page Table
+		eventListVO.setAttachmentNo(rs.getObject("attachment_no"));
 		
 		return eventListVO;
 	}
