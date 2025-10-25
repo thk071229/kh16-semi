@@ -129,29 +129,47 @@
 				<div class="cell center">
 					<h1>진행중</h1>
 				</div>
+				
 				<c:forEach var="beforeList" items="${beforeDto}" varStatus="status">
-					<div class="cell event-box">
-						<a class="event-link" href="detail?eventNo=${beforeList.eventNo}">
-							<div class="mb-10 event-title">
-								<label>${beforeList.eventTitle}</label> <label
-									style="font-size: 16px;">(${beforeList.eventAttend}/${beforeList.eventMaxPeople})</label>
+					<a class="event-link" href="detail?eventNo=${beforeList.eventNo}">
+						<div class="cell event-box flex-box">
+							<div>
+								<c:choose>
+								    <c:when test="${beforeList.attachmentNo != null}">
+								        <img src="/attachment/download?attachmentNo=${beforeList.attachmentNo}" width="100">
+								    </c:when>
+								    <c:otherwise>
+								        <img src="/images/error/no-image.png" width="100">
+								    </c:otherwise>
+								</c:choose>
 							</div>
-							<div class="ms-20">
-								<i class="fa-solid fa-calendar"></i> <label> <fmt:formatDate
-										value="${beforeList.eventDate}" pattern="y년 M월 d일 H:mm"></fmt:formatDate>
-								</label>
+							
+							<div class="flex-fill ms-20">
+								<div class="mb-10 event-title">
+									<label>${beforeList.eventTitle}</label>
+									<label style="font-size: 16px;">(${beforeList.eventAttend}/${beforeList.eventMaxPeople})</label>
+								</div>
+								<div class="ms-20">
+									<i class="fa-solid fa-calendar"></i>
+									<label>
+										<fmt:formatDate value="${beforeList.eventDate}" pattern="y년 M월 d일 H:mm"></fmt:formatDate>
+									</label>
+								</div>
+								<div class="ms-20">
+									<i class="fa-solid fa-person"></i>
+									<label>${beforeList.memberNickname}</label>
+								</div>
+								<div class="ms-20">
+									<i class="fa-solid fa-house"></i>
+									<label>${beforeList.clubName}</label>
+								</div>
+								<div class="ms-20">
+									<i class="fa-solid fa-house"></i>
+									<label>${beforeList.eventAddress}</label>
+								</div>
 							</div>
-							<div class="ms-20">
-								<i class="fa-solid fa-person"></i> <label>${beforeList.memberNickname}</label>
-							</div>
-							<div class="ms-20">
-								<i class="fa-solid fa-house"></i> <label>${beforeList.clubName}</label>
-							</div>
-							<div class="ms-20">
-								<i class="fa-solid fa-house"></i> <label>${beforeList.eventAddress}</label>
-							</div>
-						</a>
-					</div>
+						</div>
+					</a>
 				</c:forEach>
 
 			</div>
@@ -163,28 +181,41 @@
 				</div>
 
 				<c:forEach var="afterList" items="${afterDto}" varStatus="status">
-					<div class="cell event-box">
-						<a class="event-link" href="detail?eventNo=${afterList.eventNo}">
-							<div class="mb-10 event-title">
-								<label>${afterList.eventTitle}</label> <label
-									style="font-size: 16px;">(${afterList.eventAttend}/${afterList.eventMaxPeople})</label>
+					<a class="event-link" href="detail?eventNo=${afterList.eventNo}">
+						<div class="cell event-box flex-box">
+							<div>
+								<c:choose>
+								    <c:when test="${afterList.attachmentNo != null}">
+								        <img src="/attachment/download?attachmentNo=${afterList.attachmentNo}" width="100">
+								    </c:when>
+								    <c:otherwise>
+								        <img src="/images/error/no-image.png" width="100">
+								    </c:otherwise>
+								</c:choose>
 							</div>
-							<div class="ms-20">
-								<i class="fa-solid fa-calendar"></i> <label> <fmt:formatDate
-										value="${afterList.eventDate}" pattern="y년 M월 d일 H:mm"></fmt:formatDate>
-								</label>
+						
+							<div class="flex-fill ms-20">
+								<div class="mb-10 event-title">
+																<label>${afterList.eventTitle}</label> <label
+																	style="font-size: 16px;">(${afterList.eventAttend}/${afterList.eventMaxPeople})</label>
+															</div>
+															<div class="ms-20">
+																<i class="fa-solid fa-calendar"></i> <label> <fmt:formatDate
+																		value="${afterList.eventDate}" pattern="y년 M월 d일 H:mm"></fmt:formatDate>
+																</label>
+															</div>
+															<div class="ms-20">
+																<i class="fa-solid fa-person"></i> <label>${afterList.memberNickname}</label>
+															</div>
+															<div class="ms-20">
+																<i class="fa-solid fa-house"></i> <label>${afterList.clubName}</label>
+															</div>
+															<div class="ms-20">
+																<i class="fa-solid fa-house"></i> <label>${afterList.eventAddress}</label>
+															</div>
 							</div>
-							<div class="ms-20">
-								<i class="fa-solid fa-person"></i> <label>${afterList.memberNickname}</label>
-							</div>
-							<div class="ms-20">
-								<i class="fa-solid fa-house"></i> <label>${afterList.clubName}</label>
-							</div>
-							<div class="ms-20">
-								<i class="fa-solid fa-house"></i> <label>${afterList.eventAddress}</label>
-							</div>
-						</a>
-					</div>
+						</div>
+					</a>
 				</c:forEach>
 			</div>
 
@@ -203,7 +234,7 @@
 				<a class="event-link" href="detail?eventNo=${eventList.eventNo}">
 					<div class="mb-10 event-title">
 						<label>${eventList.eventTitle}</label> <label
-							style="font-size: 16px;">(${beforeList.eventAttend}/${beforeList.eventMaxPeople})</label>
+							style="font-size: 16px;">(${eventList.eventAttend}/${eventList.eventMaxPeople})</label>
 					</div>
 					<div class="ms-20">
 						<i class="fa-solid fa-calendar"></i> <label> <fmt:formatDate
