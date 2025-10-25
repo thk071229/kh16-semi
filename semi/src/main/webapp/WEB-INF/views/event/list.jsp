@@ -196,23 +196,27 @@
 						
 							<div class="flex-fill ms-20">
 								<div class="mb-10 event-title">
-																<label>${afterList.eventTitle}</label> <label
-																	style="font-size: 16px;">(${afterList.eventAttend}/${afterList.eventMaxPeople})</label>
-															</div>
-															<div class="ms-20">
-																<i class="fa-solid fa-calendar"></i> <label> <fmt:formatDate
-																		value="${afterList.eventDate}" pattern="y년 M월 d일 H:mm"></fmt:formatDate>
-																</label>
-															</div>
-															<div class="ms-20">
-																<i class="fa-solid fa-person"></i> <label>${afterList.memberNickname}</label>
-															</div>
-															<div class="ms-20">
-																<i class="fa-solid fa-house"></i> <label>${afterList.clubName}</label>
-															</div>
-															<div class="ms-20">
-																<i class="fa-solid fa-house"></i> <label>${afterList.eventAddress}</label>
-															</div>
+									<label>${afterList.eventTitle}</label>
+									<label style="font-size: 16px;">(${afterList.eventAttend}/${afterList.eventMaxPeople})</label>
+								</div>
+								<div class="ms-20">
+									<i class="fa-solid fa-calendar"></i>
+									<label>
+										<fmt:formatDate	value="${afterList.eventDate}" pattern="y년 M월 d일 H:mm"></fmt:formatDate>
+									</label>
+								</div>
+								<div class="ms-20">
+									<i class="fa-solid fa-person"></i>
+									<label>${afterList.memberNickname}</label>
+								</div>
+								<div class="ms-20">
+									<i class="fa-solid fa-house"></i>
+									<label>${afterList.clubName}</label>
+								</div>
+								<div class="ms-20">
+									<i class="fa-solid fa-house"></i>
+									<label>${afterList.eventAddress}</label>
+								</div>
 							</div>
 						</div>
 					</a>
@@ -230,28 +234,41 @@
 		</div>
 
 		<c:forEach var="eventList" items="${eventDto}" varStatus="status">
-			<div class="cell event-box">
-				<a class="event-link" href="detail?eventNo=${eventList.eventNo}">
-					<div class="mb-10 event-title">
-						<label>${eventList.eventTitle}</label> <label
-							style="font-size: 16px;">(${eventList.eventAttend}/${eventList.eventMaxPeople})</label>
+			<a class="event-link" href="detail?eventNo=${eventList.eventNo}">
+				<div class="cell event-box flex-box">
+					<div>
+						<c:choose>
+							<c:when test="${eventList.attachmentNo != null}">
+								<img src="/attachment/download?attachmentNo=${eventList.attachmentNo}" width="100">
+							</c:when>
+							<c:otherwise>
+								<img src="/images/error/no-image.png" width="100">
+							</c:otherwise>
+						</c:choose>
 					</div>
-					<div class="ms-20">
-						<i class="fa-solid fa-calendar"></i> <label> <fmt:formatDate
-								value="${eventList.eventDate}" pattern="y년 M월 d일 H:mm"></fmt:formatDate>
-						</label>
+					<div class="flex-fill ms-20">
+						<div class="mb-10 event-title">
+							<label>${eventList.eventTitle}</label>
+							<label style="font-size: 16px;">(${eventList.eventAttend}/${eventList.eventMaxPeople})</label>
+						</div>
+						<div class="ms-20">
+							<i class="fa-solid fa-calendar"></i>
+							<label>
+								<fmt:formatDate value="${eventList.eventDate}" pattern="y년 M월 d일 H:mm"></fmt:formatDate>
+							</label>
+						</div>
+						<div class="ms-20">
+							<i class="fa-solid fa-person"></i> <label>${eventList.memberNickname}</label>
+						</div>
+						<div class="ms-20">
+							<i class="fa-solid fa-house"></i> <label>${eventList.clubName}</label>
+						</div>
+						<div class="ms-20">
+							<i class="fa-solid fa-house"></i> <label>${eventList.eventAddress}</label>
+						</div>
 					</div>
-					<div class="ms-20">
-						<i class="fa-solid fa-person"></i> <label>${eventList.memberNickname}</label>
-					</div>
-					<div class="ms-20">
-						<i class="fa-solid fa-house"></i> <label>${eventList.clubName}</label>
-					</div>
-					<div class="ms-20">
-						<i class="fa-solid fa-house"></i> <label>${eventList.eventAddress}</label>
-					</div>
-				</a>
-			</div>
+				</div>
+			</a>
 		</c:forEach>
 	</div>
 
