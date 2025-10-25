@@ -5,6 +5,19 @@
 <%@taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt"%>
 
 <style>
+	.board-title {
+		margin-left:5px;
+		font-size:25px;
+   		align-items: center; /* 세로 중앙 정렬 */
+    	gap: 8px; /* 뱃지와 제목 사이 간격 */
+	}
+	
+	.board-info-wrapper > .board-writer-nickname {
+		padding:10px;
+		font-size:18px;
+		font-weight : bold;
+	}
+		
 	#board-like {
 	cursor : pointer;
 	}
@@ -13,14 +26,14 @@
 		margin-left:10px;
 	}
 	.reply-list-wrapper {
-	padding:10px;
+	padding-top:15px;
+	padding-bottom:15px;
 	display:flex;
 	flex-direction:column;
 	}
 	.reply-writer-profile {
 	width:100px;
 	height:100px;
-	padding:10px;
 	box-shadow:0 0 1px 1px #EEEEEE;
 	border-radius:50%;
 	overflow:hidden;
@@ -36,13 +49,16 @@
 	.reply-body-wrapper {
 	flex-grow:1;
 	padding:10px;
+	font-size:15px;
 	}
 	.reply-edited-wrapper {
 	display:inline-flex;
+	font-size:12px;
 	}
 	.reply-writer {
 	margin-top : 0;
 	margin-bottom: 0;
+	font-size:15px;
 	}
 	.button-wrapper {
 		text-align : right;
@@ -63,10 +79,12 @@
 	}
 	/* 뱃지 스타일 */
 	.badge {
-		padding:0.25em 0.25em;
+		padding:0.2em 0.5em;
         color:#6cb7f4;
-        border:2px solid #6cb7f4;
+        border:1px solid #6cb7f4;
         border-radius:20px;
+        font-size:10px;
+        margin-left:5px;
 	}
 	
 	hr {
@@ -88,16 +106,18 @@
 			<img class="reply-writer-profile">
 		</div>
 		<div class="reply-body-wrapper">
-			<h3 class="reply-writer">작성자</h3>
-			<pre class="reply-content">내용</pre>
+			<h3 class="reply-writer flex-box">
+			작성자
+			</h3>
 			<div class="reply-edited-wrapper">
 				<div class="reply-time">yyyy-MM-dd HH:mm:ss</div>
 				<%-- 수정되었을때에만 표시되도록 추후 처리 --%>
 				<span class="reply-edited">(수정됨)</span>
 			</div>
+			<pre class="reply-content">내용</pre>
 			<div class="button-wrapper">
-				<i class = "fa-solid fa-edit fa-2x gray"></i>
-				<i class = "fa-solid fa-trash fa-2x gray"></i>
+				<i class = "fa-solid fa-edit gray"></i>
+				<i class = "fa-solid fa-trash gray"></i>
 			</div>
 	</div>
 </script>
@@ -106,24 +126,37 @@
 		<div class = "reply-edit-wrapper">
 		<textarea class="reply-editor field w-100" rows = "4" style = "resize:none;"></textarea>
 		<div class= "button-wrapper">
-			<i class="fa-solid fa-xmark fa-2x gray"></i>
-			<i class="fa-solid fa-check fa-2x gray"></i>
+			<i class="fa-solid fa-xmark gray"></i>
+			<i class="fa-solid fa-check gray"></i>
 		</div>
 </script>
 
 <div class="container w-700">
 <div class="cell">
-	<h1>${boardDto.boardTitle}</h1>
+	<div class="board-title inline-flex-box">
+	<h3>${boardDto.boardTitle}</h3>
+	<c:if test="${boardDto.boardEtime != null}">
+		<span class="badge">수정됨</span>
+	</c:if>
+	</div>
 	<hr>
-	<a href = "/member/detail?memberId=${boardDto.boardWriter}">
-	<span>${memberDto.memberNickname}</span>
+	<div class="board-info-wrapper">
+	
+	<a href = "/member/detail?memberId=${boardDto.boardWriter}" class="member-link">
+	<span class="board-writer-nickname me-10">
+	<i class="fa-solid fa-pen"></i>
+	${memberDto.memberNickname}
+	</span>
 	</a>
-	<span>
+	<span class="me-10">
+	<i class="fa-solid fa-clock"></i>
 	<fmt:formatDate value ="${boardDto.boardWtime}" pattern = "yyyy-MM-dd HH:mm"/>
 	</span>
 	<span>
+	<i class="fa-solid fa-book-open-reader"></i>
 	${boardDto.boardRead}
 	</span>
+	</div>
 	<hr>
 	<div class="cell"  style = "min-height:200px; vertical-align : top; padding : 10px;">
 	${boardDto.boardContent}
@@ -139,7 +172,7 @@
 	</label>
 	<hr>
 </div>
-	
+	<!-- 댓글 영역 기본 멘트 -->
 	<div class="reply-list-wrapper">
 		<h3>아직 등록된 댓글이 없습니다</h3>
 	</div>
@@ -173,24 +206,24 @@
 	<!-- 메뉴 영역 -->
 	<!-- 누구에게나 보여줄 버튼 -->
 	<div class="cell">
-		<a href="list?clubNo=${boardDto.boardClub}">목록으로</a>
+		<a href="list?clubNo=${boardDto.boardClub}" class="btn btn-common">목록으로</a>
 	<!-- 모임 회원/게시글 작성자/모임장/관리자일때 보여줄 버튼 -->
 	<c:choose>
 	<c:when test="${isClubMember && sessionScope.loginId == boardDto.boardWriter}">
-			<a href="edit?boardNo=${boardDto.boardNo}">수정하기</a>
-			<a href="delete?boardNo=${boardDto.boardNo}">삭제하기</a>
-			<a href="write?clubNo=${boardDto.boardClub}">새 글 등록</a>
+			<a href="edit?boardNo=${boardDto.boardNo}" class="btn btn-common">수정하기</a>
+			<a href="delete?boardNo=${boardDto.boardNo}" class="btn btn-common">삭제하기</a>
+			<a href="write?clubNo=${boardDto.boardClub}" class="btn btn-primary">새 글 등록</a>
 	</c:when>
 	<c:when test="${isClubMember}">
 		<div class="cell">
-			<a href="write?clubNo=${boardDto.boardClub}">새 글 등록</a>
+			<a href="write?clubNo=${boardDto.boardClub}" class="btn btn-primary">새 글 등록</a>
 		</div>
 	</c:when>
 	<c:when test = "${sessionScope.loginId == clubLeader}">
-		<a href="delete?boardNo=${boardDto.boardNo}">삭제하기</a>
+		<a href="delete?boardNo=${boardDto.boardNo}" class="btn btn-common">삭제하기</a>
 	</c:when>
 	<c:when test = "${sessionScope.loginLevel == '관리자'}">
-		<a href="delete?boardNo=${boardDto.boardNo}">삭제하기</a>
+		<a href="delete?boardNo=${boardDto.boardNo}" class="btn btn-common">삭제하기</a>
 	</c:when>
 	</c:choose>
 </div>

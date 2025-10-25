@@ -26,12 +26,13 @@
                 effect: 'coverflow',
                 grabCursor: true,
                 centeredSlides: true,
-                slidesPerView: 'auto',       // 화면에 맞춰 슬라이드 크기 자동 조정
+                slidesPerView: 1,
+				spaceBetween: 0,
                 loop: true,
                 coverflowEffect: {
                     rotate: 30,              // 회전 각도
                     stretch: 0,              // 늘리기
-                    depth: 150,              // Z축 깊이
+                    depth: 120,              // Z축 깊이
                     modifier: 0.8,             // 효과 강도
                     scale: 0.85,
                     slideShadows: false,      // 그림자 표시

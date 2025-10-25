@@ -64,7 +64,7 @@ public class BoardDao {
 		}
 		else {//검색이라면 
 				//- pageVO를 사용하므로 직접 컬럼, 키워드 변수를 만들지말고 VO에서 불러온다
-			Set<String> allowList = Set.of("board_title", "board_writer");
+			Set<String> allowList = Set.of("board_title", "board_writer", "member_nickname");
 			if(!allowList.contains(pageVO.getColumn())) return List.of();
 			String sql = "select * from ("
 					+ "select rownum rn, TMP.* from ("

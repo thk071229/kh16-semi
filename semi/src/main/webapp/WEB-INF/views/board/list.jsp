@@ -32,7 +32,7 @@
 	}
 	
 	.board-info-wrapper > .board-writer-nickname {
-		padding:10px;
+		padding:5px 10px 0px 10px;
 		font-size:18px;
 		font-weight : bold;
 	}
@@ -95,7 +95,7 @@
 		    font-size: 13px;
 		    font-weight: 600;
 		    color: #fff;
-		    background-color: #ff4d4f;
+		    background-color: var(--primary);
 		    border-radius: 6px;
 		    letter-spacing: 0.3px;
 		    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
@@ -110,6 +110,15 @@
         .notice:hover {
         	background-color : #F0F6F4;
         }
+        
+        .search-select-box {
+        border: 1px solid #dcdcdc;
+		  border-radius: 8px;
+		  padding: 10px 14px;
+		  font-size: 15px;
+		  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        
 </style>
 
 <div class="container w-700">
@@ -140,7 +149,9 @@
 						<label class="board-type">자유게시판</label>
 					</c:otherwise>
 					</c:choose>
-					<div class="write-time ms-20">${boardDto.boardWriteTime}</div>
+					<div class="write-time ms-10">
+					${boardDto.boardWriteTime}
+					</div>
 				</div>
 			</div>
 		</div>
@@ -154,7 +165,7 @@
 		</div>
 		<!-- 기타 정보 영역 -->
 		<div class="board-count mt-20 mb-20">		
-				<i class="fa-solid fa-user"></i>
+				<i class="fa-solid fa-book-open-reader"></i>
 				<span>${boardDto.boardRead}</span>
 				<i class="fa-solid fa-heart"></i>
 				<span>${boardDto.boardLike}</span>
@@ -169,12 +180,25 @@
 <div class="cell center mt-20 mb-20">
 <jsp:include page="/WEB-INF/views/template/pagination-num.jsp"></jsp:include>	
 </div>
-
-<div class="cell">
-	<c:if test = "${sessionScope.loginId != null}">
-	<a href = "write?clubNo=${clubNo}">새 글 등록</a>
-	</c:if>
-	<a href = "/club/home?clubNo=${clubNo}">모임 화면으로</a>
+ <!-- 검색창 -->
+   <div class="cell search center mt-30 mb-50">
+      <form action = "list" method = "get" class="search-form w-75">
+	<select name="column" class="search-select-box">
+		<option value = "board_title" ${pageVO.column == "board_title" ? "selected" : ""}>글 제목</option>
+		<option value = "board_writer" ${pageVO.column == "board_writer" ? "selected" : ""}>작성자</option>
+		<option value = "member_nickname" ${pageVO.column == "member_nickname" ? "selected" : ""}>닉네임</option>
+	</select>
+		<input type = "search" name="keyword" placeholder = "검색어 입력"  required value = "${pageVO.keyword}" class="search-input w-100">
+		<input type = "hidden" name="clubNo" value = "${clubNo}">
+	<button class="btn btn-primary">검색</button>
+</form>
 </div>
+<div class="cell">
+	<c:if test = "${sessionScope.loginId != null && isClubMember}">
+	<a href = "write?clubNo=${clubNo}" class="btn btn-accent">새 글 등록</a>
+	</c:if>
+	<a href = "/club/home?clubNo=${clubNo}" class="btn btn-accent">모임 화면으로</a>
+</div>
+
 </div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
