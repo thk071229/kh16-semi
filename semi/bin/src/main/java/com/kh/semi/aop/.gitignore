@@ -1,0 +1,9 @@
+/BoardOwnerInterceptor.class
+/BoardReadInterceptor.class
+/ClubJoinCheckInterceptor.class
+/EmptyStringControllerAdvice.class
+/EventOwnerInterceptor.class
+/ExceptionControllerAdvice.class
+/InterceptorConfiguration.class
+/MemberJoinInterceptor.class
+/MemberLoginInterceptor.class
