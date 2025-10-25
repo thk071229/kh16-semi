@@ -171,7 +171,9 @@
 </div>
 
 <div class="cell">
+	<c:if test = "${sessionScope.loginId != null}">
 	<a href = "write?clubNo=${clubNo}">새 글 등록</a>
+	</c:if>
 	<a href = "/club/home?clubNo=${clubNo}">모임 화면으로</a>
 </div>
 </div>

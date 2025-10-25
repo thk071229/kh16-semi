@@ -92,6 +92,7 @@
 			</tbody>
 		</table>
 	</div>
+	<!-- 차트 영역 -->
 
 </div>
 <!-- footer -->
