@@ -10,13 +10,9 @@
 	    display: block;
 	    clear: both;
 	}
-    .event-box{
-    	background-color:#ecfbf8;
-    	border : 1px solid #d8f8f1;
-    	border-radius : 1em;
-    	padding : 0.5em;
-		align-items: center;
-		
+
+	
+	.event-box{
 		display: flex;               /* 내부 레이아웃 유지 */
 		flex-wrap : wrap;
 		flex-direction: row;         /* 기본 행 배치 */
@@ -26,19 +22,6 @@
 		box-sizing: border-box;      /* padding, border 포함 폭 계산 */
 	}
 
-    .event-box:hover{
-    	filter: brightness(95%);
-    	outline : 2px solid #d8f8f1;
-    }
-    .event-title{
-    	font-size:24px;
-    	font-weight:500;
-    	color:#005d5c;
-    }
-    .event-link{
-    	text-decoration:none;
-    	color:black;
-    }
 </style>
 
 <!-- --------------------------------------------- -->
