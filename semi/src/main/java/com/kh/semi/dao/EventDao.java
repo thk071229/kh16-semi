@@ -12,6 +12,7 @@ import com.kh.semi.mapper.EventListMapper;
 import com.kh.semi.mapper.EventMapper;
 import com.kh.semi.vo.EventAttendeeListVO;
 import com.kh.semi.vo.EventListVO;
+import com.kh.semi.vo.PageVO;
 
 @Repository
 public class EventDao {
@@ -58,6 +59,27 @@ public class EventDao {
 		return jdbcTemplate.query(sql, eventListMapper);
 	}
 
+	// PageVO 적용 조회
+	public List<EventListVO> selectListWithPaging(PageVO pageVO){
+		String sql = "select * from ("
+				+ "select rownum rn, TMP.* from ("
+				+ "select * from event_list order by event_date desc"
+				+ ")TMP "
+				+ ")where rn between ? and ?";
+		Object[] params = {pageVO.getBegin(), pageVO.getEnd()};
+		return jdbcTemplate.query(sql, eventListMapper, params);
+	}
+	
+	//게시글 카운트 메소드(클럽 내에서 페이지별로 보여주기 위함)
+	public int count(PageVO pageVO) { 
+		// 컨트롤러에서 pageVO만을 전달해서 불러올수있도록
+			String sql = "select count(*) from event_list";
+			return jdbcTemplate.queryForObject(sql, int.class);
+	}
+	
+	
+	
+	
 	// 조회 (int clubNo)
 	public List<EventDto> selectList(int clubNo){
 		String sql = "select * from event where event_club = ? "

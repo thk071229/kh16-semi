@@ -127,6 +127,12 @@
 			</div>
 		</a>
 	</c:forEach>
+	
+	<!-- 페이지 내비게이터 영역 -->
+	<div class="cell center mt-20 mb-20">
+		<jsp:include page="/WEB-INF/views/template/pagination-num.jsp"></jsp:include>	
+	</div>
+	
 </div>
 
 
