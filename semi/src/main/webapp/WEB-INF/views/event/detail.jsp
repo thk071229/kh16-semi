@@ -76,6 +76,18 @@
 			
 			//버튼을 누르면 서버의 /rest/event/action으로 신호를 전송
 			$("#event-attendee").on("click",function() {
+					// 현재 참여체크
+				    var isAttend = $(this).hasClass("fa-square-check");
+					// 최대인원 체크
+					var currentCount = parseInt($("#event-attendee-count").text());
+					var maxPeople = parseInt("${eventDto.eventMaxPeople}");
+
+					// 최대인원 체크
+						if(!isAttend && currentCount >= maxPeople){
+							alert("이미 최대 인원에 도달했습니다.");
+						return; // 클릭 무시
+					}
+				
 						var params = new URLSearchParams(location.search);
 						var eventNo = params.get("eventNo");
 						$.ajax({
