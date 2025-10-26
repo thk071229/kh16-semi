@@ -173,4 +173,5 @@ public class EventDao {
 		Object[] params = {eventAttend, eventNo};
 		return jdbcTemplate.update(sql,params)>0;
 	}
+	
 }
