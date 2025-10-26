@@ -61,13 +61,33 @@
 			})
 		});
 </script>
-<c:if
-	test="${sessionScope.loginId != null}">
+<c:if test="${sessionScope.loginId != null}">
 	<!-- 참여 관련 처리 -->
 	<script type="text/javascript">
 		$(function() {
+			
+			// 오늘 날짜 기준으로 event-date가 과거면 비동기통신 작동안함
+			var eventDate = new Date($(".eventDate").val());
+			var today = new Date();
+			if(eventDate < today){
+				$("#event-attendee").prop("disabled",true);
+				return;
+			} 
+			
 			//버튼을 누르면 서버의 /rest/event/action으로 신호를 전송
 			$("#event-attendee").on("click",function() {
+					// 현재 참여체크
+				    var isAttend = $(this).hasClass("fa-square-check");
+					// 최대인원 체크
+					var currentCount = parseInt($("#event-attendee-count").text());
+					var maxPeople = parseInt("${eventDto.eventMaxPeople}");
+
+					// 최대인원 체크
+						if(!isAttend && currentCount >= maxPeople){
+							alert("이미 최대 인원에 도달했습니다.");
+						return; // 클릭 무시
+					}
+				
 						var params = new URLSearchParams(location.search);
 						var eventNo = params.get("eventNo");
 						$.ajax({
@@ -94,6 +114,7 @@
 <!-- -hidden 으로 정보 전달--- -->	
 <input type="hidden" value="${eventDto.eventRegionX}" class="regionX" readonly>
 <input type="hidden" value="${eventDto.eventRegionY}" class="regionY" readonly>
+<input type="hidden" value="${eventDto.eventDate}" class="eventDate">
 	<div>
 		<a class="btn btn-ghost w-25 center" href="list?clubNo=${eventDto.eventClub}"> ◀ 목록</a>
  	</div>
@@ -142,12 +163,16 @@
      	<hr>
     </div>
     
-    <div class="cell center">
-    	
-    	<a class="btn btn-primary w-25" href="add?clubNo=${eventDto.eventClub}">등록</a>
-    	<a class="btn btn-accent w-25" href="edit?eventNo=${eventDto.eventNo}">수정</a>
-    	<a class="btn btn-accent w-25" href="delete?eventNo=${eventDto.eventNo}">삭제</a>
-    </div>
+	
+	<c:if test="${sessionScope.loginId != null}">
+	    <div class="cell center">
+	    	<a class="btn btn-primary w-25" href="add?clubNo=${eventDto.eventClub}">등록</a>
+			<c:if test="${sessionScope.loginId == eventDto.eventWriter}">
+	 	   		<a class="btn btn-accent w-25" href="edit?eventNo=${eventDto.eventNo}">수정</a>
+	    		<a class="btn btn-accent w-25" href="delete?eventNo=${eventDto.eventNo}">삭제</a>
+			</c:if>
+	    </div>
+	</c:if>
     
 </div>
 

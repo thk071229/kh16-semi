@@ -26,6 +26,7 @@ import com.kh.semi.error.TargetNotFoundException;
 import com.kh.semi.service.AttachmentService;
 import com.kh.semi.vo.ClubListVO;
 import com.kh.semi.vo.EventListVO;
+import com.kh.semi.vo.PageVO;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -47,7 +48,12 @@ public class EventController {
 	@RequestMapping("/home")
 	public String list(Model model) {
 		List<EventListVO> eventDto = eventDao.selectList();
+		//List<EventListVO> eventDto = eventDao.selectListWithPaging(pageVO);
 		model.addAttribute("eventDto", eventDto);
+		
+		//int dataCount = eventDao.count(pageVO);
+		//pageVO.setDataCount(dataCount);
+		
 		return "/WEB-INF/views/event/home.jsp";
 	}
 	

@@ -89,9 +89,11 @@
 
 
 	<div class="cell left">
-		<a class="btn btn-ghost" href="/club/home?clubNo=${clubNo}">메인</a> <a
-			class="btn btn-ghost" href="/board/list?clubNo=${clubNo}">게시판</a> <a
-			class="btn btn-primary" href="/event/add?clubNo=${clubNo}">신규 등록</a>
+		<a class="btn btn-ghost" href="/club/home?clubNo=${clubNo}">메인</a>
+		<a class="btn btn-ghost" href="/board/list?clubNo=${clubNo}">게시판</a>
+		<c:if test="${sessionScope.loginId != null}">
+			<a class="btn btn-primary" href="/event/add?clubNo=${clubNo}">신규 등록</a>
+		</c:if>
 	</div>
 
 	<div class="cell">
