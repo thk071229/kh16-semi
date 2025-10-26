@@ -1,7 +1,6 @@
 package com.kh.semi.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -148,13 +147,28 @@ public class ClubController {
 		clubDao.delete(clubNo);
 		return "redirect:list";
 	}
-	
+	//추천 모임  
+	@GetMapping("/recommandList")
+	public String recommandList(Model model, @ModelAttribute PageVO pageVO) {
+		int limit = 4;
+		
+		List<ClubListVO> clubList = clubDao.selectClubListOrderByLikes(limit);
+		model.addAttribute("clubList", clubList);//여러개 기준을 정하려면 이름 변경 필요할듯
+		return "/WEB-INF/views/club/recommandList.jsp";
+	}
+	//전체 모임 목록
 	@GetMapping("/list")
-		public String list(Model model, @ModelAttribute PageVO pageVO) {
-			List<ClubListVO> clubList = clubDao.selectListWithPaging(pageVO);
-			model.addAttribute("clubList", clubList);
-			return "/WEB-INF/views/club/list.jsp";
-		}
+	public String list(Model model, @ModelAttribute PageVO pageVO) {
+		
+		//1. 전체 목록 카운트
+		int dataCount = clubDao.count(pageVO); 
+		pageVO.setDataCount(dataCount);
+		
+		List<ClubListVO> clubList = clubDao.selectListWithPaging(pageVO);
+		model.addAttribute("clubList", clubList);
+		
+		return "/WEB-INF/views/club/list.jsp";
+	}
 	
 	
 }

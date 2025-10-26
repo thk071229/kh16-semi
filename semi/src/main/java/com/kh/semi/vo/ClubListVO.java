@@ -15,5 +15,6 @@ public class ClubListVO {
 	private int clubCategory;
 	private String regionName;
 	private String categoryName;
-	// public S
+	private int clubLike;
+	private Integer clubProfile;
 }
