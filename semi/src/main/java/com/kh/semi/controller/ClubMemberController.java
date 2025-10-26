@@ -1,6 +1,8 @@
 package com.kh.semi.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;import org.springframework.data.annotation.ReadOnlyProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,12 +13,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.semi.dao.ClubDao;
 import com.kh.semi.dao.ClubMemberDao;
-import com.kh.semi.dao.MemberDao;
 import com.kh.semi.dto.ClubDto;
 import com.kh.semi.dto.ClubMemberDto;
-import com.kh.semi.dto.MemberDto;
 import com.kh.semi.error.TargetNotFoundException;
 import com.kh.semi.error.UnauthorizationException;
+import com.kh.semi.service.ClubService;
+import com.kh.semi.vo.ClubMemberListVO;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -29,7 +31,7 @@ public class ClubMemberController {
 	@Autowired
 	private ClubDao clubDao;
 	@Autowired
-	private MemberDao memberDao;
+	private ClubService clubService;
 	
 	@PostMapping("/join")
 	public String insert(@ModelAttribute ClubMemberDto clubMemberDto, 
@@ -85,21 +87,29 @@ public class ClubMemberController {
 		if(memberId.equals(leaderId)) throw new UnauthorizationException("모임장은 자신을 제명할 수 없습니다");
 		
 		clubMemberDao.delete(clubNo, memberId);
-		return "redirect:list?clubN0=" + clubNo;
+		return "redirect:list?clubNo=" + clubNo;
+	}
+	// 모임장 변경 기능
+	@PostMapping("/changeLeader")
+	public String changeLeader(@RequestParam int clubNo, 
+			@RequestParam String newLeader, 
+			HttpSession session) {
+		String loginId = (String)session.getAttribute("loginId");
+		clubService.changeClubLeader(clubNo, newLeader, loginId);
+		return "redirect:/club/home?clubNo=" + clubNo;
 	}
 	
 	@GetMapping("/list")
-	public String list(@RequestParam int clubNo, @RequestParam String memberId, Model model) {
-		MemberDto memberDto = memberDao.selectOne(memberId);
-		if(memberDto == null) throw new TargetNotFoundException("존재하지 않는 회원");
-		model.addAttribute("memberDto", memberDto);
-		
+	public String list(@RequestParam int clubNo,  Model model) {
+		//1. 모임 정보 조회
 		ClubDto clubDto = clubDao.selectOne(clubNo);
 		if(clubDto == null) throw new TargetNotFoundException("존재하지 않는 소모임");
+		model.addAttribute("clubDto", clubDto);
 		
-		ClubMemberDto clubMemberDto = clubMemberDao.selectOne(clubNo);
-		if(clubMemberDto == null) throw new TargetNotFoundException("존재하지 않는 소모임");
-		model.addAttribute("clubMemberDto", clubMemberDto);
+		//2. 회원 전체 목록 조회
+		List<ClubMemberListVO> memberList = clubMemberDao.selectListWithNickname(clubNo);
+		model.addAttribute("memberList", memberList);
+		
 		return "/WEB-INF/views/clubMember/list.jsp";
 	}
 	
