@@ -25,6 +25,8 @@ public class EventAttendeeListVO {
 	private String categoryName;
 	// From event_attendee Table
 	private String memberId;
+	// From member Table
+	private String memberNickname;
 
 	
 }

@@ -25,8 +25,8 @@ import com.kh.semi.dto.EventDto;
 import com.kh.semi.error.TargetNotFoundException;
 import com.kh.semi.service.AttachmentService;
 import com.kh.semi.vo.ClubListVO;
+import com.kh.semi.vo.EventAttendeeListVO;
 import com.kh.semi.vo.EventListVO;
-import com.kh.semi.vo.PageVO;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -123,8 +123,12 @@ public class EventController {
 	public String detail(Model model, @RequestParam int eventNo) {
 		EventDto eventDto = eventDao.selectOne(eventNo);
 		if(eventDto==null) throw new TargetNotFoundException("존재하지 않는 이벤트번호");
+		List<EventAttendeeListVO> eventAttendee = eventDao.selectListWithEvent(eventNo);
+		EventListVO eventListVO = eventDao.selectOneWithWriter(eventDto.getEventWriter());
 		//int attachmentNo = eventDao.findAttachment(eventNo);
 		//model.addAttribute("attachmentNo", attachmentNo);
+		model.addAttribute("eventAttendee", eventAttendee);
+		model.addAttribute("eventListVO", eventListVO);
 		model.addAttribute("eventDto", eventDto);
 		return "/WEB-INF/views/event/detail.jsp";
 	}

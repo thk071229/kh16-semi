@@ -104,6 +104,14 @@ public class EventDao {
 		return jdbcTemplate.query(sql, eventAttendeeListMapper, params);
 	}
 	
+	public List<EventAttendeeListVO> selectListWithEvent(int eventNo){
+		String sql = "Select * from event_attendee_list where event_no=? ";
+		Object[] params = {eventNo};
+		return jdbcTemplate.query(sql, eventAttendeeListMapper, params);
+	}
+	
+	
+	
 	// 마이페이지용 - 개최한 event 조회
 	public List<EventListVO> selectListWithWriter(String memberId){
 		String sql = "select * from event_list where event_writer = ? "
@@ -136,6 +144,16 @@ public class EventDao {
 		List<EventDto> list = jdbcTemplate.query(sql, eventMapper, params);
 		return list.isEmpty() ? null : list.get(0);
 	}
+	
+	// 상세조회 memberId로
+	public EventListVO selectOneWithWriter(String memberId){
+		String sql = "select * from event_list where event_writer = ? "
+		           		+ "order by event_date desc";
+		Object[] params= {memberId};
+		List<EventListVO> list = jdbcTemplate.query(sql, eventListMapper, params);
+		return list.isEmpty() ? null : list.get(0);
+	}
+	
 	
 	// 삭제
 	public boolean delete(int eventNo) {

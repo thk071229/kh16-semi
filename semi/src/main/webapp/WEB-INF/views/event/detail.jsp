@@ -16,6 +16,24 @@
 		width: 100%;
 		height: 300px;
 	}
+	.table-wrapper {
+	  background: var(--surface);
+	  border-radius: var(--radius);
+	  box-shadow: var(--shadow);
+	  padding: 16px;
+	  margin-top: 15px;
+	}
+	.table-wrapper table {
+	  width: 100%;
+	  border-collapse: collapse;
+	}
+	.table-wrapper th, .table-wrapper td {
+	  border: 1px solid #dcdcdc;
+	  padding: 10px;
+	  text-align: center;
+	}
+
+
 </style>
 <!-- -------------------------------------- -->	
 <script type="text/javascript">
@@ -122,18 +140,19 @@
 		    	<h1>
 		    		${eventDto.eventTitle}
 		    		<c:if test="${eventDto.eventEtime != null}">
-						<span style="font-size:18;">(수정 :
-							<fmt:formatDate value="${eventDto.eventEtime}" pattern="M/d H:mm" ></fmt:formatDate>
-						 )</span>
+						<span style="font-size:18;">(수정됨)</span>
 					</c:if>
 				</h1>
 			</div>
  			<div class="float-box">
 				<div class="cell float-left">
+					<i class="fa-solid fa-person"></i>
+					<label>${eventListVO.memberNickname}</label><br>
 			    	<i class="fa-solid fa-calendar"></i>
 			    	<fmt:formatDate value="${eventDto.eventDate}" pattern="y년 M월 d일 H:mm" ></fmt:formatDate>
-			    	<label> / 작성일</label>
+					<label> ( 작성일</label>
 			    	<fmt:formatDate value="${eventDto.eventWtime}" pattern="M월 d일 H:mm" ></fmt:formatDate>
+					<label> )</label>
 			    </div>
 			    <div class="float-right">
 				    <div class="cell" style="font-size:18px">
@@ -145,16 +164,39 @@
 				</div>
 			</div>	
 
+			
+			<div class="table-wrapper">
+				<hr>
+				<table>
+			      <tbody>
+			          <tr>
+						<td style="width:80px;">참여인원</td>
+			            <td>
+							<c:forEach var="eventAttendee" items="${eventAttendee}" varStatus="status">
+								<a href="/member/detail?memberId=${eventAttendee.memberId}">${eventAttendee.memberNickname}</a>
+								<label>  <label>
+							</c:forEach>
+			            </td>
+			          </tr>
+					  <tr>
+					  <td>
+						<div> 내용 </div>
+					  </td>
+					    <td>
+							${eventDto.eventContent}
+					    </td>
+					  </tr>
+			      </tbody>
+			    </table>
+				<hr>
+			</div>
+
 
  	
- 	
-     <div class="cell">
-     	<hr>
+	
 
-   		${eventDto.eventContent}
-
-   		<hr>
-    </div>
+	
+	
 	<div class="cell">
 		<div class="kakao-map w-100"></div>
 	</div>
