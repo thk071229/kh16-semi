@@ -3,17 +3,30 @@ package com.kh.semi.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import com.kh.semi.configuration.EmailConfiguragion;
 import com.kh.semi.dao.MemberDao;
+import com.kh.semi.dao.MemberRegionDao;
 import com.kh.semi.dto.MemberDto;
+import com.kh.semi.dto.MemberRegionDto;
 import com.kh.semi.error.TargetNotFoundException;
 
 @Service
 public class MemberService {
+
+    private final EmailConfiguragion emailConfiguragion;
 	@Autowired
 	private MemberDao memberDao;
 	@Autowired
 	private AttachmentService attachmentService;
+	@Autowired
+	private RegionService regionService;
+	@Autowired
+	private MemberRegionDao memberRegionDao;
+
+
+    MemberService(EmailConfiguragion emailConfiguragion) {
+        this.emailConfiguragion = emailConfiguragion;
+    }
 	
 	
 	//회원 탈퇴 서비스
@@ -39,4 +52,19 @@ public class MemberService {
 		
 		return true;
 	}
+	//(추가) 회원가입 시 지역 설정
+	@Transactional
+	public void addMemberRegion(String memberId, String regionName, String regionType) {
+		// regionNo 가져오기
+		int regionNo = regionService.createRegion(regionName);
+		
+		// member_region에 저장
+		MemberRegionDto memberRegionDto = new MemberRegionDto();
+		memberRegionDto.setMemberId(memberId);
+		memberRegionDto.setRegionNo(regionNo);
+		memberRegionDto.setRegionType(regionType);
+		//memberRegionDao에 insert
+		memberRegionDao.insert(memberRegionDto);
+	}
+	
 }
