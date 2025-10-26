@@ -10,7 +10,7 @@
 	<i class="fa-solid fa-house"></i>
 	<span>홈</span>
 	</a>
-	<a href="/club/list">
+	<a href="/club/recommandList">
 	<i class="fa-solid fa-star"></i>
 	<span>추천 모임</span>
 	</a>

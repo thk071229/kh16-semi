@@ -20,9 +20,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.semi.dao.BoardDao;
 import com.kh.semi.dao.ClubDao;
+import com.kh.semi.dao.ClubMemberDao;
 import com.kh.semi.dao.MemberDao;
 import com.kh.semi.dto.BoardDto;
 import com.kh.semi.dto.ClubDto;
+import com.kh.semi.dto.ClubMemberDto;
 import com.kh.semi.dto.MemberDto;
 import com.kh.semi.error.TargetNotFoundException;
 import com.kh.semi.service.AttachmentService;
@@ -41,6 +43,8 @@ public class BoardController {
 	private ClubDao clubDao;
 	@Autowired
 	private MemberDao memberDao;
+	@Autowired
+	private ClubMemberDao clubMemberDao;
 	
 	@Autowired
 	private AttachmentService attachmentService;
@@ -73,21 +77,31 @@ public class BoardController {
 	
 	//게시글 상세 조회 매핑
 	@RequestMapping("/detail")
-	public String detail(@RequestParam int boardNo, Model model) {
+	public String detail(HttpSession session, @RequestParam int boardNo, Model model) {
 		BoardDto boardDto = boardDao.selectOne(boardNo);
 		if(boardDto == null) throw new TargetNotFoundException("존재하지 않는 게시글");
 		if(boardDto.getBoardWriter() != null) { //작성자가 존재할 때만 memberDto에 추가
 			MemberDto memberDto = memberDao.selectOne(boardDto.getBoardWriter());
 			model.addAttribute("memberDto", memberDto);
 		}
+		//모임장 정보 추출
+		ClubDto clubDto = clubDao.selectOne(boardDto.getBoardClub());
+		String clubLeader = clubDto.getClubLeader();
+		
+		String loginId = (String) session.getAttribute("loginId");
+		//모임 가입 멤버 추출
+		ClubMemberDto clubMemberDto = clubMemberDao.selectByClubMember(boardDto.getBoardClub(), loginId);
+		boolean isClubMember = loginId != null && clubMemberDto != null;
+		model.addAttribute("isClubMember", isClubMember);
 		model.addAttribute("boardNo", boardNo);
 		model.addAttribute("boardDto", boardDto);
+		model.addAttribute("clubLeader", clubLeader);
 		return "/WEB-INF/views/board/detail.jsp";
 	}
 	
 	//게시글 목록 조회 매핑(페이지 구현) - 해당 모임의 게시글만 가져오므로 clubNo 필수
 	@RequestMapping("/list")
-	public String list(Model model, @ModelAttribute PageVO pageVO, @RequestParam int clubNo) {//변수 대신 VO 불러옴
+	public String list(HttpSession session, Model model, @ModelAttribute PageVO pageVO, @RequestParam int clubNo) {//변수 대신 VO 불러옴
 		ClubDto clubDto = clubDao.selectOne(clubNo);
 		if(clubDto == null) throw new TargetNotFoundException("존재하지 않는 모임입니다");
 		model.addAttribute("clubDto",clubDto);
@@ -116,6 +130,12 @@ public class BoardController {
 		//model.addAttribute("type", "board");
 		//부모 파라미터의 "key" 값을 parentParamsKey 라는 이름으로 화면에 전달
 		//model.addAttribute("parentParamsKey", "clubNo");
+		
+		//모임 가입 멤버 추출
+		String loginId = (String) session.getAttribute("loginId");
+		ClubMemberDto clubMemberDto = clubMemberDao.selectByClubMember(clubNo, loginId);
+		boolean isClubMember = loginId != null && clubMemberDto != null;
+		model.addAttribute("isClubMember", isClubMember);
 		return "/WEB-INF/views/board/list.jsp";
 	}
 	

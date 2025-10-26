@@ -6,7 +6,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
 <script src="/js/multipage.js"></script>
 <script src="/js/join.js"></script> </head>
-<form action="join" method="post" enctype="multipart/form-data" autocomplete="off">
+<form action="join" method="post" enctype="multipart/form-data" autocomplete="off" class="check-form">
 	
 	<div class="container w-300">
 	

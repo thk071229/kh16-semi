@@ -26,5 +26,7 @@ public class EventListVO {
 	private String categoryName;
 	// From member Table
 	private String memberNickname;
+	// From event_image Table
+	private Object attachmentNo;
 	
 }

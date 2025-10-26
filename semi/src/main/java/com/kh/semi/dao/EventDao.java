@@ -3,13 +3,14 @@ package com.kh.semi.dao;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.semi.dto.EventDto;
+import com.kh.semi.mapper.EventAttendeeListMapper;
 import com.kh.semi.mapper.EventListMapper;
 import com.kh.semi.mapper.EventMapper;
+import com.kh.semi.vo.EventAttendeeListVO;
 import com.kh.semi.vo.EventListVO;
 
 @Repository
@@ -21,6 +22,8 @@ public class EventDao {
 	private EventMapper eventMapper;
 	@Autowired
 	private EventListMapper eventListMapper;
+	@Autowired
+	private EventAttendeeListMapper eventAttendeeListMapper;
 	
 	// 시퀀스 번호 생성
 	public int sequence() {
@@ -71,7 +74,13 @@ public class EventDao {
 		return jdbcTemplate.query(sql, eventListMapper, params);
 	}
 	
-	
+	// 조회 (String memberId or loginId)
+	public List<EventAttendeeListVO> selectListWithMember(String memberId){
+		String sql = "select * from event_attendee_list where member_id = ? "
+		           		+ "order by event_date desc";
+		Object[] params= {memberId};
+		return jdbcTemplate.query(sql, eventAttendeeListMapper, params);
+	}
 	
 	/// 조회 - 진행중(현재시각전)
 		public List<EventListVO> selectListBefore(int clubNo){

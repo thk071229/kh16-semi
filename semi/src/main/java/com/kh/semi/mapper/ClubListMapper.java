@@ -21,7 +21,9 @@ public class ClubListMapper implements RowMapper<ClubListVO>{
 				.clubRegion(rs.getInt("club_region"))
 				.clubCategory(rs.getInt("club_category"))
 				.regionName(rs.getString("region_name"))
-				.categoryName(rs.getString("club_category"))
+				.categoryName(rs.getString("category_name"))
+				.clubLike(rs.getInt("club_like"))
+				.clubProfile(rs.getObject("club_profile", Integer.class))
 				.build();
 	}
 }
