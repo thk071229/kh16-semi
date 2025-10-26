@@ -61,11 +61,19 @@
 			})
 		});
 </script>
-<c:if
-	test="${sessionScope.loginId != null}">
+<c:if test="${sessionScope.loginId != null}">
 	<!-- 참여 관련 처리 -->
 	<script type="text/javascript">
 		$(function() {
+			
+			// 오늘 날짜 기준으로 event-date가 과거면 비동기통신 작동안함
+			var eventDate = new Date($(".eventDate").val());
+			var today = new Date();
+			if(eventDate < today){
+				$("#event-attendee").prop("disabled",true);
+				return;
+			} 
+			
 			//버튼을 누르면 서버의 /rest/event/action으로 신호를 전송
 			$("#event-attendee").on("click",function() {
 						var params = new URLSearchParams(location.search);
@@ -94,6 +102,7 @@
 <!-- -hidden 으로 정보 전달--- -->	
 <input type="hidden" value="${eventDto.eventRegionX}" class="regionX" readonly>
 <input type="hidden" value="${eventDto.eventRegionY}" class="regionY" readonly>
+<input type="hidden" value="${eventDto.eventDate}" class="eventDate">
 	<div>
 		<a class="btn btn-ghost w-25 center" href="list?clubNo=${eventDto.eventClub}"> ◀ 목록</a>
  	</div>
