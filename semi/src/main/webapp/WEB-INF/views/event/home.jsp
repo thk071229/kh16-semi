@@ -4,6 +4,55 @@
 <%@ taglib prefix="fmt"  uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>	
+
+<script type="text/javascript">
+	$(function(){
+		var today = new Date();
+		
+		// 버튼에 오늘~7일까지 날짜값 채우기
+		$(".date").each(function(index){
+			var newDate = new Date(today);
+			newDate.setDate(today.getDate()+index);
+			$(this).val(formatDate(newDate));
+			// 기존 글자에 덧붙이기
+			var dayonly = newDate.getDate();
+			$(this).text($(this).text()+"("+dayonly+")");
+		});		
+
+		//날짜 선택 시 이벤트 필터링
+		$(".date").on("click",function(){
+			var selectedDate = $(this).val();
+			
+			$(".event-box").each(function(){
+			        var timestamp = $(this).find(".event-date").val();
+			        var eventDate = new Date(parseInt(timestamp));
+			        var eventDateConvert = formatDate(eventDate);
+					// 해당하는 날짜면 보여주고, 아니면 숨기기
+			        if(eventDateConvert === selectedDate){
+			            $(this).closest(".event-link").show();
+			       	 } else {
+			            $(this).closest(".event-link").hide();
+			       	 }
+			    });
+
+		});
+		
+		// 전체 정모 보여주기
+		$(".date-all").on("click",function(){
+			$(".event-link").show();
+		});
+		
+	});
+	
+	function formatDate(date) {
+		var year = date.getFullYear();
+		var month = date.getMonth() + 1;
+		var day = date.getDate();
+		if(month < 10) month = '0' + month;
+		if(day < 10) day = '0' + day;
+		return year + '-' + month + '-' + day;
+	}
+</script>
 <style>
 	.container::after {
 	    content: "";
@@ -18,7 +67,6 @@
 		flex-direction: row;         /* 기본 행 배치 */
 		float: left;                 /* 카드 좌측 정렬, 줄 바꿈 허용 */
 		width : 48%;
-		height : 150px;
 		box-sizing: border-box;      /* padding, border 포함 폭 계산 */
 	}
 
@@ -29,6 +77,19 @@
     <div class="cell center">
 	    <h1>정모 목록</h1>
 	</div>
+	<!-- 위클리페이지-->
+	<div class="flex-box">
+		<div class="btn btn-primary date">오늘</div> <!-- 오늘 -->
+		<div class="btn btn-primary ms-10 date">내일</div>
+		<div class="btn btn-primary ms-10 date">모레</div>
+		<div class="btn btn-primary ms-10 date">4일 후</div>
+		<div class="btn btn-primary ms-10 date">5일 후</div>
+		<div class="btn btn-primary ms-10 date">6일 후</div>
+		<div class="btn btn-primary ms-10 date">7일 후</div> <!-- 7일째 -->
+		<div class="btn btn-ghost ms-10 date-all">전체보기</div>
+	</div>
+	
+	
 	<c:forEach var="eventList" items="${eventDto}" varStatus="status">
 		<a class="event-link" href="detail?eventNo=${eventList.eventNo}">
 			<div class="flex-box cell event-box ms-10">
@@ -49,6 +110,7 @@
 					</div>
 					<div class="ms-20"><i class="fa-solid fa-calendar"></i>
 						<label>
+							<input type="hidden" class="event-date" value="${eventList.eventDate.time}">
 							<fmt:formatDate value="${eventList.eventDate}" pattern="M월 d일 H:mm" ></fmt:formatDate>
 						</label>
 					</div>
