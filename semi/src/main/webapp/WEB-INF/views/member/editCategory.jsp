@@ -6,7 +6,7 @@
 <form action="editCategory" method="post">
     
     <div>
-    	<h1>선호 카테고리 수정</h1>
+    	<h1 style="color: var(--subtle);">선호 카테고리 수정</h1>
     </div>
     	<div class="cell w-50 ">
 		<div>

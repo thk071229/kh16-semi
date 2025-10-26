@@ -156,6 +156,7 @@ public class EmailService {
 		
 		sender.send(message);
 		
+		certDao.delete(memberDto.getMemberEmail());
 		//인증 테이블에 등록
 		certDao.insert(CertDto.builder()
 					.certEmail(memberDto.getMemberEmail())

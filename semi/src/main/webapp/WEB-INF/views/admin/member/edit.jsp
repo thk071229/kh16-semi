@@ -4,36 +4,36 @@
 
 <form action="edit" method="post">
 <input type="hidden" name="memberId" value="${memberDto.memberId}">
-<div>
+<div class="container w-300">
 
-	<div>
-		<h1>회원 정보 수정</h1>
+	<div class="cell center">
+		<h1 style="color: var(--subtle);">회원 정보 수정</h1>
 	</div>
-	<div>
+	<div class="cell">
 		<label>닉네임</label>
-		<input type="text" name="memberNickname" value="${memberDto.memberNickname}" required><br><br>
+		<input type="text" name="memberNickname" value="${memberDto.memberNickname}" required class="search-input w-100">
 	</div>
-	<div>
+	<div class="cell">
 		<label>이메일</label>
-		<input type="text" name="memberEmail" value="${memberDto.memberEmail}" inputmode="email" required><br><br>
+		<input type="text" name="memberEmail" value="${memberDto.memberEmail}" inputmode="email" required class="search-input w-100">
 	</div>
-	<div>
+	<div class="cell">
 		<label>생년월일</label>
-		<input type="date" name="memberBirth" value="${memberDto.memberBirth}"><br><br>
+		<input type="date" name="memberBirth" value="${memberDto.memberBirth}" class="search-input w-100">
 	</div>
-	<div>
+	<div class="cell">
 		<label>회원 등급</label>
-		<select name="memberLevel">
+		<select name="memberLevel" class="search-input w-100">
 			<option ${memberDto.memberLevel == '일반회원' ? 'selected' : '' }>일반회원</option>
 			<!--<option ${memberDto.memberLevel == '' ? 'selected' : '' }></option> -->
 		</select>
 	</div>
-	<div>
+	<div class="cell">
 		<label>포인트</label>
-		<input type="text" name="memberPoint" value="${memberDto.memberPoint}" inputmode="numeric" required> <br><br>
+		<input type="text" name="memberPoint" value="${memberDto.memberPoint}" inputmode="numeric" required class="search-input w-100">
 	</div>
-	<div>
-		<button type="submit">수정하기</button>
+	<div class="cell">
+		<button class="btn btn-primary w-100" type="submit">수정하기</button>
 	</div>
 
 </div>

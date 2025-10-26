@@ -1,6 +1,8 @@
 package com.kh.semi.controller;
 
 import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.semi.dao.CategoryDao;
+import com.kh.semi.dao.CertDao;
 import com.kh.semi.dao.ClubDao;
 import com.kh.semi.dao.EventDao;
 import com.kh.semi.dao.MemberCategoryDao;
@@ -21,8 +24,10 @@ import com.kh.semi.dao.MemberDao;
 import com.kh.semi.dao.MemberRegionDao;
 import com.kh.semi.dao.RegionDao;
 import com.kh.semi.dto.CategoryDto;
+import com.kh.semi.dto.CertDto;
 import com.kh.semi.dto.MemberCategoryDto;
 import com.kh.semi.dto.MemberDto;
+import com.kh.semi.error.NeedPermissionException;
 import com.kh.semi.error.TargetNotFoundException;
 import com.kh.semi.service.AttachmentService;
 import com.kh.semi.service.EmailService;
@@ -58,6 +63,8 @@ public class MemberController {
 	private AttachmentService attachmentService;
 	@Autowired
 	private EmailService emailService;
+	@Autowired
+	private CertDao certDao;
 	
 	//이용약관 동의
 	@GetMapping("/agree")
@@ -324,5 +331,117 @@ public class MemberController {
 			return "redirect:/images/error/no-image.png";
 		}
 	}
+	
+	//아이디 및 비밀번호 찾기
+	//아이디
+	@GetMapping("/findMemberId")
+	public String findMemberId() {
+		return "/WEB-INF/views/member/findMemberId.jsp";
+	}
+	@PostMapping("/findMemberId")
+	public String findMemberId(@ModelAttribute MemberDto memberDto) {
+		//수신한 닉네임으로 사용자 정보를 조회 및 비교하고 존재한다면 이메일 발송
+		MemberDto findDto = memberDao.selectOneByNickname(memberDto.getMemberNickname());
+		if(findDto == null) return "redirect:findMemberId?error";
+		boolean emailValid = memberDto.getMemberEmail().equals(findDto.getMemberEmail());
+		if(emailValid == false) return "redirect:findMembrId?error";
+		
+		//이메일 발송
+		emailService.sendEmail(
+				findDto.getMemberEmail(), 
+				"[KH정보교육원] 아이디 찾기 결과", 
+				findDto.getMemberNickname()+"님의 아이디는 ["
+				+findDto.getMemberId()+"] 입니다"
+		);
+		
+		return "redirect:findMemberIdFinish";
+	}
+	@RequestMapping("/findMemberIdFinish")
+	public String findMemberIdFinish() {
+		return "/WEB-INF/views/member/findMemberIdFinish.jsp";
+	}
+	
+	//비밀번호
+	//이메일에서 비밀번호 재설정 눌러서 오는 곳
+	@GetMapping("/changeMemberPw")
+	public String changeMemberPw(
+			@RequestParam String memberId,
+			@RequestParam String certNumber, 
+			Model model) {
+		//아이디로 이메일을 찾아서 인증내역 조회
+		MemberDto memberDto = memberDao.selectOne(memberId); //아이디가 존재하는가
+		if(memberDto == null) throw new TargetNotFoundException("존재하지 않는 회원");
+		 
+		CertDto certDto = certDao.selectOne(memberDto.getMemberEmail()); //인증내역이 존재하는가
+		if(certDto == null) throw new NeedPermissionException("허가받지 않은 접근");
+		
+		boolean numberValid = certDto.getCertNumber().equals(certNumber); //인증번호가 일치하는가
+		if(numberValid == false) throw new NeedPermissionException("허가받지 않은 접근");
+		
+		LocalDateTime current = LocalDateTime.now(); //현재시각
+		LocalDateTime created = certDto.getCertTime().toLocalDateTime(); //인증생성시각
+		
+		Duration duration = Duration.between(created, current);
+		boolean timeValid = duration.toSeconds() <= 600;//10분 0초
+		if(timeValid == false) throw new NeedPermissionException("인증정보 만료됨");
+		
+		model.addAttribute("memberId", memberId);
+		model.addAttribute("certNumber", certNumber);
+		
+		return "/WEB-INF/views/member/changeMemberPw.jsp";
+	}
+	@PostMapping("/changeMemberPw")
+	public String changeMemberPw(
+			@ModelAttribute MemberDto memberDto, 
+			@RequestParam String certNumber) {
+		MemberDto findDto = memberDao.selectOne(memberDto.getMemberId());
+		if(findDto == null) return "redirect:changeMemberPw?error";
+		
+		//아이디로 이메일을 찾아서 인증내역을 조회
+		CertDto certDto = certDao.selectOne(findDto.getMemberEmail()); //인증내역이 존재하는가
+		if(certDto == null) throw new NeedPermissionException("허가받지 않은 접근");
+		boolean numberValid = certDto.getCertNumber().equals(certNumber); //인증번호가 일치하는가
+		if(numberValid == false) throw new NeedPermissionException("허가받지 않은 접근");
+		
+		LocalDateTime current = LocalDateTime.now();//현재시각
+		LocalDateTime created = certDto.getCertTime().toLocalDateTime();//인증생성시각
+		Duration duration = Duration.between(created, current);
+		
+		boolean timeValid = duration.toSeconds() <= 600;//10분 0초까지
+		if(timeValid == false) throw new NeedPermissionException("인증정보 만료됨");
+		
+		memberDao.updateMemberPw(memberDto);//비밀번호 변경
+		certDao.delete(findDto.getMemberEmail());//인증정보 재사용 금지(삭제)
+		
+		return "redirect:changeMemberPwFinish";
+	}
+	@RequestMapping("/changeMemberPwFinish")
+	public String changeMemberPwFinish() {
+		return "/WEB-INF/views/member/changeMemberPwFinish.jsp";
+	}
+	
+	@GetMapping("/findMemberPw")
+	public String findMemberPw() {
+		return "/WEB-INF/views/member/findMemberPw.jsp";
+	}
+	@PostMapping("/findMemberPw")
+	public String findMemberPw(@ModelAttribute MemberDto memberDto) throws MessagingException, IOException {
+		//검사 후 메일 발송
+		MemberDto findDto = memberDao.selectOne(memberDto.getMemberId());
+		if(findDto == null) return "redirect:findMemberPw?error";//아이디 없음
+		boolean nicknameValid = memberDto.getMemberNickname().equals(findDto.getMemberNickname());
+		if(nicknameValid == false) return "redirect:findMemberPw?error";//닉네임 불일치
+		boolean emailValid = memberDto.getMemberEmail().equals(findDto.getMemberEmail());
+		if(emailValid == false) return "redirect:findMemberPw?error";//이메일 불일치
+
+		emailService.sendResetPassword(findDto);//비밀번호 재설정 메일 발송
+		
+		return "redirect:findMemberPwFinish";
+	}
+	@RequestMapping("/findMemberPwFinish")
+	public String findMemberPwFinish() {
+		return "/WEB-INF/views/member/findMemberPwFinish.jsp"; 
+	}
+	
 	
 }
