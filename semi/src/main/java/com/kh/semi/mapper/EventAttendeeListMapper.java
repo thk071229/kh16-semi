@@ -30,7 +30,8 @@ public class EventAttendeeListMapper implements RowMapper<EventAttendeeListVO>{
 		eventAttendeeListVO.setCategoryName(rs.getString("club_category"));
 		// From event_attendee Table
 		eventAttendeeListVO.setMemberId(rs.getString("member_id"));
-
+		// From member Table
+		eventAttendeeListVO.setMemberNickname(rs.getString("member_nickname"));
 		
 		return eventAttendeeListVO;
 	}
