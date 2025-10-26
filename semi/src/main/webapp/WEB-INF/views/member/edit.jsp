@@ -7,7 +7,7 @@
 	<div>
 		
 		<div>
-			<h1>회원 정보 수정</h1>
+			<h1 style="color: var(--subtle);">회원 정보 수정</h1>
 		</div>
 		<!-- 닉네임 -->
 		<div>

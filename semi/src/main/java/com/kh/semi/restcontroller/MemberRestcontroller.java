@@ -64,8 +64,7 @@ public class MemberRestcontroller {
 
 		// 신규파일 등록
 		if (attach.isEmpty() == false) {
-			int attachmentNo = attachmentService.save(attach);
-			memberDao.connect(loginId, attachmentNo);
+			int attachmentNo = attachmentService.save(attach);			memberDao.connect(loginId, attachmentNo);
 		}
 	}
 

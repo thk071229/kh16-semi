@@ -83,9 +83,8 @@
 <div class="container">
 
 	<div class="cell center">
-		<h1>회원가입 완료</h1>
+		<h1 style="color: var(--subtle);">회원가입 완료</h1>
 		<span>찾아주셔서 감사합니다</span>
-		
 	</div>
 	<div class="cell center">
 		<hr>

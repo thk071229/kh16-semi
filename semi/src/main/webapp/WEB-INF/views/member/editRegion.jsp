@@ -5,7 +5,7 @@
 <div>
 <form action="/editRegion" method="post">
 	<div>
-		<h1>선호 지역 수정</h1>
+		<h1 style="color: var(--subtle);">선호 지역 수정</h1>
 	</div>
 	<c:forEach var="region" items="${regionList}" varStatus="status">
     	<div>

@@ -84,13 +84,6 @@ public class MemberRegionDao {
 		return jdbcTemplate.queryForList(sql, Integer.class, params);
 	}
 	
-	//선호하는 지역으로 선택한 사람이 몇 명 있는지 조회
-	public int countByRegion(int regionNo) {
-		String sql = "select count(*) from member_region "
-						+ "where region_no=?";
-		Object[] params = { regionNo };
-		return jdbcTemplate.queryForObject(sql, int.class, params);
-	}
 	
 	//수정
 	@Transactional

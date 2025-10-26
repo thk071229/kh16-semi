@@ -90,11 +90,7 @@
     		<artifactId>jsoup</artifactId>
     		<version>1.21.2</version>
 		</dependency>
-		<dependency>
-			<groupId>com.kh</groupId>
-			<artifactId>spring09</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+
 		
 				<!--이메일 사용을 위한 의존성-->
 		<dependency>
