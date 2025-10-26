@@ -46,12 +46,13 @@ public class EventController {
 	
 	// 정모게시글 전체
 	@RequestMapping("/home")
-	public String list(Model model, @ModelAttribute PageVO pageVO) {
-		List<EventListVO> eventDto = eventDao.selectListWithPaging(pageVO);
+	public String list(Model model) {
+		List<EventListVO> eventDto = eventDao.selectList();
+		//List<EventListVO> eventDto = eventDao.selectListWithPaging(pageVO);
 		model.addAttribute("eventDto", eventDto);
 		
-		int dataCount = eventDao.count(pageVO);
-		pageVO.setDataCount(dataCount);
+		//int dataCount = eventDao.count(pageVO);
+		//pageVO.setDataCount(dataCount);
 		
 		return "/WEB-INF/views/event/home.jsp";
 	}

@@ -34,12 +34,18 @@
 			            $(this).closest(".event-link").hide();
 			       	 }
 			    });
+				
+				
+		// 페이지 내비게이터 비활성화 + URL 쿼리 제거 
+		$(".page-navigater").hide();
+		history.replaceState(null, '', window.location.pathname);
 
 		});
 		
 		// 전체 정모 보여주기
 		$(".date-all").on("click",function(){
 			$(".event-link").show();
+			$(".page-navigater").show();
 		});
 		
 	});
@@ -54,20 +60,28 @@
 	}
 </script>
 <style>
-	.container::after {
-	    content: "";
-	    display: block;
-	    clear: both;
+	
+	.flex-container {
+	    display: flex;
+	    flex-wrap: wrap;
+	    gap: 20px; /* 카드 간격 */
 	}
 
-	
-	.event-box{
-		display: flex;               /* 내부 레이아웃 유지 */
-		flex-wrap : wrap;
-		flex-direction: row;         /* 기본 행 배치 */
-		float: left;                 /* 카드 좌측 정렬, 줄 바꿈 허용 */
-		width : 48%;
-		box-sizing: border-box;      /* padding, border 포함 폭 계산 */
+	.event-link {
+	    flex: 0 0 calc(50% - 10px); /* 한 줄에 2개 */
+	    box-sizing: border-box;
+	    text-decoration: none;
+	    color: inherit;
+	}
+
+	.event-box {
+	    display: flex;
+	    flex-direction: row;
+	    width: 100%;
+	    background-color: #ecfbf8;
+	    border: 1px solid #d8f8f1;
+	    border-radius: 1em;
+	    padding: 0.5em;
 	}
 
 </style>
@@ -89,10 +103,10 @@
 		<div class="btn btn-ghost ms-10 date-all">전체보기</div>
 	</div>
 	
-	
+	<div class="flex-container mt-10">
 	<c:forEach var="eventList" items="${eventDto}" varStatus="status">
 		<a class="event-link" href="detail?eventNo=${eventList.eventNo}">
-			<div class="flex-box cell event-box ms-10">
+			<div class="event-box ms-10">
 				<div >
 					<c:choose>
 						<c:when test="${eventList.attachmentNo != null}">
@@ -123,15 +137,16 @@
 					<div class="ms-20"><i class="fa-solid fa-location-dot"></i>
 						<label>${eventList.eventAddress}</label>
 					</div>
-				</div>		
+				</div>	
 			</div>
 		</a>
 	</c:forEach>
-	
-	<!-- 페이지 내비게이터 영역 -->
-	<div class="cell center mt-20 mb-20">
-		<jsp:include page="/WEB-INF/views/template/pagination-num.jsp"></jsp:include>	
 	</div>
+	
+	<!-- 페이지 내비게이터 영역 오류있어서 적용x-->
+	<!--	<div class="cell center mt-20 mb-20 page-navigater">
+		<jsp:include page="/WEB-INF/views/template/pagination-num(home).jsp"></jsp:include>	
+	</div>-->
 	
 </div>
 
