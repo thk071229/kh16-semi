@@ -96,12 +96,20 @@ public class EventDao {
 		return jdbcTemplate.query(sql, eventListMapper, params);
 	}
 	
-	// 조회 (String memberId or loginId)
+	// 마이페이지용 - 참여한 event 조회 (String memberId or loginId)
 	public List<EventAttendeeListVO> selectListWithMember(String memberId){
 		String sql = "select * from event_attendee_list where member_id = ? "
 		           		+ "order by event_date desc";
 		Object[] params= {memberId};
 		return jdbcTemplate.query(sql, eventAttendeeListMapper, params);
+	}
+	
+	// 마이페이지용 - 개최한 event 조회
+	public List<EventListVO> selectListWithWriter(String memberId){
+		String sql = "select * from event_list where event_writer = ? "
+		           		+ "order by event_date desc";
+		Object[] params= {memberId};
+		return jdbcTemplate.query(sql, eventListMapper, params);
 	}
 	
 	/// 조회 - 진행중(현재시각전)

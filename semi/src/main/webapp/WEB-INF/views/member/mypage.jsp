@@ -284,14 +284,14 @@
   </div>
 
   <!-- 참여한 정모리스트 -->
-  <div class="section-title">${memberDto.memberId}님의 정모 목록</div>
+  <div class="section-title">${memberDto.memberId}님의 참여 정모 목록</div>
   <div class="table-wrapper">
 	<table>
 	      <thead>
 	        <tr><th>일자</th><th>소모임</th><th>정모 이름</th><th>정모 지역</th><th>참여/정원</th></tr>
 	      </thead>
 	      <tbody>
-	        <c:forEach var="event" items="${eventList}">
+	        <c:forEach var="event" items="${eventAttendeeList}">
 	          <tr>
 				<td>
 					<fmt:formatDate value="${event.eventDate}" pattern="M월 d일 H:mm" ></fmt:formatDate>
@@ -309,7 +309,32 @@
 	      </tbody>
 	    </table>
   </div>
-  
+  <!-- 본인이 등록한 소모임 -->
+  <div class="section-title">${memberDto.memberId}님의 등록한 정모 목록</div>
+  <div class="table-wrapper">
+  <table>
+        <thead>
+          <tr><th>일자</th><th>소모임</th><th>정모 이름</th><th>정모 지역</th><th>참여/정원</th></tr>
+        </thead>
+        <tbody>
+          <c:forEach var="event" items="${eventList}">
+            <tr>
+  			<td>
+  				<fmt:formatDate value="${event.eventDate}" pattern="M월 d일 H:mm" ></fmt:formatDate>
+  			</td>
+              <td>
+              	<a href="/club/home?clubNo=${event.eventClub}" class="member-link">${event.clubName}</a>
+              </td>
+  			<td>
+  				<a href="/event/detail?eventNo=${event.eventNo}" class="member-link">${event.eventTitle}</a>
+  			</td>
+              <td>${event.eventAddress}</td>
+              <td>${event.eventAttend}/${event.eventMaxPeople}</td>
+            </tr>
+          </c:forEach>
+        </tbody>
+      </table>
+  </div>
   
   
   

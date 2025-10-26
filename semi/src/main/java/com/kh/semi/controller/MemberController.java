@@ -28,6 +28,7 @@ import com.kh.semi.service.AttachmentService;
 import com.kh.semi.service.EmailService;
 import com.kh.semi.service.MemberService;
 import com.kh.semi.vo.EventAttendeeListVO;
+import com.kh.semi.vo.EventListVO;
 import com.kh.semi.vo.MemberCategoryListVO;
 import com.kh.semi.vo.MemberClubListVO;
 import com.kh.semi.vo.MemberRegionListVO;
@@ -161,14 +162,16 @@ public class MemberController {
 		List<MemberCategoryListVO>categoryList = memberCategoryDao.selectVOList(loginId);
 		//회원이 가입한 소모임 리스트
 		List<MemberClubListVO>clubList = clubDao.selectClubList(loginId);
-		//회원이 작성한 정모 리스트 ( 구현중)
-		List<EventAttendeeListVO> eventList = eventDao.selectListWithMember(loginId);
-		
+		//회원이 참여한 정모 리스트
+		List<EventAttendeeListVO> eventAttendeeList = eventDao.selectListWithMember(loginId);
+		//회원이 개최한 정모 리스트
+		List<EventListVO> eventList = eventDao.selectListWithWriter(loginId);
 		
 		model.addAttribute("memberDto", memberDto);
 		model.addAttribute("regionList", regionList);
 		model.addAttribute("categoryList", categoryList);
 		model.addAttribute("clubList", clubList);
+		model.addAttribute("eventAttendeeList", eventAttendeeList);
 		model.addAttribute("eventList", eventList);
 		return "/WEB-INF/views/member/mypage.jsp";
 	}
