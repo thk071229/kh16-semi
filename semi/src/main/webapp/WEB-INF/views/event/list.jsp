@@ -74,38 +74,6 @@
 </script>
 <!-- -------------------------------------- -->
 <style>
-.event-box {
-	background-color: #ecfbf8;
-	border: 1px solid #d8f8f1;
-	border-radius: 1.5em;
-	padding: 0.5em;
-	
-	align-items: center;
-}
-
-.event-box.event-ing {
-	background-color: #d5fef5;
-}
-.event-box.event-end {
-	background-color: #cacaca;
-}
-
-
-.event-box:hover {
-	filter: brightness(95%);
-	outline : 2px solid #d8f8f1;
-}
-
-.event-title {
-	font-size: 24px;
-	font-weight: 500;
-	color: #005d5c;
-}
-
-.event-link {
-	text-decoration: none;
-	color: black;
-}
 
 .kakao-map {
 	width: 100%;

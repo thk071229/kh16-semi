@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.semi.dao.CategoryDao;
 import com.kh.semi.dao.ClubDao;
+import com.kh.semi.dao.EventDao;
 import com.kh.semi.dao.MemberCategoryDao;
 import com.kh.semi.dao.MemberDao;
 import com.kh.semi.dao.MemberRegionDao;
@@ -26,6 +27,7 @@ import com.kh.semi.error.TargetNotFoundException;
 import com.kh.semi.service.AttachmentService;
 import com.kh.semi.service.EmailService;
 import com.kh.semi.service.MemberService;
+import com.kh.semi.vo.EventAttendeeListVO;
 import com.kh.semi.vo.MemberCategoryListVO;
 import com.kh.semi.vo.MemberClubListVO;
 import com.kh.semi.vo.MemberRegionListVO;
@@ -50,6 +52,8 @@ public class MemberController {
 	private RegionDao regionDao;
 	@Autowired
 	private ClubDao clubDao;
+	@Autowired
+	private EventDao eventDao;
 	@Autowired
 	private AttachmentService attachmentService;
 	@Autowired
@@ -158,13 +162,14 @@ public class MemberController {
 		//회원이 가입한 소모임 리스트
 		List<MemberClubListVO>clubList = clubDao.selectClubList(loginId);
 		//회원이 작성한 정모 리스트 ( 구현중)
-		//List<MemberClubListVO>eventList = eventDao.select-----(loginId);
+		List<EventAttendeeListVO> eventList = eventDao.selectListWithMember(loginId);
 		
 		
 		model.addAttribute("memberDto", memberDto);
 		model.addAttribute("regionList", regionList);
 		model.addAttribute("categoryList", categoryList);
 		model.addAttribute("clubList", clubList);
+		model.addAttribute("eventList", eventList);
 		return "/WEB-INF/views/member/mypage.jsp";
 	}
 	
