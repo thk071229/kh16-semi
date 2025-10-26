@@ -42,6 +42,7 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 		//회원의 회원가입 페이지 접근 차단 인터셉터
 		registry.addInterceptor(memberJoinInterceptor)
 					.addPathPatterns("/member/join*")
+					.excludePathPatterns("/member/joinFinish")
 					.order(2);
 		
 		//게시글 수정 및 삭제 접근 차단 인터셉터

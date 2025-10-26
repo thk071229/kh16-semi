@@ -27,8 +27,10 @@ public class ClubService {
 	private AttachmentService attachmentService;
 	
 	@Transactional
-	public void createClub(ClubDto clubDto, String regionName, MultipartFile attach) throws IllegalStateException, IOException{
-		  int regionNo = regionService.createRegion(regionName);
+	public void createClub(ClubDto clubDto, 
+					String regionName, String regionDepth1, String regionDepth2,
+					MultipartFile attach) throws IllegalStateException, IOException{
+		  int regionNo = regionService.createRegion(regionName,regionDepth1, regionDepth2);
 		  clubDto.setClubRegion(regionNo);
 		  
 		  // 3. (신규) 파일 저장 로직

@@ -55,8 +55,6 @@ public class MemberController {
 	@Autowired
 	private CategoryDao categoryDao;
 	@Autowired
-	private RegionDao regionDao;
-	@Autowired
 	private ClubDao clubDao;
 	@Autowired
 	private EventDao eventDao;
@@ -79,7 +77,7 @@ public class MemberController {
 		return "/WEB-INF/views/member/join.jsp";
 	}
 	@PostMapping("/join")
-	public String join(@ModelAttribute MemberDto memberDto, 
+	public String join(@ModelAttribute MemberDto memberDto, HttpSession session,
 			@RequestParam MultipartFile attach) throws IllegalStateException, IOException, MessagingException {
 		memberDao.insert(memberDto);
 		if(attach.isEmpty() == false) {//첨부파일이 비어있지 않다면(=있으면)
@@ -88,6 +86,11 @@ public class MemberController {
 		}
 		//가입 환영 메일 발송
 		emailService.sendWelcomeMail(memberDto);
+		
+		//회원가입 직후 로그인이 되게 설정
+		session.setAttribute("loginId", memberDto.getMemberId());
+		session.setAttribute("loginLevel", memberDto.getMemberLevel());
+		
 		return "redirect:joinFinish?memberId=" + memberDto.getMemberId();
 	}
 	//회원 가입 후 관심 지역 & 관심 카테고리 등록
@@ -104,14 +107,18 @@ public class MemberController {
 	@PostMapping("/joinFinish")
 	public String joinFinish(
 			@RequestParam String memberId,
+			@RequestParam String regionName,
+			@RequestParam String regionType,
+			@RequestParam(required = false) String regionDepth1,
+			@RequestParam(required = false) String regionDepth2,
 			@ModelAttribute MemberCategoryDto memberCategoryDto) {
 				
 		//관심 지역 & 카테고리 등록 처리
-		//regionDto에서 지역 번호를 꺼내서 넣음
-		
 		
 		memberCategoryDto.setMemberId(memberId);
 		memberCategoryDao.insert(memberCategoryDto);
+		
+		memberService.addMemberRegion(memberId, regionName, regionDepth1, regionDepth2, regionType);
 		
 		return "redirect:/";
 	}

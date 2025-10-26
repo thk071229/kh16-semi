@@ -54,10 +54,9 @@ public class MemberService {
 	}
 	//(추가) 회원가입 시 지역 설정
 	@Transactional
-	public void addMemberRegion(String memberId, String regionName, String regionType) {
+	public void addMemberRegion(String memberId, String regionName, String regionDepth1, String regionDepth2, String regionType) {
 		// regionNo 가져오기
-		int regionNo = regionService.createRegion(regionName);
-		
+		int regionNo = regionService.createRegion(regionName, regionDepth1, regionDepth2);		
 		// member_region에 저장
 		MemberRegionDto memberRegionDto = new MemberRegionDto();
 		memberRegionDto.setMemberId(memberId);

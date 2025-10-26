@@ -23,6 +23,7 @@ import com.kh.semi.error.TargetNotFoundException;
 import com.kh.semi.error.UnauthorizationException;
 import com.kh.semi.service.ClubService;
 import com.kh.semi.vo.ClubListVO;
+import com.kh.semi.vo.ClubMemberListVO;
 import com.kh.semi.vo.PageVO;
 
 import jakarta.servlet.http.HttpSession;
@@ -50,9 +51,9 @@ public class ClubController {
 			if(clubDto == null) throw new TargetNotFoundException("존재하지 않는 소모임");
 			model.addAttribute("clubDto", clubDto);
 			//+추가 클럽멤버 정보 수정
-			List<ClubMemberDto> list = clubMemberDao.selectList(clubNo);
+			List<ClubMemberListVO> memberList = clubMemberDao.selectListWithNickname(clubNo);
 					
-			model.addAttribute("clubMember", list);
+			model.addAttribute("memberList", memberList);
 			if(loginId != null) {
 				ClubMemberDto clubMemberDto = clubMemberDao.selectByClubMember(clubNo, loginId);
 				model.addAttribute("clubMemberDto", clubMemberDto); 
@@ -74,13 +75,16 @@ public class ClubController {
 	}
 	@PostMapping("/add")
 	public String add(@ModelAttribute ClubDto clubDto, HttpSession session, 
-			@RequestParam String regionName, @RequestParam MultipartFile attach) throws IllegalStateException, IOException {
+			@RequestParam String regionName, 
+			@RequestParam(required = false) String regionDepth1, 
+			@RequestParam(required = false) String regionDepth2,
+			@RequestParam MultipartFile attach) throws IllegalStateException, IOException {
 		String loginId = (String)session.getAttribute("loginId");
 		if(loginId == null) {//로그인중이 아니면 로그인 페이지로 이동
 			return "/WEB-INF/views/member/login.jsp";
 		}
 		clubDto.setClubLeader(loginId);
-		clubService.createClub(clubDto, regionName, attach);
+		clubService.createClub(clubDto, regionName, regionDepth1, regionDepth2, attach);
 		
 		return "redirect:addFinish";
 	}
