@@ -46,7 +46,7 @@
 						//작성자가 게시글 작성자 본인이라면
 						if(reply.writer == true){
 							//badge 스타일 추가
-							$(html).find(".reply-writer").append("<span class='badge ms-10'>작성자</span>");
+							$(html).find(".reply-writer").append("<span class='badge flex-box right'>작성자</span>");
 						}
 						
 						$(html).find(".reply-content").text(reply.replyContent);//댓글 내용 교체
@@ -54,6 +54,12 @@
 						//var wtime = moment(reply.replyWtime).format("YYYY-MM-DD HH:mm:ss");//wtime의 표시형태만 변경
 						var wtime = moment(reply.replyWtime).fromNow();//상대적 시각
 						$(html).find(".reply-time").text(wtime);//작성 시각 교체
+						if (reply.replyEtime != null){
+							$(html).find(".reply-edited").show();
+						}
+						else{
+							$(html).find(".reply-edited").hide();
+						}
 						
 						$(html).find(".fa-trash").attr("data-pk", reply.replyNo);//삭제 버튼에 PK 설정
 						$(html).find(".fa-edit").attr("data-pk", reply.replyNo);//수정 버튼에 PK 설정

@@ -1,49 +1,59 @@
-	//차트 생성 ajax
-	$(function(){
-		//카테고리 별 모임 현황 조회한 뒤 차트 생성
-		createChart("/rest/admin/stat/club/category", "#club-category-chart", "bar", "모임 수");
-		//지역 별 모임 현황 조회한 뒤 차트 생성
-		createChart("/rest/admin/stat/club/region", "#club-region-chart", "bar", "모임 수");
-		//카테고리 별 정모 현황(종료된 모임 기준)
-		createChart("/rest/admin/stat/event/category", "#event-category-chart", "bar", "모임 수");
-		//지역 별 정모 현황(종료된 모임 기준)
-		createChart("/rest/admin/stat/event/region", "#event-region-chart", "bar", "모임 수");
-		//차트 생성 함수
-		function createChart(url, selector, chartType, label){
-			$.ajax({
-				url:url,
-				method:"POST",
-				success:function(response){
-					console.log(response);
-					 
-					 // ChartVO 속성 사용(배열로 출력안됨)
-					var labels = response.labels;
-					var data = response.data;
-					var chartType = response.type;
-		            var label = response.subject;
-					
-		            new Chart($(selector)[0], {
-						type: chartType,
-						data:{
-							labels:labels,
-							//데이터를 배열 형태로 전송
-							datasets: [{
-								label:label,
-								data:data,
-								borderWidth:1,
-								backgroundColor: '#BFE6D8',
-							}]
-						},
-						options:{
-							scales:{
-								y:{
-									beginAtZero: true,
-								}
-							}
-						}
-					});
-				}
-			});
-		}
+$(function(){
+    // 기존 모임/정모 차트
+    createChart("/rest/admin/stat/club/category", "#club-category-chart", "doughnut", "모임 수");
+    createChart("/rest/admin/stat/club/region", "#club-region-chart", "doughnut", "모임 수");
+    createChart("/rest/admin/stat/event/category", "#event-category-chart", "doughnut", "모임 수");
+    createChart("/rest/admin/stat/event/region", "#event-region-chart", "doughnut", "모임 수");
 
-	});
+    // 새로 추가된 회원 관련 차트
+    createChart("/rest/admin/stat/member/category", "#member-category-chart", "doughnut", "회원 수");
+    createChart("/rest/admin/stat/member/region", "#member-region-chart", "doughnut", "회원 수");
+    createChart("/rest/admin/stat/member/gender", "#member-gender-chart", "doughnut", "회원 수");
+    createChart("/rest/admin/stat/member/age", "#member-age-chart", "doughnut", "회원 수");
+
+    // 공통 차트 생성 함수
+    function createChart(url, selector, chartType, label){
+        $.ajax({
+            url: url,
+            method: "POST",
+            success: function(response){
+                new Chart($(selector)[0], {
+                    type: chartType,
+                    data: {
+                        labels: response.labels,
+                        datasets: [{
+                            label: label,
+                            data: response.data,
+                            borderWidth: 1,
+                            backgroundColor: [
+                                '#BFE6D8', '#FFB6B9', '#FFE156', '#6A4C93', '#6A9FB5', '#FF6F61'
+                            ],
+                        }]
+                    },
+					options: {
+					    responsive: true,
+					    layout: {
+					        padding: {
+					            top: 0,
+					            bottom: 0,
+					            left: 0,
+					            right: 0
+					        }
+					    },
+					    plugins: {
+					        legend: {
+					            position: 'right',
+					        }
+					    },
+					    scales: {
+					        y: {
+					            beginAtZero: true
+					        }
+					    }
+					}
+
+                });
+            }
+        });
+    }
+});

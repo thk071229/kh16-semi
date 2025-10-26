@@ -101,7 +101,7 @@ public class BoardController {
 	
 	//게시글 목록 조회 매핑(페이지 구현) - 해당 모임의 게시글만 가져오므로 clubNo 필수
 	@RequestMapping("/list")
-	public String list(Model model, @ModelAttribute PageVO pageVO, @RequestParam int clubNo) {//변수 대신 VO 불러옴
+	public String list(HttpSession session, Model model, @ModelAttribute PageVO pageVO, @RequestParam int clubNo) {//변수 대신 VO 불러옴
 		ClubDto clubDto = clubDao.selectOne(clubNo);
 		if(clubDto == null) throw new TargetNotFoundException("존재하지 않는 모임입니다");
 		model.addAttribute("clubDto",clubDto);
@@ -130,6 +130,12 @@ public class BoardController {
 		//model.addAttribute("type", "board");
 		//부모 파라미터의 "key" 값을 parentParamsKey 라는 이름으로 화면에 전달
 		//model.addAttribute("parentParamsKey", "clubNo");
+		
+		//모임 가입 멤버 추출
+		String loginId = (String) session.getAttribute("loginId");
+		ClubMemberDto clubMemberDto = clubMemberDao.selectByClubMember(clubNo, loginId);
+		boolean isClubMember = loginId != null && clubMemberDto != null;
+		model.addAttribute("isClubMember", isClubMember);
 		return "/WEB-INF/views/board/list.jsp";
 	}
 	
