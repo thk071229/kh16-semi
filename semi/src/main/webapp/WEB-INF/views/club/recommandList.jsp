@@ -32,7 +32,7 @@
                 <div> <%-- 이미지 영역 --%>
                     <c:choose>
                         <c:when test="${club.clubProfile != null}">
-                            <img src="/attachment/download?attachmentNo=${club.clubProfile}" alt="${club.clubName} 프로필" style="width:100%; height:auto; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--radius-sm) var(--radius-sm) 0 0;"> <%-- 이미지 스타일 + 상단 모서리 둥글게 --%>
+                            <img src="/attachment/download?attachmentNo=${club.clubProfile}" alt="${club.clubName} 프로필" style="width:100%; height:auto	; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--radius-sm) var(--radius-sm) 0 0;"> <%-- 이미지 스타일 + 상단 모서리 둥글게 --%>
                         </c:when>
                         <c:otherwise>
                             <img src="/images/error/no-image.png" alt="기본 이미지" style="width:100%; height:auto; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--radius-sm) var(--radius-sm) 0 0;"> <%-- 이미지 스타일 + 상단 모서리 둥글게 --%>
@@ -53,6 +53,8 @@
         </c:forEach>
 
     </div>
+    
+    
 
 </div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

@@ -136,12 +136,7 @@ public class ClubDao {
 		return jdbcTemplate.update(sql, params) > 0;
 	}
 	
-	// 추천 소모임을 위한 메소드들
-	public int countByClubLike() {
-		String sql = "select count(*) from club_list";
-		return jdbcTemplate.queryForObject(sql, int.class);
-	}
-	// 추천 소모임 목록 페이징
+	// 추천 소모임 목록 페이징(club_like)
 	public List<ClubListVO> selectClubListOrderByLikesWithPaging(PageVO pageVO){
 		String sql = "select * from ("
 				+ "select rownum rn, TMP.* from("
@@ -163,6 +158,5 @@ public class ClubDao {
 		Object[] params = {limit};
 		return jdbcTemplate.query(sql, clubListMapper, params);
 	}
-	
 	
 }

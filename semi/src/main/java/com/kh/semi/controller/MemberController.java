@@ -22,7 +22,6 @@ import com.kh.semi.dao.EventDao;
 import com.kh.semi.dao.MemberCategoryDao;
 import com.kh.semi.dao.MemberDao;
 import com.kh.semi.dao.MemberRegionDao;
-import com.kh.semi.dao.RegionDao;
 import com.kh.semi.dto.CategoryDto;
 import com.kh.semi.dto.CertDto;
 import com.kh.semi.dto.MemberCategoryDto;
