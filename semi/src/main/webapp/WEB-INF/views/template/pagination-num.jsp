@@ -47,6 +47,7 @@
 				<a href = "list?page=${pageVO.prevPage}${pageVO.searchParams}${pageVO.parentParamsToString}">&lt;</a>
 				<%-- ${pageVO.blockStart - 1} = 이전 페이지 --%>
 				<%-- 인덱스의 시작 경계인 start(ex:21(21-30블럭))에서 -1을 해줘야 이전 페이지(ex:20(11-20블럭))로 돌아감 --%>
+				</c:if>
 				<c:forEach var="i" begin = "${pageVO.blockStart}" end = "${pageVO.blockFinish}" step = "1">
 					<%-- ${Math.min(finish, totalPage)} = Math.min 은 두 값 중 더 작은 값을 반환 --%>
 					<%-- finish > totalPages ? totalPages : finish --%>
@@ -72,7 +73,6 @@
 						<%-- 인덱스의 끝 경계인 finish(ex:20(11-20블럭))에서 +1을 해줘야 다음 페이지(ex:21-30블럭))로 넘어감--%>
 						<a href = "list?page=${pageVO.totalPage}${pageVO.searchParams}${pageVO.parentParamsToString}">&gt;&gt;</a>
 				</c:if>
-			</c:if>
 			</div>
 		</div>
 </div>
