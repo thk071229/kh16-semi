@@ -90,6 +90,7 @@
 <div class="container w-1000">
     <div class="cell center">
 	    <h1>정모 목록</h1>
+	    <label style="color: gray;">종료된 모임은 표시되지 않습니다</label>
 	</div>
 	<!-- 위클리페이지-->
 	<div class="flex-box">
@@ -134,13 +135,7 @@
 			</div>
 		</a>
 	</c:forEach>
-	</div>
-	
-	<!-- 페이지 내비게이터 영역 오류있어서 적용x-->
-	<!--	<div class="cell center mt-20 mb-20 page-navigater">
-		<jsp:include page="/WEB-INF/views/template/pagination-num(home).jsp"></jsp:include>	
-	</div>-->
-	
+	</div>	
 </div>
 
 
