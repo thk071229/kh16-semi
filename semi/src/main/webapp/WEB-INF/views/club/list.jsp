@@ -28,7 +28,41 @@
     background-color: #eee;
 }
 </style>
-
+<%-- 좋아요 관련 javaSciprt 코드 --%> 
+<script type="text/javascript">
+	$(function(){
+		var params = new URLSearchParams(location.search);
+		var clubNo = params.get("clubNo");
+	$.ajax({
+		url:"/rest/club/check",
+		method:"post",
+		data:{clubNo : clubNo},
+		success: function(response){//response는 ClubLikeVO 형태
+			$(".club-like").removeClass("fa-regular fa solid").addClass(response.like ? "fa-solid" : "fa-regular");
+			$(".club-like-count").text(response.count);
+			}
+		});
+	});
+</script>
+<c:if test="${sessionScope.loginId != null && sessionScope.loginLevel != '관리자'}">
+<script type="text/javascript">
+	$(function(){
+		var params = new URLSearchParams(location.search);
+		var clubNo = params.get("clubNo");
+		$(".club-like").on("click",function(){
+			$.ajax({
+				url:"/rest/club/action",
+				method:"post",
+				data:{clubNo : clubNo},
+				success:function(response){
+					$(".club-like").removeClass("fa-regular fa-solid").addClass(response.like ? "fa-solid" : "fa-regular");
+					$(".club-like-count").text(response.count);
+				}
+			});
+		});
+	});
+</script>
+</c:if>
 <div class="container mt-30"> <%-- 전체 컨테이너 --%>
     <h2>전체 소모임 목록</h2>
 
@@ -52,7 +86,9 @@
                     </div>
                     <h4 style="margin: 4px 0 8px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${club.clubName}</h4> <%-- 모임 이름 --%>
                     <div class="h-stack"> <%-- 가로 스택 (좋아요 수) --%>
-                        <span class="ms-10"><i class="fa-solid fa-heart red"></i> ${club.clubLike}개</span> <%-- 빨간색 하트 + 좋아요 수 --%>
+                        <span class="ms-10 club-like-count">
+                        <i class="fa-regular fa-heart red club-like"></i>${club.clubLike}개
+                        </span> <%-- 빨간색 하트 + 좋아요 수 --%>
                     </div>
                     <a href="/club/home?clubNo=${club.clubNo}" class="btn btn-ghost mt-10">자세히 보기</a> <%-- 고스트 버튼 + 상단 여백 --%>
                 </div>

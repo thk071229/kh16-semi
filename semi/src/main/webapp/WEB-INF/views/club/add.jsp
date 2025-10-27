@@ -169,7 +169,7 @@ $(function () {
 	            </div>
 	            <div class="success-feedback w-100">지역이 선택되었습니다.</div>
 	            <div class="fail-feedback w-100">활동 지역을 검색하여 선택해주세요.</div>
-        </div>
+        	</div>
 
             <div class="cell">
             	<label>승인 방식<i class="fa-solid fa-asterisk red ms-5"></i></label>
