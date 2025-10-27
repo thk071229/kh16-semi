@@ -28,23 +28,6 @@
     background-color: #eee;
 }
 </style>
-<%-- 좋아요 관련 javaSciprt 코드 --%>
-<c:if test="${sessionScope.loginId != null && sessionScope.loginLevel != '관리자'}">
-	<script type="text/javascript">
-		$(function(){
-			$(".club-like").on("click",function(){
-				$.ajax({
-					url:"/rest/club/action",
-					method:"post",
-					data:{clubNo : clubNo},
-					success:function(response){
-						
-					}
-				})				
-			});
-		});
-	</script> 
-</c:if>
 <div class="container mt-30"> <%-- 전체 컨테이너 --%>
     <h2>전체 소모임 목록</h2>
 
@@ -85,8 +68,6 @@
 	</div>
 	
 </div>
-
-    
 
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
