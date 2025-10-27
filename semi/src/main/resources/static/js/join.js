@@ -175,32 +175,37 @@ $(function(){
     // (삭제) 연락처 관련 로직 제거됨
     // (삭제) 주소 관련 로직 제거됨
 
-    //생년월일 관련 (필수 항목이 아니지만 형식은 검사. 비어있으면 통과)
-    $("[name=memberBirth]").on("blur", function(){
-        var value = $(this).val();
-        if (value.length === 0) {
-             $(this).removeClass("success fail fail2");
-             state.memberBirthValid = true; // 비어 있으면 통과
-             return;
-        }
-        
-        var regex = /^(19[0-9]{2}|20[0-9]{2})-((02-(0[1-9]|1[0-9]|2[0-9]))|((0[469]|11)-(0[1-9]|1[0-9]|2[0-9]|30))|((0[13578]|1[02])-(0[1-9]|1[0-9]|2[0-9]|3[01])))$/;
-        var valid = regex.test(value);
-        
-        if(valid == false) {//날짜 형식에 맞지 않을 때
-            $(this).removeClass("success fail fail2").addClass("fail");
-            state.memberBirthValid = false;
-        }
-        else {//날짜 형식에 맞을 때 (momentjs를 이용해서 미래의 날짜인지를 검사)
-            var current = moment();
-            var inputDate = moment(value);
-            var valid2 = current.isAfter(inputDate); // 미래 날짜 검사
+	//생년월일 관련 (필수 항목이 아니지만 형식은 검사. 비어있으면 통과)
+	$("[name=memberBirth]").on("blur", function(){
+	    var value = $(this).val();
+	    
+	    // [핵심 수정 부분] 값이 비어있는 경우
+	    if (value.length === 0) {
+	         // class를 모두 제거하여 유효성 검사 표시를 없애고
+	         $(this).removeClass("success fail fail2");
+	         // 상태를 true로 설정하여 필수 항목이 아님을 보장
+	         state.memberBirthValid = true; 
+	         return; // 여기서 함수 종료
+	    }
+	    
+	    // 값이 있는 경우: 형식 및 미래 날짜 검사
+	    var regex = /^(19[0-9]{2}|20[0-9]{2})-((02-(0[1-9]|1[0-9]|2[0-9]))|((0[469]|11)-(0[1-9]|1[0-9]|2[0-9]|30))|((0[13578]|1[02])-(0[1-9]|1[0-9]|2[0-9]|3[01])))$/;
+	    var valid = regex.test(value);
+	    
+	    if(valid == false) {//날짜 형식에 맞지 않을 때
+	        $(this).removeClass("success fail fail2").addClass("fail");
+	        state.memberBirthValid = false;
+	    }
+	    else {//날짜 형식에 맞을 때 (momentjs를 이용해서 미래의 날짜인지를 검사)
+	        var current = moment();
+	        var inputDate = moment(value);
+	        var valid2 = current.isAfter(inputDate); // 미래 날짜 검사
 
-            $(this).removeClass("success fail fail2").addClass(valid2 ? "success" : "fail2");
-            state.memberBirthValid = valid2;
-        }
-    });
-
+	        $(this).removeClass("success fail fail2").addClass(valid2 ? "success" : "fail2");
+	        state.memberBirthValid = valid2;
+	    }
+	});
+	
     //프로필 이미지 관련 (이전과 동일)
     $("[name=attach]").on("input", function(){
         var originUrl = $(".img-preview").prop("src");
