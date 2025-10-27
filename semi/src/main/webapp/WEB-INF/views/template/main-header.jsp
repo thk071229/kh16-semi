@@ -59,6 +59,28 @@
         </a>
         <!-- 헤더 내 검색 영역 -->
 		<div class="header-search">
+			<div class="region-select-bar">
+			<div class="first-select-list">
+				<!-- 추후 드롭다운으로 구현 -->
+				<select id="first-option">
+				<option value = "">지역 선택</option>
+					<!-- region_depth1의 값을 선택 -->
+					<c:forEach var="depth1" items="${firstDepthList}">
+					<option value = "${depth1}">
+					${depth1}
+					</option>
+					</c:forEach>
+				</select>
+				<select id = "second-option">
+					<!-- region_depth2의 값을 선택 -->
+					<c:forEach var = "depth2" items = "${secondDepthList}">
+					<option value = "depth2">
+					${depth2}
+					</option>
+					</c:forEach>
+				</select>
+			</div>
+			</div>
 			<div class="keyword-search">
 		  <form action="/search" method="get" autocomplete="off">
 		    <input

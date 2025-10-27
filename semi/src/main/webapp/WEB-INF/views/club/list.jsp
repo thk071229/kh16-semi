@@ -28,7 +28,6 @@
     background-color: #eee;
 }
 </style>
-
 <div class="container mt-30"> <%-- 전체 컨테이너 --%>
     <h2>전체 소모임 목록</h2>
 

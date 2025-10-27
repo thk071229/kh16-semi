@@ -158,5 +158,23 @@ public class ClubDao {
 		Object[] params = {limit};
 		return jdbcTemplate.query(sql, clubListMapper, params);
 	}
+	//전체 추천 소모임 목록
+	public List<ClubListVO> selectRecommendClubList(PageVO pageVO){
+		String sql = "select * from ("
+				+ "select rownum rn, TMP.* from("
+					+ "select * from club_list "
+					+ "where club_like >= 1 "
+					+ "order by club_like desc, club_no asc"
+					+ ") TMP"
+					+ ") where rn between ? and ?";
+		
+		Object[] params = {pageVO.getBegin(), pageVO.getEnd()};
+		return jdbcTemplate.query(sql, clubListMapper, params);
+	}
+	//추천 소모임의 수를 카운트
+	public int countByClubLike(PageVO pageVO) {//club_like가 1이상인 소모임 갯수 카운트
+		String sql = "select count(*) from club_list where club_like >=1";
+		return jdbcTemplate.queryForObject(sql, int.class);
+		   }
 	
 }

@@ -16,14 +16,16 @@ public class PageVO {
 
 	private int page = 1; 
 	//현재 페이지 번호 - defaultValue를 1로 설정
-	private int size = 10; 
-	//한 페이지에 표시할 데이터(게시글) 수- defaultValue를 10으로 설정
+	private int size = 4; 
+	//한 페이지에 표시할 데이터(게시글) 수- defaultValue를 4로 설정
 	private String column, keyword; 
 	//검색항목, 검색어-기본값 : null(안써도 됨)
 	private int dataCount; //총 데이터(게시글) 개수
 	private int blockSize = 10;//표시할 블록 개수
 	//부모 파라미터 저장하기 위한 필드 생성
 	private Map<String, Integer> parentParams;
+	//더보기 버튼 사용 시 필요한 리스트 타입
+	private String type;
 	
 	//외부에서 호출하기 위한 게터메소드
 	public Map<String, Integer> getParentParams(){
@@ -55,38 +57,23 @@ public class PageVO {
 		return column == null || keyword == null;
 	}
 	
-	//더보기 pagination에서 사용할 페이지 계산 게터 메소드
-	public int getMorePage() {
-		return page + 1;
-	}
 	//더보기 pagination에서 사용할 size 계산 게터 메소드
 	public String getSearchParamsInMore() {
-	  int totalSize = size * page;
-	  if (page < getTotalPage()) {
-	        totalSize += size;  
-	    }
+			  int totalSize = size * page;
+			  if (page < getTotalPage()) {
+			        totalSize += size;  
+			    }
 
-	    if (totalSize > dataCount) {
-	        totalSize = dataCount;
-	    }
+			    if (totalSize > dataCount) {
+			        totalSize = dataCount;
+			    }
 
-	    if (isSearch()) {
-	        return "&size=" + totalSize + "&column=" + column + "&keyword=" + keyword;
-	    } else {
-	        return "&size=" + totalSize;
-	    }
-	}
-	//ajax에서 size 값 가져오기 위한 게터메소드
-	public int getTotalSize() {
-	    int totalSize = size * page;
-	    if (page < getTotalPage()) {
-	        totalSize += size;
-	    }
-	    if (totalSize > dataCount) {
-	        totalSize = dataCount;
-	    }
-	    return totalSize;
-	}
+			    if (isSearch()) {
+			        return "&size=" + totalSize + "&column=" + column + "&keyword=" + keyword;
+			    } else {
+			        return "&size=" + totalSize;
+			    }
+			}
 
 	public String getSearchParams() {//목록 or 검색 여부에 따라 주소에 추가될 파라미터를 반환
 	if(isSearch()) {//검색일때 - size 및 컬럼, 키워드 반환

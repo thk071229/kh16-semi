@@ -2,25 +2,30 @@ package com.kh.semi.controller;
 
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.kh.semi.dao.ClubDao;
 import com.kh.semi.dao.RegionDao;
 import com.kh.semi.dto.RegionDto;
+import com.kh.semi.vo.ClubListVO;
+import com.kh.semi.vo.PageVO;
 
 
 @Controller
 public class MainController {
 	@Autowired
 	private RegionDao regionDao;
+	
+	@Autowired
+	private ClubDao clubDao;
 	
 	@RequestMapping("/")
 	public String main(Model model) {
@@ -57,4 +62,5 @@ public class MainController {
 		
 		return "/WEB-INF/views/main.jsp";
 	}
+
 }

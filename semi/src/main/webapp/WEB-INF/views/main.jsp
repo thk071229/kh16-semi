@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!-- header -->
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>	
+<jsp:include page="/WEB-INF/views/template/main-header.jsp"></jsp:include>	
 <div class = "container">
 <hr>
 <h1>메인 페이지</h1>
