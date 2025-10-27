@@ -9,23 +9,14 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-<<<<<<< HEAD
-import com.kh.semi.dao.ClubDao;
-=======
 import com.kh.semi.dao.CountDao;
->>>>>>> refs/remotes/origin/main
 import com.kh.semi.dao.RegionDao;
 import com.kh.semi.dto.RegionDto;
-<<<<<<< HEAD
-import com.kh.semi.vo.ClubListVO;
-import com.kh.semi.vo.PageVO;
-=======
+
 import com.kh.semi.vo.ClubBoardCountVO;
 import com.kh.semi.vo.ClubEventCountVO;
->>>>>>> refs/remotes/origin/main
 
 
 @Controller
@@ -35,10 +26,6 @@ public class MainController {
 	@Autowired
 	private CountDao countDao;
 
-	
-	@Autowired
-	private ClubDao clubDao;
-	
 	@RequestMapping("/")
 	public String main(Model model) {
 		//지역 선택을 위해 지역 정보 화면 전달
