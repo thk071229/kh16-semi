@@ -24,15 +24,13 @@ public class EventAttendeeListMapper implements RowMapper<EventAttendeeListVO>{
 		eventAttendeeListVO.setEventDate(rs.getTimestamp("event_date"));
 		// From club_list Table
 		eventAttendeeListVO.setClubName(rs.getString("club_name"));
-		eventAttendeeListVO.setClubRegion(rs.getInt("club_region"));
-		eventAttendeeListVO.setRegionName(rs.getString("region_name"));
-		eventAttendeeListVO.setClubCategory(rs.getInt("club_category"));
-		eventAttendeeListVO.setCategoryName(rs.getString("club_category"));
+		eventAttendeeListVO.setClubLeader(rs.getString("club_leader"));
 		// From event_attendee Table
-		eventAttendeeListVO.setMemberId(rs.getString("member_id"));
+		eventAttendeeListVO.setAttendMember(rs.getString("attend_member"));
 		// From member Table
 		eventAttendeeListVO.setMemberNickname(rs.getString("member_nickname"));
-		
+		eventAttendeeListVO.setAttendMemberNickname(rs.getString("attend_member_nickname"));
+
 		return eventAttendeeListVO;
 	}
 

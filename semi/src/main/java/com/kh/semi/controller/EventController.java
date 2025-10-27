@@ -20,11 +20,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.semi.dao.ClubDao;
+import com.kh.semi.dao.ClubMemberDao;
 import com.kh.semi.dao.EventDao;
 import com.kh.semi.dto.EventDto;
 import com.kh.semi.error.TargetNotFoundException;
 import com.kh.semi.service.AttachmentService;
 import com.kh.semi.vo.ClubListVO;
+import com.kh.semi.vo.ClubMemberListVO;
 import com.kh.semi.vo.EventAttendeeListVO;
 import com.kh.semi.vo.EventListVO;
 
@@ -41,6 +43,9 @@ public class EventController {
 	private ClubDao clubDao;
 	
 	@Autowired
+	private ClubMemberDao clubMemberDao;
+	
+	@Autowired
 	private AttachmentService attachmentService;
 	
 	
@@ -48,12 +53,7 @@ public class EventController {
 	@RequestMapping("/home")
 	public String list(Model model) {
 		List<EventListVO> eventDto = eventDao.selectList();
-		//List<EventListVO> eventDto = eventDao.selectListWithPaging(pageVO);
 		model.addAttribute("eventDto", eventDto);
-		
-		//int dataCount = eventDao.count(pageVO);
-		//pageVO.setDataCount(dataCount);
-		
 		return "/WEB-INF/views/event/home.jsp";
 	}
 	
@@ -123,11 +123,9 @@ public class EventController {
 	public String detail(Model model, @RequestParam int eventNo) {
 		EventDto eventDto = eventDao.selectOne(eventNo);
 		if(eventDto==null) throw new TargetNotFoundException("존재하지 않는 이벤트번호");
-		List<EventAttendeeListVO> eventAttendee = eventDao.selectListWithEvent(eventNo);
+		List<EventAttendeeListVO> eventAttendeeListVO = eventDao.selectListWithEvent(eventNo);
 		EventListVO eventListVO = eventDao.selectOneWithWriter(eventDto.getEventWriter());
-		//int attachmentNo = eventDao.findAttachment(eventNo);
-		//model.addAttribute("attachmentNo", attachmentNo);
-		model.addAttribute("eventAttendee", eventAttendee);
+		model.addAttribute("eventAttendeeListVO", eventAttendeeListVO);
 		model.addAttribute("eventListVO", eventListVO);
 		model.addAttribute("eventDto", eventDto);
 		return "/WEB-INF/views/event/detail.jsp";
