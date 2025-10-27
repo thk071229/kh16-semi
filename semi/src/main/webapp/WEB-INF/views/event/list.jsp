@@ -114,14 +114,7 @@
 					<a class="event-link" href="detail?eventNo=${beforeList.eventNo}">
 						<div class="cell event-box event-ing flex-box">
 							<div>
-								<c:choose>
-								    <c:when test="${beforeList.attachmentNo != null}">
-								        <img src="/attachment/download?attachmentNo=${beforeList.attachmentNo}" width="100">
-								    </c:when>
-								    <c:otherwise>
-								        <img src="/images/error/no-image.png" width="100">
-								    </c:otherwise>
-								</c:choose>
+								<img src="/event/image?eventNo=${beforeList.eventNo}" width="100">
 							</div>
 							
 							<div class="flex-fill ms-20">
@@ -164,14 +157,7 @@
 					<a class="event-link" href="detail?eventNo=${afterList.eventNo}">
 						<div class="cell event-box event-end flex-box">
 							<div>
-								<c:choose>
-								    <c:when test="${afterList.attachmentNo != null}">
-								        <img src="/attachment/download?attachmentNo=${afterList.attachmentNo}" width="100">
-								    </c:when>
-								    <c:otherwise>
-								        <img src="/images/error/no-image.png" width="100">
-								    </c:otherwise>
-								</c:choose>
+								<img src="/event/image?eventNo=${afterList.eventNo}" width="100">
 							</div>
 						
 							<div class="flex-fill ms-20">
@@ -217,14 +203,7 @@
 			<a class="event-link" href="detail?eventNo=${eventList.eventNo}">
 				<div class="cell event-box flex-box">
 					<div>
-						<c:choose>
-							<c:when test="${eventList.attachmentNo != null}">
-								<img src="/attachment/download?attachmentNo=${eventList.attachmentNo}" width="100">
-							</c:when>
-							<c:otherwise>
-								<img src="/images/error/no-image.png" width="100">
-							</c:otherwise>
-						</c:choose>
+						<img src="/event/image?eventNo=${eventList.eventNo}" width="100">
 					</div>
 					<div class="flex-fill ms-20">
 						<div class="mb-10 event-title">

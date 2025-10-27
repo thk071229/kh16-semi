@@ -86,7 +86,7 @@ public class EventController {
 		return "redirect:detail?eventNo="+eventNo;
 	}
 	/// 대표이미지를 반환하는 매핑
-	@GetMapping("image")
+	@GetMapping("/image")
 	public String image(@RequestParam int eventNo) {
 		try {
 			int attachmentNo = eventDao.findAttachment(eventNo);

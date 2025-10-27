@@ -108,14 +108,7 @@
 		<a class="event-link" href="detail?eventNo=${eventList.eventNo}">
 			<div class="event-box ms-10">
 				<div >
-					<c:choose>
-						<c:when test="${eventList.attachmentNo != null}">
-							<img src="/attachment/download?attachmentNo=${eventList.attachmentNo}" width="100">
-						</c:when>
-						<c:otherwise>
-							<img src="/images/error/no-image.png" width="100">
-						</c:otherwise>
-					</c:choose>
+					<img src="/event/image?eventNo=${eventList.eventNo}" width="100">
 				</div>
 				<div class="flex-fill ms-20">
 					<div class="mb-10 event-title">
