@@ -26,9 +26,9 @@ import com.kh.semi.dto.EventDto;
 import com.kh.semi.error.TargetNotFoundException;
 import com.kh.semi.service.AttachmentService;
 import com.kh.semi.vo.ClubListVO;
-import com.kh.semi.vo.ClubMemberListVO;
 import com.kh.semi.vo.EventAttendeeListVO;
 import com.kh.semi.vo.EventListVO;
+import com.kh.semi.vo.PageVO;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -100,11 +100,17 @@ public class EventController {
 	
 	// 정모게시글 목록
 	@RequestMapping("/list")
-	public String list(Model model,@RequestParam int clubNo) {
-		List<EventListVO> eventDto = eventDao.selectListWithClub(clubNo);
+	public String list(Model model,@RequestParam int clubNo, @ModelAttribute PageVO pageVO) {
+		List<EventListVO> eventDto = eventDao.selectListWithPaging(clubNo, pageVO);
 		if(eventDto==null) throw new TargetNotFoundException("존재하지 않는 소모임");
 		List<EventListVO> beforeDto = eventDao.selectListBefore(clubNo);
 		List<EventListVO> afterDto = eventDao.selectListAfter(clubNo);
+		
+		// PageVO 세팅 + 부모 파라미터 세팅
+		pageVO.putParentParams("clubNo", clubNo);
+		int dataCount = eventDao.count(pageVO);
+		pageVO.setDataCount(dataCount);
+		
 		
 		// 클럽리스트를 불러와서 거기서 클럽 regionName을 추출
 		ClubListVO clubList = clubDao.selectOneFromClubList(clubNo);
