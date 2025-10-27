@@ -7,6 +7,7 @@
 	text-align: center;
 }
 .pagination > a {
+	font-weight: 700;
     text-decoration: none;
     color: #64B698;
     border: none;

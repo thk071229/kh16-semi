@@ -14,65 +14,56 @@
 </style>
 <!-- -------------------------------------- -->	
 <script type="text/javascript">
-	$(function(){
-		// 생성한 마커의 정보를 저장할 공간 (마커가 여러개인 경우)
-		var history = [];
+$(window).on("load", function(){
+	  var history = [];
+	  var container = document.querySelector('.kakao-map');
+	  var options = {
+	    center: new kakao.maps.LatLng(37.499020, 127.032972),
+	    level: 3
+	  };
+	  var map = new kakao.maps.Map(container, options);
+	  var imageSrc = "https://cdn-icons-png.flaticon.com/512/535/535239.png";
+	  var imageSize = new kakao.maps.Size(64, 69);
+	  var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+	  var geocoder = new kakao.maps.services.Geocoder();
 
-		//지도 생성 코드
-		var container = document.querySelector('.kakao-map');
-		var options = {
-			center: new kakao.maps.LatLng(37.499020, 127.032972), // 지도중심 (위도 : Lat, 경도 : Lng)
-			level: 3 // 지도배율 (1~15)
-			};
-		var map = new kakao.maps.Map(container, options);
-		
-		//마커 이미지 설정
-		var imageSrc = "https://cdn-icons-png.flaticon.com/512/535/535239.png";
-		var imageSize = new kakao.maps.Size(64, 69);
-		var imageOption = { offset: new kakao.maps.Point(27, 69) }
-		var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
-		// 지오코더 서비스 생성(주소검색)
-		var geocoder = new kakao.maps.services.Geocoder();
+	  $(".address-search-btn").on("click", function(){
+	    var address = $(".address-input").val().trim();
+	    if (!address) {
+	      alert("주소를 입력하세요.");
+	      return;
+	    }
 
-		
-		
-		
-	// [1] 주소 검색시, 마커 설정 + 좌표 저장
-	$(".address-search-btn").on("click", function () {
+	    // 이전 마커 제거
+	    history.forEach(m => m.setMap(null));
+	    history = [];
 
-		//[1-0] 추가) 마커 초기화
-		for(var i=0; i< history.length; i++){ // 이력의 모든 마커를 지도에서 제거
-			history[i].setMap(null);
-		}
-		history=[]; //이력 제거
-		
-		//[1-1] 주소가 없으면 차단
-		var address = $(".address-input").val();
-		if (address.trim().length == 0) return;
+	    geocoder.addressSearch(address, function(result, status){
+	      console.log("status:", status, result);
+	      if (status === kakao.maps.services.Status.OK) {
+	        var addrInfo = result[0].road_address || result[0].address;
+	        if (!addrInfo) return alert("주소 정보를 찾을 수 없습니다.");
 
-		//[1-2]주소가 있다면, 카카오에서 제공하는 장소검색 도구의 도움을 받아 처리
-		geocoder.addressSearch(address, function (result, status) {
-			if (status == kakao.maps.services.Status.OK) {
-				$("[name=regionName]").val(result[0].address_name);
-				$("[name=regionDepth1]").val(result[0].address.region_1depth_name);
-				$("[name=regionDepth2]").val(result[0].address.region_2depth_name);
-					
-				var location = new kakao.maps.LatLng(result[0].y, result[0].x); // 위치 정보 생성
-				map.panTo(location);
+	        $("[name=regionName]").val(addrInfo.address_name);
+	        $("[name=regionDepth1]").val(addrInfo.region_1depth_name);
+	        $("[name=regionDepth2]").val(addrInfo.region_2depth_name);
 
-				//마커 생성
-				var marker = new kakao.maps.Marker({
-					position: location,
-					clickable: true,
-					image: markerImage, //마커 이미지 설정
-				});
-				marker.setMap(map);
-				history.push(marker);
-			}
-		});
+	        var loc = new kakao.maps.LatLng(result[0].y, result[0].x);
+	        map.panTo(loc);
+
+	        var marker = new kakao.maps.Marker({
+	          position: loc,
+	          image: markerImage,
+	          clickable: true
+	        });
+	        marker.setMap(map);
+	        history.push(marker);
+	      } else {
+	        alert("주소를 찾을 수 없습니다. (status: " + status + ")");
+	      }
+	    });
+	  });
 	});
-
-		});
 </script>
 
 

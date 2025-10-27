@@ -33,11 +33,16 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 					.addPathPatterns(
 							"/board/**", 
 							// 로그인해야 접속 가능
-							"/event/detail/**","/event/add/**","/event/edit/**","/member/joinFinish",
+							"/event/detail/**","/event/add/**","/event/edit/**","/member/**",
 							//좋아요 못누르도록 차단
 							"/rest/image/**", "/rest/board/action", "/rest/reply/**")
 					.excludePathPatterns("/board/list*",
-										"/rest/reply/list", "rest/reply/check")
+										"/rest/reply/list", "/rest/reply/check", 
+										"/member/join", "/member/login", "/member/goodbye", 
+										"/member/findMemberId", "/member/findMemberIdFinish",
+										"/member/findMemberPw", "/member/findMemberPwFinish",
+										"/member/fistLogin", "/changeMemberPw", "/changeMemberPwFinish",
+										"/member/agree")
 					.order(1);
 		//회원의 회원가입 페이지 접근 차단 인터셉터
 		registry.addInterceptor(memberJoinInterceptor)
