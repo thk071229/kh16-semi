@@ -3,7 +3,6 @@
 <!-- header -->
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>	
 <div class = "container">
-<hr>
 <h1>메인 페이지</h1>
 <h2>소모임 - 우리동네 취미 모임</h2>
 <h4>소개글</h4>
