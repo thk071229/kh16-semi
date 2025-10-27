@@ -32,20 +32,6 @@
 <div class="container mt-30"> <%-- 전체 컨테이너 --%>
     <h2>전체 소모임 목록</h2>
 
-    <%-- 검색창 영역 (필요하다면 추가) --%>
-    <%--
-    <div class="row right">
-        <form action="list" method="get">
-            <select name="column">
-                <option value="club_name" ${pageVO.column == 'club_name' ? 'selected' : ''}>모임명</option>
-                <option value="club_leader" ${pageVO.column == 'club_leader' ? 'selected' : ''}>모임장</option>
-            </select>
-            <input type="search" name="keyword" placeholder="검색어 입력" value="${pageVO.keyword}">
-            <button type="submit">검색</button>
-        </form>
-    </div>
-    --%>
-
     <div class="grid mt-20"> <%-- 카드 목록 그리드 (4열) --%>
 
         <c:forEach var="club" items="${clubList}"> <%-- 컨트롤러에서 전달한 clubList 반복 --%>
