@@ -81,15 +81,12 @@
 <form action="joinFinish" method="post">
 <input type="hidden" name="memberId" value="${memberId}">
 <div class="container">
-
 	<div class="cell center">
-		<h1>회원가입 완료</h1>
-		<span>찾아주셔서 감사합니다</span>
-		
+		<h1 style="color: var(--subtle);">환영합니다</h1>
 	</div>
 	<div class="cell center">
 		<hr>
-		<h2>관심 지역과 카테고리 선택</h2>
+		<h2 style="color: var(--subtle);">관심 지역과 카테고리 선택</h2>
 	</div>
 	<div class="flex-box">
 	<!-- 관심카테고리 -->

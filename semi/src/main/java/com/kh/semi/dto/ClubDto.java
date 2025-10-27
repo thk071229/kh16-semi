@@ -18,4 +18,6 @@ public class ClubDto {
 	private String clubOpen;
 	private Timestamp clubJoin;
 	private Integer clubProfile;//null이 나올 수 있기 때문
+	private int clubLike;
+	
 }

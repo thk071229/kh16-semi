@@ -77,20 +77,13 @@ public class MemberRegionDao {
 	}
 	
 	//id로 선호하는 지역 목록 조회
-	public List<Integer> selectRegionById(String memberId) {
-		String sql = "select region_no from member_region "
+	public List<MemberRegionDto> selectRegionById(String memberId) {
+		String sql = "select * from member_region "
 						+ "where member_id=?";
 		Object[] params = {memberId};
-		return jdbcTemplate.queryForList(sql, Integer.class, params);
+		return jdbcTemplate.query(sql, memberRegionMapper, params);
 	}
 	
-	//선호하는 지역으로 선택한 사람이 몇 명 있는지 조회
-	public int countByRegion(int regionNo) {
-		String sql = "select count(*) from member_region "
-						+ "where region_no=?";
-		Object[] params = { regionNo };
-		return jdbcTemplate.queryForObject(sql, int.class, params);
-	}
 	
 	//수정
 	@Transactional

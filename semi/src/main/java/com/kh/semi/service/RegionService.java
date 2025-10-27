@@ -14,7 +14,7 @@ public class RegionService {
 	private RegionDao regionDao;
 	
 	@Transactional
-	public int createRegion(String regionName){
+	public int createRegion(String regionName, String regionDepth1, String regionDepth2){
 		  //1.regionNo가 있는지 확인
 		  RegionDto origin = regionDao.findByRegionName(regionName);
 		  
@@ -27,8 +27,8 @@ public class RegionService {
 		    int regionNo = regionDao.sequence();//시퀀스 만들고
 		    regionDto.setRegionNo(regionNo);
 		    regionDto.setRegionName(regionName);
-		    regionDto.setRegionDepth1(regionDto.getRegionDepth1());
-		    regionDto.setRegionDepth2(regionDto.getRegionDepth2());
+		    regionDto.setRegionDepth1(regionDepth1);
+		    regionDto.setRegionDepth2(regionDepth2);
 		    regionDao.insert(regionDto);//No랑 Name 담아서 insert
 		    return regionNo;//반환
 		  }

@@ -20,12 +20,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.semi.dao.ClubDao;
+import com.kh.semi.dao.ClubMemberDao;
 import com.kh.semi.dao.EventDao;
 import com.kh.semi.dto.EventDto;
 import com.kh.semi.error.TargetNotFoundException;
 import com.kh.semi.service.AttachmentService;
 import com.kh.semi.vo.ClubListVO;
+import com.kh.semi.vo.EventAttendeeListVO;
 import com.kh.semi.vo.EventListVO;
+import com.kh.semi.vo.PageVO;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -40,13 +43,16 @@ public class EventController {
 	private ClubDao clubDao;
 	
 	@Autowired
+	private ClubMemberDao clubMemberDao;
+	
+	@Autowired
 	private AttachmentService attachmentService;
 	
 	
 	// 정모게시글 전체
 	@RequestMapping("/home")
 	public String list(Model model) {
-		List<EventListVO> eventDto = eventDao.selectList();
+		List<EventListVO> eventDto = eventDao.selectListAfter();
 		model.addAttribute("eventDto", eventDto);
 		return "/WEB-INF/views/event/home.jsp";
 	}
@@ -80,7 +86,7 @@ public class EventController {
 		return "redirect:detail?eventNo="+eventNo;
 	}
 	/// 대표이미지를 반환하는 매핑
-	@GetMapping("image")
+	@GetMapping("/image")
 	public String image(@RequestParam int eventNo) {
 		try {
 			int attachmentNo = eventDao.findAttachment(eventNo);
@@ -94,11 +100,17 @@ public class EventController {
 	
 	// 정모게시글 목록
 	@RequestMapping("/list")
-	public String list(Model model,@RequestParam int clubNo) {
-		List<EventListVO> eventDto = eventDao.selectListWithClub(clubNo);
+	public String list(Model model,@RequestParam int clubNo, @ModelAttribute PageVO pageVO) {
+		List<EventListVO> eventDto = eventDao.selectListWithPaging(clubNo, pageVO);
 		if(eventDto==null) throw new TargetNotFoundException("존재하지 않는 소모임");
 		List<EventListVO> beforeDto = eventDao.selectListBefore(clubNo);
 		List<EventListVO> afterDto = eventDao.selectListAfter(clubNo);
+		
+		// PageVO 세팅 + 부모 파라미터 세팅
+		pageVO.putParentParams("clubNo", clubNo);
+		int dataCount = eventDao.count(pageVO);
+		pageVO.setDataCount(dataCount);
+		
 		
 		// 클럽리스트를 불러와서 거기서 클럽 regionName을 추출
 		ClubListVO clubList = clubDao.selectOneFromClubList(clubNo);
@@ -117,8 +129,10 @@ public class EventController {
 	public String detail(Model model, @RequestParam int eventNo) {
 		EventDto eventDto = eventDao.selectOne(eventNo);
 		if(eventDto==null) throw new TargetNotFoundException("존재하지 않는 이벤트번호");
-		//int attachmentNo = eventDao.findAttachment(eventNo);
-		//model.addAttribute("attachmentNo", attachmentNo);
+		List<EventAttendeeListVO> eventAttendeeListVO = eventDao.selectListWithEvent(eventNo);
+		EventListVO eventListVO = eventDao.selectOneWithWriter(eventDto.getEventWriter());
+		model.addAttribute("eventAttendeeListVO", eventAttendeeListVO);
+		model.addAttribute("eventListVO", eventListVO);
 		model.addAttribute("eventDto", eventDto);
 		return "/WEB-INF/views/event/detail.jsp";
 	}

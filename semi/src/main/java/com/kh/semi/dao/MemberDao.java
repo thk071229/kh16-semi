@@ -66,7 +66,7 @@ public class MemberDao {
 		}
 		else {
 			String sql ="select count(*) from member "
-					+ "where instr(#1, ?) > 0 and member_level != '관리자'";
+					+ "where instr(#1, ?) > 0 and (member_level != '관리자' or member_level is null)";
 			sql = sql.replace("#1", pageVO.getColumn());
 			Object[] params = {pageVO.getKeyword()};
 			return jdbcTemplate.queryForObject(sql, int.class, params);
@@ -75,20 +75,20 @@ public class MemberDao {
 	
 	public List<MemberDto> selectListWithPaging(PageVO pageVO) {
 		if(pageVO.isList()) {//목록이라면
-			return null;//보안상의 이유로 목록은 제공 x
+			return null;//return List.of();//목록은 현재 보여주지 않고 있다
 		}
 		else {//검색이라면
 			String sql = "select * from ("
 								+ "select rownum rn, TMP.* from ("
 									+ "select * from member "
-									+ "where instr(#1, ?) > 0 and member_level != '관리자' "
+									+ "where instr(#1, ?) > 0 and (member_level != '관리자' or member_level is null) "
 									+ "order by #1 asc, member_id asc"
 								+ ")TMP"
 							+ ") where rn between ? and ?";
 			sql = sql.replace("#1", pageVO.getColumn());
 			Object[] params = {
 					pageVO.getKeyword(), pageVO.getBegin(), pageVO.getEnd()
-			};//동적할당
+			};
 			return jdbcTemplate.query(sql, memberMapper, params);
 		}
 	}

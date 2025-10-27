@@ -33,9 +33,11 @@ public class ClubDao {
 		return jdbcTemplate.queryForObject(sql, int.class);
 	}
 	public void insert(ClubDto clubDto) {
-		String sql = "insert into club(club_no, club_leader, club_name, club_introduce, club_open, club_region, club_category, club_profile) values(?,?,?,?,?,?,?,?)";
+		String sql = "insert into club(club_no, club_leader, club_name, club_introduce, "
+				+ "club_open, club_region, club_category, club_profile,club_like) values(?,?,?,?,?,?,?,?,?)";
 		Object[] params = {clubDto.getClubNo(), clubDto.getClubLeader(), clubDto.getClubName(), 
-				clubDto.getClubIntroduce(), clubDto.getClubOpen(),clubDto.getClubRegion(), clubDto.getClubCategory(), clubDto.getClubProfile()};
+				clubDto.getClubIntroduce(), clubDto.getClubOpen(),clubDto.getClubRegion(), 
+				clubDto.getClubCategory(), clubDto.getClubProfile(), clubDto.getClubLike()};
 		jdbcTemplate.update(sql, params);
 	}
 	//삭제
@@ -44,11 +46,21 @@ public class ClubDao {
 		Object[] params = {clubNo};
 		return jdbcTemplate.update(sql, params) > 0;
 	}
-	//수정
+	// 소모임 수정
 	public boolean update(ClubDto clubDto) {//
 		String sql = "update club set club_name = ?, club_introduce = ?, club_open = ?, club_category = ?, club_profile = ? where club_no = ?";
 		Object[] params = {clubDto.getClubName(), clubDto.getClubIntroduce(), clubDto.getClubOpen(),  
 				clubDto.getClubCategory(), clubDto.getClubProfile(), clubDto.getClubNo()};
+		return jdbcTemplate.update(sql, params) > 0;
+	}
+	// 소모임 좋아요 갯수 수정
+	public boolean updateClubLike(int clubNo) {
+		String sql = "update club "
+				+ "set club_like = "
+				+ "(select count(*) "
+				+ "from club_like where club_no =?) "
+				+ "where club_no = ?";
+		Object[] params = {clubNo, clubNo};
 		return jdbcTemplate.update(sql, params) > 0;
 	}
 	//모임장 위임을 위한 메소드
@@ -118,11 +130,50 @@ public class ClubDao {
 		return jdbcTemplate.query(sql, memberClubListMapper, params);
 	}
 	// 대표사진 수정 메소드
-	public boolean updateProfileImgage(int clubNo, int attachmentNo) {
+	public boolean updateProfileImage(int clubNo, int attachmentNo) {
 		String sql = "update club set club_profile = ? where club_no = ?";
 		Object[] params = {attachmentNo, clubNo};
 		return jdbcTemplate.update(sql, params) > 0;
 	}
 	
+	public List<ClubListVO> selectClubListOrderByLikesWithPaging(PageVO pageVO){
+		String sql = "select * from ("
+				+ "select rownum rn, TMP.* from("
+					+ "select * from club_list "
+					+ "order by club_like desc, club_no asc"
+					+ ") TMP"
+					+ ") where rn between ? and ?";
+		Object[] params = {pageVO.getBegin(), pageVO.getEnd()};
+		return jdbcTemplate.query(sql, clubListMapper, params);
+	}
+	//상위 N(N=limit)개 추천 소모임 목록
+	public List<ClubListVO> selectClubListOrderByLikes(int limit){
+		String sql = "select * from ("
+				+ "select rownum rn,  TMP.* from("
+					+ "select * from club_list "
+					+ "order by club_like desc, club_no asc"
+					+ ") TMP "
+					+ ") where rn <= ?";
+		Object[] params = {limit};
+		return jdbcTemplate.query(sql, clubListMapper, params);
+	}
+	//전체 추천 소모임 목록
+	public List<ClubListVO> selectRecommendClubList(PageVO pageVO){
+		String sql = "select * from ("
+				+ "select rownum rn, TMP.* from("
+					+ "select * from club_list "
+					+ "where club_like >= 1 "
+					+ "order by club_like desc, club_no asc"
+					+ ") TMP"
+					+ ") where rn between ? and ?";
+		
+		Object[] params = {pageVO.getBegin(), pageVO.getEnd()};
+		return jdbcTemplate.query(sql, clubListMapper, params);
+	}
+	//추천 소모임의 수를 카운트
+	public int countByClubLike(PageVO pageVO) {//club_like가 1이상인 소모임 갯수 카운트
+		String sql = "select count(*) from club_list where club_like >=1";
+		return jdbcTemplate.queryForObject(sql, int.class);
+		   }
 	
 }

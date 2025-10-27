@@ -1,7 +1,6 @@
 package com.kh.semi.dao;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -18,6 +17,12 @@ public class RegionDao {
 	@Autowired
 	private RegionMapper regionMapper;
 	
+	//전체 지역 조회
+	public List<RegionDto> selectList(){
+		String sql = "select * from region order by region_depth1 asc";
+		return jdbcTemplate.query(sql, regionMapper);
+	}
+		
 	//이름으로 조회
 	public RegionDto findByRegionName(String regionName){
 	  String sql = "select * from region where region_name = ?";

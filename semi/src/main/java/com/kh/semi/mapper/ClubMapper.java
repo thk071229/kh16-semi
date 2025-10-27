@@ -24,6 +24,7 @@ public class ClubMapper implements RowMapper<ClubDto>{
 		clubDto.setClubOpen(rs.getString("club_open"));
 		clubDto.setClubJoin(rs.getTimestamp("club_join"));
 		clubDto.setClubProfile(rs.getObject("club_profile", Integer.class));
+		clubDto.setClubLike(rs.getInt("club_like"));
 		return clubDto;
 	}
 

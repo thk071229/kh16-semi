@@ -133,7 +133,7 @@
           </thead>
           <tbody>
             <c:forEach var="memberDto" items="${memberList}" varStatus="status">
-              <tr style="${status.count % 5 == 0 ? 'background-color:#fff9e6;' : ''}">
+              <tr>
                 <td>
                   <a href="detail?memberId=${memberDto.memberId}" class="member-link">
                     ${memberDto.memberId}
@@ -155,21 +155,13 @@
                 검색결과: ${pageVO.begin} - ${pageVO.end} / ${pageVO.dataCount}명
               </td>
             </tr>
-            <tr>
-              <td colspan="8" class="result-info">
-                페이지: ${pageVO.page} / ${pageVO.totalPage}
-              </td>
-            </tr>
           </tfoot>
         </table>
       </div>
-
-      <!-- 페이지 네비게이터 -->
-      <div style="margin-top:20px; text-align:center;">
-        <jsp:include page="/WEB-INF/views/template/pagination-num.jsp"></jsp:include>
-      </div>
     </c:otherwise>
   </c:choose>
+  <!-- 페이지 네비게이터 -->
+  <jsp:include page="/WEB-INF/views/template/pagination-num.jsp"></jsp:include>
 
 </div>
 

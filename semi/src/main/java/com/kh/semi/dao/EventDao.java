@@ -3,14 +3,16 @@ package com.kh.semi.dao;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.semi.dto.EventDto;
+import com.kh.semi.mapper.EventAttendeeListMapper;
 import com.kh.semi.mapper.EventListMapper;
 import com.kh.semi.mapper.EventMapper;
+import com.kh.semi.vo.EventAttendeeListVO;
 import com.kh.semi.vo.EventListVO;
+import com.kh.semi.vo.PageVO;
 
 @Repository
 public class EventDao {
@@ -21,6 +23,8 @@ public class EventDao {
 	private EventMapper eventMapper;
 	@Autowired
 	private EventListMapper eventListMapper;
+	@Autowired
+	private EventAttendeeListMapper eventAttendeeListMapper;
 	
 	// 시퀀스 번호 생성
 	public int sequence() {
@@ -49,10 +53,37 @@ public class EventDao {
 		jdbcTemplate.update(sql,params);
 	}
 	
+	// 조회 ------------------------------------------------------------------
 	// 조회 (기본)
 	public List<EventListVO> selectList(){
 		String sql = "select * from event_list order by event_date desc";
 		return jdbcTemplate.query(sql, eventListMapper);
+	}
+	// 조회 (기본) 진행중인 것 만 표시
+	public List<EventListVO> selectListAfter(){
+		String sql = "select * from event_list "
+				+"where event_date>sysdate "
+				+"order by event_date desc";
+		return jdbcTemplate.query(sql, eventListMapper);
+	}
+
+	// 목록페이지 : 전체 Event 조회
+		// PageVO 적용 조회
+	public List<EventListVO> selectListWithPaging(int clubNo, PageVO pageVO){
+		String sql = "select * from ("
+				+ "select rownum rn, TMP.* from ("
+				+ "select * from event_list where event_club=? order by event_date desc"
+				+ ")TMP "
+				+ ")where rn between ? and ?";
+		Object[] params = {clubNo, pageVO.getBegin(), pageVO.getEnd()};
+		return jdbcTemplate.query(sql, eventListMapper, params);
+	}
+	
+		//PageVO용 :: 게시글 카운트 메소드(클럽 내에서 페이지별로 보여주기 위함)
+	public int count(PageVO pageVO) { 
+		// 컨트롤러에서 pageVO만을 전달해서 불러올수있도록
+			String sql = "select count(*) from event_list";
+			return jdbcTemplate.queryForObject(sql, int.class);
 	}
 
 	// 조회 (int clubNo)
@@ -71,21 +102,47 @@ public class EventDao {
 		return jdbcTemplate.query(sql, eventListMapper, params);
 	}
 	
+	// 마이페이지용 - 참여한 event 조회 (String memberId or loginId)
+	public List<EventAttendeeListVO> selectListWithMember(String memberId){
+		String sql = "select * from event_attendee_list where member_id = ? "
+		           		+ "order by event_date desc";
+		Object[] params= {memberId};
+		return jdbcTemplate.query(sql, eventAttendeeListMapper, params);
+	}
+	
+	public List<EventAttendeeListVO> selectListWithEvent(int eventNo){
+		String sql = "Select * from event_attendee_list where event_no=? ";
+		Object[] params = {eventNo};
+		return jdbcTemplate.query(sql, eventAttendeeListMapper, params);
+	}
 	
 	
-	/// 조회 - 진행중(현재시각전)
+	
+	// 마이페이지용 - 개최한 event 조회
+	public List<EventListVO> selectListWithWriter(String memberId){
+		String sql = "select * from event_list where event_writer = ? "
+		           		+ "order by event_date desc";
+		Object[] params= {memberId};
+		return jdbcTemplate.query(sql, eventListMapper, params);
+	}
+	
+	/// 목록 페이지 조회 - 진행중(현재시각전)
 		public List<EventListVO> selectListBefore(int clubNo){
-			String sql = "select * from event_list"
+			String sql = "select * from ( "
+							+"select * from event_list"
 							+" where event_club=? and event_date>sysdate"
-							+" order by event_date desc";
+							+" order by event_date desc"
+							+" ) where rownum <= 10";
 			Object[] params= {clubNo};
 			return jdbcTemplate.query(sql, eventListMapper, params);
 		}
-	/// 조회 - 완료(현재시각후)
+	/// 목록 페이지 조회 - 완료(현재시각후)
 		public List<EventListVO> selectListAfter(int clubNo){
-			String sql = "select * from event_list"
+			String sql =  "select * from ( "
+							+ "select * from event_list"
 							+" where event_club=? and event_date<sysdate"
-							+" order by event_date desc";
+							+" order by event_date desc"
+							+" ) where rownum <= 10";
 			Object[] params= {clubNo};
 			return jdbcTemplate.query(sql, eventListMapper, params);
 		}
@@ -97,6 +154,16 @@ public class EventDao {
 		List<EventDto> list = jdbcTemplate.query(sql, eventMapper, params);
 		return list.isEmpty() ? null : list.get(0);
 	}
+	
+	// 상세조회 memberId로
+	public EventListVO selectOneWithWriter(String memberId){
+		String sql = "select * from event_list where event_writer = ? "
+		           		+ "order by event_date desc";
+		Object[] params= {memberId};
+		List<EventListVO> list = jdbcTemplate.query(sql, eventListMapper, params);
+		return list.isEmpty() ? null : list.get(0);
+	}
+	// 조회 ------------------------------------------------------------------
 	
 	// 삭제
 	public boolean delete(int eventNo) {
@@ -142,4 +209,5 @@ public class EventDao {
 		Object[] params = {eventAttend, eventNo};
 		return jdbcTemplate.update(sql,params)>0;
 	}
+	
 }

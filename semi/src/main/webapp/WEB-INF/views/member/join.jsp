@@ -1,14 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
 <script src="/js/multipage.js"></script>
 <script src="/js/join.js"></script> </head>
+
+<!-- lightpick cdn -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/css/lightpick.min.css">
+<script src="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/lightpick.min.js"></script> 
+
+
+<script type="text/javascript">
+	$(function(){
+        //생년월일 설정
+        var picker4 = new Lightpick({
+            field: document.querySelector(".picker-4"),
+            format: "YYYY-MM-DD",
+            firstDay: 7,
+            maxDate: moment().subtract(1,'day'),
+        });
+	});
+</script>
+
 <form action="join" method="post" enctype="multipart/form-data" autocomplete="off" class="check-form">
 	
-	<div class="container w-300">
+	<div class="container w-350">
 	
 		<div class="cell center">
 			<h1 style="color: var(--subtle);">회원가입 정보 입력</h1>
@@ -181,7 +196,7 @@
 
             <div class="cell center">
                 <label>생년월일</label>
-                <input type="date" name="memberBirth" class="search-input w-100">
+                <input type="text" name="memberBirth" class="search-input w-100 picker-4">
                 <div class="fail-feedback">올바른 날짜 형식이 아닙니다</div>
                 <div class="fail2-feedback">미래의 날짜는 설정할 수 없습니다</div>
             </div>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%-- 모든 jsp에서 사용 가능한 css파일과 cdn 파일을 header에 등록 --%>
 <%-- 디자인 파일 추가 --%>
 <link rel ="stylesheet" type="text/css" href="/css/common.css">
@@ -58,6 +59,7 @@
         </a>
         <!-- 헤더 내 검색 영역 -->
 		<div class="header-search">
+			<div class="keyword-search">
 		  <form action="/search" method="get" autocomplete="off">
 		    <input
 		      type="text"
@@ -68,6 +70,7 @@
 		    >
 		    <button type="submit" class="search-btn">검색</button>
 		  </form>
+		  </div>
 		</div>
 
     </header>  
@@ -76,4 +79,4 @@
 </div>
 
 <!-- 사이드 메뉴 (클릭하면 나오도록) 추후 구현 -->
-<%-- <jsp:include page="/WEB-INF/views/template/sidebar.jsp"></jsp:include>	 --%>
+ <jsp:include page="/WEB-INF/views/template/sidebar.jsp"></jsp:include>

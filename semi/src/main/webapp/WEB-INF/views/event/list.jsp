@@ -74,38 +74,6 @@
 </script>
 <!-- -------------------------------------- -->
 <style>
-.event-box {
-	background-color: #ecfbf8;
-	border: 1px solid #d8f8f1;
-	border-radius: 1.5em;
-	padding: 0.5em;
-	
-	align-items: center;
-}
-
-.event-box.event-ing {
-	background-color: #d5fef5;
-}
-.event-box.event-end {
-	background-color: #cacaca;
-}
-
-
-.event-box:hover {
-	filter: brightness(95%);
-	outline : 2px solid #d8f8f1;
-}
-
-.event-title {
-	font-size: 24px;
-	font-weight: 500;
-	color: #005d5c;
-}
-
-.event-link {
-	text-decoration: none;
-	color: black;
-}
 
 .kakao-map {
 	width: 100%;
@@ -121,9 +89,11 @@
 
 
 	<div class="cell left">
-		<a class="btn btn-ghost" href="/club/home?clubNo=${clubNo}">메인</a> <a
-			class="btn btn-ghost" href="/board/list?clubNo=${clubNo}">게시판</a> <a
-			class="btn btn-primary" href="/event/add?clubNo=${clubNo}">신규 등록</a>
+		<a class="btn btn-ghost" href="/club/home?clubNo=${clubNo}">메인</a>
+		<a class="btn btn-ghost" href="/board/list?clubNo=${clubNo}">게시판</a>
+		<c:if test="${sessionScope.loginId != null}">
+			<a class="btn btn-primary" href="/event/add?clubNo=${clubNo}">신규 등록</a>
+		</c:if>
 	</div>
 
 	<div class="cell">
@@ -133,6 +103,7 @@
 
 
 	<div class="cell mt-40">
+		<label style="color: gray;">진행중/완료 모임은 최신순으로 각 10개까지 표기됩니다</label>
 		<div class="flex-box">
 			<!-- 진행중 정모 목록 -->
 			<div class="cell w-50" style="padding: 5px;">
@@ -144,14 +115,7 @@
 					<a class="event-link" href="detail?eventNo=${beforeList.eventNo}">
 						<div class="cell event-box event-ing flex-box">
 							<div>
-								<c:choose>
-								    <c:when test="${beforeList.attachmentNo != null}">
-								        <img src="/attachment/download?attachmentNo=${beforeList.attachmentNo}" width="100">
-								    </c:when>
-								    <c:otherwise>
-								        <img src="/images/error/no-image.png" width="100">
-								    </c:otherwise>
-								</c:choose>
+								<img src="/event/image?eventNo=${beforeList.eventNo}" width="100">
 							</div>
 							
 							<div class="flex-fill ms-20">
@@ -194,14 +158,7 @@
 					<a class="event-link" href="detail?eventNo=${afterList.eventNo}">
 						<div class="cell event-box event-end flex-box">
 							<div>
-								<c:choose>
-								    <c:when test="${afterList.attachmentNo != null}">
-								        <img src="/attachment/download?attachmentNo=${afterList.attachmentNo}" width="100">
-								    </c:when>
-								    <c:otherwise>
-								        <img src="/images/error/no-image.png" width="100">
-								    </c:otherwise>
-								</c:choose>
+								<img src="/event/image?eventNo=${afterList.eventNo}" width="100">
 							</div>
 						
 							<div class="flex-fill ms-20">
@@ -247,14 +204,7 @@
 			<a class="event-link" href="detail?eventNo=${eventList.eventNo}">
 				<div class="cell event-box flex-box">
 					<div>
-						<c:choose>
-							<c:when test="${eventList.attachmentNo != null}">
-								<img src="/attachment/download?attachmentNo=${eventList.attachmentNo}" width="100">
-							</c:when>
-							<c:otherwise>
-								<img src="/images/error/no-image.png" width="100">
-							</c:otherwise>
-						</c:choose>
+						<img src="/event/image?eventNo=${eventList.eventNo}" width="100">
 					</div>
 					<div class="flex-fill ms-20">
 						<div class="mb-10 event-title">
@@ -281,6 +231,10 @@
 				</div>
 			</a>
 		</c:forEach>
+			<!-- 페이지 내비게이터 영역 오류있어서 적용x-->
+		<div class="cell center mt-20 mb-20 page-navigater">
+			<jsp:include page="/WEB-INF/views/template/pagination-num.jsp"></jsp:include>	
+		</div>
 	</div>
 
 </div>

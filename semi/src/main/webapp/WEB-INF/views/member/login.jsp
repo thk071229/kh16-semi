@@ -29,10 +29,10 @@
 	
 	<!-- 아이디 비밀번호 찾기 페이지 -->
 	<div class="cell center mt-50">
-		<a href="#" class="link">아이디를 잊으셨나요?</a>
+		<a href="findMemberId" class="link">아이디를 잊으셨나요?</a>
 	</div>
 	<div class="cell center">
-		<a href="#" class="link">비밀번호 찾기</a>
+		<a href="findMemberPw" class="link">비밀번호 찾기</a>
 	</div>
 	
 	
