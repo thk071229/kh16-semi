@@ -8,7 +8,7 @@
 <script src="/js/join.js"></script> </head>
 <form action="join" method="post" enctype="multipart/form-data" autocomplete="off" class="check-form">
 	
-	<div class="container w-300">
+	<div class="container w-350">
 	
 		<div class="cell center">
 			<h1 style="color: var(--subtle);">회원가입 정보 입력</h1>
