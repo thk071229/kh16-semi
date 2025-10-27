@@ -21,7 +21,7 @@ public class EventAttendeeListVO {
 	private String clubName;
 	private String clubLeader;
 	// From event_attendee Table
-	private String attendMember;
+	private String MemberId;
 	// From member Table
 	private String memberNickname;
 	private String attendMemberNickname;
