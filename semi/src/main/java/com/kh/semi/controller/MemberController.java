@@ -73,29 +73,58 @@ public class MemberController {
 	
 	//회원가입
 	@GetMapping("/join")
-	public String join() {
+	public String join(Model model) {
+		//category list를 다음 단계에서 사용하도록 JSP에 전달
+		List<CategoryDto>categoryList = categoryDao.selectList();
+		model.addAttribute("categoryList", categoryList);
 		return "/WEB-INF/views/member/join.jsp";
 	}
 	@PostMapping("/join")
-	public String join(@ModelAttribute MemberDto memberDto, HttpSession session,
+	public String join(
+			@ModelAttribute MemberDto memberDto, 
+			HttpSession session,
 			@RequestParam MultipartFile attach) throws IllegalStateException, IOException, MessagingException {
+		
 		memberDao.insert(memberDto);
 		if(attach.isEmpty() == false) {//첨부파일이 비어있지 않다면(=있으면)
 			int attachmentNo = attachmentService.save(attach);
 			memberDao.connect(memberDto.getMemberId(), attachmentNo);
 		}
+		String memberId = memberDto.getMemberId();
+		
 		//가입 환영 메일 발송
 		emailService.sendWelcomeMail(memberDto);
 		
-		//회원가입 직후 로그인이 되게 설정
-		session.setAttribute("loginId", memberDto.getMemberId());
-		session.setAttribute("loginLevel", memberDto.getMemberLevel());
-		
-		return "redirect:joinFinish?memberId=" + memberDto.getMemberId();
+		return "redirect:fistLogin";
 	}
+	
+	@GetMapping("/fistLogin")
+	public String fistLogin() {
+		return "/WEB-INF/views/member/firstLogin.jsp";
+	}
+	@PostMapping("/firstLogin")
+	public String firstLogin(@ModelAttribute MemberDto memberDto, HttpSession session) {
+		MemberDto findDto = memberDao.selectOne(memberDto.getMemberId());
+		if(findDto == null) return "redirect:login?error";
+		
+		boolean isLogin = findDto.getMemberPw().equals(memberDto.getMemberPw());
+		
+		//session에 원하는 요소 저장
+		if(isLogin) {
+			session.setAttribute("loginId", findDto.getMemberId());
+			session.setAttribute("loginLevel", findDto.getMemberLevel());
+			
+			return "redirect:joinFinish";
+		}
+		else {
+			return "redirect:login?error"; 
+		}
+	}
+	
 	//회원 가입 후 관심 지역 & 관심 카테고리 등록
 	@GetMapping("/joinFinish")
-	public String joinFinish(@RequestParam String memberId, Model model) {
+	public String joinFinish(HttpSession session, Model model) {
+		String memberId = (String) session.getAttribute("loginId");
 		//회원 ID를 다음 단계에서 사용하도록 JSP에 전달
 		model.addAttribute("memberId", memberId);
 		//category list를 다음 단계에서 사용하도록 JSP에 전달
@@ -146,6 +175,8 @@ public class MemberController {
 			return "redirect:login?error"; 
 		}
 	}
+	
+	
 	
 	//로그아웃
 	@RequestMapping("/logout")
@@ -238,51 +269,28 @@ public class MemberController {
 		return "redirect:mypage";
 	}
 	
-	//선호지역 수정
-	/*
-	 * @GetMapping("/editRegion") public String editRegion(Model model, HttpSession
-	 * session) { String loginId = (String)session.getAttribute("loginId");
-	 * List<MemberRegionListVO>regionList = memberRegionDao.selectVOList(loginId);
-	 * model.addAttribute("regionList", regionList); return
-	 * "/WEB-INF/views/member/editRegion.jsp"; }
-	 * 
-	 * @PostMapping("/editRegion") public String
-	 * editRegion(@ModelAttribute("regions") MemberRegionDto[] memberRegions,
-	 * 
-	 * @RequestParam("oldRegionNo") int[] oldRegionNos, HttpSession session) { //
-	 * memberRegionDto와 수정 전의 regionNo를 배열로 받아온다 String loginId = (String)
-	 * session.getAttribute("loginId");
-	 * 
-	 * for (int i = 0; i < memberRegions.length; i++) {
-	 * memberRegions[i].setMemberId(loginId);
-	 * memberRegionDao.update(memberRegions[i], oldRegionNos[i]); }
-	 * 
-	 * return "redirect:/mypage"; }
-	 * 
-	 * //카테고리 수정
-	 * 
-	 * @GetMapping("/editCategory") public String editCategory(Model model,
-	 * HttpSession session) { String loginId = (String)
-	 * session.getAttribute("loginId");
-	 * 
-	 * // 회원이 선택한 카테고리 List<MemberCategoryListVO> categoryList =
-	 * memberCategoryDao.selectVOList(loginId); // 전체 카테고리 List<CategoryDto>
-	 * allCategoryList = categoryDao.selectList();
-	 * 
-	 * model.addAttribute("categoryList", categoryList);
-	 * model.addAttribute("allCategoryList", allCategoryList);
-	 * 
-	 * return "/WEB-INF/views/member/editCategory.jsp"; }
-	 * 
-	 * // POST – 수정 처리
-	 * 
-	 * @PostMapping("/editCategory") public String
-	 * editCategory(@RequestParam("categoryNos") List<Integer> categoryNos,
-	 * HttpSession session) { String loginId = (String)
-	 * session.getAttribute("loginId"); memberCategoryDao.updateCategories(loginId,
-	 * categoryNos); return "redirect:/mypage"; }
-	 */
+	//선호하는 지역 수정
+	@GetMapping("/editRegion")
+	public String editRegion(Model model,HttpSession session) {
+		String loginId = (String) session.getAttribute("loginId");
+		model.addAttribute("loginId", loginId);
+		
+		return "/WEB-INF/views/member/editRegion.jsp";
+	}
+	@PostMapping("/editRegion")
+	public String editRegion(HttpSession session,
+			@RequestParam String regionName,
+			@RequestParam String regionType,
+			@RequestParam(required = false) String regionDepth1,
+			@RequestParam(required = false) String regionDepth2) {
+		String memberId = (String) session.getAttribute("loginId");
+		
+		memberService.editMemberRegion(memberId, regionName, regionDepth1, regionDepth2, regionType);
+		
+		return "redirect:mypage";
+	}
 	
+	//선호하는 카테고리 수정
 	@GetMapping("/editCategory")
 	public String editCategory(Model model, HttpSession session) {
 		//사용자 아이디 전달
