@@ -330,9 +330,18 @@ public class MemberController {
 	public String editCategory(@ModelAttribute CategoryDto categoryDto, HttpSession session) {
 		String loginId = (String)session.getAttribute("loginId");
 		MemberCategoryDto memberCategoryDto = memberCategoryDao.selectById(loginId);
-		int oldCategoryNo = memberCategoryDto.getCategoryNo();
-		memberCategoryDto.setCategoryNo(categoryDto.getCategoryNo());
-		memberCategoryDao.update(memberCategoryDto, oldCategoryNo);
+		if(memberCategoryDto == null) {
+			// 기존 데이터가 없으면 새로 insert
+	        MemberCategoryDto newDto = new MemberCategoryDto();
+	        newDto.setMemberId(loginId);
+	        newDto.setCategoryNo(categoryDto.getCategoryNo());
+	        memberCategoryDao.insert(newDto);
+		}
+		else {
+			int oldCategoryNo = memberCategoryDto.getCategoryNo();
+			memberCategoryDto.setCategoryNo(categoryDto.getCategoryNo());
+			memberCategoryDao.update(memberCategoryDto, oldCategoryNo);
+		}
 		
 		return "redirect:mypage";
 	}

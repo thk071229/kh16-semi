@@ -133,7 +133,7 @@
           </thead>
           <tbody>
             <c:forEach var="memberDto" items="${memberList}" varStatus="status">
-              <tr style="${status.count % 5 == 0 ? 'background-color:#fff9e6;' : ''}">
+              <tr>
                 <td>
                   <a href="detail?memberId=${memberDto.memberId}" class="member-link">
                     ${memberDto.memberId}
@@ -153,11 +153,6 @@
             <tr>
               <td colspan="8" class="result-info">
                 검색결과: ${pageVO.begin} - ${pageVO.end} / ${pageVO.dataCount}명
-              </td>
-            </tr>
-            <tr>
-              <td colspan="8" class="result-info">
-                페이지: ${pageVO.page} / ${pageVO.totalPage}
               </td>
             </tr>
           </tfoot>
