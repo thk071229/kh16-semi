@@ -4,28 +4,28 @@
 
 <style>
 .pagination {
-            text-align: center;
-        }
-        .pagination > a {
-            text-decoration: none;
-            color: #64B698;
-            border: none;
-            padding: 0.5em;
-            font-size: 16px;
-            display: inline-block;
-            min-width: 2.5em;
-        }
+	text-align: center;
+}
+.pagination > a {
+    text-decoration: none;
+    color: #64B698;
+    border: none;
+    padding: 0.5em;
+    font-size: 16px;
+    display: inline-block;
+    min-width: 2.5em;
+}
  
-        .pagination > a:hover {
-            box-shadow: 0 0 0 2px #FFD6A5;
-            border-radius: 5px;
-        }
+.pagination > a:hover {
+    box-shadow: 0 0 0 2px #FFD6A5;
+    border-radius: 5px;
+}
 
-        .pagination > a.active {
-            box-shadow: 0 0 0 2px #FFBF86;
-            border-radius: 5px;
-            color: #64B698;
-        }
+.pagination > a.active {
+    box-shadow: 0 0 0 2px #FFBF86;
+    border-radius: 5px;
+    color: #64B698;
+}
 
 </style>
 <%-- 

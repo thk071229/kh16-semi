@@ -163,13 +163,10 @@
           </tfoot>
         </table>
       </div>
-
-      <!-- 페이지 네비게이터 -->
-      <div style="margin-top:20px; text-align:center;">
-        <jsp:include page="/WEB-INF/views/template/pagination-num.jsp"></jsp:include>
-      </div>
     </c:otherwise>
   </c:choose>
+  <!-- 페이지 네비게이터 -->
+  <jsp:include page="/WEB-INF/views/template/pagination-num.jsp"></jsp:include>
 
 </div>
 

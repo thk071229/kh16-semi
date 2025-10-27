@@ -10,7 +10,7 @@
 <%-- a태그로 구현 --%>
 <c:if test = "${pageVO != null && pageVO.dataCount > 0 && pageVO.page < pageVO.totalPage}">
 	<div class = "pagination-more">
-			<a href = "list?${pageVO.searchParamsInMore}${pageVO.parentParamsToString}">더보기</a>
+			<a href = "list?${pageVO.searchParamsInMore}${pageVO.parentParamsToString}" class="btn btn-common btn-more">더보기</a>
 	</div>
 </c:if>
 

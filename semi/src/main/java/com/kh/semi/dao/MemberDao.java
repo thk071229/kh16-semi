@@ -66,7 +66,7 @@ public class MemberDao {
 		}
 		else {
 			String sql ="select count(*) from member "
-					+ "where instr(#1, ?) > 0 and member_level != '관리자'";
+					+ "where instr(#1, ?) > 0 and (member_level != '관리자' or member_level is null)";
 			sql = sql.replace("#1", pageVO.getColumn());
 			Object[] params = {pageVO.getKeyword()};
 			return jdbcTemplate.queryForObject(sql, int.class, params);
@@ -81,7 +81,7 @@ public class MemberDao {
 			String sql = "select * from ("
 								+ "select rownum rn, TMP.* from ("
 									+ "select * from member "
-									+ "where instr(#1, ?) > 0 and member_level != '관리자' "
+									+ "where instr(#1, ?) > 0 and (member_level != '관리자' or member_level is null) "
 									+ "order by #1 asc, member_id asc"
 								+ ")TMP"
 							+ ") where rn between ? and ?";
