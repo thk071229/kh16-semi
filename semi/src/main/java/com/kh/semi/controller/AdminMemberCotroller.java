@@ -33,8 +33,8 @@ public class AdminMemberCotroller {
 	//조회
 	@RequestMapping("/list")
 	public String list(Model model, @ModelAttribute(value="pageVO") PageVO pageVO) {
-		model.addAttribute("memberList", memberDao.selectListWithPaging(pageVO));
 		pageVO.setDataCount(memberDao.count(pageVO));
+		model.addAttribute("memberList", memberDao.selectListWithPaging(pageVO));
 		return "/WEB-INF/views/admin/member/list.jsp";
 	}
 	
