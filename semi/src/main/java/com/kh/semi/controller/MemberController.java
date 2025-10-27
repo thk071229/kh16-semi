@@ -1,14 +1,18 @@
 package com.kh.semi.controller;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +26,6 @@ import com.kh.semi.dao.EventDao;
 import com.kh.semi.dao.MemberCategoryDao;
 import com.kh.semi.dao.MemberDao;
 import com.kh.semi.dao.MemberRegionDao;
-import com.kh.semi.dao.RegionDao;
 import com.kh.semi.dto.CategoryDto;
 import com.kh.semi.dto.CertDto;
 import com.kh.semi.dto.MemberCategoryDto;
@@ -64,6 +67,23 @@ public class MemberController {
 	private EmailService emailService;
 	@Autowired
 	private CertDao certDao;
+	
+	
+	//ava.sql.Date 타입으로 변환할 때 빈 문자열을 허용하고 자동으로 null로 처리 해주는 메소드
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        // 날짜 형식을 지정합니다 (HTML <input type="date">의 기본 형식인 yyyy-MM-dd)
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        // 엄격한 형식 검사
+        dateFormat.setLenient(false);
+        
+        // CustomDateEditor를 등록하여 Date 타입 변환을 처리합니다.
+        // 두 번째 인자 'true'는 'allowEmpty'를 의미합니다.
+        // 폼에서 빈 문자열("")이 넘어오면 자동으로 null 값으로 처리됩니다.
+        binder.registerCustomEditor(java.sql.Date.class, 
+                                    new CustomDateEditor(dateFormat, true));
+    }
+	
 	
 	//이용약관 동의
 	@GetMapping("/agree")
@@ -175,8 +195,6 @@ public class MemberController {
 			return "redirect:login?error"; 
 		}
 	}
-	
-	
 	
 	//로그아웃
 	@RequestMapping("/logout")
