@@ -21,7 +21,7 @@
             width: 210px;
 			box-shadow: 0 4px 15px rgba(0,0,0,0.3); 
 			border-radius : 0.5em;
-			
+			padding : 1em;
 		}
 		
         #toggle + .sidebar{
@@ -124,12 +124,12 @@
 							</div>
 							<hr><hr>
 							<div class="cell ms-30">
-								<a href="#"> <i class="fa-solid fa-user"></i>
+								<a href="#"> <i class="fa-solid fa-house"></i>
 									<span>기능1</span>
 								</a>
 							</div>
 							<div class="cell ms-30">
-								<a href="#"> <i class="fa-solid fa-user"></i>
+								<a href="#"> <i class="fa-solid fa-file"></i>
 									<span>기능2</span>
 								</a>
 							</div>
@@ -139,7 +139,7 @@
 								</a>
 							</div>
 							<div class="cell ms-30">
-								<a href="#"> <i class="fa-solid fa-user"></i>
+								<a href="#"> <i class="fa-solid fa-gear"></i>
 									<span>기능4</span>
 								</a>
 							</div>
