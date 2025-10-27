@@ -19,14 +19,11 @@ public class EventAttendeeListVO {
 	private Timestamp eventDate;
 	// From club_list Table
 	private String clubName;
-	private int clubRegion;
-	private String regionName;
-	private int clubCategory;
-	private String categoryName;
+	private String clubLeader;
 	// From event_attendee Table
-	private String memberId;
+	private String attendMember;
 	// From member Table
 	private String memberNickname;
+	private String attendMemberNickname;
 
-	
 }

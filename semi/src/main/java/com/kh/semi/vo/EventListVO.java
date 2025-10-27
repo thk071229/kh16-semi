@@ -24,9 +24,9 @@ public class EventListVO {
 	private String regionName;
 	private int clubCategory;
 	private String categoryName;
+	private String clubLeader;
 	// From member Table
 	private String memberNickname;
-	// From event_image Table
-	private Object attachmentNo;
+
 	
 }

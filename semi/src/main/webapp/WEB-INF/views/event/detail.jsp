@@ -171,17 +171,32 @@
 			      <tbody>
 			          <tr>
 						<td style="width:80px;">참여인원</td>
-			            <td>
-							<c:forEach var="eventAttendee" items="${eventAttendee}" varStatus="status">
-								<a href="/member/detail?memberId=${eventAttendee.memberId}">${eventAttendee.memberNickname}</a>
-								<label>  <label>
+			            <td class="flex-box">
+							<c:forEach var="eventAttendee" items="${eventAttendeeListVO}" varStatus="status">
+								<c:choose>
+									<c:when test = "${not empty eventAttendee.attendMember}">
+										<a href = "/member/detail?memberId=${eventAttendee.attendMember}" style="text-decoration: none; color:black; font-weight:600">
+											<div class="member-card flex-box" style="align-items: center; background-color: var(--surface); border-radius: 20px; padding: 5px 15px 5px 5px; box-shadow: var(--shadow); border: 1px solid #eee;">
+				        					<%-- 프로필 사진 (회원 ID 사용) --%>
+					        					<div style="width: 40px; height: 40px; border-radius: 50%; overflow: hidden; margin-right: 10px;">
+													<img src="/member/profile?memberId=${eventAttendee.attendMember}"  style="width: 100%; height: 100%; object-fit: cover;"
+										     		onerror="this.onerror=null; this.src='/images/error/no-image.png';"> <%-- 이미지 로드 실패 시 기본 이미지 --%>
+												</div>
+												<label>${eventAttendee.attendMemberNickname}</label>
+											</div>
+										</a>
+										</c:when>
+									<c:otherwise>
+        								<p>참여한 회원이 없습니다.</p>
+    								</c:otherwise>
+								</c:choose>
 							</c:forEach>
 			            </td>
 			          </tr>
 					  <tr>
-					  <td>
-						<div> 내용 </div>
-					  </td>
+					  	<td>
+							<div> 내용 </div>
+					  	</td>
 					    <td>
 							${eventDto.eventContent}
 					    </td>
@@ -191,12 +206,6 @@
 				<hr>
 			</div>
 
-
- 	
-	
-
-	
-	
 	<div class="cell">
 		<div class="kakao-map w-100"></div>
 	</div>
@@ -209,7 +218,7 @@
 	<c:if test="${sessionScope.loginId != null}">
 	    <div class="cell center">
 	    	<a class="btn btn-primary w-25" href="add?clubNo=${eventDto.eventClub}">등록</a>
-			<c:if test="${sessionScope.loginId == eventDto.eventWriter}">
+			<c:if test="${sessionScope.loginId == eventDto.eventWriter || sessionScope.loginId eq eventListVO.clubLeader}">
 	 	   		<a class="btn btn-accent w-25" href="edit?eventNo=${eventDto.eventNo}">수정</a>
 	    		<a class="btn btn-accent w-25" href="delete?eventNo=${eventDto.eventNo}">삭제</a>
 			</c:if>
