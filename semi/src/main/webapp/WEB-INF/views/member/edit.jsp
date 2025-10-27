@@ -30,7 +30,7 @@
 
 
 <form action="edit" method="post" class="check-form">
-	<div class="container w-450">
+	<div class="container w-300">
 		
 		<div class="cell center">
 			<h1 style="color: var(--subtle);">회원 정보 수정</h1>
