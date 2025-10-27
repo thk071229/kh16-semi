@@ -90,14 +90,14 @@
     		<artifactId>jsoup</artifactId>
     		<version>1.21.2</version>
 		</dependency>
-				<!--이메일 사용을 위한 의존성-->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-mail</artifactId>
-		</dependency>
-
-		
+	<!--이메일 사용을 위한 의존성-->
+      <dependency>
+         <groupId>org.springframework.boot</groupId>
+         <artifactId>spring-boot-starter-mail</artifactId>
+      </dependency>
 	</dependencies>
+		
+
 	
 	<build>
 		<plugins>
