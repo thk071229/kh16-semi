@@ -550,7 +550,6 @@ HTML의 기본 배치방식을 무시하고 내가 원하는 방식으로 위치
 /* 정모(event-box) 관련사항 */
 .event-box {
 	background-color: #ecfbf8;
-	border: 1px solid #d8f8f1;
 	border-radius: 1.5em;
 	padding: 0.5em;
 	
@@ -558,10 +557,11 @@ HTML의 기본 배치방식을 무시하고 내가 원하는 방식으로 위치
 }
 
 .event-box.event-ing {
-	background-color: #d5fef5;
+	background-color: #d9f8f1;
+	outline : 2px solid #cefff5;
 }
 .event-box.event-end {
-	background-color: #cacaca;
+	background-color: #e0e0e0;
 }
 
 

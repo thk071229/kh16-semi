@@ -103,6 +103,7 @@
 
 
 	<div class="cell mt-40">
+		<label style="color: gray;">진행중/완료 모임은 최신순으로 각 10개까지 표기됩니다</label>
 		<div class="flex-box">
 			<!-- 진행중 정모 목록 -->
 			<div class="cell w-50" style="padding: 5px;">
@@ -230,6 +231,10 @@
 				</div>
 			</a>
 		</c:forEach>
+			<!-- 페이지 내비게이터 영역 오류있어서 적용x-->
+		<div class="cell center mt-20 mb-20 page-navigater">
+			<jsp:include page="/WEB-INF/views/template/pagination-num.jsp"></jsp:include>	
+		</div>
 	</div>
 
 </div>

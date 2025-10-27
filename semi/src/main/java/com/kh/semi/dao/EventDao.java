@@ -53,33 +53,39 @@ public class EventDao {
 		jdbcTemplate.update(sql,params);
 	}
 	
+	// 조회 ------------------------------------------------------------------
 	// 조회 (기본)
 	public List<EventListVO> selectList(){
 		String sql = "select * from event_list order by event_date desc";
 		return jdbcTemplate.query(sql, eventListMapper);
 	}
+	// 조회 (기본) 진행중인 것 만 표시
+	public List<EventListVO> selectListAfter(){
+		String sql = "select * from event_list "
+				+"where event_date>sysdate "
+				+"order by event_date desc";
+		return jdbcTemplate.query(sql, eventListMapper);
+	}
 
-	// PageVO 적용 조회
-	public List<EventListVO> selectListWithPaging(PageVO pageVO){
+	// 목록페이지 : 전체 Event 조회
+		// PageVO 적용 조회
+	public List<EventListVO> selectListWithPaging(int clubNo, PageVO pageVO){
 		String sql = "select * from ("
 				+ "select rownum rn, TMP.* from ("
-				+ "select * from event_list order by event_date desc"
+				+ "select * from event_list where event_club=? order by event_date desc"
 				+ ")TMP "
 				+ ")where rn between ? and ?";
-		Object[] params = {pageVO.getBegin(), pageVO.getEnd()};
+		Object[] params = {clubNo, pageVO.getBegin(), pageVO.getEnd()};
 		return jdbcTemplate.query(sql, eventListMapper, params);
 	}
 	
-	//게시글 카운트 메소드(클럽 내에서 페이지별로 보여주기 위함)
+		//PageVO용 :: 게시글 카운트 메소드(클럽 내에서 페이지별로 보여주기 위함)
 	public int count(PageVO pageVO) { 
 		// 컨트롤러에서 pageVO만을 전달해서 불러올수있도록
 			String sql = "select count(*) from event_list";
 			return jdbcTemplate.queryForObject(sql, int.class);
 	}
-	
-	
-	
-	
+
 	// 조회 (int clubNo)
 	public List<EventDto> selectList(int clubNo){
 		String sql = "select * from event where event_club = ? "
@@ -120,19 +126,23 @@ public class EventDao {
 		return jdbcTemplate.query(sql, eventListMapper, params);
 	}
 	
-	/// 조회 - 진행중(현재시각전)
+	/// 목록 페이지 조회 - 진행중(현재시각전)
 		public List<EventListVO> selectListBefore(int clubNo){
-			String sql = "select * from event_list"
+			String sql = "select * from ( "
+							+"select * from event_list"
 							+" where event_club=? and event_date>sysdate"
-							+" order by event_date desc";
+							+" order by event_date desc"
+							+" ) where rownum <= 10";
 			Object[] params= {clubNo};
 			return jdbcTemplate.query(sql, eventListMapper, params);
 		}
-	/// 조회 - 완료(현재시각후)
+	/// 목록 페이지 조회 - 완료(현재시각후)
 		public List<EventListVO> selectListAfter(int clubNo){
-			String sql = "select * from event_list"
+			String sql =  "select * from ( "
+							+ "select * from event_list"
 							+" where event_club=? and event_date<sysdate"
-							+" order by event_date desc";
+							+" order by event_date desc"
+							+" ) where rownum <= 10";
 			Object[] params= {clubNo};
 			return jdbcTemplate.query(sql, eventListMapper, params);
 		}
@@ -153,7 +163,7 @@ public class EventDao {
 		List<EventListVO> list = jdbcTemplate.query(sql, eventListMapper, params);
 		return list.isEmpty() ? null : list.get(0);
 	}
-	
+	// 조회 ------------------------------------------------------------------
 	
 	// 삭제
 	public boolean delete(int eventNo) {

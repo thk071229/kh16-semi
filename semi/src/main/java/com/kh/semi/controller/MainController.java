@@ -12,17 +12,29 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+<<<<<<< HEAD
 import com.kh.semi.dao.ClubDao;
+=======
+import com.kh.semi.dao.CountDao;
+>>>>>>> refs/remotes/origin/main
 import com.kh.semi.dao.RegionDao;
 import com.kh.semi.dto.RegionDto;
+<<<<<<< HEAD
 import com.kh.semi.vo.ClubListVO;
 import com.kh.semi.vo.PageVO;
+=======
+import com.kh.semi.vo.ClubBoardCountVO;
+import com.kh.semi.vo.ClubEventCountVO;
+>>>>>>> refs/remotes/origin/main
 
 
 @Controller
 public class MainController {
 	@Autowired
 	private RegionDao regionDao;
+	@Autowired
+	private CountDao countDao;
+
 	
 	@Autowired
 	private ClubDao clubDao;
@@ -56,6 +68,13 @@ public class MainController {
 				secondDepthSet.add(depth2);
 			}
 		}
+		
+		// 카운트한 정보 모델로 전달 (정모 횟수 / 게시글 횟수)
+		List<ClubEventCountVO> clubEventCountVO = countDao.selectListWithEventCount();
+		List<ClubBoardCountVO> clubBoardCountVO = countDao.selectListWithBoardCount();
+		model.addAttribute("clubEventCountVO", clubEventCountVO);
+		model.addAttribute("clubBoardCountVO", clubBoardCountVO);
+		
 		
 		model.addAttribute("firstDepthList", firstDepthList);
 		model.addAttribute("secondDepthList", secondDepthList);

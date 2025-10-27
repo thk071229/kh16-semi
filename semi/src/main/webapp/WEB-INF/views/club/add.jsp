@@ -86,7 +86,7 @@ $(function () {
     
     $(".address-search-btn").on("click", function () {
         var keyword = $(".address-input").val(); 
-        if (keyword.trim().length == 0) {
+        if (keyword.trim().length == 0) {//공란으로 두면 표시
             alert("검색할 지역 키워드를 입력하세요.");
             return;
         }
@@ -99,7 +99,9 @@ $(function () {
                     // region_1depth_name: 시/도 (예: 서울특별시)
                     var depth1 = firstResult.address.region_1depth_name;
                     // region_2depth_name: 시/군/구 (예: 강남구)
-                    var depth2 = firstResult.address.region_2depth_name;
+                    var rawDepth2 = firstResult.address.region_2depth_name;
+                    var depth2Parts = rawDepth2.split(' ');
+                    var depth2 = depth2Parts[0];
                     var fullAddress = firstResult.address_name;
                     
                     // 1. regionName 입력 필드에 전체 주소를 설정
@@ -110,7 +112,6 @@ $(function () {
                     $("[name=regionDepth2]").val(depth2);
 
                     alert("지역이 선택되었습니다: " + fullAddress);
-
                     // 3. 유효성 검사 강제 발생 및 상태 업데이트
                     state.clubRegionValid = true; 
                     $("[name=regionName]").removeClass("fail").addClass("success").trigger("blur");
@@ -161,14 +162,14 @@ $(function () {
 	            <label>활동지역<i class="fa-solid fa-asterisk red ms-5"></i></label>
 	            <div class="flex-box">
 	                <%-- 보이는 주소 입력 필드 (검색 키워드 입력용) --%>
-	                <input class="input w-100 field address-input" type="text" name="regionName" placeholder="오른쪽 버튼으로 지역 검색">
+	                <input class="input w-100 field address-input" type="text" name="regionName" placeholder="예시 : (경기도 용인시 혹은 용인시)">
 	                <button type="button" class="btn btn-primary ms-10 address-search-btn" style="white-space: nowrap;">
 	                    <i class="fa-solid fa-magnifying-glass"></i> 검색
 	                </button>
 	            </div>
 	            <div class="success-feedback w-100">지역이 선택되었습니다.</div>
 	            <div class="fail-feedback w-100">활동 지역을 검색하여 선택해주세요.</div>
-        </div>
+        	</div>
 
             <div class="cell">
             	<label>승인 방식<i class="fa-solid fa-asterisk red ms-5"></i></label>
