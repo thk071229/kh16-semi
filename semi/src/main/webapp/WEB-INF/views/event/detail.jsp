@@ -218,8 +218,7 @@
 	<c:if test="${sessionScope.loginId != null}">
 	    <div class="cell center">
 	    	<a class="btn btn-primary w-25" href="add?clubNo=${eventDto.eventClub}">등록</a>
-			<c:if test="${sessionScope.loginId == eventDto.eventWriter}">
-<!-- 			 || sessionScope.loginId eq eventAttendeeListVO.clubLeader} -->
+			<c:if test="${sessionScope.loginId == eventDto.eventWriter || sessionScope.loginId eq eventListVO.clubLeader}">
 	 	   		<a class="btn btn-accent w-25" href="edit?eventNo=${eventDto.eventNo}">수정</a>
 	    		<a class="btn btn-accent w-25" href="delete?eventNo=${eventDto.eventNo}">삭제</a>
 			</c:if>
