@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.semi.dao.ClubDao;
 import com.kh.semi.dao.ClubLikeDao;
+import com.kh.semi.error.UnauthorizationException;
 import com.kh.semi.vo.ClubLikeVO;
 
 import jakarta.servlet.http.HttpSession;
@@ -34,6 +35,9 @@ public class ClubRestController {
 	@PostMapping("/action")
 	public ClubLikeVO action(HttpSession session, @RequestParam int clubNo) {
 		String loginId = (String)session.getAttribute("loginId");
+		String loginLevel = (String)session.getAttribute("loginLevel");
+		if(loginLevel.equals("관리자")) throw new UnauthorizationException("관리자는 이용할 수 없는 기능입니다");
+		
 		boolean before = clubLikeDao.check(loginId, clubNo);
 		if(before) {//좋아요 한 상태면
 			clubLikeDao.delete(loginId, clubNo);
