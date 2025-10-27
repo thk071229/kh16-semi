@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%-- 모든 jsp에서 사용 가능한 css파일과 cdn 파일을 header에 등록 --%>
 <%-- 디자인 파일 추가 --%>
 <link rel ="stylesheet" type="text/css" href="/css/common.css">
@@ -58,6 +59,28 @@
         </a>
         <!-- 헤더 내 검색 영역 -->
 		<div class="header-search">
+			<div class="region-select-bar">
+			<div class="first-select-list">
+				<select id="first-option">
+				<option value = "">지역 선택</option>
+					<!-- region_depth1의 값을 선택 -->
+					<c:forEach var="depth1" items="${firstDepthList}">
+					<option value = "${depth1}">
+					${depth1}
+					</option>
+					</c:forEach>
+				</select>
+				<select id = "second-option">
+					<!-- region_depth2의 값을 선택 -->
+					<c:forEach var = "depth2" items = "${secondDepthList}">
+					<option value = "depth2">
+					${depth2}
+					</option>
+					</c:forEach>
+				</select>
+			</div>
+			</div>
+			<div class="keyword-search">
 		  <form action="/search" method="get" autocomplete="off">
 		    <input
 		      type="text"
@@ -68,6 +91,7 @@
 		    >
 		    <button type="submit" class="search-btn">검색</button>
 		  </form>
+		  </div>
 		</div>
 
     </header>  
