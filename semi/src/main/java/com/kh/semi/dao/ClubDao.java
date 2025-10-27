@@ -136,7 +136,6 @@ public class ClubDao {
 		return jdbcTemplate.update(sql, params) > 0;
 	}
 	
-	// 추천 소모임 목록 페이징(club_like)
 	public List<ClubListVO> selectClubListOrderByLikesWithPaging(PageVO pageVO){
 		String sql = "select * from ("
 				+ "select rownum rn, TMP.* from("

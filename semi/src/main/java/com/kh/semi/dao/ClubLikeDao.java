@@ -44,6 +44,11 @@ public class ClubLikeDao {
 			Object[] params = {clubNo};
 			return jdbcTemplate.queryForObject(sql, int.class, params);
 		}
+		public int countByMemberId(String memberId) {
+			String sql = "select count(*) from club_like where member_id = ?";
+			Object[] params = {memberId};
+			return jdbcTemplate.queryForObject(sql, int.class, params);
+		}
 	//특정 멤버가 좋아요(찜) 한 소모임 조회
 		public List<Integer> selectLikeListByMemberId(String memberId){
 			String sql = "select club_no from club_like where member_id = ?";
