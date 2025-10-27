@@ -3,7 +3,7 @@
  <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
  
 <!-- header -->
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>	
+<jsp:include page="/WEB-INF/views/template/main-header.jsp"></jsp:include>	
 <div class = "container">
 <h1>메인 페이지</h1>
 <h2>소모임 - 우리동네 취미 모임</h2>

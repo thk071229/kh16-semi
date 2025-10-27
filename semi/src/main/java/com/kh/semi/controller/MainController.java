@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.kh.semi.dao.CountDao;
 import com.kh.semi.dao.RegionDao;
 import com.kh.semi.dto.RegionDto;
+
 import com.kh.semi.vo.ClubBoardCountVO;
 import com.kh.semi.vo.ClubEventCountVO;
 
@@ -25,7 +26,6 @@ public class MainController {
 	@Autowired
 	private CountDao countDao;
 
-	
 	@RequestMapping("/")
 	public String main(Model model) {
 		//지역 선택을 위해 지역 정보 화면 전달
@@ -68,4 +68,5 @@ public class MainController {
 		
 		return "/WEB-INF/views/main.jsp";
 	}
+
 }

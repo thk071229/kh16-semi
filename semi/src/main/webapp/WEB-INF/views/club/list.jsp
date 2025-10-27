@@ -28,6 +28,7 @@
     background-color: #eee;
 }
 </style>
+
 <%-- 좋아요 관련 javaSciprt 코드 --%> 
 <script type="text/javascript">
 	$(function(){
@@ -63,6 +64,7 @@
 	});
 </script>
 </c:if>
+
 <div class="container mt-30"> <%-- 전체 컨테이너 --%>
     <h2>전체 소모임 목록</h2>
 
@@ -103,8 +105,6 @@
 	</div>
 	
 </div>
-
-    
 
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
