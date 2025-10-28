@@ -180,10 +180,12 @@ public class ClubController {
 	public String category(@ModelAttribute(value="pageVO") PageVO pageVO, 
 			@RequestParam(required = false) int categoryNo, 
 			Model model) {
+		
 		pageVO.setDataCount(clubDao.clubCategoryCount(categoryNo));
 		List <ClubCountVO> clubList = clubDao.selectListByCategoryWithPaging(pageVO, categoryNo);
 		
 		model.addAttribute("clubList", clubList);
+		model.addAttribute("categoryDto", categoryDao.selectOne(categoryNo));
 		
 		return "/WEB-INF/views/club/category.jsp";
 	}
