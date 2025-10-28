@@ -98,7 +98,6 @@ public class BoardController {
 		model.addAttribute("clubLeader", clubLeader);
 		return "/WEB-INF/views/board/detail.jsp";
 	}
-	
 	//게시글 목록 조회 매핑(페이지 구현) - 해당 모임의 게시글만 가져오므로 clubNo 필수
 	@RequestMapping("/list")
 	public String list(HttpSession session, Model model, @ModelAttribute PageVO pageVO, @RequestParam int clubNo) {//변수 대신 VO 불러옴

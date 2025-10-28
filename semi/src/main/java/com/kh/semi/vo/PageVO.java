@@ -56,7 +56,11 @@ public class PageVO {
 	public boolean isList() {
 		return column == null || keyword == null;
 	}
-	
+	//더보기 pagination에서 사용할 boolean 메소드
+	public boolean hasMore() {
+		int totalSize = size * page;
+		return dataCount > totalSize && dataCount != 0; 
+	}
 	//더보기 pagination에서 사용할 size 계산 게터 메소드
 	public String getSearchParamsInMore() {
 			  int totalSize = size * page;
@@ -74,7 +78,6 @@ public class PageVO {
 			        return "&size=" + totalSize;
 			    }
 			}
-
 	public String getSearchParams() {//목록 or 검색 여부에 따라 주소에 추가될 파라미터를 반환
 	if(isSearch()) {//검색일때 - size 및 컬럼, 키워드 반환
 		return "&size="+size+"&column="+column+"&keyword="+keyword;
