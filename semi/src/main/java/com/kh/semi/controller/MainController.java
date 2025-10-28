@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.kh.semi.dao.ClubDao;
 import com.kh.semi.dao.CountDao;
 import com.kh.semi.dao.RegionDao;
 import com.kh.semi.dto.RegionDto;
@@ -23,6 +24,8 @@ public class MainController {
 	private RegionDao regionDao;
 	@Autowired
 	private CountDao countDao;
+	@Autowired
+	private ClubDao clubDao;
 
 	@RequestMapping("/")
 	public String main(Model model) {
@@ -62,6 +65,10 @@ public class MainController {
 		model.addAttribute("clubBoardCountVO", clubBoardCountVO);
 		model.addAttribute("clubLikeCountVO", clubLikeCountVO);
 		
+		//찜이 많은 소모임
+//		int limit = 4;
+//		List<ClubListVO> clubList = clubDao.selectClubListOrderByLikes(limit);
+//		model.addAttribute("clubList", clubList);
 		
 		model.addAttribute("firstDepthList", firstDepthList);
 		model.addAttribute("secondDepthList", secondDepthList);

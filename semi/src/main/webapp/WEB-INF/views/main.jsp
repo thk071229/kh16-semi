@@ -32,7 +32,46 @@
 <i class="fa-solid fa-location-dot"></i>
 서울시 강남구(header에 있는 button-span value 불러오기) 근처 모임
 </label>
-<!-- 추후 table로 구현  -->
+<%-- 찜이 많은 소모임 --%>
+<div class="header"> <%-- 제목과 '더보기' 링크를 위한 레이아웃 --%>
+        <h3>⭐ 찜이 많은 소모임 ⭐</h3>
+        <a href="/club/list" class="link">더보기 &gt;</a> <%-- 더보기 링크 --%>
+</div>
+<div class="grid mt-20"> <%-- 카드 목록 그리드 (CSS에서 4열로 설정 필요) --%>
+
+        <c:forEach var="club" items="${clubList}">
+            <div class="card"> 
+                <div> <%-- 이미지 영역 --%>
+                    <c:choose>
+                        <c:when test="${club.clubProfile != null}">
+                            <img src="/attachment/download?attachmentNo=${club.clubProfile}" alt="${club.clubName}" 
+                            onerror="this.onerror=null; this.src='/images/error/no-image.png';" style="width:100%; height:auto; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--radius-sm) var(--radius-sm) 0 0;">
+                        </c:when>
+                        <c:otherwise>
+                            <img src="/images/error/no-image.png" alt="기본 이미지" style="width:100%; height:auto; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--radius-sm) var(--radius-sm) 0 0;"> <%-- 이미지 스타일 + 상단 모서리 둥글게 --%>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+                <div class="v-stack" style="padding: 16px;"> <%-- 내용을 위한 세로 스택 + 카드 내부 패딩 --%>
+                    <div class="kicker"> <%-- 작은 텍스트 스타일 (지역 | 카테고리) --%>
+                        <span>${club.regionName}</span>
+                    </div>
+                    <div class="kicker">
+                    	<span>${club.categoryName}</span>
+                    </div>
+                    <div class="kicker">
+                    	<span>회원수:${club.memberCount}명</span> | <span>정모 ${eventCountVO.eventCount}</span>
+                    </div>
+                    <h4 style="margin: 4px 0 8px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${club.clubName}</h4> <%-- 모임 이름 (기본 스타일 + 줄바꿈 방지) --%>
+                    <div class="h-stack"> <%-- 가로 스택 (좋아요 수) --%>
+                        <span class="ms-10"><i class="fa-solid fa-heart red"></i> ${club.clubLike}개</span> <%-- 빨간색 하트 + 좋아요 수 --%>
+                    </div>
+                    <a href="/club/home?clubNo=${club.clubNo}" class="btn btn-ghost mt-10">자세히 보기</a> <%-- 고스트 버튼 + 상단 여백 --%>
+                </div>
+            </div>
+        </c:forEach>
+
+    </div>
 
 <h4>활동이 활발한 모임 (이벤트)</h4>
 	<div class="grid mt-20">
