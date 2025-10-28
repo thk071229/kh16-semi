@@ -26,7 +26,8 @@ public class ClubJoinCheckInterceptor implements HandlerInterceptor {
 		HttpSession session = request.getSession();
 		String loginId = (String) session.getAttribute("loginId");
 		String loginLevel = (String) session.getAttribute("loginLevel");
-	
+		
+
 		//본인이 가입한 클럽인지 확인
 		int clubNo = Integer.parseInt(request.getParameter("clubNo"));
 		// 특정 모임에 특정회원이 있는지 확인

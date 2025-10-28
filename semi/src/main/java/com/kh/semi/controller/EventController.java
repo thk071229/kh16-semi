@@ -108,7 +108,7 @@ public class EventController {
 		
 		// PageVO 세팅 + 부모 파라미터 세팅
 		pageVO.putParentParams("clubNo", clubNo);
-		int dataCount = eventDao.count(pageVO);
+		int dataCount = eventDao.count(pageVO, clubNo);
 		pageVO.setDataCount(dataCount);
 		
 		

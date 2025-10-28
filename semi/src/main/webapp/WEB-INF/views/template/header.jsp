@@ -80,3 +80,4 @@
 
 <!-- 사이드 메뉴 (클릭하면 나오도록) 추후 구현 -->
  <jsp:include page="/WEB-INF/views/template/sidebar.jsp"></jsp:include>
+ 

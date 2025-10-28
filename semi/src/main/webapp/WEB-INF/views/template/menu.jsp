@@ -147,10 +147,6 @@ $(function(){
 	<i class="fa-solid fa-calendar-days"></i>
 	<span>정모 일정</span>
 	</a>
-	<a href="#">
-	<i class="fa-solid fa-clock-rotate-left"></i>
-	<span>최근 본 모임</span>
-	</a>
 	<a href="/member/agree">
 	<i class="fa-solid fa-user-plus"></i>
 	<span>회원 가입</span>
