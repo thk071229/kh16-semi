@@ -17,6 +17,7 @@ public class ClubBoardCountMapper implements RowMapper<ClubBoardCountVO>{
 		ClubBoardCountVO clubBoardCountVO = new ClubBoardCountVO();
 		clubBoardCountVO.setBoardClub(rs.getInt("board_club"));
 		clubBoardCountVO.setClubName(rs.getString("club_name"));
+		clubBoardCountVO.setClubProfile(rs.getObject("club_profile", Integer.class));
 		clubBoardCountVO.setRegionName(rs.getString("region_name"));
 		clubBoardCountVO.setCategoryName(rs.getString("category_name"));
 		clubBoardCountVO.setBoardCount(rs.getInt("board_count"));
