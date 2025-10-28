@@ -85,7 +85,6 @@
                 
             </div>
         </c:forEach>
-
     </div>
     
 <div class="header"> <%-- 제목과 '더보기' 링크를 위한 레이아웃 --%>

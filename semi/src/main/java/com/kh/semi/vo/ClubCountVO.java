@@ -10,6 +10,8 @@ public class ClubCountVO {
 		private int clubNo;
 		private String clubName;
 		private Integer clubProfile;
+		private int clubRegion; // = region_no
+		private int clubCategory; // = category_no
 		private String regionName;
 		private String categoryName;
 		private int clubLike;

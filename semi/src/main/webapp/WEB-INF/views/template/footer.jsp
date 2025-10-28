@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<div class="container w-100">
+<div class="container">
 <h1>푸터(추후 내용 수정)</h1>
 <div class="cell flex-box">
 <div class="cell w-50 left">

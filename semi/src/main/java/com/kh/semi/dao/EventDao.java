@@ -146,7 +146,45 @@ public class EventDao {
 			Object[] params= {clubNo};
 			return jdbcTemplate.query(sql, eventListMapper, params);
 		}
-
+		
+	//페이징을 이용한 진행중 목록
+		public List<EventListVO> selectBeforeListWithPaging(int clubNo, PageVO pageVO){
+			String sql = "select * from ("
+					+ "select rownum rn, TMP.* from ("
+					+ "select * from event_list where event_club = ? and event_date > sysdate "
+					+ "order by event_date desc"
+					+ ")TMP "
+					+ ")where rn between ? and ?";
+			
+			Object[] params = {clubNo, pageVO.getBegin(), pageVO.getEnd()};
+			return jdbcTemplate.query(sql, eventListMapper, params);
+		}
+	//페이징을 이용한 완료 목록
+		public List<EventListVO> selectAfterListWithPaging(int clubNo, PageVO pageVO){
+			String sql = "select * from ("
+					+ "select rownum rn, TMP.* from ("
+					+ "select * from event_list where event_club = ? and event_date < sysdate "
+					+ "order by event_date desc"
+					+ ")TMP "
+					+ ")where rn between ? and ?";
+			
+			Object[] params = {clubNo, pageVO.getBegin(), pageVO.getEnd()};
+			return jdbcTemplate.query(sql, eventListMapper, params);
+		}
+	//전체 진행중 정모 수
+		public int beforeCount(PageVO pageVO, int clubNo) {
+			String sql = "select count(*) from event_list "
+					+ "where event_club = ? and event_date > sysdate";
+			Object[] params = {clubNo};
+			return jdbcTemplate.queryForObject(sql, int.class, params);
+		}
+	//전체 완료 정모 수
+		public int afterCount(PageVO pageVO, int clubNo) {
+			String sql = "select count(*) from event_list "
+					+ "where event_club = ? and event_date < sysdate";
+			Object[] params = {clubNo};
+			return jdbcTemplate.queryForObject(sql, int.class, params);
+		}
 	// 상세조회
 	public EventDto selectOne(int eventNo) {
 		String sql ="select * from event where event_no=?";

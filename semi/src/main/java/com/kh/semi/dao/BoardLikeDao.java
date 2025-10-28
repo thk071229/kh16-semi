@@ -51,4 +51,12 @@ public class BoardLikeDao {
 		Object[] params = {memberId};
 		return jdbcTemplate.queryForList(sql, int.class, params);
 	}
+	//특정 멤버가 좋아요 한 게시글 개수
+	public int countLike(String memberId) {
+		String sql = "select count(*) from board_like where member_id = ?";
+		Object[] params = {memberId};
+		return jdbcTemplate.queryForObject(sql, int.class, params);
+	}
+
+
 }
