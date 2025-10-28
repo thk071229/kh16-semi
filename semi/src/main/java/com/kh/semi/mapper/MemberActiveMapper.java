@@ -16,10 +16,9 @@ public class MemberActiveMapper implements RowMapper<MemberActiveVO> {
 
 		MemberActiveVO memberActiveVO = new MemberActiveVO();
 		memberActiveVO.setMemberId(rs.getString("member_id"));
-		memberActiveVO.setMemberNickname(rs.getString("memberNickname"));
-		memberActiveVO.setMemberEventAttend(rs.getInt("memberEventAttend"));
-		memberActiveVO.setMemberBoardWrite(rs.getInt("memberBoardWrite"));
-		
+		memberActiveVO.setMemberNickname(rs.getString("member_nickname"));
+		memberActiveVO.setMemberEventAttend(rs.getInt("member_event_attend"));
+		memberActiveVO.setMemberBoardWrite(rs.getInt("member_board_write"));
 		
 		return memberActiveVO;
 	}

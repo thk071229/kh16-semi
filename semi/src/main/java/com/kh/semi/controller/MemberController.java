@@ -200,7 +200,8 @@ public class MemberController {
 		if(isLogin) {
 			session.setAttribute("loginId", findDto.getMemberId());
 			session.setAttribute("loginLevel", findDto.getMemberLevel());
-			
+			// 로그인 성공시 회원 포인트 갱신
+			memberService.refreshMemberPoint(findDto.getMemberId());
 			return "redirect:/";
 		}
 		else {

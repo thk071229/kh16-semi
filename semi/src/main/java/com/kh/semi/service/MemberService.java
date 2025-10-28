@@ -6,11 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kh.semi.dao.CountDao;
 import com.kh.semi.dao.MemberDao;
 import com.kh.semi.dao.MemberRegionDao;
 import com.kh.semi.dto.MemberDto;
 import com.kh.semi.dto.MemberRegionDto;
 import com.kh.semi.error.TargetNotFoundException;
+import com.kh.semi.vo.MemberActiveVO;
 
 @Service
 public class MemberService {
@@ -24,7 +26,8 @@ public class MemberService {
 	private RegionService regionService;
 	@Autowired
 	private MemberRegionDao memberRegionDao;
-
+	@Autowired
+	private CountDao countDao;
 
 	/*
 	 * MemberService(EmailConfiguragion emailConfiguragion) {
@@ -100,5 +103,16 @@ public class MemberService {
 		memberRegionDao.update(memberRegionDto, oldRegionNo);
 		
 	}
+	
+	
+	// 활동에 따라 포인트 갱신
+	@Transactional
+	public void refreshMemberPoint(String loginId) {
+	MemberActiveVO memberActiveVO = countDao.selectOneWithActive(loginId);
+	countDao.updateMemberPoint(memberActiveVO);
+	}
+	
+	
+	
 	
 }
