@@ -165,4 +165,11 @@ public class MemberDao {
 		Object[] params = {memberId};
 		return jdbcTemplate.queryForObject(sql, int.class, params);
 	}
+	
+	// 포인트 테스트하는 메소드
+	public boolean updateMemberPoint(String memberId, int memberPoint) {
+		String sql = "update member set member_point = ? where member_id = ?";
+		Object[] params = {memberPoint, memberId};
+		return jdbcTemplate.update(sql, params) > 0;
+	}
 }
