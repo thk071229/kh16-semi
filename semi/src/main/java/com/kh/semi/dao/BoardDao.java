@@ -84,7 +84,7 @@ public class BoardDao {
 	//공지사항 조회 메소드
 	public List<BoardListVO> selectListNotice(PageVO pageVO, int clubNo){
 		if(pageVO.isList()) {
-			String sql = "select *from board_list where board_notice = 'Y' and board_club = ?"
+			String sql = "select * from board_list where board_notice = 'Y' and board_club = ?"
 					+ "order by board_no desc";
 			Object[] params = {clubNo};
 		return jdbcTemplate.query(sql, boardListMapper, params);
@@ -114,7 +114,7 @@ public class BoardDao {
 	return jdbcTemplate.queryForObject(sql, int.class, params);
 	}
 	}
-
+	
 	//게시글 수정
 	public boolean update(BoardDto boardDto) {
 		String sql = "update board set board_title = ?, board_content = ?, "
