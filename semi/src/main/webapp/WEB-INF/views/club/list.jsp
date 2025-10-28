@@ -92,6 +92,9 @@
                     <div class="kicker">
                    		<span>${club.categoryName}</span>
                     </div>
+                    <div class="kicker">
+                   		<span>회원수:${club.memberCount}명</span>
+                    </div>
                     <h4 style="margin: 4px 0 8px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display:block;">${club.clubName}</h4> <%-- 모임 이름 --%>
                     <div class="h-stack club-like-area" data-club-no="${club.clubNo}"> <%-- 가로 스택 (좋아요 수) --%>
                         <span class="ms-10 club-like-count">

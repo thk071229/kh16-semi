@@ -17,4 +17,6 @@ public class ClubListVO {
 	private String categoryName;
 	private int clubLike;
 	private Integer clubProfile;
+	private String clubIntroduce;
+	private int memberCount;
 }
