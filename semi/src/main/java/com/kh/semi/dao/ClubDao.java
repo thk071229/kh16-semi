@@ -10,6 +10,7 @@ import com.kh.semi.dto.ClubDto;
 import com.kh.semi.mapper.ClubListMapper;
 import com.kh.semi.mapper.ClubMapper;
 import com.kh.semi.mapper.MemberClubListMapper;
+import com.kh.semi.vo.BoardListVO;
 import com.kh.semi.vo.ClubListVO;
 import com.kh.semi.vo.MemberClubListVO;
 import com.kh.semi.vo.PageVO;
@@ -175,5 +176,21 @@ public class ClubDao {
 		String sql = "select count(*) from club_list where club_like >=1";
 		return jdbcTemplate.queryForObject(sql, int.class);
 		   }
+	
+	//좋아요 한 게시글 목록 페이징
+	public List<ClubListVO> selectListLikeWithPaging(PageVO pageVO, String memberId){
+		if(memberId == null) return List.of();//선택사항(적으면 코드는 길어지지만 메소드가 안전해짐)
+		String sql = "SELECT * FROM ("
+		            + "SELECT rownum rn, TMP.* FROM ("
+		            	+ "SELECT L.* "
+		            	+ "FROM club_list L "
+		            	+ "INNER JOIN club_like B ON L.club_no = B.club_no "
+		            	+ "WHERE B.member_id = ? "
+		            	+ "ORDER BY L.club_no DESC"
+		            + ") TMP "
+		            + ") WHERE rn BETWEEN ? AND ?";
+		Object[] params = {memberId, pageVO.getBegin(), pageVO.getEnd()};
+		return jdbcTemplate.query(sql, clubListMapper, params);
+	}
 	
 }

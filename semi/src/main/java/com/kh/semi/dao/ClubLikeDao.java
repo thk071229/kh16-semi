@@ -55,4 +55,5 @@ public class ClubLikeDao {
 			Object[] params = {memberId};
 			return jdbcTemplate.queryForList(sql, Integer.class, params);
 		}
+		
 	}

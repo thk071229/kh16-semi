@@ -121,6 +121,7 @@
         
 </style>
 
+
 <div class="container w-700">
 <div class="cell mt-20 mb-20">
 	<label class="club-title">${clubDto.clubName} 의 게시판</label>

@@ -161,4 +161,41 @@ public class BoardDao {
 		Object[] params = {boardNo};
 		return jdbcTemplate.update(sql, params) > 0;
 	}
+	
+	//작성자별 글 내역을 조회
+	public List<BoardListVO> selectListByBoardWriter(PageVO pageVO, String boardWriter) {
+		if(boardWriter == null) return List.of();//선택사항(적으면 코드는 길어지지만 메소드가 안전해짐)
+		
+		String sql = "select * from ("
+				+ "select rownum rn, TMP.* from ("
+				+ "select * from board_list where board_writer = ? "
+				+ "order by board_no desc"
+				+ ")TMP "
+				+ ")where rn between ? and ?";
+		
+		Object[] params = {boardWriter, pageVO.getBegin(), pageVO.getEnd()};
+		return jdbcTemplate.query(sql, boardListMapper, params);
+	}
+	
+	public int countByBoardWriter(String boardWriter) {
+		String sql = "select count(*) from board_list where board_writer = ?";
+		Object[] params = {boardWriter};
+		return jdbcTemplate.queryForObject(sql, int.class, params);
+	}
+	
+	//좋아요 한 게시글 목록 페이징
+	public List<BoardListVO> selectListLikeWithPaging(PageVO pageVO, String memberId){
+		if(memberId == null) return List.of();//선택사항(적으면 코드는 길어지지만 메소드가 안전해짐)
+		String sql = "SELECT * FROM ("
+	            	+ "SELECT rownum rn, TMP.* FROM ("
+	            		+ "SELECT L.* "
+	            		+ "FROM board_list L "
+	            		+ "INNER JOIN board_like B ON L.board_no = B.board_no "
+	            		+ "WHERE B.member_id = ? "
+	            		+ "ORDER BY L.board_no DESC"
+	            	+ ") TMP "
+	            	+ ") WHERE rn BETWEEN ? AND ?";
+		Object[] params = {memberId, pageVO.getBegin(), pageVO.getEnd()};
+		return jdbcTemplate.query(sql, boardListMapper, params);
+	}
 }
