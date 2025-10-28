@@ -62,7 +62,7 @@
 						<span>정모 ${eventCountVO.eventCount}</span>
                     </div>
                     </div>
-                    <a href="/club/home?clubNo=${eventCountVO.eventClub}" class="btn btn-ghost mt-10">자세히 보기</a> <%-- 고스트 버튼 + 상단 여백 --%>
+                    <a href="/club/home?clubNo=${eventCountVO.clubNo}" class="btn btn-ghost mt-10">자세히 보기</a> <%-- 고스트 버튼 + 상단 여백 --%>
                 </div>
             </div>
 		</c:forEach>
@@ -95,10 +95,10 @@
                      </div>
                     <div class="v-stack kicker center"> <%-- 작은 텍스트 스타일 (지역 | 카테고리) --%>
                         <span> 멤버 ${boardCountVO.memberCount}</span>
-						<span>정모 ${boardCountVO.boardCount}</span>
+						<span> 게시글 ${boardCountVO.boardCount}</span>
                     </div>
                     </div>
-                    <a href="/club/home?clubNo=${eventCountVO.eventClub}" class="btn btn-ghost mt-10">자세히 보기</a> <%-- 고스트 버튼 + 상단 여백 --%>
+                    <a href="/club/home?clubNo=${boardCountVO.clubNo}" class="btn btn-ghost mt-10">자세히 보기</a> <%-- 고스트 버튼 + 상단 여백 --%>
                 </div>
             </div>
 		</c:forEach>

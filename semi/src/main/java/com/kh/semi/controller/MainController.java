@@ -14,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.kh.semi.dao.CountDao;
 import com.kh.semi.dao.RegionDao;
 import com.kh.semi.dto.RegionDto;
-
-import com.kh.semi.vo.ClubBoardCountVO;
-import com.kh.semi.vo.ClubEventCountVO;
+import com.kh.semi.vo.ClubCountVO;
 
 
 @Controller
@@ -57,10 +55,12 @@ public class MainController {
 		}
 		
 		// 카운트한 정보 모델로 전달 (정모 횟수 / 게시글 횟수)
-		List<ClubEventCountVO> clubEventCountVO = countDao.selectListWithEventCount();
-		List<ClubBoardCountVO> clubBoardCountVO = countDao.selectListWithBoardCount();
+		List<ClubCountVO> clubEventCountVO = countDao.selectListWithEventCount();
+		List<ClubCountVO> clubBoardCountVO = countDao.selectListWithBoardCount();
+		List<ClubCountVO> clubLikeCountVO = countDao.selectListWithLikeCount();
 		model.addAttribute("clubEventCountVO", clubEventCountVO);
 		model.addAttribute("clubBoardCountVO", clubBoardCountVO);
+		model.addAttribute("clubLikeCountVO", clubLikeCountVO);
 		
 		
 		model.addAttribute("firstDepthList", firstDepthList);
