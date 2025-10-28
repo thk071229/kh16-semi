@@ -71,12 +71,6 @@ public class ClubMemberDao {
 		Object[] params = {clubNo, pageVO.getBegin(), pageVO.getEnd()};
 		return jdbcTemplate.query(sql, clubMemberListMapper, params);
 	}
-	//모임 가입 회원 수
-	public int clubMemberCount (PageVO pageVO, int clubNo) {
-		String sql = "select count(*) from club_member_list where club_no = ?";
-		Object[] params = {clubNo};
-		return jdbcTemplate.queryForObject(sql, int.class, params);
-	}
 	// 모임 탈퇴 메소드
 	public boolean delete(int clubNo, String memberId) {
 		String sql ="delete from club_member where club_no = ? and club_member = ?";
