@@ -24,8 +24,6 @@ public class MainController {
 	private RegionDao regionDao;
 	@Autowired
 	private CountDao countDao;
-	@Autowired
-	private ClubDao clubDao;
 
 	@RequestMapping("/")
 	public String main(Model model) {
@@ -64,11 +62,6 @@ public class MainController {
 		model.addAttribute("clubEventCountVO", clubEventCountVO);
 		model.addAttribute("clubBoardCountVO", clubBoardCountVO);
 		model.addAttribute("clubLikeCountVO", clubLikeCountVO);
-		
-		//찜이 많은 소모임
-//		int limit = 4;
-//		List<ClubListVO> clubList = clubDao.selectClubListOrderByLikes(limit);
-//		model.addAttribute("clubList", clubList);
 		
 		model.addAttribute("firstDepthList", firstDepthList);
 		model.addAttribute("secondDepthList", secondDepthList);

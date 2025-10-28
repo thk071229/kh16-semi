@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kh.semi.dao.ClubDao;
 import com.kh.semi.dao.MemberDao;
 import com.kh.semi.dao.MemberRegionDao;
 import com.kh.semi.dto.MemberDto;
@@ -24,6 +25,8 @@ public class MemberService {
 	private RegionService regionService;
 	@Autowired
 	private MemberRegionDao memberRegionDao;
+	@Autowired
+	private ClubDao clubDao;
 
 
 	/*

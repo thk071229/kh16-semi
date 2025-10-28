@@ -174,6 +174,6 @@ public class ClubDao {
 	public int countByClubLike(PageVO pageVO) {//club_like가 1이상인 소모임 갯수 카운트
 		String sql = "select count(*) from club_list where club_like >=1";
 		return jdbcTemplate.queryForObject(sql, int.class);
-		   }
+	 }
 	
 }
