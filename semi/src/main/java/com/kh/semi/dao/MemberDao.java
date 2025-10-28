@@ -92,14 +92,6 @@ public class MemberDao {
 			return jdbcTemplate.query(sql, memberMapper, params);
 		}
 	}
-	//public List<MemberDto> selectList(String column, String keyword) {
-	//	String sql = "select * from member "
-	//						+ "where instr(#1, ?)>0 and member_level != '관리자' "
-	//						+ "order by #1 asc, member_id asc";
-	//	sql.replace("#1", column);
-	//	Object[] params = {keyword};
-	//	return jdbcTemplate.query(sql, memberMapper, params);
-	//}
 
 	//수정(update)
 	//회원 정보 수정(회원전용)

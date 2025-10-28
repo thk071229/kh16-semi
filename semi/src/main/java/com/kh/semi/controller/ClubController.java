@@ -22,6 +22,7 @@ import com.kh.semi.dto.ClubMemberDto;
 import com.kh.semi.error.TargetNotFoundException;
 import com.kh.semi.error.UnauthorizationException;
 import com.kh.semi.service.ClubService;
+import com.kh.semi.vo.ClubCountVO;
 import com.kh.semi.vo.ClubListVO;
 import com.kh.semi.vo.ClubMemberListVO;
 import com.kh.semi.vo.PageVO;
@@ -172,6 +173,21 @@ public class ClubController {
 		model.addAttribute("clubList", clubList);
 		
 		return "/WEB-INF/views/club/list.jsp";
+	}
+	
+	//카테고리별 소모임 목록
+	@RequestMapping("/category")
+	public String category(@ModelAttribute(value="pageVO") PageVO pageVO, 
+			@RequestParam(required = false) int categoryNo, 
+			Model model) {
+		
+		pageVO.setDataCount(clubDao.clubCategoryCount(categoryNo));
+		List <ClubCountVO> clubList = clubDao.selectListByCategoryWithPaging(pageVO, categoryNo);
+		
+		model.addAttribute("clubList", clubList);
+		model.addAttribute("categoryDto", categoryDao.selectOne(categoryNo));
+		
+		return "/WEB-INF/views/club/category.jsp";
 	}
 	
 	

@@ -56,7 +56,7 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 		
 		//관리자 검사용 인터셉터
 		registry.addInterceptor(adminInterceptor)
-					.addPathPatterns("/addmin/**")
+					.addPathPatterns("/admin/**")
 					.order(3);
 		
 		//게시글 수정 및 삭제 접근 차단 인터셉터
