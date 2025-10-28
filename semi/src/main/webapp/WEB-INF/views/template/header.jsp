@@ -47,7 +47,7 @@
 
 </style>
 
-<div class="container w-100">
+<div class="container">
     <header class="header">
         <a class="brand" href="/">
         <!-- 로고 이미지 -->
