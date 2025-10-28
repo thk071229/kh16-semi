@@ -41,9 +41,6 @@ public class ListMoreRestController {
 	@Autowired
 	private EventDao eventDao;
 	
-	@Autowired
-	private CountDao countDao;
-	
 	//board의 데이터
 	@PostMapping("/board")
 	public Map<String, Object> boardMore(@ModelAttribute PageVO pageVO, @RequestParam int clubNo){
@@ -172,43 +169,51 @@ public class ListMoreRestController {
 	
 	//정모 리스트
 	@PostMapping("/event")
-	public List<EventListVO> eventMore(PageVO pageVO, int clubNo){
+	public Map<String, Object> eventMore(@ModelAttribute PageVO pageVO, int clubNo){
+		pageVO.setDataCount(eventDao.count(pageVO));
+		
+		//정보를 담을 빈 리스트 생성
+		List<EventListVO> allList = new ArrayList<>();
 		List<EventListVO> eventList = eventDao.selectListWithPaging(clubNo, pageVO);
 		
-		List<EventListVO> result = new ArrayList<>();
-		
+		//allList 데이터셋
 		for(EventListVO eventListVO : eventList) {
-			result.add(EventListVO.builder()
-						.eventNo(clubNo)
-						.eventTitle(null)
-						.eventClub(clubNo)
-						.eventWriter(null)
-						.eventAttend(clubNo)
-						.eventMaxPeople(clubNo)
-						.eventDate(null)
-						.eventAddress(null)
-						.clubName(null)
-						.clubCategory(clubNo)
-						.clubLeader(null)
-						.clubRegion(clubNo)
-						.regionName(null)
-						.categoryName(null)
-						.memberNickname(null)
+			allList.add(EventListVO.builder()
+						.eventNo(eventListVO.getEventNo())
+						.eventTitle(eventListVO.getEventTitle())
+						.eventClub(eventListVO.getEventClub())
+						.eventWriter(eventListVO.getEventWriter())
+						.eventAttend(eventListVO.getEventAttend())
+						.eventMaxPeople(eventListVO.getEventMaxPeople())
+						.eventDate(eventListVO.getEventDate())
+						.eventAddress(eventListVO.getEventAddress())
+						.clubName(eventListVO.getClubName())
+						.clubCategory(eventListVO.getClubCategory())
+						.clubLeader(eventListVO.getClubLeader())
+						.clubRegion(eventListVO.getClubRegion())
+						.regionName(eventListVO.getRegionName())
+						.categoryName(eventListVO.getCategoryName())
+						.memberNickname(eventListVO.getMemberNickname())
 						.build());
 		}
+		//response로 전달될 데이터
+		Map<String, Object> result = new HashMap<>();
+		result.put("list", allList);
+		result.put("hasMore", pageVO.hasMore());
+		
 		return result;
 	}
 	//다가오는 정모
 	@PostMapping("/beforeEvent")
-	public List<EventListVO> beforeMore(PageVO pageVO, int clubNo){
+	public Map<String, Object> beforeMore(PageVO pageVO, int clubNo){
 		pageVO.setDataCount(eventDao.beforeCount(pageVO, clubNo));
 		
 		List<EventListVO> beforeList = eventDao.selectBeforeListWithPaging(clubNo, pageVO);
 		
-		List<EventListVO> result = new ArrayList<>();
+		List<EventListVO> list = new ArrayList<>();
 		
 		for(EventListVO eventListVO : beforeList) {
-			result.add(EventListVO.builder()
+			list.add(EventListVO.builder()
 					.eventNo(eventListVO.getEventNo())
 					.eventClub(eventListVO.getEventClub())
 					.eventTitle(eventListVO.getEventTitle())
@@ -226,20 +231,25 @@ public class ListMoreRestController {
 					.memberNickname(eventListVO.getMemberNickname())
 					.build());
 		}
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("list", list);
+		result.put("hasMore", pageVO.hasMore());
+		
 		return result;
 	}
 	
 	//완료된 정모
 	@PostMapping("/afterEvent")
-	public List<EventListVO> afterMore(PageVO pageVO, int clubNo){
+	public Map<String, Object> afterMore(PageVO pageVO, int clubNo){
 		pageVO.setDataCount(eventDao.afterCount(pageVO, clubNo));
 		
 		List<EventListVO> afterList = eventDao.selectAfterListWithPaging(clubNo, pageVO);
 		
-		List<EventListVO> result = eventDao.selectAfterListWithPaging(clubNo, pageVO);
+		List<EventListVO> list = new ArrayList<>();
 		
 		for(EventListVO eventListVO : afterList) {
-			result.add(EventListVO.builder()
+			list.add(EventListVO.builder()
 					.eventNo(eventListVO.getEventNo())
 					.eventClub(eventListVO.getEventClub())
 					.eventTitle(eventListVO.getEventTitle())
@@ -257,6 +267,12 @@ public class ListMoreRestController {
 					.memberNickname(eventListVO.getMemberNickname())
 					.build());
 		}
+		
+		Map<String, Object> result = new HashMap<>();
+		
+		result.put("list", list);
+		result.put("hasMore", pageVO.hasMore());
+		
 		return result;
 	}
 }

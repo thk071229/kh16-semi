@@ -10,6 +10,7 @@ import com.kh.semi.mapper.ClubCountMapper;
 import com.kh.semi.mapper.MemberActiveMapper;
 import com.kh.semi.vo.ClubCountVO;
 import com.kh.semi.vo.MemberActiveVO;
+import com.kh.semi.vo.PageVO;
 
 @Repository
 public class CountDao {
@@ -42,7 +43,54 @@ public class CountDao {
 						+"order by club_like desc";
 		return jdbcTemplate.query(sql, clubCountMapper);
 	}
+	//pagination 적용
+	public List<ClubCountVO> selectLikeListWithPaging(PageVO pageVO){
+		String sql = "select * from ("
+				+ "select rownum rn, TMP.* from ("
+				+ "select * from club_count where club_like > 0 "
+				+ "order by club_like desc"
+				+ ")TMP "
+				+ ")where rn between ? and ?";
+		
+		Object[] params = {pageVO.getBegin(), pageVO.getEnd()};
+		return jdbcTemplate.query(sql, clubCountMapper, params);
+	}
 	
+	public List<ClubCountVO> selectBoardListWithPaging(PageVO pageVO){
+		String sql = "select * from ("
+				+ "select rownum rn, TMP.* from ("
+				+ "select * from club_count where board_count > 0 "
+				+ "order by board_count desc"
+				+ ")TMP "
+				+ ")where rn between ? and ?";
+		
+		Object[] params = {pageVO.getBegin(), pageVO.getEnd()};
+		return jdbcTemplate.query(sql, clubCountMapper, params);
+	}
+	public List<ClubCountVO> selectEventListWithPaging(PageVO pageVO){
+		String sql = "select * from ("
+				+ "select rownum rn, TMP.* from ("
+				+ "select * from club_count where event_count > 0 "
+				+ "order by event_count desc"
+				+ ")TMP "
+				+ ")where rn between ? and ?";
+		
+		Object[] params = {pageVO.getBegin(), pageVO.getEnd()};
+		return jdbcTemplate.query(sql, clubCountMapper, params);
+	}
+	//dataCount 설정 위한 count
+	public int eventListCount(PageVO pageVO) {
+		String sql = "select count(*) from club_count where event_count > 0";
+		return jdbcTemplate.queryForObject(sql, int.class);
+	}
+	public int boardListCount(PageVO pageVO) {
+		String sql = "select count(*) from club_count where board_count > 0";
+		return jdbcTemplate.queryForObject(sql, int.class);
+	}
+	public int clubLikeListCount(PageVO pageVO) {
+		String sql = "select count(*) from club_count where club_like > 0";
+		return jdbcTemplate.queryForObject(sql, int.class);
+	}
 	// 포인트 관련-------------
 	// 포인트 확인
 	public boolean updateMemberPoint(MemberActiveVO memberActiveVO) {

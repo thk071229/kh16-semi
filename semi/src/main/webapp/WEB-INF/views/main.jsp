@@ -40,6 +40,36 @@
 <c:if test="${sessionScope.loginId != null && sessionScope.loginLevel != '관리자'}">
 <script type="text/javascript" src="/js/club-like.js"></script>
 </c:if>	
+<%-- clubLikeList-ajax 코드가 들어갈 js --%>
+<script type="text/javascript">
+	$(function(){});
+</script>
+
+<%-- clubEventList-ajax 코드가 들어갈 js --%>
+<script type="text/javascript">
+	$(function(){});
+</script>
+
+<%-- clubBoardList-ajax 코드가 들어갈 js --%>
+<script type="text/javascript">
+	$(function(){});
+</script>
+
+<%-- clubLikeList의 template --%>
+<script type ="text/template">
+
+</script>
+
+<%-- clubEventList의 template --%>
+<script type ="text/template">
+
+</script>
+
+<%-- clubBoardList의 template --%>
+<script type ="text/template">
+
+</script>
+
 
 <div class = "container">
 

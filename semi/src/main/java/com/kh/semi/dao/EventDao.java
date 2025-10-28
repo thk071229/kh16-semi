@@ -66,7 +66,24 @@ public class EventDao {
 				+"order by event_date desc";
 		return jdbcTemplate.query(sql, eventListMapper);
 	}
-
+	// 진행중 목록 페이징 적용
+	public List<EventListVO> selectListAfterWithPaging(PageVO pageVO){
+		String sql = "select * from ("
+				+ "select rownum rn, TMP.* from ("
+				+ "select * from event_list where event_date < sysdate "
+				+ "order by event_date desc"
+				+ ")TMP "
+				+ ")where rn between ? and ?";
+		
+		Object[] params = {pageVO.getBegin(), pageVO.getEnd()};
+		return jdbcTemplate.query(sql, eventListMapper, params);
+	}
+	
+	// 진행중 목록 카운트
+	public int afterEventCount(PageVO pageVO) {
+		String sql = "select count(*) from event_list where event_date > sysdate";
+		return jdbcTemplate.queryForObject(sql, int.class);
+	}
 	// 목록페이지 : 전체 Event 조회
 		// PageVO 적용 조회
 	public List<EventListVO> selectListWithPaging(int clubNo, PageVO pageVO){
