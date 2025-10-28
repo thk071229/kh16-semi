@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
- <style>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<style>
 /* 추천 목록 그리드 (항상 4열로 강제) */
 .grid {
   display: grid !important; /* display 속성 강제 */
@@ -13,7 +15,18 @@
 .card {
     max-width: 260px !important; /* 최대 너비 강제 (1100px 컨테이너 기준 계산 값) */
     width: 100% !important;
+    display: flex; /* 카드 내부 정렬을 위해 추가 */
+    flex-direction: column; /* 카드 내용을 세로로 쌓음 */
 }
+.card .v-stack { /* 카드 내용 영역이 남은 공간 채우도록 */
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+.card .btn-ghost { /* 자세히 보기 버튼 하단 정렬 */
+    margin-top: auto; /* 위쪽 여백을 최대로 밀어 버튼을 아래로 */
+}
+
 .region-name {
   display: inline-block; 
   max-width: 13ch;            /* 글자 단위로 9글자 너비 제한 */
@@ -22,9 +35,7 @@
   white-space: nowrap;       /* 줄바꿈 방지 */
 }
 </style>
-<!-- header -->
 <jsp:include page="/WEB-INF/views/template/main-header.jsp"></jsp:include>
-
 <%-- js 파일을 불러와 소모임에 토글 기능 추가 --%>
 <c:if test="${sessionScope.loginId != null && sessionScope.loginLevel != '관리자'}">
 <script type="text/javascript" src="/js/club-like.js"></script>
@@ -39,6 +50,7 @@
 <i class="fa-solid fa-location-dot"></i>
 서울시 강남구(header에 있는 button-span value 불러오기) 근처 모임
 </label>
+
 <%-- 찜이 많은 소모임 --%>
 <div class="header"> <%-- 제목과 '더보기' 링크를 위한 레이아웃 --%>
         <h3>⭐ 찜이 많은 소모임 ⭐</h3>
@@ -51,20 +63,19 @@
             <div class="card"> 
                 <div> <%-- 이미지 영역 --%>
                     <c:choose>
-                        <c:when test="${likeCountVO.clubProfile != null && likeCountVO.clubProfile != ''}">
+                        <c:when test="${not empty likeCountVO.clubProfile}">
    						 	<img src="/attachment/download?attachmentNo=${likeCountVO.clubProfile}" alt="${likeCountVO.clubName}" 
     						onerror="this.onerror=null; this.src='/images/error/no-image.png';"
     						style="width:100%; height:auto; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--radius-sm) var(--radius-sm) 0 0;">
 						</c:when>
                         <c:otherwise>
                             <img src="/images/error/no-image.png" alt="기본 이미지" 
-                            style="width:100%; height:auto; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--radius-sm) var(--radius-sm) 0 0;"> <%-- 이미지 스타일 + 상단 모서리 둥글게 --%>
+                            style="width:100%; height:auto; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--radius-sm) var(--radius-sm) 0 0;">
                         </c:otherwise>
                     </c:choose>
                 </div>
-                
                 <div class="v-stack" style="padding: 16px;"> <%-- 내용을 위한 세로 스택 + 카드 내부 패딩 --%>
-                <h4 style="margin: 4px 0 8px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${likeCountVO.clubName}</h4> <%-- 모임 이름 (기본 스타일 + 줄바꿈 방지) --%>
+                    <h4 style="margin: 4px 0 8px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${likeCountVO.clubName}</h4>
                     <div class="kicker"> <%-- 작은 텍스트 스타일 (지역 | 카테고리) --%>
                         <span class="region-name">${likeCountVO.regionName}</span>
                     </div>
@@ -74,17 +85,17 @@
                     <div class="kicker">
                     	<span>회원수:${likeCountVO.memberCount}</span> | <span>정모 ${likeCountVO.eventCount}</span>
                     </div>
-                    <div class="h-stack like-area" data-club-no="${likeCountVO.clubNo}"> <%-- 가로 스택 (좋아요 수) --%>
+                    <div class="h-stack like-area" data-club-no="${likeCountVO.clubNo}">
                         <span class="ms-10 like-count">
                         <i class="fa-regular fa-heart red toggle-like"></i>
-                        <span class="like-count-value">${likeCountVO.clubLike}</span>
-                        </span> <%-- 빨간색 하트 + 좋아요 수 --%>
+                        <span class="like-count-value">${likeCountVO.clubLike}</span>개 <%-- '개' 글자 span 안으로 이동 --%>
+                        </span>
                     </div>
-                    <a href="/club/home?clubNo=${likeCountVO.clubNo}" class="btn btn-ghost mt-10">자세히 보기</a> <%-- 고스트 버튼 + 상단 여백 --%>
+                    <a href="/club/home?clubNo=${likeCountVO.clubNo}" class="btn btn-ghost mt-10">자세히 보기</a>
                 </div>
-                
             </div>
         </c:forEach>
+
     </div>
     
 <div class="header"> <%-- 제목과 '더보기' 링크를 위한 레이아웃 --%>
@@ -97,42 +108,40 @@
 			<div class="card">
 				<div> <%-- 이미지 영역 --%>
                     <c:choose>
-                        <c:when test="${eventCountVO.clubProfile != null}">
-                        <%-- 액박을 해결하는 onerror 추가 --%>
-                            <img src="/attachment/download?attachmentNo=${eventCount.clubProfile}" alt="${eventCount.clubName}" 
+                        <c:when test="${not empty eventCountVO.clubProfile}">
+                            <img src="/attachment/download?attachmentNo=${eventCountVO.clubProfile}" alt="${eventCountVO.clubName}" 
                             onerror="this.onerror=null; this.src='/images/error/no-image.png';" style="width:100%; height:auto; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--radius-sm) var(--radius-sm) 0 0;">
                         </c:when>
                         <c:otherwise>
-                            <img src="/images/error/no-image.png" alt="기본 이미지" style="width:100%; height:auto; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--radius-sm) var(--radius-sm) 0 0;"> <%-- 이미지 스타일 + 상단 모서리 둥글게 --%>
+                            <img src="/images/error/no-image.png" alt="기본 이미지" style="width:100%; height:auto; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--radius-sm) var(--radius-sm) 0 0;">
                         </c:otherwise>
                     </c:choose>
                 </div>
-                <div class="v-stack" style="padding: 16px;"> <%-- 내용을 위한 세로 스택 + 카드 내부 패딩 --%>
-                
-                   <h4 style="margin: 4px 0 8px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${likeCountVO.clubName}</h4> <%-- 모임 이름 (기본 스타일 + 줄바꿈 방지) --%>
-                    <div class="kicker"> <%-- 작은 텍스트 스타일 (지역 | 카테고리) --%>
+                <div class="v-stack" style="padding: 16px;"> <%-- [수정] center 클래스 제거, v-stack만 사용 --%>
+                    <h4 style="margin: 4px 0 8px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${eventCountVO.clubName}</h4>
+                    <div class="kicker">
                         <span class="region-name">${eventCountVO.regionName}</span>
                     </div>
                     <div class="kicker">
-                    	<span>${eventCountVO.categoryName}</span>
+                        <span>${eventCountVO.categoryName}</span>
                     </div>
                     <div class="kicker">
-                    	<span>회원수:${eventCountVO.memberCount}</span> | <span>정모 ${eventCountVO.eventCount}</span>
+                        <span> 멤버 ${eventCountVO.memberCount}</span> | <span>정모 ${eventCountVO.eventCount}</span>
                     </div>
-                    <div class="h-stack like-area" data-club-no="${eventCountVO.clubNo}"> <%-- 가로 스택 (좋아요 수) --%>
+                    <div class="h-stack like-area" data-club-no="${eventCountVO.clubNo}">
                         <span class="ms-10 like-count">
                         <i class="fa-regular fa-heart red toggle-like"></i>
-                        <span class="like-count-value">${eventCountVO.clubLike}</span>
-                        </span> <%-- 빨간색 하트 + 좋아요 수 --%>
+                        <span class="like-count-value">${eventCountVO.clubLike}</span>개 <%-- '개' 글자 span 안으로 이동 --%>
+                        </span>
                     </div>
-                    <a href="/club/home?clubNo=${eventCountVO.clubNo}" class="btn btn-ghost mt-10">자세히 보기</a> <%-- 고스트 버튼 + 상단 여백 --%>
-                    
-                    </div>
-                    <a href="/club/home?clubNo=${eventCountVO.clubNo}" class="btn btn-ghost mt-10">자세히 보기</a> <%-- 고스트 버튼 + 상단 여백 --%>
+                    <a href="/club/home?clubNo=${eventCountVO.clubNo}" class="btn btn-ghost mt-10">자세히 보기</a>
                 </div>
-				</c:forEach>
-            </div>
+            </div> <%-- card 닫기 --%>
+		</c:forEach>
+	</div> <%-- grid 닫기 --%>
 		
+	
+
 <div class="header"> <%-- 제목과 '더보기' 링크를 위한 레이아웃 --%>
         <h3>⭐ 활동이 활발한 모임 (게시글) ⭐</h3>
         <a href="/club/list" class="link">더보기 &gt;</a> <%-- 더보기 링크 --%>
@@ -142,37 +151,38 @@
 			<div class="card">
 				<div> <%-- 이미지 영역 --%>
                     <c:choose>
-                        <c:when test="${boardCountVO.clubProfile != null}">
-                        <%-- 액박을 해결하는 onerror 추가 --%>
-                            <img src="/attachment/download?attachmentNo=${boardCount.clubProfile}" alt="${boardCount.clubName}" 
+                        <c:when test="${not empty boardCountVO.clubProfile}">
+                            <img src="/attachment/download?attachmentNo=${boardCountVO.clubProfile}" alt="${boardCountVO.clubName}" 
                             onerror="this.onerror=null; this.src='/images/error/no-image.png';" style="width:100%; height:auto; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--radius-sm) var(--radius-sm) 0 0;">
                         </c:when>
                         <c:otherwise>
-                            <img src="/images/error/no-image.png" alt="기본 이미지" style="width:100%; height:auto; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--radius-sm) var(--radius-sm) 0 0;"> <%-- 이미지 스타일 + 상단 모서리 둥글게 --%>
+                            <img src="/images/error/no-image.png" alt="기본 이미지" style="width:100%; height:auto; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--radius-sm) var(--radius-sm) 0 0;">
                         </c:otherwise>
                     </c:choose>
                 </div>
-                <div class="v-stack center" style="padding: 16px;"> <%-- 내용을 위한 세로 스택 + 카드 내부 패딩 --%>
-                    <h4 style="margin: 4px 0 8px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${boardCountVO.clubName}</h4> <%-- 모임 이름 (기본 스타일 + 줄바꿈 방지) --%>
-                    <div class="h-stack like-area" data-club-no="${boardCountVO.clubNo}"> <%-- 가로 스택 (좋아요 수) --%>
+                <div class="v-stack" style="padding: 16px;"> <%-- [수정] center 클래스 제거, v-stack만 사용 --%>
+                    <h4 style="margin: 4px 0 8px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${boardCountVO.clubName}</h4>
+                    <div class="kicker">
+                        <span class="region-name">${boardCountVO.regionName}</span>
+                    </div>
+                    <div class="kicker">
+                        <span>${boardCountVO.categoryName}</span>
+                    </div>
+                    <div class="kicker">
+                         <span> 멤버 ${boardCountVO.memberCount}</span> | <span> 게시글 ${boardCountVO.boardCount}</span>
+                    </div>
+                    <div class="h-stack like-area" data-club-no="${boardCountVO.clubNo}">
                         <span class="ms-10 like-count">
                         <i class="fa-regular fa-heart red toggle-like"></i>
-                        <span class="like-count-value">${boardCountVO.clubLike}</span>
-                        </span> <%-- 빨간색 하트 + 좋아요 수 --%>
+                        <span class="like-count-value">${boardCountVO.clubLike}</span>개 <%-- '개' 글자 span 안으로 이동 --%>
+                        </span>
                     </div>
-                    <div class="v-stack kicker center"> <%-- 작은 텍스트 스타일 (지역 | 카테고리) --%>
-                        <span class="region-name">${boardCountVO.regionName}</span>
-                        <span>${boardCountVO.categoryName}</span>
-                     </div>
-                    <div class="v-stack kicker center"> <%-- 작은 텍스트 스타일 (지역 | 카테고리) --%>
-                        <span> 멤버 ${boardCountVO.memberCount}</span>
-						<span> 게시글 ${boardCountVO.boardCount}</span>
-                    </div>
-                    </div>
-                    <a href="/club/home?clubNo=${boardCountVO.clubNo}" class="btn btn-ghost mt-10">자세히 보기</a> <%-- 고스트 버튼 + 상단 여백 --%>
+                    <a href="/club/home?clubNo=${boardCountVO.clubNo}" class="btn btn-ghost mt-10">자세히 보기</a>
                 </div>
-			</c:forEach>
-            </div>
+            </div> <%-- card 닫기 --%>
+		</c:forEach>
+	</div> <%-- grid 닫기 --%>
+
 <div class="header"> <%-- 제목과 '더보기' 링크를 위한 레이아웃 --%>
         <h3>⭐ 내 근처에서 시작되는 정모 ⭐</h3>
         <a href="/club/list" class="link">더보기 &gt;</a> <%-- 더보기 링크 --%>
@@ -186,5 +196,4 @@
 <%-- 구분선 --%>
 <hr>
 </div>
-<!-- footer -->
-<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>	
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
