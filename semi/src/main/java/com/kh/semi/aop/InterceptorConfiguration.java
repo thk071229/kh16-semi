@@ -27,6 +27,7 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 	
 	@Autowired
 	private AdminInterceptor adminInterceptor;
+
 	
 	@Override
 	//인터셉터 등록 메소드
@@ -76,7 +77,6 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 		// 가입한 소모임 정모만 등록 가능
 		registry.addInterceptor(clubJoinCheckInterceptor)
 				.addPathPatterns("/event/add","/board/write");
-		
 		
 	}
 }
