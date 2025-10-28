@@ -11,6 +11,7 @@ import com.kh.semi.dao.ClubDao;
 import com.kh.semi.dao.ClubLikeDao;
 import com.kh.semi.error.UnauthorizationException;
 import com.kh.semi.vo.ClubLikeVO;
+import com.kh.semi.vo.PageVO;
 
 import jakarta.servlet.http.HttpSession;
 
