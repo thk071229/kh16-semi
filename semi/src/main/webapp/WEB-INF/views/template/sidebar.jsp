@@ -44,11 +44,11 @@
         #toggle ~ .toggle-label{
             font-size:24px;
             width: 1.5em;
-            height: 1.5em;
+            height: 5em;
             
-            border: 3px solid #51595c;
+            background-color : rgba(164, 224, 199, 0.5);
             border-radius: 0.2em;
-            color: #51595c;
+            color: rgb(107, 184, 152);
             cursor:pointer;
 
             display:inline-flex;
@@ -56,25 +56,26 @@
             align-items: center;
             
             position:fixed;
-            top:1em;
-            left:1em;
+            top:20em;
+            left:0.2em;
             z-index:1000;
         }
         #toggle ~ .toggle-label:hover {
-            border-color:black;
-            color:black;
+            border-color:rgba(164, 224, 199, 0.8);
+            background-color:rgba(164, 224, 199, 0.8);
+            color:white;
         }
         
-        #toggle ~ .toggle-label > .fa-bars,
-        #toggle:checked ~ .toggle-label > .fa-xmark
+        #toggle ~ .toggle-label > .fa-arrow-right,
+        #toggle:checked ~ .toggle-label > .fa-arrow-left
         {
             display:none;
         }
 
-        #toggle ~ .toggle-label > .fa-xmark,
-        #toggle:checked ~ .toggle-label > .fa-bars
+        #toggle ~ .toggle-label > .fa-arrow-left,
+        #toggle:checked ~ .toggle-label > .fa-arrow-right
         {
-            display:block;
+            display:block;         
         }
 
     </style>
@@ -114,11 +115,31 @@
 								<hr>
 								<h5 class="mt-0 mb-0"><i class="fa-solid fa-square-parking"></i> 포인트 : <span class="blue">${sidebarData.memberPoint()}</span> P</h5>
 								<h5 class="mt-0 mb-0"><i class="fa-solid fa-handshake"></i> 정모 참여 : <span class="green">${sidebarData.memberEventAttend}</span> 회</h5>
+								
 								<h5 class="mt-0 mb-0"><i class="fa-solid fa-pen"></i> 게시글 작성 : <span class="green">${sidebarData.memberBoardWrite}</span> 회</h5>
+								
 								<hr>
 							</div>
+							<div class="cell ms-30">
+									<a href="/member/memberEvent">
+										<i class="fa-solid fa-arrow-right"></i> 
+										<span>참여한 정모 목록</span>
+									</a>
+								</div>
+								<div class="cell ms-30">
+									<a href="/member/memberBoard">
+										<i class="fa-solid fa-arrow-right"></i>
+										<span>작성한 게시글</span>
+									</a>
+								</div>
+							<div class="cell ms-30">
+								<a href="/member/memberLike">
+									<i class="fa-solid fa-arrow-right"></i>
+									<span>좋아요한 게시글</span>
+								</a>
+							</div>
 							<div class="cell center">
-								<a href="/member/mypage"> <i class="fa-solid fa-user"></i>
+								<a href="/member/mypage"> <i class="fa-solid fa-gear"></i>
 									<span>내 정보 보기</span>
 								</a>
 							</div>
@@ -127,34 +148,15 @@
 									<span>로그아웃</span>
 								</a>
 							</div>
-							<hr><hr>
-							<div class="cell ms-30">
-								<a href="#"> <i class="fa-solid fa-house"></i>
-									<span>기능1</span>
-								</a>
-							</div>
-							<div class="cell ms-30">
-								<a href="#"> <i class="fa-solid fa-file"></i>
-									<span>기능2</span>
-								</a>
-							</div>
-							<div class="cell ms-30">
-								<a href="#"> <i class="fa-solid fa-user"></i>
-									<span>기능3</span>
-								</a>
-							</div>
-							<div class="cell ms-30">
-								<a href="#"> <i class="fa-solid fa-gear"></i>
-									<span>기능4</span>
-								</a>
-							</div>
+							<hr>
+
 						</div>
 					</c:otherwise>
 				</c:choose>
             </div>
             
              <label for="toggle" class="toggle-label">
-                    <i class="fa-solid fa-bars"></i>
-                    <i class="fa-solid fa-xmark"></i>
+                    <i class="fa-solid fa-arrow-right"></i>
+                    <i class="fa-solid fa-arrow-left"></i>
                 </label>
         </div>
