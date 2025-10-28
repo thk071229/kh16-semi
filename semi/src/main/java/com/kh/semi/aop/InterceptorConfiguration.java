@@ -25,6 +25,9 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 	@Autowired
 	private ClubJoinCheckInterceptor clubJoinCheckInterceptor;
 	
+	@Autowired
+	private AdminInterceptor adminInterceptor;
+	
 	@Override
 	//인터셉터 등록 메소드
 	public void addInterceptors(InterceptorRegistry registry) {
@@ -49,6 +52,11 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 					.addPathPatterns("/member/join*")
 					.excludePathPatterns("/member/joinFinish")
 					.order(2);
+		
+		//관리자 검사용 인터셉터
+		registry.addInterceptor(adminInterceptor)
+					.addPathPatterns("/addmin/**")
+					.order(3);
 		
 		//게시글 수정 및 삭제 접근 차단 인터셉터
 		registry.addInterceptor(boardOwnerInterceptor)

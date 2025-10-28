@@ -228,8 +228,14 @@
     </div>
   </div>
 
+  <div class="action-buttons mt-50">
+    <a href="password" class="btn btn-common">비밀번호 변경</a>
+    <a href="edit" class="btn btn-common">내 정보 수정</a>
+    <a href="drop" class="btn btn-ghost">회원 탈퇴</a>
+  </div>
+
   <!-- 선호 지역 -->
-  <div class="section-title">선호하는 지역</div>
+  <div class="section-title mt-50">선호하는 지역</div>
   <div class="table-wrapper">
     <table>
       <thead>
@@ -242,12 +248,12 @@
       </tbody>
     </table>
   </div>
-  <div class="action-buttons">
+  <div class="action-buttons mt-30">
     <a href="editRegion" class="btn btn-common">선호지역 수정</a>
   </div>
 
   <!-- 선호 카테고리 -->
-  <div class="section-title">선호하는 카테고리</div>
+  <div class="section-title mt-50">선호하는 카테고리</div>
   <div class="table-wrapper">
     <table>
       <thead><tr><th>카테고리 이름</th></tr></thead>
@@ -258,7 +264,7 @@
       </tbody>
     </table>
   </div>
-  <div class="action-buttons">
+  <div class="action-buttons mt-30">
     <a href="editCategory" class="btn btn-common">카테고리 수정</a>
   </div>
 
@@ -282,69 +288,17 @@
       </tbody>
     </table>
   </div>
+  <div class="cell center mt-30">
+  	<a href="memberLikeClub" class="btn btn-primary">찜한 소모임</a>
+  </div>
+  
 
-  <!-- 참여한 정모리스트 -->
-  <div class="section-title">${memberDto.memberId}님의 참여 정모 목록</div>
-  <div class="table-wrapper">
-	<table>
-	      <thead>
-	        <tr><th>일자</th><th>소모임</th><th>정모 이름</th><th>정모 지역</th><th>참여/정원</th></tr>
-	      </thead>
-	      <tbody>
-	        <c:forEach var="event" items="${eventAttendeeList}">
-	          <tr>
-				<td>
-					<fmt:formatDate value="${event.eventDate}" pattern="M월 d일 H:mm" ></fmt:formatDate>
-				</td>
-	            <td>
-	            	<a href="/club/home?clubNo=${event.eventClub}" class="member-link">${event.clubName}</a>
-	            </td>
-				<td>
-					<a href="/event/detail?eventNo=${event.eventNo}" class="member-link">${event.eventTitle}</a>
-				</td>
-	            <td>${event.eventAddress}</td>
-	            <td>${event.eventAttend}/${event.eventMaxPeople}</td>
-	          </tr>
-	        </c:forEach>
-	      </tbody>
-	    </table>
-  </div>
-  <!-- 본인이 등록한 소모임 -->
-  <div class="section-title">${memberDto.memberId}님의 등록한 정모 목록</div>
-  <div class="table-wrapper">
-  <table>
-        <thead>
-          <tr><th>일자</th><th>소모임</th><th>정모 이름</th><th>정모 지역</th><th>참여/정원</th></tr>
-        </thead>
-        <tbody>
-          <c:forEach var="event" items="${eventList}">
-            <tr>
-  			<td>
-  				<fmt:formatDate value="${event.eventDate}" pattern="M월 d일 H:mm" ></fmt:formatDate>
-  			</td>
-              <td>
-              	<a href="/club/home?clubNo=${event.eventClub}" class="member-link">${event.clubName}</a>
-              </td>
-  			<td>
-  				<a href="/event/detail?eventNo=${event.eventNo}" class="member-link">${event.eventTitle}</a>
-  			</td>
-              <td>${event.eventAddress}</td>
-              <td>${event.eventAttend}/${event.eventMaxPeople}</td>
-            </tr>
-          </c:forEach>
-        </tbody>
-      </table>
+  <div class="action-buttons mt-50">
+  	<a href="memberEvent" class="btn btn-primary">참여한 정모</a>
+  	<a href="memberBoard" class="btn btn-primary">작성한 게시글</a>
+  	<a href="memberLike" class="btn btn-primary">좋아요 한 게시글</a>
   </div>
   
-  
-  
-  
-  
-  <div class="action-buttons">
-    <a href="password" class="btn btn-common">비밀번호 변경</a>
-    <a href="edit" class="btn btn-common">내 정보 수정</a>
-    <a href="drop" class="btn btn-ghost">회원 탈퇴</a>
-  </div>
 </div>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
