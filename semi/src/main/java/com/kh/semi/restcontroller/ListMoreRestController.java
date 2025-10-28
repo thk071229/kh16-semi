@@ -170,7 +170,7 @@ public class ListMoreRestController {
 	//정모 리스트
 	@PostMapping("/event")
 	public Map<String, Object> eventMore(@ModelAttribute PageVO pageVO, int clubNo){
-		pageVO.setDataCount(eventDao.count(pageVO));
+		pageVO.setDataCount(eventDao.count(pageVO,clubNo));
 		
 		//정보를 담을 빈 리스트 생성
 		List<EventListVO> allList = new ArrayList<>();
