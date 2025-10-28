@@ -110,7 +110,12 @@
 							</div>
 							<div class="cell center">
 								<h3 class="mb-0">${sessionScope.loginId}</h3>
-								<h5 class="mt-0">(${sessionScope.loginLevel})</h5>
+								<h5 class="mt-0" style="margin-bottom:5px">(${sessionScope.loginLevel})</h5>
+								<hr>
+								<h5 class="mt-0 mb-0"><i class="fa-solid fa-square-parking"></i> 포인트 : <span class="blue">${sidebarData.memberPoint()}</span> P</h5>
+								<h5 class="mt-0 mb-0"><i class="fa-solid fa-handshake"></i> 정모 참여 : <span class="green">${sidebarData.memberEventAttend}</span> 회</h5>
+								<h5 class="mt-0 mb-0"><i class="fa-solid fa-pen"></i> 게시글 작성 : <span class="green">${sidebarData.memberBoardWrite}</span> 회</h5>
+								<hr>
 							</div>
 							<div class="cell center">
 								<a href="/member/mypage"> <i class="fa-solid fa-user"></i>
