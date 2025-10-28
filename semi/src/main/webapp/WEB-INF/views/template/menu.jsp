@@ -98,7 +98,7 @@ $(function(){
 					const $newHtml = $($.parseHTML(templateText));
                     
                     // 3. 내용 변경 (데이터 바인딩)
-                    const link = `/category?categoryNo=${categoryDto.categoryNo}`;
+                    const link = `/club/category?categoryNo=${categoryDto.categoryNo}`;
                     
                     // 링크 (<a>) 요소 찾기
                     $newHtml.find(".category-link")
@@ -131,7 +131,7 @@ $(function(){
 	</a>
 	<ul class="dropdown-menu">
        <li>
-           <a href="/club/category">
+           <a href="/club/list">
            <i class="fa-solid fa-list"></i>
            <span>카테고리</span>
            </a>

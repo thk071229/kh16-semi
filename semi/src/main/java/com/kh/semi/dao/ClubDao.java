@@ -7,10 +7,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.semi.dto.ClubDto;
+import com.kh.semi.mapper.ClubCountMapper;
 import com.kh.semi.mapper.ClubListMapper;
 import com.kh.semi.mapper.ClubMapper;
 import com.kh.semi.mapper.MemberClubListMapper;
-import com.kh.semi.vo.BoardListVO;
+import com.kh.semi.vo.ClubCountVO;
 import com.kh.semi.vo.ClubListVO;
 import com.kh.semi.vo.MemberClubListVO;
 import com.kh.semi.vo.PageVO;
@@ -27,6 +28,8 @@ public class ClubDao {
 	private ClubListMapper clubListMapper;
 	@Autowired
 	private MemberClubListMapper memberClubListMapper;
+	@Autowired
+	private ClubCountMapper clubCountMapper;
 
 	//등록
 	public int sequence() {
@@ -191,6 +194,24 @@ public class ClubDao {
 		            + ") WHERE rn BETWEEN ? AND ?";
 		Object[] params = {memberId, pageVO.getBegin(), pageVO.getEnd()};
 		return jdbcTemplate.query(sql, clubListMapper, params);
+	}
+	
+	//category 별 클럽 목록
+	public List<ClubCountVO> selectListByCategoryWithPaging(PageVO pageVO, int categoryNo) {
+		String sql = "select * from ("
+				+ "select rownum rn, TMP.* from ("
+				+ "select * from club_count where club_category = ? "
+				+ "order by club_no desc"
+				+ ")TMP "
+				+ ")where rn between ? and ?";
+		Object[] params = {categoryNo, pageVO.getBegin(), pageVO.getEnd()};
+		return jdbcTemplate.query(sql, clubCountMapper, params);
+	}
+	
+	public int clubCategoryCount(int categoryNo) {
+		String sql = "select count(*) from club_count where club_category =?";
+		Object[] params = {categoryNo};
+		return jdbcTemplate.queryForObject(sql, int.class, params);
 	}
 	
 }
