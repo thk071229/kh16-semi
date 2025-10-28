@@ -46,7 +46,7 @@ html,body{height:100%}
 body{
   margin:0;
   font-family:var(--font-sans);
-  background:linear-gradient(180deg,var(--bg),#FFFFFF);
+  background:#FFFFFF;
   color:var(--ink);
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
@@ -96,10 +96,12 @@ body{
 }
 /* 메뉴 */
 .nav{
-  margin-left:20px;
+  background: var(--bg);
   display:flex;
-  gap:12px;
+  gap:20px;
   align-items:center;
+  justify-content: center; /* 전체 메뉴 가운데 정렬 */
+  padding: 5px 0; /* 위아래 여백 추가 */
 }
 .nav a{ text-decoration:none; color:var(--subtle); padding:8px 10px; border-radius:8px; font-weight:600; font-size:14px;}
 .nav a:hover{ background:var(--muted); color:var(--ink)}

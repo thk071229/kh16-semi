@@ -1,14 +1,12 @@
 package com.kh.semi.dao;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.semi.dto.CategoryDto;
-import com.kh.semi.dto.RegionDto;
 import com.kh.semi.mapper.CategoryMapper;
 
 
@@ -41,6 +39,14 @@ public class CategoryDao {
 		String sql = "select * from category "
 						+ "order by category_no asc";
 		return jdbcTemplate.query(sql, categoryMapper);
+	}
+	public CategoryDto selectOne(int categoryNo) {
+		String sql = "select * from category "
+						+ "where category_no=?";
+		Object[] params = {categoryNo};
+		List<CategoryDto> list = jdbcTemplate.query(sql, categoryMapper, params);
+		
+		return list.isEmpty() ? null : list.get(0);
 	}
 	
 	//수정

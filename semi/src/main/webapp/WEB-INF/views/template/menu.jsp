@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 <style>
 .dropdown-menu {
@@ -71,7 +72,55 @@
 
 </style>
 
-<hr>
+<script type="text/template" id="category-template">
+    <li>
+        <a class="category-link" href="#"></a>
+    </li>
+</script>
+
+<script type="text/javascript">
+$(function(){
+	// 템플릿을 미리 읽고 jQuery 객체로 저장
+    const templateText = $("#category-template").text();
+    
+	function loadCategoryList(){
+		$.ajax({
+			url:"/rest/category/list", 
+			method:"GET", 
+			success:function(response){
+				const $categoryUl = $("#category-submenu");
+				$categoryUl.empty(); // 기존 내용 비우기
+				
+				// 1. 응답 목록을 순회하며 HTML 생성
+				response.forEach(function(categoryDto) {
+					// 2. 템플릿 복제 및 HTML 구조 재해석
+                    // $.parseHTML()을 사용해 텍스트를 HTML 요소로 변환한 후 jQuery 객체로 감쌈
+					const $newHtml = $($.parseHTML(templateText));
+                    
+                    // 3. 내용 변경 (데이터 바인딩)
+                    const link = `/club/category?categoryNo=`;
+                    
+                    // 링크 (<a>) 요소 찾기
+                    $newHtml.find(".category-link")
+                        .attr("href", link+categoryDto.categoryNo) // href 속성 설정
+                        .text(categoryDto.categoryName); // 텍스트 내용 설정
+       
+					// 4. 대상 영역에 추가
+					$categoryUl.append($newHtml);
+				});
+			},
+			error: function() {
+				console.error("카테고리 목록을 불러오는 데 실패했습니다.");
+                $("#category-submenu").append("<li><a>목록 로드 실패</a></li>");
+			}
+		});
+	}
+	
+	// 페이지 로드 후 함수 실행
+	loadCategoryList();
+});
+</script>
+<!-- hr> -->
 <!-- <h1>상단 메뉴</h1> -->
 <!-- 로그인 여부에 따라 다른 메뉴들을 표시 -->
 <!-- 일단 비회원 화면만 구현 -->
@@ -80,6 +129,16 @@
 	<i class="fa-solid fa-house"></i>
 	<span>홈</span>
 	</a>
+	<ul class="dropdown-menu">
+       <li>
+           <a href="/club/list">
+           <i class="fa-solid fa-list"></i>
+           <span>카테고리</span>
+           </a>
+           <ul id="category-submenu">
+           </ul>
+       </li>
+   </ul>
 	<a href="/club/recommandList">
 	<i class="fa-solid fa-star"></i>
 	<span>추천 모임</span>
@@ -88,21 +147,6 @@
 	<i class="fa-solid fa-calendar-days"></i>
 	<span>정모 일정</span>
 	</a>
-	<ul class="dropdown-menu">
-        <li>
-            <a href="/club/category">
-            <i class="fa-solid fa-list"></i>
-            <span>카테고리</span>
-            </a>
-            <ul>
-            	<c:forEach items="${categoryList}" var="categoryDto">
-                <li>
-                    <a href="/club/category?categoryNo=${categoryDto.categoryNo}">${categoryDto.categoryName}</a>
-                </li>
-            	</c:forEach>
-            </ul>
-        </li>
-    </ul>
 	<a href="#">
 	<i class="fa-solid fa-clock-rotate-left"></i>
 	<span>최근 본 모임</span>
@@ -134,4 +178,4 @@
 	</a>
 	</c:if>
 </nav>
-	<hr>
+<!-- 	<hr> -->

@@ -7,9 +7,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.semi.dto.ClubDto;
+import com.kh.semi.mapper.ClubCountMapper;
 import com.kh.semi.mapper.ClubListMapper;
 import com.kh.semi.mapper.ClubMapper;
 import com.kh.semi.mapper.MemberClubListMapper;
+import com.kh.semi.vo.ClubCountVO;
 import com.kh.semi.vo.ClubListVO;
 import com.kh.semi.vo.MemberClubListVO;
 import com.kh.semi.vo.PageVO;
@@ -26,6 +28,8 @@ public class ClubDao {
 	private ClubListMapper clubListMapper;
 	@Autowired
 	private MemberClubListMapper memberClubListMapper;
+	@Autowired
+	private ClubCountMapper clubCountMapper;
 
 	//등록
 	public int sequence() {
@@ -161,6 +165,40 @@ public class ClubDao {
 	public int countByClubLike(PageVO pageVO) {//club_like가 1이상인 소모임 갯수 카운트
 		String sql = "select count(*) from club_list where club_like >=1";
 		return jdbcTemplate.queryForObject(sql, int.class);
-		   }
+	 }
+	
+	//좋아요 한 게시글 목록 페이징
+	public List<ClubListVO> selectListLikeWithPaging(PageVO pageVO, String memberId){
+		if(memberId == null) return List.of();//선택사항(적으면 코드는 길어지지만 메소드가 안전해짐)
+		String sql = "SELECT * FROM ("
+		            + "SELECT rownum rn, TMP.* FROM ("
+		            	+ "SELECT L.* "
+		            	+ "FROM club_list L "
+		            	+ "INNER JOIN club_like B ON L.club_no = B.club_no "
+		            	+ "WHERE B.member_id = ? "
+		            	+ "ORDER BY L.club_no DESC"
+		            + ") TMP "
+		            + ") WHERE rn BETWEEN ? AND ?";
+		Object[] params = {memberId, pageVO.getBegin(), pageVO.getEnd()};
+		return jdbcTemplate.query(sql, clubListMapper, params);
+	}
+	
+	//category 별 클럽 목록
+	public List<ClubCountVO> selectListByCategoryWithPaging(PageVO pageVO, int categoryNo) {
+		String sql = "select * from ("
+				+ "select rownum rn, TMP.* from ("
+				+ "select * from club_count where club_category = ? "
+				+ "order by club_no desc"
+				+ ")TMP "
+				+ ")where rn between ? and ?";
+		Object[] params = {categoryNo, pageVO.getBegin(), pageVO.getEnd()};
+		return jdbcTemplate.query(sql, clubCountMapper, params);
+	}
+	
+	public int clubCategoryCount(int categoryNo) {
+		String sql = "select count(*) from club_count where club_category =?";
+		Object[] params = {categoryNo};
+		return jdbcTemplate.queryForObject(sql, int.class, params);
+	}
 	
 }

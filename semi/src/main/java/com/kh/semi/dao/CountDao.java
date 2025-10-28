@@ -7,7 +7,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.semi.mapper.ClubCountMapper;
+import com.kh.semi.mapper.MemberActiveMapper;
 import com.kh.semi.vo.ClubCountVO;
+import com.kh.semi.vo.MemberActiveVO;
 
 @Repository
 public class CountDao {
@@ -18,6 +20,9 @@ public class CountDao {
 	@Autowired
 	private ClubCountMapper clubCountMapper;
 
+	@Autowired
+	private MemberActiveMapper memberActiveMapper;
+	
 	// 홈화면 조회 : 정모 많이한 클럽
 	public List<ClubCountVO> selectListWithEventCount(){
 		String sql = "select * from club_count where event_count > 0 "
@@ -38,6 +43,20 @@ public class CountDao {
 		return jdbcTemplate.query(sql, clubCountMapper);
 	}
 	
-	//페이징 추가
-	
+	// 포인트 관련-------------
+	// 포인트 확인
+	public boolean updateMemberPoint(MemberActiveVO memberActiveVO) {
+		String sql = "update member "
+				+ "set member_point=? "
+				+ "where member_id=? ";
+		Object[] params = {memberActiveVO.memberPoint(), memberActiveVO.getMemberId()};
+		return jdbcTemplate.update(sql, params)>0;
+	}
+	// 회원 활동 조회 <- update할 VO를 memberID로 찾기
+	public MemberActiveVO selectOneWithActive(String memberId) {
+		String sql = "select * from member_active_count where member_id=?";
+		Object[] params = {memberId};
+		return jdbcTemplate.queryForObject(sql, memberActiveMapper, params);
+		
+	}
 }

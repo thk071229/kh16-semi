@@ -28,6 +28,7 @@ import com.kh.semi.dto.ClubMemberDto;
 import com.kh.semi.dto.MemberDto;
 import com.kh.semi.error.TargetNotFoundException;
 import com.kh.semi.service.AttachmentService;
+import com.kh.semi.service.MemberService;
 import com.kh.semi.vo.BoardListVO;
 import com.kh.semi.vo.PageVO;
 
@@ -48,6 +49,9 @@ public class BoardController {
 	
 	@Autowired
 	private AttachmentService attachmentService;
+	
+	@Autowired
+	private MemberService memberService;
 	
 	//게시글 등록 매핑
 	@GetMapping("/write")
@@ -71,7 +75,7 @@ public class BoardController {
 		boardDto.setBoardClub(clubNo);
 		
 		boardDao.insert(boardDto);
-		
+		memberService.refreshMemberPoint(loginId);
 		return "redirect:detail?boardNo="+boardNo;
 	}
 	
@@ -221,6 +225,9 @@ public class BoardController {
 		//글 삭제
 		boardDao.delete(boardNo);
 		
+		//포인트 갱신
+		// - 접속한 사람이 아니라 관리자가 글 삭제할 수도 있으므로
+		memberService.refreshMemberPoint(boardDto.getBoardWriter());
 		return "redirect:list?clubNo="+clubDto.getClubNo();
 		}
 	
