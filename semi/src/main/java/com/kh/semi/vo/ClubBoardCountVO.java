@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 public class ClubBoardCountVO {
 	private int boardClub;
 	private String clubName;
+	private Integer clubProfile;
 	private String regionName;
 	private String categoryName;
 	private int boardCount;
