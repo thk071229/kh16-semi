@@ -2,8 +2,8 @@ $(function(){
     // 기존 모임/정모 차트
     createChart("/rest/admin/stat/club/category", "#club-category-chart", "doughnut", "모임 수");
     createChart("/rest/admin/stat/club/region", "#club-region-chart", "doughnut", "모임 수");
-    createChart("/rest/admin/stat/event/category", "#event-category-chart", "doughnut", "모임 수");
-    createChart("/rest/admin/stat/event/region", "#event-region-chart", "doughnut", "모임 수");
+    createChart("/rest/admin/stat/event/category", "#event-category-chart", "doughnut", "정모 수");
+    createChart("/rest/admin/stat/event/region", "#event-region-chart", "doughnut", "정모 수");
 
     // 새로 추가된 회원 관련 차트
     createChart("/rest/admin/stat/member/category", "#member-category-chart", "doughnut", "회원 수");

@@ -71,9 +71,11 @@ public class AttachmentService {
 		
 		//파일 존재 여부 확인
 		AttachmentDto attachmentDto = attachmentDao.selectOne(attachmentNo);
-		//존재하지 않으면 예외 처리
-		if(attachmentDto == null) throw new TargetNotFoundException("존재하지 않는 파일");
-		
+		//존재하지 않으면 리턴
+		 if(attachmentDto == null) {
+		        // 파일이 이미 없으면 그냥 리턴
+		        return;
+		    }
 		//실제 파일 삭제
 		//경로 정보를 담은 File 객체 생성
 		File target = new File(upload, String.valueOf(attachmentNo));

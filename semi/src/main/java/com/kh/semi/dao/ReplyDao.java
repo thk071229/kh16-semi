@@ -31,7 +31,7 @@ public class ReplyDao {
 	//작성자별 댓글 목록
 	public List<ReplyDto> selectList(String replyWriter) {
 		String sql = "select * from reply "
-				+ "where reply_writer = ? order by reply_no desc";
+				+ "where reply_writer = ? order by reply_wtime desc";
 		Object[] params = {replyWriter};
 		return jdbcTemplate.query(sql, replyMapper, params);
 	}
@@ -39,7 +39,7 @@ public class ReplyDao {
 	//게시글 별 댓글 목록
 	public List<ReplyDto> selectList(int replyTarget) {
 		String sql = "select * from reply "
-				+ "where reply_target = ? order by reply_no asc";
+				+ "where reply_target = ? order by reply_wtime desc";
 		Object[] params = {replyTarget};
 		return jdbcTemplate.query(sql, replyMapper, params);
 	}
