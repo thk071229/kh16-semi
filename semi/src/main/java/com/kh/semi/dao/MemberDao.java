@@ -164,4 +164,11 @@ public class MemberDao {
 		Object[] params = {memberPoint, memberId};
 		return jdbcTemplate.update(sql, params) > 0;
 	}
+	
+	// 소모임 생성권한 업데이트
+	public boolean updateMemberAuthority(String memberId) {
+		String sql = "update member set member_authority = 'y' where member_id=?";
+		Object[] params = {memberId};
+		return jdbcTemplate.update(sql, params) > 0;
+	}
 }

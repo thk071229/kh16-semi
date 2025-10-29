@@ -29,12 +29,15 @@ import com.kh.semi.dao.EventDao;
 import com.kh.semi.dao.MemberCategoryDao;
 import com.kh.semi.dao.MemberDao;
 import com.kh.semi.dao.MemberRegionDao;
+import com.kh.semi.dao.PointUseDao;
 import com.kh.semi.dto.CategoryDto;
 import com.kh.semi.dto.CertDto;
 import com.kh.semi.dto.MemberCategoryDto;
 import com.kh.semi.dto.MemberDto;
+import com.kh.semi.dto.PointUseDto;
 import com.kh.semi.error.NeedPermissionException;
 import com.kh.semi.error.TargetNotFoundException;
+import com.kh.semi.error.UnauthorizationException;
 import com.kh.semi.service.AttachmentService;
 import com.kh.semi.service.EmailService;
 import com.kh.semi.service.MemberService;
@@ -79,6 +82,8 @@ public class MemberController {
 	private BoardDao boardDao;
 	@Autowired
 	private BoardLikeDao boardLikeDao;
+	@Autowired
+	private PointUseDao pointUseDao;
 	
 	
 	//ava.sql.Date 타입으로 변환할 때 빈 문자열을 허용하고 자동으로 null로 처리 해주는 메소드
@@ -556,6 +561,37 @@ public class MemberController {
 	@RequestMapping("/findMemberPwFinish")
 	public String findMemberPwFinish() {
 		return "/WEB-INF/views/member/findMemberPwFinish.jsp"; 
+	}
+	
+	
+	@GetMapping("/pointUse")
+	public String pointUse() {
+		return "/WEB-INF/views/member/pointUse.jsp";
+	}
+	@PostMapping("/pointUse")
+	public String pointUse(HttpSession session, Model model) {
+		// 로그인 여부 검사
+		String loginId = (String)session.getAttribute("loginId");
+		if(loginId==null) throw new TargetNotFoundException("로그인이 필요합니다");
+		// 생성권한 이미 가지고 있는지 검사
+		MemberDto memberDto = memberDao.selectOne(loginId);
+		if(memberDto.getMemberAuthority().equals("y")) throw new TargetNotFoundException("이미 소모임 생성 권한을 가지고 있습니다");
+		// 500포인트 이상 있는지 검사
+		if(memberDto.getMemberPoint()<=500) throw new TargetNotFoundException("보유 포인트가 부족합니다");
+		
+		// 포인트 사용 기록
+		PointUseDto pointUseDto = new PointUseDto();
+		pointUseDto.setUseNo(pointUseDao.sequence()); // 시퀀스 생성해서 저장
+		pointUseDto.setUseId(loginId);
+		pointUseDto.setUseType("소모임 생성권");
+		pointUseDao.insert(pointUseDto);
+		
+		// 포인트 사용시 포인트 갱신
+		memberService.refreshMemberPoint(loginId);
+		
+		//권한 부여
+		memberDao.updateMemberAuthority(loginId);
+		return "redirect:/";
 	}
 	
 	
