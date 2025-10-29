@@ -235,7 +235,7 @@
   </div>
 
   <!-- 선호 지역 -->
-  <div class="section-title mt-50">선호하는 지역</div>
+  <div class="section-title mt-50">활동 지역</div>
   <div class="table-wrapper">
     <table>
       <thead>
