@@ -54,6 +54,19 @@ public class MemberRegionDao {
 		return jdbcTemplate.query(sql, memberRegionListMapper, params);
 	}
 	
+	/// 한가지만 조회
+	public MemberRegionListVO selectOne(String memberId) {
+		String sql = "select * from member_region_list "
+				+ "where member_id=? "
+			+ "order by region_no asc";
+		Object[] params = {memberId};
+		List<MemberRegionListVO> list = jdbcTemplate.query(sql, memberRegionListMapper, params);
+		return list.isEmpty() ? null : list.get(0);
+	}
+	
+
+	
+	
 	//id와 regionType으로 조회
 	public MemberRegionDto selectRegion(String memberId, String regionType) {
 		String sql = "select * from member_region "
