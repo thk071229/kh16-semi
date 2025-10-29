@@ -203,7 +203,7 @@ $(function(){
     // 템플릿 텍스트 미리 읽기
     const level1TemplateText = $("#region-level1-template").text();
     const level2TemplateText = $("#region-level2-template").text();
-
+    
     // --- 1단계 지역 목록 로드 함수 ---
     function loadRegionLevel1(){
         $.ajax({

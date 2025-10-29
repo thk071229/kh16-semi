@@ -52,8 +52,8 @@
 						$(html).find(".reply-content").text(reply.replyContent);//댓글 내용 교체
 						
 						//var wtime = moment(reply.replyWtime).format("YYYY-MM-DD HH:mm:ss");//wtime의 표시형태만 변경
-						var wtime = moment(reply.replyWtime).fromNow();//상대적 시각
-						$(html).find(".reply-time").text(wtime);//작성 시각 교체
+						var wtime = moment(reply.replyWtime).fromNow();// 상대적 시각
+						$(html).find(".reply-time").text(wtime);
 						if (reply.replyEtime != null){
 							$(html).find(".reply-edited").show();
 						}

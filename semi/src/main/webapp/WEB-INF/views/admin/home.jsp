@@ -93,7 +93,8 @@
 		</table>
 	</div>
 	<!-- 차트 영역 -->
-
+	<jsp:include page="/WEB-INF/views/admin/stat/chart.jsp"></jsp:include>	
+		
 </div>
 <!-- footer -->
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>	

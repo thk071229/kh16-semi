@@ -120,8 +120,15 @@
         }
         
 </style>
-
-
+<!-- 리스트 최신화를 위한 event -->
+<script type="text/javascript">
+window.addEventListener('pageshow', function(event) {
+    // 브라우저가 history 탐색으로 페이지를 불러왔을 때
+    if (event.persisted || performance.getEntriesByType("navigation")[0].type === "back_forward") {
+        location.reload();
+    }
+});
+</script>
 <div class="container w-700">
 <div class="cell mt-20 mb-20">
 	<label class="club-title">${clubDto.clubName} 의 게시판</label>

@@ -83,7 +83,7 @@ public class AdminStatRestController {
 		}
 		//ChartVO의 형태로 반환
 		return ChartVO.builder()
-						.subject("지역 별 모임 수")
+						.subject("지역 별 정모 수")
 						.type("doughnut")
 						.labels(labels)
 						.data(data)
@@ -106,7 +106,7 @@ public class AdminStatRestController {
 		}
 		//ChartVO의 형태로 반환
 		return ChartVO.builder()
-						.subject("지역 별 모임 수")
+						.subject("지역 별 정모 수")
 						.type("doughnut")
 						.labels(labels)
 						.data(data)

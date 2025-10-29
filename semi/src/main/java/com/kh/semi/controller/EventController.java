@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.semi.dao.ClubDao;
 import com.kh.semi.dao.ClubMemberDao;
 import com.kh.semi.dao.EventDao;
+import com.kh.semi.dto.ClubMemberDto;
 import com.kh.semi.dto.EventDto;
 import com.kh.semi.error.TargetNotFoundException;
 import com.kh.semi.service.AttachmentService;
@@ -101,34 +102,29 @@ public class EventController {
 	public String list(Model model,@RequestParam int clubNo, @ModelAttribute PageVO pageVO) {
 		List<EventListVO> eventDto = eventDao.selectListWithPaging(clubNo, pageVO);
 		if(eventDto==null) throw new TargetNotFoundException("존재하지 않는 소모임");
-		List<EventListVO> beforeDto = eventDao.selectListBefore(clubNo);
-		List<EventListVO> afterDto = eventDao.selectListAfter(clubNo);
 		
-		// PageVO 세팅 + 부모 파라미터 세팅
-		pageVO.putParentParams("clubNo", clubNo);
-		int dataCount = eventDao.count(pageVO, clubNo);
-		pageVO.setDataCount(dataCount);
-		
-		
-		// 클럽리스트를 불러와서 거기서 클럽 regionName을 추출
 		ClubListVO clubList = clubDao.selectOneFromClubList(clubNo);
 		model.addAttribute("clubRegionName",clubList.getRegionName());
-		
+		model.addAttribute("dataCount", pageVO.getDataCount());
 		model.addAttribute("clubNo",clubNo);
-		model.addAttribute("eventDto", eventDto);	
-		model.addAttribute("beforeDto", beforeDto);		
-		model.addAttribute("afterDto", afterDto);		
-		return "/WEB-INF/views/event/list.jsp";
+		return "/WEB-INF/views/event/list-more.jsp";
 	}
 	
 	
 	// 정모게시글 상세
 	@RequestMapping("/detail")
-	public String detail(Model model, @RequestParam int eventNo) {
+	public String detail(Model model, @RequestParam int eventNo, HttpSession session) {
 		EventDto eventDto = eventDao.selectOne(eventNo);
 		if(eventDto==null) throw new TargetNotFoundException("존재하지 않는 이벤트번호");
 		List<EventAttendeeListVO> eventAttendeeListVO = eventDao.selectListWithEvent(eventNo);
 		EventListVO eventListVO = eventDao.selectOneWithWriter(eventDto.getEventWriter());
+		
+		String loginId = (String) session.getAttribute("loginId");
+		//모임 가입 멤버 추출
+		ClubMemberDto clubMemberDto = clubMemberDao.selectByClubMember(eventDto.getEventClub(), loginId);
+		boolean isClubMember = loginId != null && clubMemberDto != null;
+		model.addAttribute("isClubMember", isClubMember);
+		
 		model.addAttribute("eventAttendeeListVO", eventAttendeeListVO);
 		model.addAttribute("eventListVO", eventListVO);
 		model.addAttribute("eventDto", eventDto);

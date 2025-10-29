@@ -3,7 +3,6 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
 <style>
 /* 추천 목록 그리드 (항상 4열로 강제) */
 .grid {
@@ -26,12 +25,10 @@
 }
 </style>
 <jsp:include page="/WEB-INF/views/template/main-header.jsp"></jsp:include>
-
 <%-- js 파일을 불러와 소모임에 토글 기능 추가 --%>
 <c:if test="${sessionScope.loginId != null && sessionScope.loginLevel != '관리자'}">
 <script type="text/javascript" src="/js/club-like.js"></script>
 </c:if>	
-
 <%-- clubLikeList-ajax 코드가 들어갈 js --%>
 <script type="text/javascript">
 	$(function(){});
@@ -68,14 +65,63 @@
 	<h1>메인 페이지</h1>
 	<h2>소모임 - 우리동네 취미 모임</h2>
 	<h4>소개글</h4>
-<label>
+<label class="text-wrapper">
 <i class="fa-solid fa-location-dot"></i>
-서울시 강남구(header에 있는 button-span value 불러오기) 근처 모임
+<span class="location">지역 이름</span> 근처 모임
 </label>
 
 <%-- 찜이 많은 소모임 --%>
 <div class="header"> <%-- 제목과 '더보기' 링크를 위한 레이아웃 --%>
         <h3>⭐ 찜이 많은 소모임 ⭐</h3>
+        <a href="/club/list" class="link">더보기 &gt;</a> <%-- 더보기 링크 --%>
+</div>
+<div class="grid mt-20"> <%-- 카드 목록 그리드 (CSS에서 4열로 설정 필요) --%>
+        <c:forEach var="likeCountVO" items="${clubLikeCountVO}">
+            <div class="card"> 
+                <div> <%-- 이미지 영역 --%>
+                    <c:choose>
+                        <c:when test="${not empty likeCountVO.clubProfile}">
+   						 	<img src="/attachment/download?attachmentNo=${likeCountVO.clubProfile}" alt="${likeCountVO.clubName}" 
+    						onerror="this.onerror=null; this.src='/images/error/no-image.png';"
+    						style="width:100%; height:auto; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--radius-sm) var(--radius-sm) 0 0;">
+						</c:when>
+                        <c:otherwise>
+                            <img src="/images/error/no-image.png" alt="기본 이미지" 
+                            style="width:100%; height:auto; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--radius-sm) var(--radius-sm) 0 0;">
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+                
+                <div class="v-stack" style="padding: 16px;"> <%-- 내용을 위한 세로 스택 + 카드 내부 패딩 --%>
+                    <h4 style="margin: 4px 0 8px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${likeCountVO.clubName}</h4>
+                    <div class="kicker"> <%-- 작은 텍스트 스타일 (지역 | 카테고리) --%>
+                        <span class="region-name">
+                        ${likeCountVO.regionName}
+                        </span>
+                    </div>
+                    <div class="kicker">
+                    	<span>${likeCountVO.categoryName}</span>
+                    </div>
+                    <div class="kicker">
+                    	<span>회원수:${likeCountVO.memberCount}</span> | <span>정모 ${likeCountVO.eventCount}</span>
+                    </div>
+                    <div class="h-stack like-area" data-club-no="${likeCountVO.clubNo}">
+                        <span class="ms-10 like-count">
+                        <i class="fa-regular fa-heart red toggle-like"></i>
+                        <span class="like-count-value">${likeCountVO.clubLike}</span> <%-- '개' 글자 span 안으로 이동 --%>
+                        </span>
+                    </div>
+                    <a href="/club/home?clubNo=${likeCountVO.clubNo}" class="btn btn-ghost mt-10">자세히 보기</a>
+                </div>
+            </div>
+        </c:forEach>
+        </div>
+    	<div class="cell center mt-20 mb-20">
+			<jsp:include page="/WEB-INF/views/template/pagination-num-board.jsp"></jsp:include>	
+		</div>
+		
+<div class="header"> <%-- 제목과 '더보기' 링크를 위한 레이아웃 --%>
+        <h3>⭐ 활동이 활발한 모임 (이벤트) ⭐</h3>
         <a href="/club/list" class="link">더보기 &gt;</a> <%-- 더보기 링크 --%>
 </div>
 
@@ -121,54 +167,6 @@
             </div>
         </c:forEach>
     </div>
-    
-    	<div class="cell center mt-20 mb-20">
-			<jsp:include page="/WEB-INF/views/template/pagination-num-board.jsp"></jsp:include>	
-		</div>
-		
-<div class="header"> <%-- 제목과 '더보기' 링크를 위한 레이아웃 --%>
-        <h3>⭐ 활동이 활발한 모임 (이벤트) ⭐</h3>
-        <a href="/club/list" class="link">더보기 &gt;</a> <%-- 더보기 링크 --%>
-</div>
-
-<div class="grid mt-20">
-	
-	<c:forEach var="eventCountVO" items="${clubEventCountVO}" varStatus="status">
-			<div class="card">
-				<div> <%-- 이미지 영역 --%>
-                    <c:choose>
-                        <c:when test="${not empty eventCountVO.clubProfile}">
-                            <img src="/attachment/download?attachmentNo=${eventCountVO.clubProfile}" alt="${eventCountVO.clubName}" 
-                            onerror="this.onerror=null; this.src='/images/error/no-image.png';" style="width:100%; height:auto; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--radius-sm) var(--radius-sm) 0 0;">
-                        </c:when>
-                        <c:otherwise>
-                            <img src="/images/error/no-image.png" alt="기본 이미지" style="width:100%; height:auto; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--radius-sm) var(--radius-sm) 0 0;">
-                        </c:otherwise>
-                    </c:choose>
-                </div>
-                <div class="v-stack" style="padding: 16px;"> <%-- [수정] center 클래스 제거, v-stack만 사용 --%>
-                    <h4 style="margin: 4px 0 8px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${eventCountVO.clubName}</h4>
-                    <div class="kicker">
-                        <span class="region-name">${eventCountVO.regionName}</span>
-                    </div>
-                    <div class="kicker">
-                        <span>${eventCountVO.categoryName}</span>
-                    </div>
-                    <div class="kicker">
-                        <span> 멤버 ${eventCountVO.memberCount}</span> | <span>정모 ${eventCountVO.eventCount}</span>
-                    </div>
-                    <div class="h-stack like-area" data-club-no="${eventCountVO.clubNo}">
-                        <span class="ms-10 like-count">
-                        <i class="fa-regular fa-heart red toggle-like"></i>
-                        <span class="like-count-value">${eventCountVO.clubLike}</span> <%-- '개' 글자 span 안으로 이동 --%>
-                        </span>
-                    </div>
-                    <a href="/club/home?clubNo=${eventCountVO.clubNo}" class="btn btn-ghost mt-10">자세히 보기</a>
-                </div>
-            </div> <%-- card 닫기 --%>
-		</c:forEach>
-
-	</div> <%-- grid 닫기 --%>
 		<div class="cell center mt-20 mb-20">
 			<jsp:include page="/WEB-INF/views/template/pagination-num-event.jsp"></jsp:include>	
 		</div>

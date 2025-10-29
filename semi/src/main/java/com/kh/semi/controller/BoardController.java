@@ -55,12 +55,17 @@ public class BoardController {
 	
 	//게시글 등록 매핑
 	@GetMapping("/write")
-	public String write(@RequestParam int clubNo, Model model) {
+	public String write(@RequestParam int clubNo, Model model, HttpSession session) {
 		//clubNo 존재여부 검증 코드 추가
 		ClubDto clubDto = clubDao.selectOne(clubNo);
 		if(clubDto == null){
 		 throw new TargetNotFoundException("존재하지 않는 모임입니다");
 		}
+		String loginId = (String) session.getAttribute("loginId");
+		String clubLeader = clubDto.getClubLeader();
+		
+		model.addAttribute("clubLeader", clubLeader);
+		
 		model.addAttribute("clubNo", clubNo);
 		return "/WEB-INF/views/board/write.jsp";
 	}
@@ -75,6 +80,7 @@ public class BoardController {
 		boardDto.setBoardClub(clubNo);
 		
 		boardDao.insert(boardDto);
+		
 		memberService.refreshMemberPoint(loginId);
 		return "redirect:detail?boardNo="+boardNo;
 	}
@@ -146,14 +152,18 @@ public class BoardController {
 	@GetMapping("/edit")
 	public String edit(@RequestParam int boardNo, Model model) {
 		BoardDto boardDto = boardDao.selectOne(boardNo);
-		if(boardDto == null) throw new TargetNotFoundException("존재하지 않는 게시글"); //임시 Exception --> 추후 TargetNotfoundException + error 페이지 만들어서 수정
+		if(boardDto == null) throw new TargetNotFoundException("존재하지 않는 게시글");
 		model.addAttribute("boardDto", boardDto);
+		//모임장 정보 추출
+		ClubDto clubDto = clubDao.selectOne(boardDto.getBoardClub());
+		String clubLeader = clubDto.getClubLeader();
+		model.addAttribute("clubLeader", clubLeader);
 		return "/WEB-INF/views/board/edit.jsp";
 	}
 
 	//변경된 수정 처리 매핑
 		@PostMapping("/edit")
-		public String edit(@ModelAttribute BoardDto boardDto, @RequestParam long boardNo) {
+		public String edit(@ModelAttribute BoardDto boardDto, @RequestParam int boardNo) {
 			//기존 글 정보 조회
 			BoardDto beforeDto = boardDao.selectOne(boardDto.getBoardNo());
 			if(beforeDto == null) throw new TargetNotFoundException("존재하지 않는 게시글");

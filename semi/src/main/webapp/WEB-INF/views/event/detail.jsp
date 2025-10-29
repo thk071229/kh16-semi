@@ -9,7 +9,18 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <!-- kakaomap cdn  -->
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8e8665a62573621467f321f74eb7cae4&libraries=services"></script>
-
+<script type="text/javascript">
+	$(function () {
+		
+		$(".join").on("click", function (){
+		     if (confirm("모임에 가입하시고 정모에 참여해보세요!")) {
+		            var clubNo = "${eventDto.eventClub}";
+		            console.log("${eventDto.eventClub}");
+		            window.location.href = "/club/home?clubNo=" + clubNo;
+		        }
+		});
+	});
+</script>
 <!-- --------------------------------------------- -->
 <style>
 	.kakao-map {
@@ -32,7 +43,11 @@
 	  padding: 10px;
 	  text-align: center;
 	}
-
+	.not-club-member{
+		display:inline-block;
+		text-align: center;
+		width: 100%;
+	}
 
 </style>
 <!-- -------------------------------------- -->	
@@ -159,9 +174,11 @@
 				    	인원 : <span id="event-attendee-count">?</span> / ${eventDto.eventMaxPeople}
 					</div>
 				</div>
+				<c:if test="${sessionScope.loginId != null && isClubMember}">
 				<div class="cell float-right" >
 					<i id="event-attendee" class="fa-regular fa-square fa-2x "></i>
 				</div>
+				</c:if>
 			</div>	
 
 			
@@ -205,7 +222,11 @@
 			    </table>
 				<hr>
 			</div>
-
+			<div class="not-club-member">
+			<c:if test="${!isClubMember && sessionScope.loginId != null}">
+				<button type="button" class="btn btn-primary mt-20 join">모임 가입</button>
+			</c:if>
+			</div>
 	<div class="cell">
 		<div class="kakao-map w-100"></div>
 	</div>

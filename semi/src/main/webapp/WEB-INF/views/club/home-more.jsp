@@ -13,6 +13,7 @@
 		box-shadow: var(--shadow); 
 		border: 1px solid #eee;
 		height:50px;
+		width:150px;
 	}
 	.member-more {
 	  display: flex;
@@ -38,8 +39,8 @@
 $(function(){
 	var params = new URLSearchParams(location.search);
 	var clubNo = params.get("clubNo");
-	var size = 7;
-	var increase = 7;
+	var size = 5;
+	var increase = 5;
 	
 	//최초 목록 호출
 	loadList();
@@ -200,7 +201,11 @@ $(function(){
 	            	</a>
 	            </c:if>
 	        	
-	        	
+	        	<div class="button-wrapper">
+					<button type="button" class="btn-more member-more">
+						<span style="font-weight: 600; font-size: 15px;">멤버 더보기</span>
+					</button>
+				</div>
 				
         	</div>
 
@@ -208,12 +213,6 @@ $(function(){
         	<div class="flex-box mt-10 member-list-wrapper" style="flex-wrap: wrap; gap: 15px;">
         		<div>비어있음</div>
         	</div>
-        	
-        	<div class="button-wrapper">
-					<button type="button" class="btn-more member-more">
-						<span style="font-weight: 600; font-size: 15px;">멤버 더보기</span>
-					</button>
-				</div>
    
         </div>
         
