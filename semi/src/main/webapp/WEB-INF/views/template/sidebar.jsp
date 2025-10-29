@@ -16,7 +16,7 @@
             position:fixed;
             top:80px;
             left:20px;
-            bottom:0;
+            bottom:20px;
             z-index:999;
             width: 210px;
 			box-shadow: 0 4px 15px rgba(0,0,0,0.3); 
@@ -25,7 +25,7 @@
 		}
 		
         #toggle + .sidebar{
-            background-color: rgba(164, 224, 199);
+            background-color: rgb(164, 224, 199);
             position:fixed;
             top:0;
             left:0;
@@ -96,11 +96,11 @@
 						</div>
 						<div class="sidebar-in">
 							<div class="cell center">
-								<a href="/member/login">
+								<a class="btn btn-primary w-100" href="/member/login" style="box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
 								<i class="fa-solid fa-right-to-bracket"></i> <span>로그인</span></a>
 							</div>
 							<div class="cell center">
-									<a href="/member/join">
+									<a class="btn btn-common w-100" href="/member/join" style="box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
 									<i class="fa-solid fa-user-plus"></i> <span>회원가입</span></a>
 							</div>
 						</div>
@@ -148,12 +148,13 @@
 									<span>내 정보 보기</span>
 								</a>
 							</div>
+							<hr>
 							<div class="cell center">
-								<a class="sidebar-menu" href="/member/logout"> <i class="fa-solid fa-user"></i>
+								<a class="btn btn-accent w-100" href="/member/logout"> <i class="fa-solid fa-user"></i>
 									<span>로그아웃</span>
 								</a>
 							</div>
-							<hr>
+							
 
 						</div>
 					</c:otherwise>

@@ -14,8 +14,8 @@ public class MemberActiveVO {
 	private int memberBoardWrite;
 	private int memberPointUse;
 	
-	int eventImportance = 20; // 정모 참여시 가중치
-	int boardImportance = 5; // 게시글 작성시 가중치
+	int eventImportance = 100; // 정모 참여시 가중치
+	int boardImportance = 50; // 게시글 작성시 가중치
 	int PointUseImportance = -500; // 생성권 구매 가중치
 	
 	public int memberPoint() {
