@@ -210,15 +210,13 @@ public class ClubDao {
 						+ "instr(club_name, ?)>0 "
 						+ "or instr(region_name, ?)>0 "
 						+ "or instr(category_name, ?)>0 "
-						+ "or instr(region_depth1, ?)>0 "
-						+ "or instr(region_depth2, ?)>0 "
 						+ "order by club_no desc"
 					+ ")TMP "
 				+ ")where rn between ? and ?";
 		Object[] params = {
-				keyword, keyword, keyword, keyword, keyword, 
+				keyword, keyword, keyword,
 				pageVO.getBegin(), pageVO.getEnd()
-				};
+			};
 		return jdbcTemplate.query(sql, clubCountMapper, params);
 	}
 	public int searchResultCount(String keyword) {
@@ -227,10 +225,8 @@ public class ClubDao {
 							+ "instr(club_name, ?)>0 "
 							+ "or instr(region_name, ?)>0 "
 							+ "or instr(category_name, ?)>0 "
-							+ "or instr(region_depth1, ?)>0 "
-							+ "or instr(region_depth2, ?)>0 "
 						+ "order by club_no desc";
-		Object[] params = {keyword, keyword, keyword, keyword, keyword};
+		Object[] params = {keyword, keyword, keyword};
 		return jdbcTemplate.queryForObject(sql, int.class, params);
 	}
 	
