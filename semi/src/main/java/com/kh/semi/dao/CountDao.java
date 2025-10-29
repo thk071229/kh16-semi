@@ -59,7 +59,7 @@ public class CountDao {
 			String sql = "select * from ("
 					+ "select rownum rn, TMP.* from ("
 					+ "select * from club_count "
-					+ "where club_like > 0 and region_depth1 = ? and region_depth = ? "
+					+ "where club_like > 0 and region_depth1 = ? and region_depth2 = ? "
 					+ "order by club_like desc"
 					+ ")TMP "
 					+ ")where rn between ? and ?";
@@ -84,7 +84,7 @@ public class CountDao {
 			String sql = "select * from ("
 					+ "select rownum rn, TMP.* from ("
 					+ "select * from club_count "
-					+ "where event_count > 0 and region_depth1 = ? and region_depth = ? "
+					+ "where event_count > 0 and region_depth1 = ? and region_depth2 = ? "
 					+ "order by event_count desc"
 					+ ")TMP "
 					+ ")where rn between ? and ?";
@@ -109,7 +109,7 @@ public class CountDao {
 			String sql = "select * from ("
 					+ "select rownum rn, TMP.* from ("
 					+ "select * from club_count "
-					+ "where board_count > 0 and region_depth1 = ? and region_depth = ? "
+					+ "where board_count > 0 and region_depth1 = ? and region_depth2 = ? "
 					+ "order by club_like desc"
 					+ ")TMP "
 					+ ")where rn between ? and ?";
