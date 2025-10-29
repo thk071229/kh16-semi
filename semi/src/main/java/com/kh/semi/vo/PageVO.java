@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 //페이징의 공통데이터를 필드와 메소드로 정리하고 PageVO를 전달
+
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 //롬복에서 data불러와서 setter,getter,constructor,toString 생성
 //설정해줘야 controller에서 클래스 자유롭게 사용 가능
@@ -31,10 +32,19 @@ public class PageVO {
 	private String regionDepth1;
 	private String regionDepth2;
 	
-	public boolean noRegion() {
-			return (regionDepth1 == null || regionDepth1.isEmpty())
-			|| (regionDepth2 == null || regionDepth2.isEmpty());
-	}
+	public String checkRegion() {
+		// Depth1만 채워져있을때
+		if((regionDepth1 != null && regionDepth1.isEmpty()==false) && (regionDepth2 == null || regionDepth2.isEmpty()))
+			return "Depth1";
+		// Depth1과 2가 모두 채워져있을때
+		else if((regionDepth1 != null && regionDepth1.isEmpty()==false) && (regionDepth2 != null && regionDepth2.isEmpty()==false)) {
+			return "Depth1Depth2";
+		} // 둘다 null일때
+		else {
+			return "empty";
+		}
+	};
+
 	
 	
 	
