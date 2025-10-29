@@ -74,7 +74,12 @@
         {
             display:block;         
         }
-
+	.sidebar-menu{
+		 font-size:15px;
+		 font-weight : 500;
+		 color: rgb(30, 77, 57);
+		 text-decoration: none;
+	}
     </style>
   
 
@@ -118,30 +123,31 @@
 								<hr>
 							</div>
 							<div class="cell ms-30">
-									<a href="/member/memberEvent">
+									<a class="sidebar-menu" href="/member/memberEvent">
 										<i class="fa-solid fa-arrow-right"></i> 
 										<span>참여한 정모 목록</span>
 									</a>
 								</div>
 								<div class="cell ms-30">
-									<a href="/member/memberBoard">
+									<a class="sidebar-menu" href="/member/memberBoard">
 										<i class="fa-solid fa-arrow-right"></i>
 										<span>작성한 게시글</span>
 									</a>
 								</div>
 							<div class="cell ms-30">
-								<a href="/member/memberLike">
+								<a class="sidebar-menu" href="/member/memberLike">
 									<i class="fa-solid fa-arrow-right"></i>
 									<span>좋아요한 게시글</span>
 								</a>
 							</div>
 							<div class="cell center">
-								<a href="/member/mypage"> <i class="fa-solid fa-gear"></i>
+								<a class="sidebar-menu" href="/member/mypage">
+								<i class="fa-solid fa-gear"></i>
 									<span>내 정보 보기</span>
 								</a>
 							</div>
 							<div class="cell center">
-								<a href="/member/logout"> <i class="fa-solid fa-user"></i>
+								<a class="sidebar-menu" href="/member/logout"> <i class="fa-solid fa-user"></i>
 									<span>로그아웃</span>
 								</a>
 							</div>
