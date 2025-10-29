@@ -47,109 +47,127 @@
 
 </style>
 
-    <style>
-  
-        /* (+) */
-        .dropdown-menu,
-        .dropdown-menu ul, 
-        .dropdown-menu li {
-            align-items: center;
-            justify-content: center;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
+<style>
+/* ========================================================= */
+/* 1. 기본 설정 및 목록 기호 제거 */
+/* ========================================================= */
 
-        /* 
-            .dropdown = ul
-            .collapse = li        
-        */
+.dropdown-menu2 {
+    position: relative;
+    /* nav의 Flex 흐름에서 독립적인 블록 요소로 동작 */
+    display: inline-block; 
+    margin: 0;
+    padding: 0;
+    list-style: none; /* 최상위 목록 기호 제거 */
+}
 
-        /* (1) */
-        .dropdown-menu ul {
-            display: none;
-        }
+/* 모든 하위 목록의 기호 및 마진/패딩 초기화 */
+.dropdown-menu2 ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
 
-        /* (2) */
-        .dropdown-menu {
-            display: flex;
-        }
+/* 1단계 항목 LI (Absolute 위치의 기준점) */
+.dropdown-menu2 > li {
+    position: relative; 
+    width: 150px; /* 상위 버튼 너비 */
+    list-style: none;
+}
 
-        /* (3) */
-        .dropdown-menu li:hover > ul {
-            display: block;
-        }
+/* --------------------------------------------------------- */
+/* 2. 1차 메뉴 (세로 1열) */
+/* --------------------------------------------------------- */
 
-        /* (4) */ 
-        .dropdown-menu li {
-            position: relative;
-        }
-        .dropdown-menu ul {
-            position: absolute;
-            top: 100%;
-            left: 0;
-        }
+/* 1차 메뉴 UL (#region-submenu-level1) */
+.dropdown-menu2 ul {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    
+    /* 1차 메뉴 스타일: 세로 1열로 길게 */
+    max-height: none; 
+    width: 150px; /* 1차 메뉴 폭 고정 */
+    column-count: 1; /* 1열 강제 */
+    
+    /* 디자인 */
+    background: var(--bg);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(35,50,56,0.05);
+    padding: 5px 0; 
+}
 
-        /* (5) */
-        .dropdown-menu li {
-            width: 130px;
-        }
-        .dropdown-menu a {
-            text-decoration: none;
-            color: var(--subtle);
-            border-radius: 8px;
-            display: block;
-            width: 100%; /* a 태그 뿐만 아니라 블럭을 눌러도 클릭이 되도록 처리 */
-            padding: 0.25em 0.5em;
-            transition: background 0.2s ease;
-            font-weight: 600;
-            font-size: 14px;
-            align-items: center;
-            justify-content: center;               /* width: 100%는 display가 block일 경우에만 가능    */
-            
-        }
-        .dropdown-menu a:hover {
-           background: var(--muted);
-            color: var(--ink);
-        }
-        .dropdown-menu ul {
-            width: 100%;
-        }
+/* --------------------------------------------------------- */
+/* 3. 2차 메뉴 (Multi-Column 3열 및 위치) */
+/* --------------------------------------------------------- */
 
-        /* (6) */
-        /* dropdown-menu > .dropdown > .collapse .collapse */
-        .dropdown-menu > li li > ul {
-            top: 0;
-            left: 100%;
-        }
+/* 2단계 하위 UL (상위 LI 옆으로 펼쳐짐) */
+.dropdown-menu2 ul ul {
+    position: absolute;
+    top: 0; 
+    left: 100%; /* 1차 메뉴의 오른쪽 끝에 위치 */
+    z-index: 1001;
+    margin-left: 1px;
+    
+    /* ▼▼▼ [핵심] 2차 메뉴: 3열 Multi-Column 설정 ▼▼▼ */
+    max-height: 400px; /* 10개 항목 높이 */
+    width: 450px; /* 3열(150px * 3) 너비 확보 */
+    column-count: 3; /* 3열 강제 */
+    column-gap: 10px; 
+    
+    /* 디자인 */
+    background: var(--muted); 
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow);
+    padding: 5px;
+}
 
-        /* (7) div 대신 li로 divdier를 만들어서 적용 */
-        .dropdown-menu > .divider {
-            margin-left: auto;
-            margin-right: auto;
-        }
+/* hover 시 하위 메뉴 표시 */
+.dropdown-menu2 li:hover > ul {
+    display: block;
+}
 
-        /* (8) */
-        .dropdown-menu > .divider ~ li li > ul {
-            top: 0;
-            left: auto;
-            right: 100%;
-        }
-        
-        .dropdown-menu,
-        .dropdown-menu ul {
-           background: var(--muted); 
-           border-radius: 8px;
-           box-shadow: 0 2px 5px rgba(0,0,0,0.15);
-           text-align: center;
-           color: var(--subtle);
-        }
+/* --------------------------------------------------------- */
+/* 4. 항목 및 링크 공통 스타일 */
+/* --------------------------------------------------------- */
 
-        .dropdown-menu ul > a:hover{
-               background: var(--muted);
-            color: var(--ink); 
-        }
-    </style>
+/* 모든 LI 항목 */
+.dropdown-menu2 li {
+    padding: 0; 
+    margin: 0;
+}
+
+/* 모든 A 태그 (폰트, 색상, 패딩) */
+.dropdown-menu2 a {
+    text-decoration: none;
+    color: var(--subtle);
+    display: flex; 
+    align-items: center;
+    justify-content: flex-start;
+    padding: 6px 8px; /* 항목별 패딩 */
+    font-size: 14px;
+    font-weight: 600;
+    width: 100%;
+    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+    border-radius: 4px;
+}
+
+/* hover 시 색상 */
+.dropdown-menu2 a:hover {
+    background: var(--muted);
+    color: var(--ink);
+}
+
+/* 2차 메뉴 hover 시 배경 강조 (3열 전체에 적용) */
+.dropdown-menu2 ul ul a:hover {
+    background: rgba(127,200,169,0.2); 
+    color: var(--primary-600);
+}
+</style>
+
 
 <script type="text/javascript">
 $("#searchBtn").on("click", function() {
@@ -298,7 +316,7 @@ $(function(){
 </script>
 
 
-<div class="container w-100">
+<div class="container">
     <header class="header">
         <a class="brand" href="/">
         <!-- 로고 이미지 -->
@@ -309,30 +327,10 @@ $(function(){
         </div>
         </a>
         <!-- 헤더 내 검색 영역 -->
-		<div class="header-search">
-<%-- 			<div class="region-select-bar">
-			<div class="first-select-list">
-				<!-- 추후 드롭다운으로 구현 -->
-				<select id="first-option">
-				<option value = "">지역 선택</option>
-					<!-- region_depth1의 값을 선택 -->
-					<c:forEach var="depth1" items="${firstDepthList}">
-					<option value = "${depth1}">
-					${depth1}
-					</option>
-					</c:forEach>
-				</select>
-				<select id = "second-option">
-					<!-- region_depth2의 값을 선택 -->
-					<c:forEach var = "depth2" items = "${secondDepthList}">
-					<option value = "depth2">
-					${depth2}
-					</option>
-					</c:forEach>
-				</select>
-			</div>
-			</div> --%>
-			<ul class="dropdown-menu">
+		<div class="cell right">
+			<div class="flex-box">
+			<div class="flex-fill">
+			<ul class="dropdown-menu2">
 		       <li>
 		           <a href="#"> <%-- 최상위 링크 비활성화 --%>
 		               <i class="fa-solid fa-map-location-dot"></i>
@@ -342,7 +340,8 @@ $(function(){
 		           <ul id="region-submenu-level1"></ul>
 		       </li>
 		    </ul>
-			<div class="keyword-search">
+		</div>
+			
 		  <form action="/search" method="get" id="searchForm" autocomplete="off">
 		    <input
 		      type="text"
@@ -355,7 +354,8 @@ $(function(){
 		    <button type="submit" id="searchBtn" class="search-btn">검색</button>
 		  </form>
 		  </div>
-		</div>
+		  </div>
+		
 
     </header>  
 <!-- 상단 메뉴 -->
