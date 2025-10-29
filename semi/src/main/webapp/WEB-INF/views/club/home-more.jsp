@@ -191,15 +191,16 @@ $(function(){
         
 		<%-- 회원 목록 --%>
         <div class="cell mt-30">
+        
         	<div class="header"> 
 	            <h2 class="flex-fill" style="margin:0;">모인 멤버 (${memberList.size()}명)</h2>
-	            
+	            <c:if test = "${loginId == clubDto.clubLeader}">
+	            	<a href="/clubMember/list?clubNo=${clubDto.clubNo}" class ="link">
+	            		<i class="fa-solid fa-users me-5"></i> 멤버관리
+	            	</a>
+	            </c:if>
 	        	
-	        	<div class="button-wrapper">
-					<button type="button" class="btn-more member-more">
-						<span style="font-weight: 600; font-size: 15px;">멤버 더보기</span>
-					</button>
-				</div>
+	        	
 				
         	</div>
 
@@ -207,8 +208,15 @@ $(function(){
         	<div class="flex-box mt-10 member-list-wrapper" style="flex-wrap: wrap; gap: 15px;">
         		<div>비어있음</div>
         	</div>
+        	
+        	<div class="button-wrapper">
+					<button type="button" class="btn-more member-more">
+						<span style="font-weight: 600; font-size: 15px;">멤버 더보기</span>
+					</button>
+				</div>
    
         </div>
+        
          <hr class="mt-30 mb-30">
 
         <%-- 가입/탈퇴 버튼 --%>

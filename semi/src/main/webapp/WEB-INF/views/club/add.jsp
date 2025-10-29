@@ -25,13 +25,11 @@ $(function () {
     $("[name=clubName]").on("blur", function () {
         var value = $(this).val();
         var trimmedValue = value.trim();
-        // 한글, 영문, 숫자, 공백 포함 패턴 (중간 공백 허용)
-        var regex = /^[가-힣a-zA-Z0-9 ]*$/;
         
-        // 2~6자 길이 체크
-        var lengthValid = trimmedValue.length >= 2 && trimmedValue.length <= 6;
-        var patternValid = regex.test(value);
-        var valid = patternValid && lengthValid;
+        // 2글자 이상
+        var lengthValid = trimmedValue.length > 1 && trimmedValue.length <= 100;
+        
+        var valid =  lengthValid;
         
         $(this).removeClass("success fail");
         
@@ -135,14 +133,15 @@ $(function () {
         });
     });
     // 모임 생성 시 표시
-    $(".authority-check").on("click", function(e){
-    	var authority = $(this).data("authority")
+//     $(".authority-check").on("click", function(e){
+//     	var authority = $(this).data("authority")
     	
-    	if(authority == 'n'){
-    		e.preventDefault();
-    		window.alert("모임 생성 권한이 없습니다");
-    	}
-    });
+//     	if(authority == 'n'){
+//     		e.preventDefault();
+//     		window.alert("모임 생성 권한이 없습니다");
+//     	}
+//     });
+    
 });
 </script>
 <div class="container w-600">
@@ -157,9 +156,9 @@ $(function () {
 
             <div class="cell">
             	<label>모임 이름<i class="fa-solid fa-asterisk red ms-5"></i></label>
-                <input class="input w-100" type="text" name="clubName" placeholder="한글, 영문, 숫자 포함 2~6글자">
+                <input class="input w-100" type="text" name="clubName" placeholder="모임 이름">
                 <div class="success-feedback w-100">올바른 이름 형식입니다</div>
-                <div class="fail-feedback w-100">이름은 한글, 숫자, 영문, 공백 포함 2~6글자로 작성해주세요</div>
+                <div class="fail-feedback w-100">이름은 2자 이상 30자 이내로 작성해주세요</div>
             </div>
 
             <div class="cell">

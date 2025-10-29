@@ -96,6 +96,7 @@
                         </c:otherwise>
                     </c:choose>
                 </div>
+                
                 <div class="v-stack" style="padding: 16px;"> <%-- 내용을 위한 세로 스택 + 카드 내부 패딩 --%>
                     <h4 style="margin: 4px 0 8px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${likeCountVO.clubName}</h4>
                     <div class="kicker"> <%-- 작은 텍스트 스타일 (지역 | 카테고리) --%>
@@ -120,14 +121,17 @@
             </div>
         </c:forEach>
     </div>
+    
     	<div class="cell center mt-20 mb-20">
 			<jsp:include page="/WEB-INF/views/template/pagination-num-board.jsp"></jsp:include>	
 		</div>
+		
 <div class="header"> <%-- 제목과 '더보기' 링크를 위한 레이아웃 --%>
         <h3>⭐ 활동이 활발한 모임 (이벤트) ⭐</h3>
         <a href="/club/list" class="link">더보기 &gt;</a> <%-- 더보기 링크 --%>
 </div>
-	<div class="grid mt-20">
+
+<div class="grid mt-20">
 	
 	<c:forEach var="eventCountVO" items="${clubEventCountVO}" varStatus="status">
 			<div class="card">
