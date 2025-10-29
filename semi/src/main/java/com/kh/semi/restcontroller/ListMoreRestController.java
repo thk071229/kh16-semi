@@ -93,7 +93,7 @@ public class ListMoreRestController {
 	
 	//전체 모임 리스트
 	@PostMapping("/club")
-	public Map<String, Object> clubMore(PageVO pageVO){
+	public Map<String, Object> clubMore(@ModelAttribute PageVO pageVO){
 
 		pageVO.setDataCount(clubDao.count(pageVO));
 		
@@ -119,37 +119,6 @@ public class ListMoreRestController {
 		result.put("list", list);
 		result.put("hasMore", pageVO.hasMore());
 		
-		return result;
-	}
-	//추천 모임 리스트
-	@PostMapping("/recommendClub")
-	public Map<String, Object> clubLikeMore(PageVO pageVO){
-		pageVO.setDataCount(clubDao.countByClubLike(pageVO));
-		
-		List<ClubListVO> clubLikeList = clubDao.selectClubListOrderByLikesWithPaging(pageVO);
-		
-		List<ClubListVO> list = new ArrayList<>();
-		
-		for(ClubListVO clubListVO : clubLikeList) {
-			list.add(ClubListVO.builder()
-					.clubNo(clubListVO.getClubNo())
-					.clubName(clubListVO.getClubName())
-					.clubCategory(clubListVO.getClubCategory())
-					.clubIntroduce(clubListVO.getClubIntroduce())
-					.clubLeader(clubListVO.getClubLeader())
-					.clubLike(clubListVO.getClubLike())
-					.clubProfile(clubListVO.getClubProfile())
-					.clubRegion(clubListVO.getClubRegion())
-					.memberCount(clubListVO.getMemberCount())
-					.regionName(clubListVO.getRegionName())
-					.categoryName(clubListVO.getCategoryName())
-					.build());
-			
-		}
-		
-		Map<String, Object> result = new HashMap<>();
-		result.put("list", list);
-		result.put("hasMore", pageVO.hasMore());
 		return result;
 	}
 	//모임 회원 목록 페이징
