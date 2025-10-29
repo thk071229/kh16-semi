@@ -47,118 +47,109 @@
 
 </style>
 
-<style>
-.dropdown-menu {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
+    <style>
+  
+        /* (+) */
+        .dropdown-menu,
+        .dropdown-menu ul, 
+        .dropdown-menu li {
+            align-items: center;
+            justify-content: center;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
 
-/* 드롭다운 상위 항목 (카테고리 버튼) — 다른 메뉴와 동일한 높이감 */
-.dropdown-menu > li > a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  color: var(--subtle);
-  padding: 8px 10px;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 14px;
-  transition: background 0.2s ease;
-}
+        /* 
+            .dropdown = ul
+            .collapse = li        
+        */
 
-.dropdown-menu > li > a:hover {
-  background: var(--muted);
-  color: var(--ink);
-}
+        /* (1) */
+        .dropdown-menu ul {
+            display: none;
+        }
 
-/* 하위 메뉴 (드롭다운 목록) */
-.dropdown-menu ul {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 50%; /* 가운데 정렬 */
-  transform: translateX(-50%);
-  background: var(--muted);
-  list-style: none;
-  margin: 0;
-  padding: 5px 0;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
-  z-index: 1000;
-  min-width: 130px;
-  text-align: center;
-}
+        /* (2) */
+        .dropdown-menu {
+            display: flex;
+        }
 
-/* hover 시 하위 메뉴 표시 */
-.dropdown-menu li:hover > ul {
-  display: block;
-}
+        /* (3) */
+        .dropdown-menu li:hover > ul {
+            display: block;
+        }
 
-/* 하위 메뉴 항목 스타일 */
-.dropdown-menu ul li a {
-  display: block;
-  padding: 8px 10px;
-  color: var(--subtle);
-  text-decoration: none;
-  border-radius: 0;
-}
+        /* (4) */ 
+        .dropdown-menu li {
+            position: relative;
+        }
+        .dropdown-menu ul {
+            position: absolute;
+            top: 100%;
+            left: 0;
+        }
 
-.dropdown-menu ul li a:hover {
-  background:var(--muted); 
-  color:var(--ink)
-}
+        /* (5) */
+        .dropdown-menu li {
+            width: 130px;
+        }
+        .dropdown-menu a {
+            text-decoration: none;
+            color: var(--subtle);
+            border-radius: 8px;
+            display: block;
+            width: 100%; /* a 태그 뿐만 아니라 블럭을 눌러도 클릭이 되도록 처리 */
+            padding: 0.25em 0.5em;
+            transition: background 0.2s ease;
+            font-weight: 600;
+            font-size: 14px;
+            align-items: center;
+            justify-content: center;               /* width: 100%는 display가 block일 경우에만 가능    */
+            
+        }
+        .dropdown-menu a:hover {
+           background: var(--muted);
+            color: var(--ink);
+        }
+        .dropdown-menu ul {
+            width: 100%;
+        }
 
-.dropdown-menu { /* 기본 구조 확인 */
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.dropdown-menu > li { position: relative; }
-.dropdown-menu > li > a { display: flex; /* ... 기타 스타일 ... */ }
-.dropdown-menu ul { /* 1단계 하위 메뉴 */
-  display: none; position: absolute; top: 100%; left: 0; /* 왼쪽 정렬 */
-  transform: none; /* transform 제거 */
-  background: var(--muted); list-style: none; margin: 0; padding: 5px 0;
-  border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.15); z-index: 1000;
-  min-width: 150px; text-align: left; border: 1px solid rgba(35,50,56,0.05);
-}
-.dropdown-menu li:hover > ul { display: block; }
-.dropdown-menu ul li { width: 100%; }
-.dropdown-menu ul li a { display: block; padding: 8px 12px; color: var(--subtle); text-decoration: none; text-align: left; }
-.dropdown-menu ul li a:hover { background:var(--muted); color:var(--ink); }
+        /* (6) */
+        /* dropdown-menu > .dropdown > .collapse .collapse */
+        .dropdown-menu > li li > ul {
+            top: 0;
+            left: 100%;
+        }
 
-/* ▼▼▼ 2단계 메뉴 스타일 추가 ▼▼▼ */
-.dropdown-menu ul ul { /* 2단계 하위 메뉴 */
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 100%; /* 부모 li 오른쪽에 위치 */
-    margin-left: 1px; /* 약간의 간격 (선택 사항) */
-    
-    /* 1단계와 유사한 디자인 상속 또는 재정의 */
-    background: var(--muted); 
-    min-width: 150px; 
-    padding: 5px 0;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
-    z-index: 1001; /* 1단계 위에 오도록 */
-    text-align: left;
-}
+        /* (7) div 대신 li로 divdier를 만들어서 적용 */
+        .dropdown-menu > .divider {
+            margin-left: auto;
+            margin-right: auto;
+        }
 
-.dropdown-menu ul li:hover > ul { /* 부모 li에 호버 시 2단계 메뉴 표시 */
-    display: block;
-}
-</style>
+        /* (8) */
+        .dropdown-menu > .divider ~ li li > ul {
+            top: 0;
+            left: auto;
+            right: 100%;
+        }
+        
+        .dropdown-menu,
+        .dropdown-menu ul {
+           background: var(--muted); 
+           border-radius: 8px;
+           box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+           text-align: center;
+           color: var(--subtle);
+        }
+
+        .dropdown-menu ul > a:hover{
+               background: var(--muted);
+            color: var(--ink); 
+        }
+    </style>
 
 <script type="text/javascript">
 $("#searchBtn").on("click", function() {
@@ -194,8 +185,6 @@ $(function(){
     // 템플릿 텍스트 미리 읽기
     const level1TemplateText = $("#region-level1-template").text();
     const level2TemplateText = $("#region-level2-template").text();
-    // 클럽 목록 페이지 기본 URL
-    const targetBaseUrl = "/club/list"; // 실제 클럽 목록 URL로 변경 필요
 
     // --- 1단계 지역 목록 로드 함수 ---
     function loadRegionLevel1(){
@@ -287,7 +276,7 @@ $(function(){
         const depth1 = $(this).data("depth1");
         if (depth1) {
             // URL 생성 및 페이지 이동
-            location.href = `${targetBaseUrl}?regionDepth1=`+depth1;
+            location.href = `/?regionDepth1=`+depth1;
         }
     });
 
@@ -299,7 +288,7 @@ $(function(){
         const depth2 = $(this).data("depth2");
         if (depth1 && depth2) {
             // URL 생성 및 페이지 이동
-            location.href = `${targetBaseUrl}?regionDepth1=`+depth1`&regionDepth2=`+depth2;
+            location.href = `/?regionDepth1=`+depth1+`&regionDepth2=`+depth2;
         }
     });
 
