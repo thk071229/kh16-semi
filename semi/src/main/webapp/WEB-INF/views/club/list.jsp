@@ -19,52 +19,10 @@
 
 <%-- 좋아요 관련 javaSciprt 코드 --%>
 
+<%-- js 파일을 불러와 소모임에 토글 기능 추가 --%>
 <c:if test="${sessionScope.loginId != null && sessionScope.loginLevel != '관리자'}">
-	<script type="text/javascript">
-		$(function(){
-			//먼저 clubNo를 가져올 수 있게 전체에서 검색
-			$(".grid").on("click",".club-like-btn",function(){
-				var $icon = $(this);//클릭된 아이콘 저장(jQuery 객체를 담고있다는 coding convention)
-				var $likeArea = $icon.closest(".club-like-area");
-				var clubNo = $likeArea.data("club-no");
-				var $countSpan = $likeArea.find(".like-count-value");
-				
-				if(!clubNo) return;
-				
-				$.ajax({
-					url:"/rest/club/action",
-					method:"post",
-					data:{clubNo : clubNo},
-					success:function(response){
-						$icon.removeClass("fa-regular fa-solid").addClass(response.like ? "fa-solid" : "fa-regular");
-						$countSpan.text(response.count);
-					},
-					error:function(){
-						alert("좋아요 처리 중 오류가 발생했습니다");
-					}
-				})
-			});
-			$(".club-like-area").each(function(){
-				var $likeArea = $(this);
-				var clubNo = $likeArea.data("club-no");
-				var $icon = $likeArea.find(".club-like-btn");
-				var $countSpan = $likeArea.find(".like-count-value");
-				
-				if(!clubNo) return;
-				
-				$.ajax({
-					url:"/rest/club/check",
-					method:"post",
-					data:{clubNo : clubNo},
-					success:function(response){
-						$icon.removeClass("fa-regular fa-solid").addClass(response.like ? "fa-solid" : "fa-regular");
-						$countSpan.text(response.count);
-					}
-				})
-			});
-		});
-	</script> 
-</c:if>
+<script type="text/javascript" src="/js/club-like.js"></script>
+</c:if>	
 
 <div class="container mt-30"> <%-- 전체 컨테이너 --%>
     <h2>전체 소모임 목록</h2>
@@ -96,11 +54,11 @@
                    		<span>회원수:${club.memberCount}명</span>
                     </div>
                     <h4 style="margin: 4px 0 8px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display:block;">${club.clubName}</h4> <%-- 모임 이름 --%>
-                    <div class="h-stack club-like-area" data-club-no="${club.clubNo}"> <%-- 가로 스택 (좋아요 수) --%>
-                        <span class="ms-10 club-like-count">
-                        <i class="fa-regular fa-heart club-like-btn red"></i>
-                        <span class="like-count-value">${club.clubLike}</span>
-                        </span> <%-- 빨간색 하트 + 좋아요 수 --%>
+                    	<div class="h-stack like-area" data-club-no="${club.clubNo}">
+                        <span class="ms-10 like-count">
+                        <i class="fa-regular fa-heart red toggle-like"></i>
+                        <span class="like-count-value">${club.clubLike}</span> <%-- '개' 글자 span 안으로 이동 --%>
+                        </span>
                     </div>
                     <a href="/club/home?clubNo=${club.clubNo}" class="btn btn-ghost mt-10 club-number">자세히 보기</a> <%-- 고스트 버튼 + 상단 여백 --%>
                 </div>

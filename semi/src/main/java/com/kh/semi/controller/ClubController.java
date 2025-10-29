@@ -208,7 +208,6 @@ public class ClubController {
 		//1. 전체 목록 카운트
 		int dataCount = clubDao.count(pageVO); 
 		pageVO.setDataCount(dataCount);
-		
 		List<ClubListVO> clubList = clubDao.selectListWithPaging(pageVO);
 		model.addAttribute("clubList", clubList);
 		
