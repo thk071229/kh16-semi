@@ -243,6 +243,7 @@ $(function(){
 		<button type="button" class="btn btn-common btn-more w-100">정모 일정 더보기</button>
 		 <div class="center no-more" style="display:none;"><h3>더이상 일정이 없습니다</h3></div>
 	</div>
+</div>
 
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>	
