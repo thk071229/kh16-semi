@@ -37,6 +37,10 @@
 }
 </style>
 
+<%-- club-like.js 불러오기 --%>
+<c:if test="${sessionScope.loginId != null && sessionScope.loginLevel != '관리자'}">
+	<script src="/js/club-like.js"></script>
+</c:if>
 
 <%-- 메인과 동일--%>
 <div class = "container">

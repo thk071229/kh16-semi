@@ -17,10 +17,12 @@ import com.kh.semi.dao.CategoryDao;
 import com.kh.semi.dao.ClubDao;
 import com.kh.semi.dao.ClubMemberDao;
 import com.kh.semi.dao.CountDao;
+import com.kh.semi.dao.MemberDao;
 import com.kh.semi.dao.MemberRegionDao;
 import com.kh.semi.dto.CategoryDto;
 import com.kh.semi.dto.ClubDto;
 import com.kh.semi.dto.ClubMemberDto;
+import com.kh.semi.dto.MemberDto;
 import com.kh.semi.error.TargetNotFoundException;
 import com.kh.semi.error.UnauthorizationException;
 import com.kh.semi.service.ClubService;
@@ -48,6 +50,8 @@ public class ClubController {
 	private CountDao countDao;
 	@Autowired
 	private MemberRegionDao memberRegionDao;
+	@Autowired
+	private MemberDao memberDao;
 	
 	
 	//소모임 Home으로 이동
@@ -83,7 +87,7 @@ public class ClubController {
 		return "/WEB-INF/views/club/add.jsp";
 	}
 	@PostMapping("/add")
-	public String add(@ModelAttribute ClubDto clubDto, HttpSession session, 
+	public String add(@ModelAttribute ClubDto clubDto, HttpSession session, Model model,
 			@RequestParam String regionName, 
 			@RequestParam(required = false) String regionDepth1, 
 			@RequestParam(required = false) String regionDepth2,
@@ -92,6 +96,8 @@ public class ClubController {
 		if(loginId == null) {//로그인중이 아니면 로그인 페이지로 이동
 			return "/WEB-INF/views/member/login.jsp";
 		}
+		MemberDto memberDto = memberDao.selectOne(loginId);
+		model.addAttribute("memberDto", memberDto);
 		clubDto.setClubLeader(loginId);
 		clubService.createClub(clubDto, regionName, regionDepth1, regionDepth2, attach);
 		
