@@ -152,14 +152,15 @@ public class ClubController {
 		clubDao.delete(clubNo);
 		return "redirect:list";
 	}
-	//추천 모임  --> 홈 구현 후 삭제 예정
 	@GetMapping("/recommandList")
-	public String recommandList(Model model, @ModelAttribute PageVO pageVO) {
+	public String recommandList(Model model, @ModelAttribute PageVO pageVO,HttpSession session) {
+		String loginId = (String)session.getAttribute("loginId");
+		if(loginId == null) return "redirect:/member/login?error2";
 		
-		int limit = 4;
-		List<ClubListVO> clubList = clubDao.selectClubListOrderByLikes(limit);
-		model.addAttribute("clubList", clubList);//여러개 기준을 정하려면 이름 변경 필요할듯
-		return "/WEB-INF/views/main.jsp";
+		
+		
+		
+		return "/WEB-INF/views/club/recommandList.jsp";
 	}
 	//전체 모임 목록
 	@GetMapping("/list")

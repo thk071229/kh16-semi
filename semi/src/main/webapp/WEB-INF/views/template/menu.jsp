@@ -120,10 +120,9 @@ $(function(){
 	loadCategoryList();
 });
 </script>
-<!-- hr> -->
-<!-- <h1>상단 메뉴</h1> -->
+<script type="text/javascript">
+</script>
 <!-- 로그인 여부에 따라 다른 메뉴들을 표시 -->
-<!-- 일단 비회원 화면만 구현 -->
 <nav class="nav">	
     <a href="/">
 	<i class="fa-solid fa-house"></i>
@@ -147,10 +146,12 @@ $(function(){
 	<i class="fa-solid fa-calendar-days"></i>
 	<span>정모 일정</span>
 	</a>
+	<c:if test="${sessionScope.loginId == null}">
 	<a href="/member/agree">
 	<i class="fa-solid fa-user-plus"></i>
 	<span>회원 가입</span>
 	</a>
+	</c:if>
 	<c:if test="${sessionScope.loginId == null}">
 	<a href="/member/login">
 	<i class="fa-solid fa-right-to-bracket"></i>
