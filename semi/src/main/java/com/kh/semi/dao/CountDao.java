@@ -24,60 +24,102 @@ public class CountDao {
 	@Autowired
 	private MemberActiveMapper memberActiveMapper;
 	
-	// 홈화면 조회 : 정모 많이한 클럽
-	public List<ClubCountVO> selectListWithEventCount(){
-		String sql = "select * from club_count where event_count > 0 "
-				+"order by event_count desc";
-		return jdbcTemplate.query(sql, clubCountMapper);
-	}
-	// 홈화면 조회 : 게시글 많이 쓴 클럽
-	public List<ClubCountVO> selectListWithBoardCount(){
-		String sql = "select * from club_count where board_count > 0 "
-				+"order by board_count desc";
-		return jdbcTemplate.query(sql, clubCountMapper);
-	}
+//	// 홈화면 조회 : 정모 많이한 클럽
+//	public List<ClubCountVO> selectListWithEventCount(){
+//		String sql = "select * from club_count where event_count > 0 "
+//				+"order by event_count desc";
+//		return jdbcTemplate.query(sql, clubCountMapper);
+//	}
+//	// 홈화면 조회 : 게시글 많이 쓴 클럽
+//	public List<ClubCountVO> selectListWithBoardCount(){
+//		String sql = "select * from club_count where board_count > 0 "
+//				+"order by board_count desc";
+//		return jdbcTemplate.query(sql, clubCountMapper);
+//	}
+//	
+//	// 홈화면 조회 : 좋아요 많이 받은 클럽
+//	public List<ClubCountVO> selectListWithLikeCount(){
+//		String sql = "select * from club_count where club_like > 0 "
+//						+"order by club_like desc";
+//		return jdbcTemplate.query(sql, clubCountMapper);
+//	}
 	
-	// 홈화면 조회 : 좋아요 많이 받은 클럽
-	public List<ClubCountVO> selectListWithLikeCount(){
-		String sql = "select * from club_count where club_like > 0 "
-						+"order by club_like desc";
-		return jdbcTemplate.query(sql, clubCountMapper);
-	}
-	//pagination 적용
+	//pagination 적용 :: 홈화면 조회 : 좋아요 많이 받은 클럽
 	public List<ClubCountVO> selectLikeListWithPaging(PageVO pageVO){
-		String sql = "select * from ("
-				+ "select rownum rn, TMP.* from ("
-				+ "select * from club_count where club_like > 0 "
-				+ "order by club_like desc"
-				+ ")TMP "
-				+ ")where rn between ? and ?";
-		
-		Object[] params = {pageVO.getBegin(), pageVO.getEnd()};
-		return jdbcTemplate.query(sql, clubCountMapper, params);
+		if(pageVO.noRegion()) { // 목록 + 페이징
+			String sql = "select * from ("
+					+ "select rownum rn, TMP.* from ("
+					+ "select * from club_count where club_like > 0 "
+					+ "order by club_like desc"
+					+ ")TMP "
+					+ ")where rn between ? and ?";
+			Object[] params = {pageVO.getBegin(), pageVO.getEnd()};
+			return jdbcTemplate.query(sql, clubCountMapper, params);
+		} else { // 검색 + 페이징
+			String sql = "select * from ("
+					+ "select rownum rn, TMP.* from ("
+					+ "select * from club_count "
+					+ "where club_like > 0 and region_depth1 = ? and region_depth = ? "
+					+ "order by club_like desc"
+					+ ")TMP "
+					+ ")where rn between ? and ?";
+			Object[] params = { pageVO.getRegionDepth1(), pageVO.getRegionDepth2(),
+					pageVO.getBegin(), pageVO.getEnd() };
+			return jdbcTemplate.query(sql, clubCountMapper, params);
+		}
 	}
 	
-	public List<ClubCountVO> selectBoardListWithPaging(PageVO pageVO){
-		String sql = "select * from ("
-				+ "select rownum rn, TMP.* from ("
-				+ "select * from club_count where board_count > 0 "
-				+ "order by board_count desc"
-				+ ")TMP "
-				+ ")where rn between ? and ?";
-		
-		Object[] params = {pageVO.getBegin(), pageVO.getEnd()};
-		return jdbcTemplate.query(sql, clubCountMapper, params);
-	}
+	//pagination 적용 :: 홈화면 조회 : 정모 많이한 클럽
 	public List<ClubCountVO> selectEventListWithPaging(PageVO pageVO){
-		String sql = "select * from ("
-				+ "select rownum rn, TMP.* from ("
-				+ "select * from club_count where event_count > 0 "
-				+ "order by event_count desc"
-				+ ")TMP "
-				+ ")where rn between ? and ?";
-		
-		Object[] params = {pageVO.getBegin(), pageVO.getEnd()};
-		return jdbcTemplate.query(sql, clubCountMapper, params);
+		if(pageVO.noRegion()) { // 목록 + 페이징
+			String sql = "select * from ("
+					+ "select rownum rn, TMP.* from ("
+					+ "select * from club_count where event_count > 0 "
+					+ "order by event_count desc"
+					+ ")TMP "
+					+ ")where rn between ? and ?";
+			Object[] params = {pageVO.getBegin(), pageVO.getEnd()};
+			return jdbcTemplate.query(sql, clubCountMapper, params);
+		} else { // 검색 + 페이징
+			String sql = "select * from ("
+					+ "select rownum rn, TMP.* from ("
+					+ "select * from club_count "
+					+ "where event_count > 0 and region_depth1 = ? and region_depth = ? "
+					+ "order by event_count desc"
+					+ ")TMP "
+					+ ")where rn between ? and ?";
+			Object[] params = { pageVO.getRegionDepth1(), pageVO.getRegionDepth2(),
+					pageVO.getBegin(), pageVO.getEnd() };
+			return jdbcTemplate.query(sql, clubCountMapper, params);
+		}
 	}
+	
+	//pagination 적용 :: 홈화면 조회 : 게시글 많이 쓴 클럽
+	public List<ClubCountVO> selectBoardListWithPaging(PageVO pageVO){
+		if(pageVO.noRegion()) { // 목록 + 페이징
+			String sql = "select * from ("
+					+ "select rownum rn, TMP.* from ("
+					+ "select * from club_count where board_count > 0 "
+					+ "order by board_count desc"
+					+ ")TMP "
+					+ ")where rn between ? and ?";
+			Object[] params = {pageVO.getBegin(), pageVO.getEnd()};
+			return jdbcTemplate.query(sql, clubCountMapper, params);
+		} else { // 검색 + 페이징
+			String sql = "select * from ("
+					+ "select rownum rn, TMP.* from ("
+					+ "select * from club_count "
+					+ "where board_count > 0 and region_depth1 = ? and region_depth = ? "
+					+ "order by club_like desc"
+					+ ")TMP "
+					+ ")where rn between ? and ?";
+			Object[] params = { pageVO.getRegionDepth1(), pageVO.getRegionDepth2(),
+					pageVO.getBegin(), pageVO.getEnd() };
+			return jdbcTemplate.query(sql, clubCountMapper, params);
+		}
+	}
+
+	
 	//dataCount 설정 위한 count
 	public int eventListCount(PageVO pageVO) {
 		String sql = "select count(*) from club_count where event_count > 0";

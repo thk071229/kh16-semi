@@ -27,6 +27,17 @@ public class PageVO {
 	//더보기 버튼 사용 시 필요한 리스트 타입
 	private String type;
 	
+	/// 지역검색용 pageVO에 추가
+	private String regionDepth1;
+	private String regionDepth2;
+	
+	public boolean noRegion() {
+			return (regionDepth1 == null || regionDepth1.isEmpty())
+			|| (regionDepth2 == null || regionDepth2.isEmpty());
+	}
+	
+	
+	
 	//외부에서 호출하기 위한 게터메소드
 	public Map<String, Integer> getParentParams(){
 		if(parentParams == null) {
