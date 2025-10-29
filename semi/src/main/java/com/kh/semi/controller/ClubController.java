@@ -52,7 +52,7 @@ public class ClubController {
 	
 	//소모임 Home으로 이동
 		@GetMapping("/home")
-		public String home(HttpSession session, @RequestParam int clubNo, Model model) {
+		public String home(HttpSession session, @RequestParam int clubNo, Model model, @ModelAttribute PageVO pageVO) {
 			String loginId = (String)session.getAttribute("loginId");
 			
 			// 1. 모임 정보 조회
@@ -68,7 +68,7 @@ public class ClubController {
 				model.addAttribute("clubMemberDto", clubMemberDto); 
 			}
 			
-			return "/WEB-INF/views/club/home.jsp";
+			return "/WEB-INF/views/club/home-more.jsp";
 		}
 	//소모임 등록
 	@GetMapping("/add")

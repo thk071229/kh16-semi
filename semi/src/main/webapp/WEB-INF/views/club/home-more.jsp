@@ -4,64 +4,122 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+<style>
+	.member-card {
+		align-items: center; 
+		background-color: var(--surface); 
+		border-radius: 30px; 
+		padding: 5px 15px 5px 5px; 
+		box-shadow: var(--shadow); 
+		border: 1px solid #eee;
+		height:50px;
+	}
+	.member-more {
+	  display: flex;
+	  justify-content: center; /* 가로 가운데 */
+	  align-items: center;     /* 세로 가운데 */
+	  background-color: var(--muted);
+	  border-radius: 30px;
+	  padding: 5px 15px;
+	  box-shadow: var(--shadow);
+	  border: 1px solid #eee;
+	  height: 100%;
+	  color:var(--primary-600);
+	  cursor:pointer;
+	}
+	
+</style>
+<!-- 좋아요 js 분리 -->
+<script src="/js/club-home-check.js"></script>
+<script src="/js/club-home-like.js"></script>
 
+<!-- more-button js -->
 <script type="text/javascript">
-	// jQuery가 header.jsp에 포함되어 있다고 가정
-	$(function(){
-		// 삭제 확인 스크립트
-		$(".check-club-delete").on("click", function(e){
-			e.preventDefault(); // 기본 링크 이동 방지
-			var isConfirm = confirm("정말 삭제하시겠습니까? 모임 관련 모든 정보(게시글, 정모 등)가 삭제됩니다.");
-			if(isConfirm){
-				window.location.href = $(this).attr("href"); // 확인 시 링크로 이동
-			}
-		});
+$(function(){
+	var params = new URLSearchParams(location.search);
+	var clubNo = params.get("clubNo");
+	var size = 7;
+	var increase = 7;
+	
+	//최초 목록 호출
+	loadList();
+	
+	//더보기 버튼 이벤트
+	$(".btn-more").on("click", function(){
+		size += increase;
+		console.log("size=" + size);
+		loadList();
 		
-		// --- 좋아요 초기 상태 확인 (페이지 로딩 시 1회 실행) ---
-		var params = new URLSearchParams(location.search);
-		var clubNo = params.get("clubNo");
-
-		// clubNo가 없으면 (잘못된 URL) 중단
-		if(!clubNo) return; 
+	});
+	//목록 불러오는 함수
+	function loadList(){
 
 		$.ajax({
-			url:"/rest/club/check", // 상태 확인
-			method:"post",
-			data:{clubNo : clubNo},
-			success: function(response){
-				// 초기 하트 모양과 숫자 설정
-				$("#club-like").removeClass("fa-regular fa-solid").addClass(response.like ? "fa-solid" : "fa-regular");
-				$("#club-like-count").text(response.count);
-			}
-		});
-	});
-</script>
-<%-- 좋아요 클릭 이벤트 (로그인한 일반 회원에게만) --%>
-<c:if test="${sessionScope.loginId != null && sessionScope.loginLevel != '관리자'}">
-<script type="text/javascript">
-	$(function(){
-		var params = new URLSearchParams(location.search);
-		var clubNo = params.get("clubNo");
-		
-		$("#club-like").on("click", function(){ // ID로 클릭 이벤트
-			$.ajax({
-				url:"/rest/club/action", // 상태 변경
-				method:"post",
-				data:{clubNo : clubNo},
-				success: function(response){
-					// 클릭 결과(변경된 상태)로 아이콘과 숫자 업데이트
-					$("#club-like").removeClass("fa-regular fa-solid").addClass(response.like ? "fa-solid" : "fa-regular");
-					$("#club-like-count").text(response.count);
-				},
-				error: function() {
-					alert("좋아요 처리 중 오류가 발생했습니다.");
+			url:"/rest/more/clubMember",
+			method:"POST",
+			data:{
+				page: 1,
+				size: size,
+				clubNo:clubNo,
+			},
+			success:function(response){
+				console.log(response);
+				console.log(size)
+				//list가 비어있을 경우 아무것도 하지 않음
+				var list = response.list;
+			
+				if(list.length == 0){
+					return;
 				}
-			})
-		});
+				
+				$(".member-list-wrapper").empty();
+				//목록 화면 생성
+				for(var i = 0 ; i < list.length ; i++){
+					var member = list[i];
+					
+					var origin = $("#member-list-template").text();
+					var html = $.parseHTML(origin);
+			
+					$(html).find(".member-image").attr("src", "/member/profile?memberId=" + member.clubMember)
+												 .attr("alt", member.memberNickname + " 프로필");
+					
+					$(html).find(".member-nickname").text(member.memberNickname);
+					if(member.clubMemberRole == '모임장'){
+						$(html).find(".member-nickname").append("<i class='fa-solid fa-crown ms-5' style='color: #f0c41a;' title='모임장'></i>")
+						}
+					
+					$(".member-list-wrapper").append(html);
+				}
+				
+				//button 실행 조건
+				if(response.hasMore == false){
+					$(".btn-more").hide();
+				}
+				else{
+					$(".btn-more").show();
+					
+				}
+			}
+			
 	});
+		
+	}
+	
+});
 </script>
-</c:if>
-
+<script type="text/template" id="member-list-template">
+<div class="member-list flex-box" style="flex-wrap: wrap; gap: 15px;">
+	      <div class="member-card flex-box">
+		      <div style="width: 40px; height: 40px; border-radius: 50%; overflow: hidden; margin-right: 10px;">
+				<img class="member-image" style="width: 100%; height: 100%; object-fit: cover;"
+					onerror="this.onerror=null; this.src='/images/error/no-image.png';">
+			  </div>
+			<div style="font-weight: 600; font-size: 15px;">
+				<span class="member-nickname">회원 닉네임</span>
+			</div>
+			</div>
+</div>
+</script>
 <div class="container w-1000"> <%-- 전체 컨텐츠 너비 조절 (w-800 사용) --%>
 
 		<%-- 메뉴 바 --%>
@@ -130,37 +188,28 @@
                 <p class="gray">예정된 정모가 없습니다.</p> <%-- 임시 메시지 --%>
             </div>
         </div>
-
-        <%-- 회원 목록 --%>
+        
+		<%-- 회원 목록 --%>
         <div class="cell mt-30">
-        	<div class="header"> <%-- .header 스타일 적용 --%>
+        	<div class="header"> 
 	            <h2 class="flex-fill" style="margin:0;">모인 멤버 (${memberList.size()}명)</h2>
-	            <c:if test="${loginId == clubDto.clubLeader}">
-		        	<a href="/clubMember/list?clubNo=${clubDto.clubNo}" class="link">
-			        	<i class="fa-solid fa-users me-5"></i>멤버 관리
-		        	</a>
-	        	</c:if>
+	            
+	        	
+	        	<div class="button-wrapper">
+					<button type="button" class="btn-more member-more">
+						<span style="font-weight: 600; font-size: 15px;">멤버 더보기</span>
+					</button>
+				</div>
+				
         	</div>
 
-        	<%-- 회원 목록 그리드 --%>
-        	<div class="flex-box mt-10" style="flex-wrap: wrap; gap: 15px;">
-	        	<c:forEach var="member" items="${memberList}">
-	        		<div class="member-card flex-box" style="align-items: center; background-color: var(--surface); border-radius: 30px; padding: 5px 15px 5px 5px; box-shadow: var(--shadow); border: 1px solid #eee;">
-		        		<div style="width: 40px; height: 40px; border-radius: 50%; overflow: hidden; margin-right: 10px;">
-							<img src="/member/profile?memberId=${member.clubMember}" alt="${member.memberNickname} 프로필" style="width: 100%; height: 100%; object-fit: cover;"
-							     onerror="this.onerror=null; this.src='/images/error/no-image.png';">
-						</div>
-						<div style="font-weight: 600; font-size: 15px;">
-							<span>${member.memberNickname}</span>
-							<c:if test="${clubDto.clubLeader == member.clubMember}">
-								<i class="fa-solid fa-crown ms-5" style="color: #f0c41a;" title="모임장"></i>
-							</c:if>
-						</div>
-					</div>
-	        	</c:forEach>
+        	
+        	<div class="flex-box mt-10 member-list-wrapper" style="flex-wrap: wrap; gap: 15px;">
+        		<div>비어있음</div>
         	</div>
+   
         </div>
-        <hr class="mt-30 mb-30">
+         <hr class="mt-30 mb-30">
 
         <%-- 가입/탈퇴 버튼 --%>
         <c:if test="${loginId != null && clubMemberDto == null}">
