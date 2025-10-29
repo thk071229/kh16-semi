@@ -17,6 +17,7 @@ import com.kh.semi.dao.CategoryDao;
 import com.kh.semi.dao.ClubDao;
 import com.kh.semi.dao.ClubMemberDao;
 import com.kh.semi.dao.CountDao;
+import com.kh.semi.dao.MemberRegionDao;
 import com.kh.semi.dto.CategoryDto;
 import com.kh.semi.dto.ClubDto;
 import com.kh.semi.dto.ClubMemberDto;
@@ -26,6 +27,7 @@ import com.kh.semi.service.ClubService;
 import com.kh.semi.vo.ClubCountVO;
 import com.kh.semi.vo.ClubListVO;
 import com.kh.semi.vo.ClubMemberListVO;
+import com.kh.semi.vo.MemberRegionListVO;
 import com.kh.semi.vo.PageVO;
 
 import jakarta.servlet.http.HttpSession;
@@ -44,6 +46,9 @@ public class ClubController {
 	private CategoryDao categoryDao;
 	@Autowired
 	private CountDao countDao;
+	@Autowired
+	private MemberRegionDao memberRegionDao;
+	
 	
 	//소모임 Home으로 이동
 		@GetMapping("/home")
@@ -158,8 +163,6 @@ public class ClubController {
 	@GetMapping("/recommandList")
 	public String recommandList(Model model,
 			//@ModelAttribute PageVO pageVO,
-			@RequestParam(required=false) String regionDepth1,
-			@RequestParam(required=false) String regionDepth2,
 			@RequestParam(defaultValue="1") int eventPage,
 			@RequestParam(defaultValue="1") int boardPage,
 			@RequestParam(defaultValue="1") int likePage,
@@ -168,25 +171,31 @@ public class ClubController {
 		String loginId = (String)session.getAttribute("loginId");
 		if(loginId == null) return "redirect:/member/login?error2";
 		
+		//로그인 아이디로 Depth1,2 들어있는 VO 조회
+		// - 이후, 밑에서 각각에 적용시키기
+		MemberRegionListVO memberRegionListVO = memberRegionDao.selectOne(loginId);
+		model.addAttribute("regionDepth1",memberRegionListVO.getRegionDepth1());
+		model.addAttribute("regionDepth2",memberRegionListVO.getRegionDepth2());
+		
 		/// 이벤트count용 PageVO 설정
 		PageVO eventPageVO = new PageVO();
 		eventPageVO.setPage(eventPage);
-		eventPageVO.setRegionDepth1(regionDepth1);
-		eventPageVO.setRegionDepth2(regionDepth2);
+		eventPageVO.setRegionDepth1(memberRegionListVO.getRegionDepth1());
+		eventPageVO.setRegionDepth2(memberRegionListVO.getRegionDepth2());
 		eventPageVO.setDataCount(countDao.eventListCount(eventPageVO));
 		
 		/// 게시글count용 PageVO 설정
 		PageVO boardPageVO = new PageVO();
 		boardPageVO.setPage(boardPage);
-		boardPageVO.setRegionDepth1(regionDepth1);
-		boardPageVO.setRegionDepth2(regionDepth2);
+		boardPageVO.setRegionDepth1(memberRegionListVO.getRegionDepth1());
+		boardPageVO.setRegionDepth2(memberRegionListVO.getRegionDepth2());
 		boardPageVO.setDataCount(countDao.boardListCount(boardPageVO));
 
 		/// 좋아요순용 PageVO 설정
 		PageVO likePageVO = new PageVO();
 		likePageVO.setPage(boardPage);
-		likePageVO.setRegionDepth1(regionDepth1);
-		likePageVO.setRegionDepth2(regionDepth2);
+		likePageVO.setRegionDepth1(memberRegionListVO.getRegionDepth1());
+		likePageVO.setRegionDepth2(memberRegionListVO.getRegionDepth2());
 		likePageVO.setDataCount(countDao.clubLikeListCount(likePageVO));
 		
 		/// 카운트한 정보 모델로 전달 (정모 횟수 / 게시글 횟수 / 좋아요 수)
@@ -198,8 +207,11 @@ public class ClubController {
 		model.addAttribute("clubEventCountVO", clubEventCountVO);
 		model.addAttribute("clubBoardCountVO", clubBoardCountVO);
 		model.addAttribute("clubLikeCountVO", clubLikeCountVO);
+		model.addAttribute("eventPageVO", eventPageVO);
+		model.addAttribute("boardPageVO", boardPageVO);
+		model.addAttribute("likePageVO", likePageVO);
 		
-		return "/WEB-INF/views/main.jsp";
+		return "/WEB-INF/views/club/recommandList.jsp";
 	}
 	//전체 모임 목록
 	@GetMapping("/list")
@@ -208,7 +220,6 @@ public class ClubController {
 		//1. 전체 목록 카운트
 		int dataCount = clubDao.count(pageVO); 
 		pageVO.setDataCount(dataCount);
-		
 		List<ClubListVO> clubList = clubDao.selectListWithPaging(pageVO);
 		model.addAttribute("clubList", clubList);
 		
