@@ -81,13 +81,14 @@ public class ClubController {
 		if(loginId == null) {//로그인중이 아니면 로그인 페이지로 이동
 			return "redirect:/member/login";
 		}
-		
+		MemberDto memberDto = memberDao.selectOne(loginId);
+		model.addAttribute("memberDto", memberDto);
 		 List<CategoryDto> categoryList = categoryDao.selectList(); 
 		 model.addAttribute("categoryList", categoryList);
 		return "/WEB-INF/views/club/add.jsp";
 	}
 	@PostMapping("/add")
-	public String add(@ModelAttribute ClubDto clubDto, HttpSession session, Model model,
+	public String add(@ModelAttribute ClubDto clubDto, HttpSession session, 
 			@RequestParam String regionName, 
 			@RequestParam(required = false) String regionDepth1, 
 			@RequestParam(required = false) String regionDepth2,
@@ -96,8 +97,7 @@ public class ClubController {
 		if(loginId == null) {//로그인중이 아니면 로그인 페이지로 이동
 			return "/WEB-INF/views/member/login.jsp";
 		}
-		MemberDto memberDto = memberDao.selectOne(loginId);
-		model.addAttribute("memberDto", memberDto);
+		
 		clubDto.setClubLeader(loginId);
 		clubService.createClub(clubDto, regionName, regionDepth1, regionDepth2, attach);
 		
