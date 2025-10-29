@@ -222,7 +222,7 @@
         <tr><th>이메일</th><td>${memberDto.memberEmail}</td></tr>
         <tr><th>성별</th><td>${memberDto.memberGender}</td></tr>
         <tr><th>생년월일</th><td><fmt:formatDate value="${memberDto.memberBirth}" pattern="yyyy-MM-dd"/></td></tr>
-        <tr><th>포인트</th><td>${memberDto.memberPoint} 포인트</td></tr>
+        <tr><th>포인트</th><td><jsp:include page="/WEB-INF/views/template/pointIcon.jsp"></jsp:include> ${memberDto.memberPoint} 포인트</td></tr>
         <tr><th>가입일</th><td><fmt:formatDate value="${memberDto.memberJoin}" pattern="y년 M월 d일 H시 m분 s초"/></td></tr>
       </table>
     </div>

@@ -111,6 +111,12 @@ public class MainController {
 		return "/WEB-INF/views/main.jsp";
 	}
 
+	@RequestMapping("/icon")
+	public String icon() {
+		return "/WEB-INF/views/icon.jsp";
+	}
+
+
 	@GetMapping("/search")
 	public String search(@ModelAttribute(value="pageVO") PageVO pageVO, 
 			@RequestParam(required=false) String keyword, Model model) {
