@@ -155,7 +155,6 @@ public class ClubController {
 		clubDao.delete(clubNo);
 		return "redirect:list";
 	}
-	//추천 모임  --> 홈 구현 후 삭제 예정
 	@GetMapping("/recommandList")
 	public String recommandList(Model model,
 			//@ModelAttribute PageVO pageVO,
@@ -163,11 +162,11 @@ public class ClubController {
 			@RequestParam(required=false) String regionDepth2,
 			@RequestParam(defaultValue="1") int eventPage,
 			@RequestParam(defaultValue="1") int boardPage,
-			@RequestParam(defaultValue="1") int likePage
+			@RequestParam(defaultValue="1") int likePage,
+			HttpSession session
 ) {
-//		int limit = 4;
-//		List<ClubListVO> clubList = clubDao.selectClubListOrderByLikes(limit);
-//		model.addAttribute("clubList", clubList);//여러개 기준을 정하려면 이름 변경 필요할듯
+		String loginId = (String)session.getAttribute("loginId");
+		if(loginId == null) return "redirect:/member/login?error2";
 		
 		/// 이벤트count용 PageVO 설정
 		PageVO eventPageVO = new PageVO();
@@ -199,9 +198,6 @@ public class ClubController {
 		model.addAttribute("clubEventCountVO", clubEventCountVO);
 		model.addAttribute("clubBoardCountVO", clubBoardCountVO);
 		model.addAttribute("clubLikeCountVO", clubLikeCountVO);
-		
-		
-		
 		
 		return "/WEB-INF/views/main.jsp";
 	}

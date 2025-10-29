@@ -6,7 +6,6 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <style>
-/* 추천 목록 그리드 (항상 4열로 강제) */
 .grid {
   display: grid !important; /* display 속성 강제 */
   gap: 16px !important; /* 간격 강제 (commons.css와 동일하게) */
@@ -17,22 +16,30 @@
 .card {
     max-width: 260px !important; /* 최대 너비 강제 (1100px 컨테이너 기준 계산 값) */
     width: 100% !important;
+    display: flex; /* 카드 내부 정렬을 위해 추가 */
+    flex-direction: column; /* 카드 내용을 세로로 쌓음 */
+}
+.card .v-stack { /* 카드 내용 영역이 남은 공간 채우도록 */
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+.card .btn-ghost { /* 자세히 보기 버튼 하단 정렬 */
+    margin-top: auto; /* 위쪽 여백을 최대로 밀어 버튼을 아래로 */
+}
+
+.region-name {
+  display: inline-block; 
+  max-width: 13ch;            /* 글자 단위로 9글자 너비 제한 */
+  overflow: hidden;          /* 넘친 글자 숨김 */
+  text-overflow: ellipsis;   /* ... 으로 표시 */
+  white-space: nowrap;       /* 줄바꿈 방지 */
 }
 </style>
-<div class="container mt-50"> <%-- 전체 컨테이너 및 상단 여백 --%>
-    <div class="header"> <%-- 제목과 '더보기' 링크를 위한 레이아웃 --%>
-        <h3>⭐ 찜이 많은 소모임 ⭐</h3>
-        <a href="/club/list" class="link">더보기 &gt;</a> <%-- 더보기 링크 --%>
-    </div>
-
-<%-- 찜이 많은 소모임 --%>
-<div class="header"> <%-- 제목과 '더보기' 링크를 위한 레이아웃 --%>
-        <h3>⭐ 찜이 많은 소모임 ⭐</h3>
-        <a href="/club/list" class="link">더보기 &gt;</a> <%-- 더보기 링크 --%>
-</div>
 
 
 <%-- 메인과 동일--%>
+	
 <div class="grid mt-20"> <%-- 카드 목록 그리드 (CSS에서 4열로 설정 필요) --%>
 
         <c:forEach var="likeCountVO" items="${clubLikeCountVO}">
@@ -72,9 +79,11 @@
             </div>
         </c:forEach>
     </div>
+    	<%-- 페이지 네비게이션 --%>
     	<div class="cell center mt-20 mb-20">
 			<jsp:include page="/WEB-INF/views/template/pagination-num-board.jsp"></jsp:include>	
 		</div>
+		
 <div class="header"> <%-- 제목과 '더보기' 링크를 위한 레이아웃 --%>
         <h3>⭐ 활동이 활발한 모임 (이벤트) ⭐</h3>
         <a href="/club/list" class="link">더보기 &gt;</a> <%-- 더보기 링크 --%>
@@ -117,6 +126,7 @@
 		</c:forEach>
 
 	</div> <%-- grid 닫기 --%>
+	
 		<div class="cell center mt-20 mb-20">
 			<jsp:include page="/WEB-INF/views/template/pagination-num-event.jsp"></jsp:include>	
 		</div>
@@ -174,10 +184,8 @@
         <h3>⭐ 카테고리 별 모임 ⭐</h3>
         <a href="/club/list" class="link">더보기 &gt;</a> <%-- 더보기 링크 --%>
 </div>
-
 <%-- 구분선 --%>
-    
-    
 
-</div>
+
+
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

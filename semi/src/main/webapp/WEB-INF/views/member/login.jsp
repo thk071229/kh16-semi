@@ -27,6 +27,13 @@
 		</div>
 	</c:if>
 	
+		<!--  로그인 실패 오류 메시지 -->
+	<c:if test="${param.error2!= null}">
+		<div class="cell center">
+			<h4 style="color:#e17055;">추천모임은 회원만 이용할 수 있습니다</h4>
+		</div>
+	</c:if>
+	
 	<!-- 아이디 비밀번호 찾기 페이지 -->
 	<div class="cell center mt-50">
 		<a href="findMemberId" class="link">아이디를 잊으셨나요?</a>

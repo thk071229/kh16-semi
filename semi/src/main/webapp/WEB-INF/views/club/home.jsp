@@ -68,7 +68,7 @@
 		<div class="cell">
 			<div class="flex-box">
 				<h2><a href="/club/home?clubNo=${clubDto.clubNo}" class="btn btn-primary">홈</a></h2> <%-- 현재 페이지 강조 --%>
-				<h2><a href="/board/list?boardClub=${clubDto.clubNo}" class="btn btn-ghost ms-20">게시판</a></h2>
+				<h2><a href="/board/list?clubNo=${clubDto.clubNo}" class="btn btn-ghost ms-20">게시판</a></h2>
 				<h2><a href="/event/list?clubNo=${clubDto.clubNo}" class="btn btn-ghost ms-20">정모</a></h2>
 			</div>
 		</div>
