@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 //페이징의 공통데이터를 필드와 메소드로 정리하고 PageVO를 전달
+
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 //롬복에서 data불러와서 setter,getter,constructor,toString 생성
 //설정해줘야 controller에서 클래스 자유롭게 사용 가능
@@ -16,8 +17,7 @@ public class PageVO {
 
 	private int page = 1; 
 	//현재 페이지 번호 - defaultValue를 1로 설정
-	private int size = 4; 
-	//한 페이지에 표시할 데이터(게시글) 수- defaultValue를 4로 설정
+	private int size = 4;
 	private String column, keyword; 
 	//검색항목, 검색어-기본값 : null(안써도 됨)
 	private int dataCount; //총 데이터(게시글) 개수
@@ -26,6 +26,27 @@ public class PageVO {
 	private Map<String, Integer> parentParams;
 	//더보기 버튼 사용 시 필요한 리스트 타입
 	private String type;
+	private String selectedDate;
+	
+	/// 지역검색용 pageVO에 추가
+	private String regionDepth1;
+	private String regionDepth2;
+	
+	public String checkRegion() {
+		// Depth1만 채워져있을때
+		if((regionDepth1 != null && regionDepth1.isEmpty()==false) && (regionDepth2 == null || regionDepth2.isEmpty()))
+			return "Depth1";
+		// Depth1과 2가 모두 채워져있을때
+		else if((regionDepth1 != null && regionDepth1.isEmpty()==false) && (regionDepth2 != null && regionDepth2.isEmpty()==false)) {
+			return "Depth1Depth2";
+		} // 둘다 null일때
+		else {
+			return "empty";
+		}
+	};
+
+	
+	
 	
 	//외부에서 호출하기 위한 게터메소드
 	public Map<String, Integer> getParentParams(){
@@ -34,6 +55,7 @@ public class PageVO {
 		}
 		return parentParams;
 	}
+
 	public int getParentParamsValue(){
 		Integer result = 0;
 		if(parentParams == null || parentParams.isEmpty()) {
@@ -56,7 +78,22 @@ public class PageVO {
 	public boolean isList() {
 		return column == null || keyword == null;
 	}
-	
+	//더보기 pagination에서 사용할 boolean 메소드
+	public boolean hasMore() {
+		int totalSize = size * page;
+		if(selectedDate != null && dataCount > 0) {
+			 totalSize = Math.min(totalSize, dataCount);
+			 return dataCount > totalSize;
+		}
+		else {
+			return dataCount > totalSize && dataCount != 0; 
+		}
+	}
+	//더보기 pagination에서 사용할 boolean 메소드
+	public boolean hasMoreInDate() {
+	    int totalSize = size * page;
+	    return dataCount > totalSize;
+	}
 	//더보기 pagination에서 사용할 size 계산 게터 메소드
 	public String getSearchParamsInMore() {
 			  int totalSize = size * page;
@@ -74,7 +111,6 @@ public class PageVO {
 			        return "&size=" + totalSize;
 			    }
 			}
-
 	public String getSearchParams() {//목록 or 검색 여부에 따라 주소에 추가될 파라미터를 반환
 	if(isSearch()) {//검색일때 - size 및 컬럼, 키워드 반환
 		return "&size="+size+"&column="+column+"&keyword="+keyword;

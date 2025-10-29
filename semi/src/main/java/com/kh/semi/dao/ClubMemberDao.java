@@ -10,6 +10,7 @@ import com.kh.semi.dto.ClubMemberDto;
 import com.kh.semi.mapper.ClubMemberListMapper;
 import com.kh.semi.mapper.ClubMemberMapper;
 import com.kh.semi.vo.ClubMemberListVO;
+import com.kh.semi.vo.PageVO;
 
 @Repository
 public class ClubMemberDao {
@@ -58,6 +59,20 @@ public class ClubMemberDao {
 		Object[] params = {clubNo};
 		return jdbcTemplate.query(sql, clubMemberListMapper, params);
 	}
+	
+	//페이징을 이용한 전체 회원 목록 조회 메소드
+	public List<ClubMemberListVO> selectMemberListWithPaging(PageVO pageVO, int clubNo){
+		String sql = "select * from ("
+				+ "select rownum rn, TMP.* from ("
+				+ "select * from club_member_list where club_no = ? "
+				+ "order by club_member_role asc"
+				+ ")TMP "
+				+ ")where rn between ? and ?";
+		Object[] params = {clubNo, pageVO.getBegin(), pageVO.getEnd()};
+		return jdbcTemplate.query(sql, clubMemberListMapper, params);
+	}
+	//전체 회원 수
+	
 	// 모임 탈퇴 메소드
 	public boolean delete(int clubNo, String memberId) {
 		String sql ="delete from club_member where club_no = ? and club_member = ?";

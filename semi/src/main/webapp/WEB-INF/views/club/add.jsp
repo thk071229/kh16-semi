@@ -134,7 +134,15 @@ $(function () {
             }
         });
     });
-    
+    // 모임 생성 시 표시
+    $(".authority-check").on("click", function(e){
+    	var authority = $(this).data("authority")
+    	
+    	if(authority == 'n'){
+    		e.preventDefault();
+    		window.alert("모임 생성 권한이 없습니다");
+    	}
+    });
 });
 </script>
 <div class="container w-600">
@@ -199,11 +207,11 @@ $(function () {
             	<label>대표 사진(미설정 시 기본 이미지가 제공됩니다)</label>
             	<input class="input w-100" type="file" name="attach" accept="image/*">
             </div>
-
+			
+			<%-- 모임 만들기 클릭 시 생성권한 변경 --%>
             <div class="cell">
-                <button type="submit" class="btn btn-primary w-100">모임 만들기</button>
+                <button type="submit" class="btn btn-primary w-100 authority-check" data-authority="${memberDto.memberAuthority}">모임 만들기</button>
             </div>
-            
             
         </form>
 </div>

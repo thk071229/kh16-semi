@@ -19,9 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.semi.dao.BoardDao;
+import com.kh.semi.dao.BoardLikeDao;
 import com.kh.semi.dao.CategoryDao;
 import com.kh.semi.dao.CertDao;
 import com.kh.semi.dao.ClubDao;
+import com.kh.semi.dao.ClubLikeDao;
 import com.kh.semi.dao.EventDao;
 import com.kh.semi.dao.MemberCategoryDao;
 import com.kh.semi.dao.MemberDao;
@@ -35,11 +38,14 @@ import com.kh.semi.error.TargetNotFoundException;
 import com.kh.semi.service.AttachmentService;
 import com.kh.semi.service.EmailService;
 import com.kh.semi.service.MemberService;
+import com.kh.semi.vo.BoardListVO;
+import com.kh.semi.vo.ClubListVO;
 import com.kh.semi.vo.EventAttendeeListVO;
 import com.kh.semi.vo.EventListVO;
 import com.kh.semi.vo.MemberCategoryListVO;
 import com.kh.semi.vo.MemberClubListVO;
 import com.kh.semi.vo.MemberRegionListVO;
+import com.kh.semi.vo.PageVO;
 
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpSession;
@@ -60,6 +66,8 @@ public class MemberController {
 	@Autowired
 	private ClubDao clubDao;
 	@Autowired
+	private ClubLikeDao clubLikeDao;
+	@Autowired
 	private EventDao eventDao;
 	@Autowired
 	private AttachmentService attachmentService;
@@ -67,6 +75,10 @@ public class MemberController {
 	private EmailService emailService;
 	@Autowired
 	private CertDao certDao;
+	@Autowired
+	private BoardDao boardDao;
+	@Autowired
+	private BoardLikeDao boardLikeDao;
 	
 	
 	//ava.sql.Date 타입으로 변환할 때 빈 문자열을 허용하고 자동으로 null로 처리 해주는 메소드
@@ -188,7 +200,8 @@ public class MemberController {
 		if(isLogin) {
 			session.setAttribute("loginId", findDto.getMemberId());
 			session.setAttribute("loginLevel", findDto.getMemberLevel());
-			
+			// 로그인 성공시 회원 포인트 갱신
+			memberService.refreshMemberPoint(findDto.getMemberId());
 			return "redirect:/";
 		}
 		else {
@@ -225,18 +238,75 @@ public class MemberController {
 		List<MemberCategoryListVO>categoryList = memberCategoryDao.selectVOList(loginId);
 		//회원이 가입한 소모임 리스트
 		List<MemberClubListVO>clubList = clubDao.selectClubList(loginId);
+		
+		model.addAttribute("memberDto", memberDto);
+		model.addAttribute("regionList", regionList);
+		model.addAttribute("categoryList", categoryList);
+		model.addAttribute("clubList", clubList);
+		return "/WEB-INF/views/member/mypage.jsp";
+	}
+	
+	//회원이 참여한 정모 목록 & 만든 정모 목록
+	@RequestMapping("/memberEvent")
+	public String memberEvent(Model model, HttpSession session) {
+		String loginId = (String)session.getAttribute("loginId");
+		MemberDto memberDto = memberDao.selectOne(loginId);
+		
 		//회원이 참여한 정모 리스트
 		List<EventAttendeeListVO> eventAttendeeList = eventDao.selectListWithMember(loginId);
 		//회원이 개최한 정모 리스트
 		List<EventListVO> eventList = eventDao.selectListWithWriter(loginId);
 		
 		model.addAttribute("memberDto", memberDto);
-		model.addAttribute("regionList", regionList);
-		model.addAttribute("categoryList", categoryList);
-		model.addAttribute("clubList", clubList);
 		model.addAttribute("eventAttendeeList", eventAttendeeList);
 		model.addAttribute("eventList", eventList);
-		return "/WEB-INF/views/member/mypage.jsp";
+		
+		return "/WEB-INF/views/member/memberEvent.jsp";
+	}
+	
+	//회원이 작성한 게시글 목록
+	@RequestMapping("/memberBoard")
+	public String memberBoard(@ModelAttribute(value="pageVO")PageVO pageVO, Model model, HttpSession session) {
+		String loginId = (String)session.getAttribute("loginId");
+		MemberDto memberDto = memberDao.selectOne(loginId);
+		
+		pageVO.setDataCount(boardDao.countByBoardWriter(loginId));
+		List<BoardListVO> boardList = boardDao.selectListByBoardWriter(pageVO, loginId);
+		
+		model.addAttribute("memberDto", memberDto);
+		model.addAttribute("boardList", boardList);
+		
+		return "/WEB-INF/views/member/memberBoard.jsp";
+	}
+	
+	//회원이 좋아요를 누른 게시글 목록
+	@RequestMapping("/memberLike")
+	public String memberLike(@ModelAttribute(value="pageVO")PageVO pageVO, Model model, HttpSession session) {
+		String loginId = (String)session.getAttribute("loginId");
+		MemberDto memberDto = memberDao.selectOne(loginId);
+		
+		pageVO.setDataCount(boardLikeDao.countLike(loginId));
+		List<BoardListVO> boardList = boardDao.selectListLikeWithPaging(pageVO, loginId);
+		
+		model.addAttribute("memberDto", memberDto);
+		model.addAttribute("boardList", boardList);
+		
+		return "/WEB-INF/views/member/memberLike.jsp";
+	}
+	
+	//회원이 찜한 소모임 목록
+	@RequestMapping("/memberLikeClub")
+	public String memberLikeClub(@ModelAttribute(value="pageVO")PageVO pageVO, Model model, HttpSession session) {
+		String loginId = (String)session.getAttribute("loginId");
+		MemberDto memberDto = memberDao.selectOne(loginId);
+		
+		pageVO.setDataCount(clubLikeDao.countByMemberId(loginId));
+		List<ClubListVO> clubList = clubDao.selectListLikeWithPaging(pageVO, loginId);
+		
+		model.addAttribute("memberDto", memberDto);
+		model.addAttribute("clubList", clubList);
+		
+		return "/WEB-INF/views/member/memberLikeClub.jsp";
 	}
 	
 	//회원 탈퇴

@@ -47,6 +47,8 @@ public class ClubRestController {
 		}
 		int count = clubLikeDao.countByClubNo(clubNo);
 		clubDao.updateClubLike(clubNo);
+		
 		return ClubLikeVO.builder().like(!before).count(count).build();
 	}
+
 }
