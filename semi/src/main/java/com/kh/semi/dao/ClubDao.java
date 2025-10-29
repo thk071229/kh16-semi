@@ -95,7 +95,7 @@ public class ClubDao {
 		}
 	}
 	
-	//지역과 카테고리에 따른 목록 및 검색 조회
+	//전체 목록 및 검색
 	public List<ClubListVO> selectListWithPaging(PageVO pageVO){
 		if(pageVO.isList()){//목록
 			String sql = "select * from ("
