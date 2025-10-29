@@ -93,15 +93,15 @@ public class ListMoreRestController {
 	
 	//전체 모임 리스트
 	@PostMapping("/club")
-	public List<ClubListVO> clubMore(PageVO pageVO){
+	public Map<String, Object> clubMore(PageVO pageVO){
 
 		pageVO.setDataCount(clubDao.count(pageVO));
 		
 		List<ClubListVO> clubList = clubDao.selectListWithPaging(pageVO);
-		List<ClubListVO> result = new ArrayList<>();
+		List<ClubListVO> list = new ArrayList<>();
 		
 		for(ClubListVO clubListVO : clubList) {
-			result.add(ClubListVO.builder()
+			list.add(ClubListVO.builder()
 					.clubNo(clubListVO.getClubNo())
 					.clubLeader(clubListVO.getClubLeader())
 					.clubCategory(clubListVO.getClubCategory())
@@ -115,19 +115,23 @@ public class ListMoreRestController {
 					.memberCount(clubListVO.getMemberCount())
 					.build());
 		}
+		Map<String, Object> result = new HashMap<>();
+		result.put("list", list);
+		result.put("hasMore", pageVO.hasMore());
+		
 		return result;
 	}
 	//추천 모임 리스트
 	@PostMapping("/recommendClub")
-	public List<ClubListVO> clubLikeMore(PageVO pageVO){
+	public Map<String, Object> clubLikeMore(PageVO pageVO){
 		pageVO.setDataCount(clubDao.countByClubLike(pageVO));
 		
 		List<ClubListVO> clubLikeList = clubDao.selectClubListOrderByLikesWithPaging(pageVO);
 		
-		List<ClubListVO> result = new ArrayList<>();
+		List<ClubListVO> list = new ArrayList<>();
 		
 		for(ClubListVO clubListVO : clubLikeList) {
-			result.add(ClubListVO.builder()
+			list.add(ClubListVO.builder()
 					.clubNo(clubListVO.getClubNo())
 					.clubName(clubListVO.getClubName())
 					.clubCategory(clubListVO.getClubCategory())
@@ -142,20 +146,24 @@ public class ListMoreRestController {
 					.build());
 			
 		}
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("list", list);
+		result.put("hasMore", pageVO.hasMore());
 		return result;
 	}
 	//모임 회원 목록 페이징
 	@PostMapping("/clubMember")
-	public List<ClubMemberListVO> memberMore(PageVO pageVO, int clubNo){
+	public Map<String, Object> memberMore(PageVO pageVO, int clubNo){
 		ClubListVO clubListVO = clubDao.selectOneFromClubList(clubNo);
 		pageVO.setDataCount(clubListVO.getMemberCount());
 		
 		List<ClubMemberListVO> memberList = clubMemberDao.selectMemberListWithPaging(pageVO, clubNo);
 		
-		List<ClubMemberListVO> result = new ArrayList<>();
+		List<ClubMemberListVO> list = new ArrayList<>();
 		
 		for(ClubMemberListVO clubMemberList : memberList) {
-			result.add(ClubMemberListVO.builder()
+			list.add(ClubMemberListVO.builder()
 						.clubMember(clubMemberList.getClubMember())
 						.clubMemberJoin(clubMemberList.getClubMemberJoin())
 						.clubMemberRole(clubMemberList.getClubMemberRole())
@@ -163,6 +171,11 @@ public class ListMoreRestController {
 						.memberNickname(clubMemberList.getMemberNickname())
 						.build());
 		}
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("list", list);
+		result.put("hasMore", pageVO.hasMore());
+		
 		return result;
 	}
 	

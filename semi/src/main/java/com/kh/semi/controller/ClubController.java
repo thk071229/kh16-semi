@@ -203,15 +203,7 @@ public class ClubController {
 	}
 	//전체 모임 목록
 	@GetMapping("/list")
-	public String list(Model model, @ModelAttribute PageVO pageVO) {
-		
-		//1. 전체 목록 카운트
-		int dataCount = clubDao.count(pageVO); 
-		pageVO.setDataCount(dataCount);
-		
-		List<ClubListVO> clubList = clubDao.selectListWithPaging(pageVO);
-		model.addAttribute("clubList", clubList);
-		
+	public String list(@ModelAttribute PageVO pageVO) {
 		return "/WEB-INF/views/club/list.jsp";
 	}
 	
