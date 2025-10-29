@@ -101,10 +101,12 @@ public class ClubController {
 		clubDto.setClubLeader(loginId);
 		clubService.createClub(clubDto, regionName, regionDepth1, regionDepth2, attach);
 		
-		return "redirect:addFinish";
+		return "redirect:addFinish?clubNo=" + clubDto.getClubNo();
 	}
 	@GetMapping("/addFinish")
-	public String addFinish() {
+	public String addFinish(@RequestParam int clubNo, Model model) {
+		ClubDto clubDto = clubDao.selectOne(clubNo);
+		model.addAttribute("clubDto", clubDto);
 		return "/WEB-INF/views/club/addFinish.jsp";
 	}
 	
