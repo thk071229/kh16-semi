@@ -4,7 +4,7 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <form action="login" method="post" autocomplete="off">
-<div class="container w-300">
+<div class="container w-350">
 
 	<div class="cell center">
      	<h2 style="color: var(--subtle);">로그인</h2>
@@ -23,7 +23,7 @@
 	<!--  로그인 실패 오류 메시지 -->
 	<c:if test="${param.error != null}">
 		<div class="cell center">
-			<h3 style="color:#e17055;">입력하신 정보가 일치하지 않습니다</h3>
+			<h4 style="color:#e17055;">입력하신 정보가 일치하지 않습니다</h4>
 		</div>
 	</c:if>
 	

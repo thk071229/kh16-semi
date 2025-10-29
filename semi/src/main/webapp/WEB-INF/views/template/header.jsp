@@ -47,6 +47,16 @@
 
 </style>
 
+<script type="text/javascript">
+$("#searchBtn").on("click", function() {
+    const keyword = $("#searchInput").val().trim();
+    if (keyword) {
+        // keyword를 URL에 담아서 페이지 이동
+        location.href = `/search?keyword=`+keyword;
+    }
+});
+</script>
+
 <div class="container">
     <header class="header">
         <a class="brand" href="/">
@@ -60,15 +70,16 @@
         <!-- 헤더 내 검색 영역 -->
 		<div class="header-search">
 			<div class="keyword-search">
-		  <form action="/search" method="get" autocomplete="off">
+		  <form action="/search" method="get" id="searchForm" autocomplete="off">
 		    <input
 		      type="text"
 		      name="keyword"
+		      id="searchInput" 
 		      class="search-input"
 		      placeholder="검색어를 입력하세요"
 		      required
 		    >
-		    <button type="submit" class="search-btn">검색</button>
+		    <button type="submit" id="searchBtn" class="search-btn">검색</button>
 		  </form>
 		  </div>
 		</div>
