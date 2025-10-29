@@ -106,6 +106,10 @@ public class MainController {
 		
 		return "/WEB-INF/views/main.jsp";
 	}
-
+	
+	@RequestMapping("/icon")
+	public String icon() {
+		return "/WEB-INF/views/icon.jsp";
+	}
 
 }
