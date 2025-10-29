@@ -19,4 +19,5 @@ public class MemberDto {
 	private int memberPoint;
 	private String memberLevel;
 	private Timestamp memberJoin;
+	private String memberAuthority;
 }

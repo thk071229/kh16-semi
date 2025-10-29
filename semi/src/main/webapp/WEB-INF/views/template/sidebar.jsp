@@ -112,7 +112,9 @@
 								<img src="/member/profile?memberId=${sessionScope.loginId}" width="150" height="150" class="image-profile">
 							</div>
 							<div class="cell center">
-								<h3 class="mb-0">${sessionScope.loginId}</h3>
+								<h3 class="mb-0">
+									<jsp:include page="/WEB-INF/views/template/pointIcon.jsp"></jsp:include>
+								 	${sessionScope.loginId}</h3>
 								<h5 class="mt-0" style="margin-bottom:5px">(${sessionScope.loginLevel})</h5>
 								<hr>
 								<h5 class="mt-0 mb-0"><i class="fa-solid fa-square-parking"></i> 포인트 : <span class="blue">${sidebarData.memberPoint()}</span> P</h5>
