@@ -102,6 +102,7 @@ body{
   align-items:center;
   justify-content: center; /* 전체 메뉴 가운데 정렬 */
   padding: 5px 0; /* 위아래 여백 추가 */
+  border-radius: 10px;
 }
 .nav a{ text-decoration:none; color:var(--subtle); padding:8px 10px; border-radius:8px; font-weight:600; font-size:14px;}
 .nav a:hover{ background:var(--muted); color:var(--ink)}

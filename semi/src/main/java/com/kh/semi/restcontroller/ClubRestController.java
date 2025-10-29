@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kh.semi.dao.ClubDao;
 import com.kh.semi.dao.ClubLikeDao;
 import com.kh.semi.error.UnauthorizationException;
-import com.kh.semi.service.MemberService;
 import com.kh.semi.vo.ClubLikeVO;
 
 import jakarta.servlet.http.HttpSession;
@@ -24,8 +23,6 @@ public class ClubRestController {
 	private ClubDao clubDao;
 	@Autowired
 	private ClubLikeDao clubLikeDao;
-	@Autowired
-	private MemberService memberService;
 	
 	@PostMapping("/check")
 	public ClubLikeVO check(HttpSession session, @RequestParam int clubNo) {
@@ -53,4 +50,5 @@ public class ClubRestController {
 		
 		return ClubLikeVO.builder().like(!before).count(count).build();
 	}
+
 }
