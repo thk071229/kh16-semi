@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kh.semi.dao.BoardDao;
 import com.kh.semi.dao.ClubDao;
 import com.kh.semi.dao.ClubMemberDao;
-import com.kh.semi.dao.CountDao;
 import com.kh.semi.dao.EventDao;
 import com.kh.semi.vo.BoardListVO;
 import com.kh.semi.vo.ClubListVO;
@@ -275,4 +274,49 @@ public class ListMoreRestController {
 		
 		return result;
 	}
-}
+	@PostMapping("/homeEvent")
+	public Map<String, Object> homeMore(@ModelAttribute PageVO pageVO){
+		List<EventListVO> homeList;
+		
+		if(pageVO.getSelectedDate() != null) {
+			int dateCount = eventDao.selectedDateCount(pageVO);
+			pageVO.setDataCount(dateCount);
+			homeList = eventDao.selectListHomeWithPagingByDate(pageVO);
+		}
+		else {
+			int count = eventDao.afterEventCount(pageVO);
+			pageVO.setDataCount(count);
+			homeList = eventDao.selectListHomeWithPaging(pageVO);
+		}
+		
+		
+		//데이터 담을 객체 준비
+		List<EventListVO> list = new ArrayList<>();
+		Map<String, Object> result = new HashMap<>();
+		
+		for(EventListVO eventListVO : homeList) {
+			list.add(EventListVO.builder()
+					.eventNo(eventListVO.getEventNo())
+					.eventClub(eventListVO.getEventClub())
+					.eventTitle(eventListVO.getEventTitle())
+					.eventAddress(eventListVO.getEventAddress())
+					.eventAttend(eventListVO.getEventAttend())
+					.eventDate(eventListVO.getEventDate())
+					.eventMaxPeople(eventListVO.getEventMaxPeople())
+					.eventWriter(eventListVO.getEventWriter())
+					.clubCategory(eventListVO.getClubCategory())
+					.clubLeader(eventListVO.getClubLeader())
+					.clubName(eventListVO.getClubName())
+					.clubRegion(eventListVO.getClubRegion())
+					.categoryName(eventListVO.getCategoryName())
+					.regionName(eventListVO.getRegionName())
+					.memberNickname(eventListVO.getMemberNickname())
+					.build());
+		}
+		
+		result.put("list", list);
+		result.put("hasMore", pageVO.hasMore());
+		return result;
+	}
+	
+	}

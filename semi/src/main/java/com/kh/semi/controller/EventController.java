@@ -51,9 +51,7 @@ public class EventController {
 	
 	// 정모게시글 전체
 	@RequestMapping("/home")
-	public String list(Model model) {
-		List<EventListVO> eventDto = eventDao.selectListAfter();
-		model.addAttribute("eventDto", eventDto);
+	public String list(@ModelAttribute PageVO pageVO) {
 		return "/WEB-INF/views/event/home.jsp";
 	}
 	

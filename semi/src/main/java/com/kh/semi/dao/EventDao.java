@@ -67,10 +67,10 @@ public class EventDao {
 		return jdbcTemplate.query(sql, eventListMapper);
 	}
 	// 진행중 목록 페이징 적용
-	public List<EventListVO> selectListAfterWithPaging(PageVO pageVO){
+	public List<EventListVO> selectListHomeWithPaging(PageVO pageVO){
 		String sql = "select * from ("
 				+ "select rownum rn, TMP.* from ("
-				+ "select * from event_list where event_date < sysdate "
+				+ "select * from event_list where event_date > sysdate "
 				+ "order by event_date desc"
 				+ ")TMP "
 				+ ")where rn between ? and ?";
@@ -84,6 +84,25 @@ public class EventDao {
 		String sql = "select count(*) from event_list where event_date > sysdate";
 		return jdbcTemplate.queryForObject(sql, int.class);
 	}
+	
+	//날짜 필터링용 메소드
+	public int selectedDateCount(PageVO pageVO) {
+		String sql = "select count(*) from event_list where event_date = ?";
+		Object[] params = {pageVO.getSelectedDate()};
+		return jdbcTemplate.queryForObject(sql, int.class, params);
+	}
+	
+	public List<EventListVO> selectListHomeWithPagingByDate(PageVO pageVO) {
+	    String sql = "SELECT * FROM ( " +
+	                 "SELECT rownum rn, TMP.* FROM ( " +
+	                 "SELECT * FROM event_list WHERE to_char(event_date, 'YYYY-MM-DD') = ? " +
+	                 "ORDER BY event_date DESC " +
+	                 ") TMP " +
+	                 ") WHERE rn BETWEEN ? AND ?";
+	    Object[] params = {pageVO.getSelectedDate(), pageVO.getBegin(), pageVO.getEnd()};
+	    return jdbcTemplate.query(sql, eventListMapper, params);
+	}
+	
 	// 목록페이지 : 전체 Event 조회
 		// PageVO 적용 조회
 	public List<EventListVO> selectListWithPaging(int clubNo, PageVO pageVO){
