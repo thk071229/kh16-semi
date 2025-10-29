@@ -25,7 +25,6 @@ $(function(){
 	//더보기 버튼 이벤트(before-list)
 	$(".btn-more-before").on("click", function(){
 		size += increase;
-		console.log("size=" + sizeBefore);
 		loadListBefore();
 		
 	});
@@ -108,7 +107,6 @@ $(function(){
 	$(".btn-more-after").on("click", function(){
 		size += increase;
 		console.log("size=" + size);
-		loadListAfter();
 		
 	});
 	
@@ -187,7 +185,6 @@ $(function(){
 		//더보기 버튼 이벤트(all-list)
 		$(".btn-more-all").on("click", function(){
 			size += increase;
-			console.log("size=" + size);
 			loadList();
 			
 		});
