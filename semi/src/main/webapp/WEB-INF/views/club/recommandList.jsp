@@ -41,9 +41,8 @@
 <%-- 메인과 동일--%>
 <div class = "container">
 
-	<h1>메인 페이지</h1>
-	<h2>소모임 - 우리동네 취미 모임</h2>
-	<h4>소개글</h4>
+	<h1>회원별 추천 모임</h1>
+
 <label>
 <i class="fa-solid fa-location-dot"></i>
 ${regionDepth1} ${regionDepth2} 근처 모임
