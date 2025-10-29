@@ -66,5 +66,8 @@ public class TestController {
 		model.addAttribute("clubNo",clubNo);
 		return "/WEB-INF/views/event/list-more.jsp";
 	}
-
+	@RequestMapping("/event/home")
+	public String List(@ModelAttribute PageVO pageVO) {
+		return "/WEB-INF/views/event/home-list-more.jsp";
+	}
 }

@@ -158,6 +158,7 @@ $(function(){
 	<span>로그인</span>
 	</a>
 	</c:if>
+	
 	<c:if test = "${sessionScope.loginId != null}">
 	<a href="/member/logout">
 	<i class="fa-solid fa-right-from-bracket"></i>
@@ -166,6 +167,12 @@ $(function(){
 	<a href="/member/mypage">
 	<i class="fa-solid fa-user"></i>
 	<span>마이페이지</span>
+	</a>
+	</c:if>
+	<c:if test="${sessionScope.loginId != null && loginLevel != '관리자'}">
+	<a href="/club/add">
+	<i class="fa-solid fa-plus"></i>
+	<span>모임 만들기</span>
 	</a>
 	</c:if>
 	<c:if test = "${sessionScope.loginId != null && loginLevel == '관리자'}">

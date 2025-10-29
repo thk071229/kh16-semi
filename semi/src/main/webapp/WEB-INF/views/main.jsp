@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -23,33 +24,14 @@
   text-overflow: ellipsis;   /* ... 으로 표시 */
   white-space: nowrap;       /* 줄바꿈 방지 */
 }
-.like-area .toggle-like { /* 아이콘 색상 */
-  font-size: 16px;
-  color: white !important; /* .red 재정의 */
-}
-.like-area {
-  position: absolute;
-  top:10px;
-  background: rgba(0, 0, 0, 0.5);
-  padding: 5px 10px;
-  color:white;
-  border-radius: var(--radius-sm);
-  display: inline-flex; /* h-stack 대체 */
-  align-items: center;
-  gap: 6px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-  z-index: 10; /* 이미지 위에 표시 */
-}
-
 </style>
 <jsp:include page="/WEB-INF/views/template/main-header.jsp"></jsp:include>
+
 <%-- js 파일을 불러와 소모임에 토글 기능 추가 --%>
 <c:if test="${sessionScope.loginId != null && sessionScope.loginLevel != '관리자'}">
 <script type="text/javascript" src="/js/club-like.js"></script>
 </c:if>	
+
 <%-- clubLikeList-ajax 코드가 들어갈 js --%>
 <script type="text/javascript">
 	$(function(){});
@@ -195,7 +177,7 @@
 	<div class="grid mt-20">
 	<c:forEach var="boardCountVO" items="${clubBoardCountVO}" varStatus="status">
 			<div class="card">
-				<div> <%-- 이미지 영역 --%>
+				<div class="card-image-container"> <%-- 이미지 영역 --%>
                     <c:choose>
                         <c:when test="${not empty boardCountVO.clubProfile}">
                             <img src="/attachment/download?attachmentNo=${boardCountVO.clubProfile}" alt="${boardCountVO.clubName}" 
@@ -220,7 +202,7 @@
                     <div class="h-stack like-area" data-club-no="${boardCountVO.clubNo}">
                         <span class="ms-10 like-count">
                         <i class="fa-regular fa-heart red toggle-like"></i>
-                        <span class="like-count-value">${boardCountVO.clubLike}</span>개 <%-- '개' 글자 span 안으로 이동 --%>
+                        <span class="like-count-value">${boardCountVO.clubLike}</span> <%-- '개' 글자 span 안으로 이동 --%>
                         </span>
                     </div>
                     <a href="/club/home?clubNo=${boardCountVO.clubNo}" class="btn btn-ghost mt-10">자세히 보기</a>
