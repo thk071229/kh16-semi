@@ -18,4 +18,6 @@ public class ClubCountVO {
 		private int eventCount;
 		private int boardCount;
 		private int memberCount;
+		private String regionDepth1;
+		private String regionDepth2;
 }

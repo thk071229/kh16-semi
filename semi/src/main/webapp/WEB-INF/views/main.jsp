@@ -11,23 +11,12 @@
   gap: 16px !important; /* 간격 강제 (commons.css와 동일하게) */
   grid-template-columns: repeat(4, 1fr) !important; /* 4열 강제 */
 }
-
 /* 카드 최대 너비 설정 (4개가 들어가도록) */
-.card {
-    max-width: 260px !important; /* 최대 너비 강제 (1100px 컨테이너 기준 계산 값) */
-    width: 100% !important;
-    display: flex; /* 카드 내부 정렬을 위해 추가 */
-    flex-direction: column; /* 카드 내용을 세로로 쌓음 */
-}
 .card .v-stack { /* 카드 내용 영역이 남은 공간 채우도록 */
     flex-grow: 1;
     display: flex;
     flex-direction: column;
 }
-.card .btn-ghost { /* 자세히 보기 버튼 하단 정렬 */
-    margin-top: auto; /* 위쪽 여백을 최대로 밀어 버튼을 아래로 */
-}
-
 .region-name {
   display: inline-block; 
   max-width: 13ch;            /* 글자 단위로 9글자 너비 제한 */
@@ -35,6 +24,27 @@
   text-overflow: ellipsis;   /* ... 으로 표시 */
   white-space: nowrap;       /* 줄바꿈 방지 */
 }
+.like-area .toggle-like { /* 아이콘 색상 */
+  font-size: 16px;
+  color: white !important; /* .red 재정의 */
+}
+.like-area {
+  position: absolute;
+  top:10px;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 5px 10px;
+  color:white;
+  border-radius: var(--radius-sm);
+  display: inline-flex; /* h-stack 대체 */
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  z-index: 10; /* 이미지 위에 표시 */
+}
+
 </style>
 <jsp:include page="/WEB-INF/views/template/main-header.jsp"></jsp:include>
 <%-- js 파일을 불러와 소모임에 토글 기능 추가 --%>
@@ -108,7 +118,9 @@
                 <div class="v-stack" style="padding: 16px;"> <%-- 내용을 위한 세로 스택 + 카드 내부 패딩 --%>
                     <h4 style="margin: 4px 0 8px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${likeCountVO.clubName}</h4>
                     <div class="kicker"> <%-- 작은 텍스트 스타일 (지역 | 카테고리) --%>
-                        <span class="region-name">${likeCountVO.regionName}</span>
+                        <span class="region-name">
+                        ${likeCountVO.regionName}
+                        </span>
                     </div>
                     <div class="kicker">
                     	<span>${likeCountVO.categoryName}</span>
@@ -119,16 +131,17 @@
                     <div class="h-stack like-area" data-club-no="${likeCountVO.clubNo}">
                         <span class="ms-10 like-count">
                         <i class="fa-regular fa-heart red toggle-like"></i>
-                        <span class="like-count-value">${likeCountVO.clubLike}</span>개 <%-- '개' 글자 span 안으로 이동 --%>
+                        <span class="like-count-value">${likeCountVO.clubLike}</span> <%-- '개' 글자 span 안으로 이동 --%>
                         </span>
                     </div>
                     <a href="/club/home?clubNo=${likeCountVO.clubNo}" class="btn btn-ghost mt-10">자세히 보기</a>
                 </div>
             </div>
         </c:forEach>
-
     </div>
-    
+    	<div class="cell center mt-20 mb-20">
+			<jsp:include page="/WEB-INF/views/template/pagination-num-board.jsp"></jsp:include>	
+		</div>
 <div class="header"> <%-- 제목과 '더보기' 링크를 위한 레이아웃 --%>
         <h3>⭐ 활동이 활발한 모임 (이벤트) ⭐</h3>
         <a href="/club/list" class="link">더보기 &gt;</a> <%-- 더보기 링크 --%>
@@ -162,15 +175,18 @@
                     <div class="h-stack like-area" data-club-no="${eventCountVO.clubNo}">
                         <span class="ms-10 like-count">
                         <i class="fa-regular fa-heart red toggle-like"></i>
-                        <span class="like-count-value">${eventCountVO.clubLike}</span>개 <%-- '개' 글자 span 안으로 이동 --%>
+                        <span class="like-count-value">${eventCountVO.clubLike}</span> <%-- '개' 글자 span 안으로 이동 --%>
                         </span>
                     </div>
                     <a href="/club/home?clubNo=${eventCountVO.clubNo}" class="btn btn-ghost mt-10">자세히 보기</a>
                 </div>
             </div> <%-- card 닫기 --%>
 		</c:forEach>
+
 	</div> <%-- grid 닫기 --%>
-		
+		<div class="cell center mt-20 mb-20">
+			<jsp:include page="/WEB-INF/views/template/pagination-num-event.jsp"></jsp:include>	
+		</div>
 	
 
 <div class="header"> <%-- 제목과 '더보기' 링크를 위한 레이아웃 --%>
@@ -213,7 +229,9 @@
             </div> <%-- card 닫기 --%>
 		</c:forEach>
 	</div> <%-- grid 닫기 --%>
-
+		<div class="cell center mt-20 mb-20">
+			<jsp:include page="/WEB-INF/views/template/pagination-num-like.jsp"></jsp:include>	
+		</div>
 <div class="header"> <%-- 제목과 '더보기' 링크를 위한 레이아웃 --%>
         <h3>⭐ 내 근처에서 시작되는 정모 ⭐</h3>
         <a href="/club/list" class="link">더보기 &gt;</a> <%-- 더보기 링크 --%>

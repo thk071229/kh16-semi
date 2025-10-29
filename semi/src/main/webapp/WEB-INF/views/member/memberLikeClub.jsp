@@ -71,7 +71,9 @@
 
 <div class="container">
 	
-	<div class="section-title">${memberDto.memberId}님이 찜한 소모임 목록</div>
+	<div class="cell center">
+	<h3>⭐ 찜한 소모임 ⭐</h3>
+	</div>
   	<div class="table-wrapper">
   		<table>
   			<thead>
