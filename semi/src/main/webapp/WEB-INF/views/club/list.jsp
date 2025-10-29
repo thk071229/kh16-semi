@@ -17,7 +17,7 @@
 }
 </style>
 
-<%-- 좋아요 관련 javaSciprt 코드 --%>
+<%-- club-like.js 불러오기 --%>
 <c:if test="${sessionScope.loginId != null && sessionScope.loginLevel != '관리자'}">
 	<script src="/js/club-like.js"></script>
 </c:if>
@@ -76,7 +76,7 @@
 					$(html).find(".club-category").text(clubList.categoryName);
 					$(html).find(".member-count").text("회원 수:" + clubList.memberCount + "명");
 					$(html).find(".club-name").text(clubList.clubName);
-					$(html).find(".club-like-area").attr("data-club-no", clubList.clubNo);
+					$(html).find(".like-area").attr("data-club-no", clubList.clubNo);
 					$(html).find(".like-count-value").text(clubList.clubLike);
 					$(html).find(".club-number").attr("href", "/club/home?clubNo=" + clubList.clubNo);
 					
@@ -106,6 +106,7 @@
      				<img class="club-image" onerror="this.onerror=null; this.src='/images/error/no-image.png';" style="width:100%; height:auto; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--radius-sm) var(--radius-sm) 0 0;">
                 </div>
                 <div class="v-stack" style="padding: 16px;"> <%-- 내용을 위한 세로 스택 + 카드 내부 패딩 --%>
+                    <h4 class="club-name" style="margin: 4px 0 8px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display:block;">모임 이름</h4> <%-- 모임 이름 --%>
                     <div class="kicker"> <%-- 작은 텍스트 스타일 (지역 | 카테고리) --%>
                         <span class="club-region">지역명</span>
                     </div>
@@ -115,10 +116,9 @@
                     <div class="kicker">
                    		<span class="member-count">회원 수</span>
                     </div>
-                    <h4 class="club-name" style="margin: 4px 0 8px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display:block;">모임 이름</h4> <%-- 모임 이름 --%>
-                    <div class="h-stack club-like-area"> <%-- 가로 스택 (좋아요 수) --%>
-                        <span class="ms-10 club-like-count">
-                        <i class="fa-regular fa-heart club-like-btn red"></i>
+                    <div class="h-stack like-area"> <%-- 가로 스택 (좋아요 수) --%>
+                        <span class="ms-10 like-count">
+                        <i class="fa-regular fa-heart red toggle-like"></i>
                         <span class="like-count-value">좋아요 수</span>
                         </span> <%-- 빨간색 하트 + 좋아요 수 --%>
                     </div>
@@ -132,6 +132,7 @@
     <h2>전체 소모임 목록</h2>
 	
 	<!-- ajax로 바뀌는 영역 -->
+	
 	<div class="club-list-wrapper grid mt-30"><%-- 카드 목록 그리드 (4열) --%>
     	<h2>아직 등록된 모임이 없습니다</h2>
     </div>
