@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kh.semi.dao.BoardDao;
 import com.kh.semi.dao.ClubDao;
 import com.kh.semi.dao.ClubMemberDao;
-import com.kh.semi.dao.CountDao;
 import com.kh.semi.dao.EventDao;
 import com.kh.semi.vo.BoardListVO;
 import com.kh.semi.vo.ClubListVO;
@@ -94,15 +93,15 @@ public class ListMoreRestController {
 	
 	//전체 모임 리스트
 	@PostMapping("/club")
-	public List<ClubListVO> clubMore(PageVO pageVO){
+	public Map<String, Object> clubMore(PageVO pageVO){
 
 		pageVO.setDataCount(clubDao.count(pageVO));
 		
 		List<ClubListVO> clubList = clubDao.selectListWithPaging(pageVO);
-		List<ClubListVO> result = new ArrayList<>();
+		List<ClubListVO> list = new ArrayList<>();
 		
 		for(ClubListVO clubListVO : clubList) {
-			result.add(ClubListVO.builder()
+			list.add(ClubListVO.builder()
 					.clubNo(clubListVO.getClubNo())
 					.clubLeader(clubListVO.getClubLeader())
 					.clubCategory(clubListVO.getClubCategory())
@@ -116,19 +115,23 @@ public class ListMoreRestController {
 					.memberCount(clubListVO.getMemberCount())
 					.build());
 		}
+		Map<String, Object> result = new HashMap<>();
+		result.put("list", list);
+		result.put("hasMore", pageVO.hasMore());
+		
 		return result;
 	}
 	//추천 모임 리스트
 	@PostMapping("/recommendClub")
-	public List<ClubListVO> clubLikeMore(PageVO pageVO){
+	public Map<String, Object> clubLikeMore(PageVO pageVO){
 		pageVO.setDataCount(clubDao.countByClubLike(pageVO));
 		
 		List<ClubListVO> clubLikeList = clubDao.selectClubListOrderByLikesWithPaging(pageVO);
 		
-		List<ClubListVO> result = new ArrayList<>();
+		List<ClubListVO> list = new ArrayList<>();
 		
 		for(ClubListVO clubListVO : clubLikeList) {
-			result.add(ClubListVO.builder()
+			list.add(ClubListVO.builder()
 					.clubNo(clubListVO.getClubNo())
 					.clubName(clubListVO.getClubName())
 					.clubCategory(clubListVO.getClubCategory())
@@ -143,20 +146,24 @@ public class ListMoreRestController {
 					.build());
 			
 		}
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("list", list);
+		result.put("hasMore", pageVO.hasMore());
 		return result;
 	}
 	//모임 회원 목록 페이징
 	@PostMapping("/clubMember")
-	public List<ClubMemberListVO> memberMore(PageVO pageVO, int clubNo){
+	public Map<String, Object> memberMore(PageVO pageVO, int clubNo){
 		ClubListVO clubListVO = clubDao.selectOneFromClubList(clubNo);
 		pageVO.setDataCount(clubListVO.getMemberCount());
 		
 		List<ClubMemberListVO> memberList = clubMemberDao.selectMemberListWithPaging(pageVO, clubNo);
 		
-		List<ClubMemberListVO> result = new ArrayList<>();
+		List<ClubMemberListVO> list = new ArrayList<>();
 		
 		for(ClubMemberListVO clubMemberList : memberList) {
-			result.add(ClubMemberListVO.builder()
+			list.add(ClubMemberListVO.builder()
 						.clubMember(clubMemberList.getClubMember())
 						.clubMemberJoin(clubMemberList.getClubMemberJoin())
 						.clubMemberRole(clubMemberList.getClubMemberRole())
@@ -164,6 +171,11 @@ public class ListMoreRestController {
 						.memberNickname(clubMemberList.getMemberNickname())
 						.build());
 		}
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("list", list);
+		result.put("hasMore", pageVO.hasMore());
+		
 		return result;
 	}
 	
@@ -275,4 +287,49 @@ public class ListMoreRestController {
 		
 		return result;
 	}
-}
+	@PostMapping("/homeEvent")
+	public Map<String, Object> homeMore(@ModelAttribute PageVO pageVO){
+		List<EventListVO> homeList;
+		
+		if(pageVO.getSelectedDate() != null) {
+			int dateCount = eventDao.selectedDateCount(pageVO);
+			pageVO.setDataCount(dateCount);
+			homeList = eventDao.selectListHomeWithPagingByDate(pageVO);
+		}
+		else {
+			int count = eventDao.afterEventCount(pageVO);
+			pageVO.setDataCount(count);
+			homeList = eventDao.selectListHomeWithPaging(pageVO);
+		}
+		
+		
+		//데이터 담을 객체 준비
+		List<EventListVO> list = new ArrayList<>();
+		Map<String, Object> result = new HashMap<>();
+		
+		for(EventListVO eventListVO : homeList) {
+			list.add(EventListVO.builder()
+					.eventNo(eventListVO.getEventNo())
+					.eventClub(eventListVO.getEventClub())
+					.eventTitle(eventListVO.getEventTitle())
+					.eventAddress(eventListVO.getEventAddress())
+					.eventAttend(eventListVO.getEventAttend())
+					.eventDate(eventListVO.getEventDate())
+					.eventMaxPeople(eventListVO.getEventMaxPeople())
+					.eventWriter(eventListVO.getEventWriter())
+					.clubCategory(eventListVO.getClubCategory())
+					.clubLeader(eventListVO.getClubLeader())
+					.clubName(eventListVO.getClubName())
+					.clubRegion(eventListVO.getClubRegion())
+					.categoryName(eventListVO.getCategoryName())
+					.regionName(eventListVO.getRegionName())
+					.memberNickname(eventListVO.getMemberNickname())
+					.build());
+		}
+		
+		result.put("list", list);
+		result.put("hasMore", pageVO.hasMore());
+		return result;
+	}
+	
+	}
