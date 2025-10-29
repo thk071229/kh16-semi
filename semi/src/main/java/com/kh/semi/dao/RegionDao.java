@@ -22,6 +22,46 @@ public class RegionDao {
 		String sql = "select * from region order by region_depth1 asc";
 		return jdbcTemplate.query(sql, regionMapper);
 	}
+	public RegionDto selectOne(int regionNo) {
+		String sql = "select * from region where region_no=?";
+		Object[] params = {regionNo};
+		List<RegionDto> list = jdbcTemplate.query(sql, regionMapper, params);
+		return list.isEmpty() ? null : list.get(0);
+	}
+	//depth1목록
+	public List<String> selectDepth1(){
+		String sql = "select distinct region_depth1 from region "
+				+ "where region_depth1 is not null "
+				+ "order by region_depth1 asc";
+		return jdbcTemplate.queryForList(sql, String.class);
+	}
+	//depth2목록
+	public List<String> selectDepth2(String regionDepth1){
+		String sql = "select distinct "
+				+ "case "
+				+ "when instr(region_depth2, ' ') > 0 "
+				+ "then substr(region_depth2, 1, instr(region_depth2, ' ') - 1) "
+				+ "else "
+				+ "region_depth2 "
+				+ "end as simplified_region_depth2 "
+				+ "from region "
+				+ "where region_depth1=? and region_depth2 is not null "
+				+ "order by simplified_region_depth2 asc";
+		Object[] params = {regionDepth1};
+		return jdbcTemplate.queryForList(sql, String.class, params);
+	}
+	public List<RegionDto> selectByDepth1(String regionDepth1) {
+		String sql = "select * from region where region_depth1=? "
+				+ "order by region_depth1 asc";
+		Object[] params = {regionDepth1};
+		return jdbcTemplate.query(sql, regionMapper, params);
+	}
+	public List<RegionDto> selectByDepth2(String regionDepth2) {
+		String sql = "select * from region where region_depth2=? "
+				+ "order by region_depth2 asc";
+		Object[] params = {regionDepth2};
+		return jdbcTemplate.query(sql, regionMapper, params);
+	}
 		
 	//이름으로 조회
 	public RegionDto findByRegionName(String regionName){

@@ -201,4 +201,33 @@ public class ClubDao {
 		return jdbcTemplate.queryForObject(sql, int.class, params);
 	}
 	
+	//search 결과 클럽 목록
+	public List<ClubCountVO> selectListByResultWithPaging(PageVO pageVO, String keyword) {
+		String sql = "select * from ("
+					+ "select rownum rn, TMP.* from ("
+					+ "select * from club_count "
+					+ "where "
+						+ "instr(club_name, ?)>0 "
+						+ "or instr(region_name, ?)>0 "
+						+ "or instr(category_name, ?)>0 "
+						+ "order by club_no desc"
+					+ ")TMP "
+				+ ")where rn between ? and ?";
+		Object[] params = {
+				keyword, keyword, keyword,
+				pageVO.getBegin(), pageVO.getEnd()
+			};
+		return jdbcTemplate.query(sql, clubCountMapper, params);
+	}
+	public int searchResultCount(String keyword) {
+		String sql = "select count(*) from club_count "
+						+ "where "
+							+ "instr(club_name, ?)>0 "
+							+ "or instr(region_name, ?)>0 "
+							+ "or instr(category_name, ?)>0 "
+						+ "order by club_no desc";
+		Object[] params = {keyword, keyword, keyword};
+		return jdbcTemplate.queryForObject(sql, int.class, params);
+	}
+	
 }

@@ -9,10 +9,12 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.semi.dao.ClubDao;
 import com.kh.semi.dao.CountDao;
 import com.kh.semi.dao.RegionDao;
 import com.kh.semi.dto.RegionDto;
@@ -26,6 +28,8 @@ public class MainController {
 	private RegionDao regionDao;
 	@Autowired
 	private CountDao countDao;
+	@Autowired
+	private ClubDao clubDao;
 
 	@RequestMapping("/")
 	public String main(Model model,
@@ -107,5 +111,18 @@ public class MainController {
 		return "/WEB-INF/views/main.jsp";
 	}
 
-
+	@GetMapping("/search")
+	public String search(@ModelAttribute(value="pageVO") PageVO pageVO, 
+			@RequestParam(required=false) String keyword, Model model) {
+		int resultCount = clubDao.searchResultCount(keyword);
+		
+		pageVO.setDataCount(resultCount);
+		List<ClubCountVO> clubList = clubDao.selectListByResultWithPaging(pageVO, keyword);
+		
+		model.addAttribute("resultCount", resultCount);
+		model.addAttribute("clubList", clubList);
+		model.addAttribute("keyword", keyword);
+		
+		return "/WEB-INF/views/search.jsp";
+	}
 }
