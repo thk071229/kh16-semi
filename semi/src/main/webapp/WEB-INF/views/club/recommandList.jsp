@@ -31,6 +31,8 @@
         <a href="/club/list" class="link">더보기 &gt;</a> <%-- 더보기 링크 --%>
 </div>
 
+
+<%-- 메인과 동일--%>
 <div class="grid mt-20"> <%-- 카드 목록 그리드 (CSS에서 4열로 설정 필요) --%>
 
         <c:forEach var="likeCountVO" items="${clubLikeCountVO}">
@@ -69,9 +71,10 @@
                 </div>
             </div>
         </c:forEach>
-
     </div>
-    
+    	<div class="cell center mt-20 mb-20">
+			<jsp:include page="/WEB-INF/views/template/pagination-num-board.jsp"></jsp:include>	
+		</div>
 <div class="header"> <%-- 제목과 '더보기' 링크를 위한 레이아웃 --%>
         <h3>⭐ 활동이 활발한 모임 (이벤트) ⭐</h3>
         <a href="/club/list" class="link">더보기 &gt;</a> <%-- 더보기 링크 --%>
@@ -112,8 +115,11 @@
                 </div>
             </div> <%-- card 닫기 --%>
 		</c:forEach>
+
 	</div> <%-- grid 닫기 --%>
-		
+		<div class="cell center mt-20 mb-20">
+			<jsp:include page="/WEB-INF/views/template/pagination-num-event.jsp"></jsp:include>	
+		</div>
 	
 
 <div class="header"> <%-- 제목과 '더보기' 링크를 위한 레이아웃 --%>
@@ -156,7 +162,9 @@
             </div> <%-- card 닫기 --%>
 		</c:forEach>
 	</div> <%-- grid 닫기 --%>
-
+		<div class="cell center mt-20 mb-20">
+			<jsp:include page="/WEB-INF/views/template/pagination-num-like.jsp"></jsp:include>	
+		</div>
 <div class="header"> <%-- 제목과 '더보기' 링크를 위한 레이아웃 --%>
         <h3>⭐ 내 근처에서 시작되는 정모 ⭐</h3>
         <a href="/club/list" class="link">더보기 &gt;</a> <%-- 더보기 링크 --%>

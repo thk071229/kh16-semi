@@ -71,7 +71,7 @@ public class MainController {
 		eventPageVO.setRegionDepth1(regionDepth1);
 		eventPageVO.setRegionDepth2(regionDepth2);
 		eventPageVO.setDataCount(countDao.eventListCount(eventPageVO));
-		
+
 		/// 게시글count용 PageVO 설정
 		PageVO boardPageVO = new PageVO();
 		boardPageVO.setPage(boardPage);
@@ -95,6 +95,9 @@ public class MainController {
 		model.addAttribute("clubEventCountVO", clubEventCountVO);
 		model.addAttribute("clubBoardCountVO", clubBoardCountVO);
 		model.addAttribute("clubLikeCountVO", clubLikeCountVO);
+		model.addAttribute("eventPageVO", eventPageVO);
+		model.addAttribute("boardPageVO", boardPageVO);
+		model.addAttribute("likePageVO", likePageVO);
 		
 		
 		
