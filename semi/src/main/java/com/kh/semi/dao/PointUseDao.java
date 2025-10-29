@@ -1,11 +1,14 @@
 package com.kh.semi.dao;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.semi.dto.PointUseDto;
 import com.kh.semi.mapper.PointUseMapper;
+
 
 @Repository
 public class PointUseDao {
@@ -29,7 +32,13 @@ public class PointUseDao {
 	 jdbcTemplate.update(sql,params);	
 	}
 	
-	
+	// 상세조회
+	public PointUseDto selectOne(String useId){ // useNo = loginId
+		String sql = "select * from point_use where use_id = ?";
+		Object[] params = {useId};
+		List<PointUseDto> list = jdbcTemplate.query(sql, pointUseMapper, params);
+		return list.isEmpty() ? null : list.get(0);
+	}
 	
 	
 }

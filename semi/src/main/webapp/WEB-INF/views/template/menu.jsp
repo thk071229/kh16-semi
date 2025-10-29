@@ -146,6 +146,12 @@ $(function(){
 	<i class="fa-solid fa-calendar-days"></i>
 	<span>정모 일정</span>
 	</a>
+	<c:if test = "${sessionScope.loginId != null}">
+	<a href="/member/pointUse">
+	<i class="fa-solid fa-address-card"></i>
+	<span>소모임생성권</span>
+	</a>
+	</c:if>
 	<c:if test="${sessionScope.loginId == null}">
 	<a href="/member/agree">
 	<i class="fa-solid fa-user-plus"></i>
