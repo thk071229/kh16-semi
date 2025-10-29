@@ -25,7 +25,7 @@
 		}
 		
         #toggle + .sidebar{
-            background-color: rgba(164, 224, 199, 0.9);
+            background-color: rgba(164, 224, 199);
             position:fixed;
             top:0;
             left:0;
@@ -43,12 +43,12 @@
         } 
         #toggle ~ .toggle-label{
             font-size:24px;
-            width: 1.5em;
+            width: 1.7em;
             height: 5em;
-            
-            background-color : rgba(164, 224, 199, 0.5);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+            background-color : rgba(164, 224, 199,0.95);
             border-radius: 0.2em;
-            color: rgb(107, 184, 152);
+            color:WHITE;
             cursor:pointer;
 
             display:inline-flex;
@@ -57,13 +57,10 @@
             
             position:fixed;
             top:20em;
-            left:0.2em;
             z-index:1000;
         }
         #toggle ~ .toggle-label:hover {
-            border-color:rgba(164, 224, 199, 0.8);
-            background-color:rgba(164, 224, 199, 0.8);
-            color:white;
+            color: rgb(107, 184, 152);
         }
         
         #toggle ~ .toggle-label > .fa-arrow-right,
