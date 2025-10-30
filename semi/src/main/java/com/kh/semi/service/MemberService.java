@@ -6,12 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kh.semi.dao.BuyDao;
 import com.kh.semi.dao.CountDao;
 import com.kh.semi.dao.MemberDao;
 import com.kh.semi.dao.MemberRegionDao;
+import com.kh.semi.dto.BuyDto;
 import com.kh.semi.dto.MemberDto;
 import com.kh.semi.dto.MemberRegionDto;
 import com.kh.semi.error.TargetNotFoundException;
+import com.kh.semi.error.UnauthorizationException;
 import com.kh.semi.vo.MemberActiveVO;
 
 @Service
@@ -28,6 +31,8 @@ public class MemberService {
 	private MemberRegionDao memberRegionDao;
 	@Autowired
 	private CountDao countDao;
+	@Autowired
+	private BuyDao buyDao;
 
 	/*
 	 * MemberService(EmailConfiguragion emailConfiguragion) {
@@ -113,6 +118,23 @@ public class MemberService {
 	}
 	
 	
+	@Transactional
+	public void updateMemberAuthorityWithBuy(String loginId) {
+		//시퀀스 생성
+		MemberDto memberDto = memberDao.selectOne(loginId);
+		if(memberDto == null) throw new TargetNotFoundException("존재하지 않는 회원");
+		if(memberDto.getMemberAuthority().equals("n")) {//authority가 n이면
+			int buyNo = buyDao.sequence();
+			BuyDto buyDto = new BuyDto();
+			buyDto.setBuyNo(buyNo);
+			buyDto.setMemberId(loginId);
+			buyDao.insert(buyDto);
+			memberDao.updateMemberAuthority(loginId);
+		}
+		else {
+			throw new TargetNotFoundException("이미 모임 생성권한이 있습니다");
+		}
+	}
 	
 	
 }
