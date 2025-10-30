@@ -127,22 +127,21 @@ public class MemberController {
 			int attachmentNo = attachmentService.save(attach);
 			memberDao.connect(memberDto.getMemberId(), attachmentNo);
 		}
-		String memberId = memberDto.getMemberId();
 		
 		//가입 환영 메일 발송
 		emailService.sendWelcomeMail(memberDto);
 		
-		return "redirect:fistLogin";
+		return "redirect:firstLogin";
 	}
 	
-	@GetMapping("/fistLogin")
+	@GetMapping("/firstLogin")
 	public String fistLogin() {
 		return "/WEB-INF/views/member/firstLogin.jsp";
 	}
 	@PostMapping("/firstLogin")
 	public String firstLogin(@ModelAttribute MemberDto memberDto, HttpSession session) {
 		MemberDto findDto = memberDao.selectOne(memberDto.getMemberId());
-		if(findDto == null) return "redirect:login?error";
+		if(findDto == null) return "redirect:firstLogin?error";
 		
 		boolean isLogin = findDto.getMemberPw().equals(memberDto.getMemberPw());
 		
@@ -154,7 +153,7 @@ public class MemberController {
 			return "redirect:joinFinish";
 		}
 		else {
-			return "redirect:login?error"; 
+			return "redirect:firstLogin?error"; 
 		}
 	}
 	
