@@ -23,11 +23,7 @@
 
 <form action="join" method="post" enctype="multipart/form-data" autocomplete="off" class="check-form">
 	
-	<div class="container w-350">
-	
-		<div class="cell center">
-			<h1 style="color: var(--subtle);">회원가입 정보 입력</h1>
-		</div>
+	<div class="container w-400">
 
         <div class="page">
             <div class="flex-box">
@@ -39,9 +35,14 @@
                     </button>
                 </div>
             </div>
-
-            <div class="cell center">
-                <h2 style="color: var(--subtle);">1단계 : 아이디 입력</h2>
+		
+		<div class="cell center">
+			<h2 style="color: var(--subtle);">회원가입 정보 입력</h2>
+		</div>
+		
+		
+            <div class="cell center mt-50">
+                <h3 style="color: var(--subtle);">1단계 : 아이디 입력</h3>
             </div>
 
             <div class="cell center">
@@ -70,7 +71,7 @@
             </div>
 
             <div class="cell center">
-                <h2 style="color: var(--subtle);">2단계 : 비밀번호 입력</h2>
+                <h3 style="color: var(--subtle);">2단계 : 비밀번호 입력</h3>
             </div>
 
             <div class="cell center">
@@ -108,7 +109,7 @@
             </div>
 
             <div class="cell center">
-                <h2 style="color: var(--subtle);">3단계 : 닉네임 입력</h2>
+                <h3 style="color: var(--subtle);">3단계 : 닉네임 입력</h3>
             </div>
 
             <div class="cell center">
@@ -138,16 +139,16 @@
        
 		
             <div class="cell center">
-                <h2 style="color: var(--subtle);">4단계 : 이메일 입력 및 인증</h2>
+                <h3 style="color: var(--subtle);">4단계 : 이메일 입력 및 인증</h3>
             </div>
-
-            <div class="cell center">
-                <label>이메일 <i class="fa-solid fa-asterisk warn"></i></label>
-                <div class="flex-box" style="width:300px; margin: 0 auto; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px;">
+			<div class="cell center">
+			<label>이메일 <i class="fa-solid fa-asterisk warn"></i></label>
+                <div class="flex-box flex-vertical center" >
                     
-                    <input type="text" inputmode="email" name="memberEmail" class="search-input" style="flex-grow: 1; max-width: 250px;">
+                    <input type="text" inputmode="email" name="memberEmail" class="search-input w-100" 
+                    value="${memberDto.memberEmail}" required>
                     
-                    <button type="button" class="btn btn-common btn-cert-send" style="margin:0;">
+                    <button type="button" class="btn btn-common btn-cert-send mt-20">
                         <i class="fa-solid fa-paper-plane"></i>
                         <span>인증번호 보내기</span>
                     </button>
@@ -191,7 +192,7 @@
             </div>
 
             <div class="cell center">
-                <h2 style="color: var(--subtle);">5단계 : 생년월일 및 성별 입력</h2>
+                <h3 style="color: var(--subtle);">5단계 : 생년월일 및 성별 입력</h3>
             </div>
 
             <div class="cell center">
@@ -226,7 +227,7 @@
             </div>
 
             <div class="cell center">
-                <h2 style="color: var(--subtle);">6단계 : 선택 정보 입력 (프로필 이미지)</h2>
+                <h3 style="color: var(--subtle);">6단계 : 선택 정보 입력 (프로필 이미지)</h3>
             </div>
 
             <div class="cell center">

@@ -65,7 +65,20 @@
 	
 <!-- 	<h2>소소 - 우리동네 취미 모임</h2> -->
 
-	
+	<section class="hero card">
+		<div class="flex-box">
+		<div class="flex-vertical">
+			<div class="title">우리 동네 모임을 쉽게, SOSO</div>
+	        <div class="subtitle">따뜻하고 소소한 모임을 찾아보세요.</div>
+			<div style="margin-top:30px; margin-right:300px;">
+				<a href="/member/pointUse" class="btn btn-primary me-10">생성권 구매</a> 
+				<a href="/club/add" class="btn btn-accent">모임 만들기</a>
+			</div>
+		</div>
+		<img src="assets/hero-illus.svg" alt="hero" style="width:220px; "/>
+		</div>
+	</section>
+
 <c:if test="${not empty depth1 || not empty depth2}">
 	<c:choose>
 		<c:when test="${depth2==null}">
@@ -83,24 +96,11 @@
 	</c:choose>
 </c:if>	
 
-	<section class="hero card">
-		<div class="flex-box">
-		<div class="flex-vertical">
-			<div class="title">우리 동네 모임을 쉽게, SOSO</div>
-	        <div class="subtitle">따뜻하고 소소한 모임을 찾아보세요.</div>
-			<div style="margin-top:30px; margin-right:300px;">
-				<a href="/member/pointUse" class="btn btn-primary me-10">생성권 구매</a> 
-				<a href="/club/add" class="btn btn-accent">모임 만들기</a>
-			</div>
-		</div>
-		<img src="assets/hero-illus.svg" alt="hero" style="width:220px; "/>
-		</div>
-	</section>
 
 <%-- 찜이 많은 소모임 --%>
 <div class="header"> <%-- 제목과 '더보기' 링크를 위한 레이아웃 --%>
         <h3>⭐ 찜이 많은 소모임 ⭐</h3>
-        <a href="/club/list" class="link">더보기 &gt;</a> <%-- 더보기 링크 --%>
+        <a href="/club/list" class="member-link">더보기 &gt;</a> <%-- 더보기 링크 --%>
 </div>
 <div class="grid mt-20"> <%-- 카드 목록 그리드 (CSS에서 4열로 설정 필요) --%>
         <c:forEach var="likeCountVO" items="${clubLikeCountVO}">
@@ -149,7 +149,7 @@
 		
 <div class="header"> <%-- 제목과 '더보기' 링크를 위한 레이아웃 --%>
         <h3>⭐ 만남이 활발한 모임 ⭐</h3>
-        <a href="/club/list" class="link">더보기 &gt;</a> <%-- 더보기 링크 --%>
+        <a href="/club/list" class="member-link">더보기 &gt;</a> <%-- 더보기 링크 --%>
 </div>
 
 <div class="grid mt-20"> <%-- 카드 목록 그리드 (CSS에서 4열로 설정 필요) --%>
@@ -201,7 +201,7 @@
 
 <div class="header"> <%-- 제목과 '더보기' 링크를 위한 레이아웃 --%>
         <h3>⭐ 소통이 활발한 모임 ⭐</h3>
-        <a href="/club/list" class="link">더보기 &gt;</a> <%-- 더보기 링크 --%>
+        <a href="/club/list" class="member-link">더보기 &gt;</a> <%-- 더보기 링크 --%>
 </div>
 	<div class="grid mt-20">
 	<c:forEach var="boardCountVO" items="${clubBoardCountVO}" varStatus="status">
