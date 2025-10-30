@@ -107,7 +107,7 @@
 /* 2단계 하위 UL (상위 LI 옆으로 펼쳐짐) */
 .dropdown-menu2 ul ul {
     position: absolute;
-    top: 0; 
+ 	top: auto;
     left: 100%; /* 1차 메뉴의 오른쪽 끝에 위치 */
     z-index: 1001;
     margin-left: 1px;
@@ -166,6 +166,7 @@
     background: rgba(127,200,169,0.2); 
     color: var(--primary-600);
 }
+
 </style>
 
 
@@ -284,7 +285,28 @@ $(function(){
         
         // depth1 값이 있고, 하위 ul이 존재하면 2단계 로드 함수 호출
         if (depth1 && $targetUl.length > 0) {
-            loadRegionLevel2(depth1, $targetUl);
+            // 1. 2단계 목록 불러오기
+        	loadRegionLevel2(depth1, $targetUl);
+            // 2. ▼▼▼ [핵심] 위치 계산 및 설정 ▼▼▼
+            const $hoveredLi = $(this);
+            
+            // 1차 메뉴 UL (부모 컨테이너)의 상단 위치 (offset().top)
+            const parentUlTop = $regionLevel1List.offset().top; 
+            
+            // 호버된 LI의 상단 위치 (offset().top)
+            const hoveredLiTop = $hoveredLi.offset().top;
+            
+            // 2차 메뉴가 부모 UL을 기준으로 시작해야 하는 상대적인 TOP 위치 계산
+            // (호버된 LI 위치 - 부모 UL 위치)
+            const relativeTop = hoveredLiTop - parentUlTop;
+
+            // 2차 메뉴의 CSS 'top' 속성 설정
+            // 미세 조정을 위해 2차 메뉴가 1차 메뉴의 <li> 시작점에 정확히 오도록 합니다.
+            // (필요에 따라 1px~3px 정도 음수 값을 빼서 간격을 조정할 수 있습니다.)
+            $targetUl.css({
+                'top': relativeTop + 'px',
+                'left': '100%' // 오른쪽에 고정
+            });
         }
     });
 
