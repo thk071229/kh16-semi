@@ -222,6 +222,30 @@ public class EventDao {
 			Object[] params = {clubNo};
 			return jdbcTemplate.queryForObject(sql, int.class, params);
 		}
+		//페이징을 이용한 근처 정모 목록
+		public List<EventListVO> selectNearbyWithPaging(String depth1, String depth2, PageVO pageVO){
+			String sql = "select * from ("
+							+ "select rownum rn, TMP.* from ("
+								+ "select * from event_list "
+								+ "where "
+									+ "instr(event_address, ?)>0 "
+									+ "or instr(event_address, ?)>0 "
+								+ "order by event_date desc"
+							+ ")TMP "
+							+ ")where rn between ? and ?";
+								
+			Object[] params = {depth1, depth2, pageVO.getBegin(), pageVO.getEnd()};
+				return jdbcTemplate.query(sql, eventListMapper, params);
+		}
+		public int countNearby(String depth1, String depth2) {
+			String sql = "select count(*) from event_list "
+							+ "where "
+							+ "instr(event_address, ?)>0 "
+							+ "or instr(event_address, ?)>0";
+			Object[] params = {depth1, depth2};
+			return jdbcTemplate.queryForObject(sql, int.class, params);
+		}
+			
 	// 상세조회
 	public EventDto selectOne(int eventNo) {
 		String sql ="select * from event where event_no=?";

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.semi.mapper.ClubCountMapper;
 import com.kh.semi.mapper.MemberActiveMapper;
 import com.kh.semi.vo.ClubCountVO;
+import com.kh.semi.vo.EventListVO;
 import com.kh.semi.vo.MemberActiveVO;
 import com.kh.semi.vo.PageVO;
 
@@ -154,7 +155,7 @@ public class CountDao {
 			return jdbcTemplate.query(sql, clubCountMapper, params);
 		}
 	}
-
+	
 	
 	//dataCount 설정 위한 count
 	public int eventListCount(PageVO pageVO) {

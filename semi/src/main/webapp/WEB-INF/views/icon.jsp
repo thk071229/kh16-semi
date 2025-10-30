@@ -33,7 +33,9 @@
 	<div class="profile-info">
 			<h2>회원 포인트별 아이콘</h2>
 	      <table>
-	        <tr><th><i class="fa-solid fa-chess-pawn black"></i></th>
+	      	<tr><th><i class="fa-solid fa-chess-pawn black"></i></th>
+	        		<td> - </td></tr>
+	        <tr><th><i class="fa-solid fa-chess-bishop purple"></i></th>
 	        		<td>100 P</td></tr>
 	        <tr><th><i class="fa-solid fa-chess-knight blue"></i></th>
 	        		<td>300 P</td></tr>

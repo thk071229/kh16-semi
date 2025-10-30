@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.semi.dao.BoardDao;
 import com.kh.semi.dao.BoardLikeDao;
@@ -38,6 +37,7 @@ import com.kh.semi.dto.MemberDto;
 import com.kh.semi.dto.PointUseDto;
 import com.kh.semi.error.NeedPermissionException;
 import com.kh.semi.error.TargetNotFoundException;
+import com.kh.semi.error.UnauthorizationException;
 import com.kh.semi.service.AttachmentService;
 import com.kh.semi.service.EmailService;
 import com.kh.semi.service.MemberService;
@@ -564,11 +564,17 @@ public class MemberController {
 	
 	
 	@GetMapping("/pointUse")
-	public String pointUse() {
+	public String pointUse(HttpSession session, Model model) {
+		String loginId = (String)session.getAttribute("loginId");
+		if(loginId == null) throw new UnauthorizationException("로그인이 필요합니다");
+		
+		MemberDto memberDto = memberDao.selectOne(loginId);
+		model.addAttribute("memberDto", memberDto);
+		
 		return "/WEB-INF/views/member/pointUse.jsp";
 	}
 	@PostMapping("/pointUse")
-	public String pointUse(HttpSession session, Model model) {
+	public String pointUse(HttpSession session) {
 		// 로그인 여부 검사
 		String loginId = (String)session.getAttribute("loginId");
 		if(loginId==null) throw new TargetNotFoundException("로그인이 필요합니다");
@@ -590,6 +596,18 @@ public class MemberController {
 		
 		//권한 부여
 		memberDao.updateMemberAuthority(loginId);
+		
+		return "redirect:/";
+	}
+	@PostMapping("/purchase")
+		public String purchase(HttpSession session, Model model) {
+		String loginId = (String)session.getAttribute("loginId");
+		if(loginId == null) throw new UnauthorizationException("로그인이 필요합니다");
+		
+		MemberDto memberDto = memberDao.selectOne(loginId);
+		model.addAttribute("memberDto", memberDto);
+		
+		memberService.updateMemberAuthorityWithBuy(loginId);
 		
 		return "redirect:/";
 	}

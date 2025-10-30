@@ -1,24 +1,31 @@
 package com.kh.semi.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.semi.dao.EventAttendeeDao;
 import com.kh.semi.dao.EventDao;
+import com.kh.semi.dao.MemberRegionDao;
+import com.kh.semi.dao.RegionDao;
 import com.kh.semi.dto.EventDto;
 import com.kh.semi.error.UnauthorizationException;
 import com.kh.semi.vo.EventAttendeeVO;
+import com.kh.semi.vo.EventListVO;
+import com.kh.semi.vo.MemberRegionListVO;
 
 @Service
 public class EventService {
 
- @Autowired
- 	private EventDao eventDao; 
- @Autowired
- 	private EventAttendeeDao eventAttendeeDao;
- @Autowired
-  	private MemberService memberService;
+	@Autowired
+	private EventDao eventDao; 
+	@Autowired
+	private EventAttendeeDao eventAttendeeDao;
+	@Autowired
+	private MemberService memberService;
+ 	
  
  	@Transactional
  	public EventAttendeeVO actionAttendance(String loginId, int eventNo) {
@@ -46,6 +53,7 @@ public class EventService {
 		memberService.refreshMemberPoint(loginId);
 	
 		return eventAttendeeVO;
- }
+ }		
+ 
 	
 }
