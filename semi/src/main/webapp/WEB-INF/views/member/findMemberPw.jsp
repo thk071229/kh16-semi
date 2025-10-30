@@ -5,7 +5,7 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<script>
+<script type="text/javascript">
 $(function() {
     // "찾기" 버튼 클릭 시 로딩 상태 적용
     $("form").on("submit", function(e) {

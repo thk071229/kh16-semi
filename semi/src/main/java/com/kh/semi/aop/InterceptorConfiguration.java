@@ -45,7 +45,7 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 										"/member/join", "/member/login", "/member/goodbye", 
 										"/member/findMemberId", "/member/findMemberIdFinish",
 										"/member/findMemberPw", "/member/findMemberPwFinish",
-										"/member/firstLogin", "/changeMemberPw", "/changeMemberPwFinish",
+										"/member/firstLogin", "/member/changeMemberPw", "/member/changeMemberPwFinish",
 										"/member/agree")
 					.order(1);
 		//회원의 회원가입 페이지 접근 차단 인터셉터

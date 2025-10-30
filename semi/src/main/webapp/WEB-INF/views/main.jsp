@@ -61,6 +61,16 @@
 
 <div class = "container">
 
+	<c:if test="${not empty sessionScope.loginId and empty memberRegion}">
+		<div class="cell">
+			<a href="/member/editRegion" class="member-link">관심 지역 설정하러가기 >></a>
+		</div>
+	</c:if>
+	<c:if test="${not empty sessionScope.loginId and empty memberCategory}">
+		<div class="cell mb-30">
+			<a href="/member/editCategory" class="member-link">관심 카테고리 설정하러가기 >></a>
+		</div>
+	</c:if>
 	
 <!-- 	<h2>소소 - 우리동네 취미 모임</h2> -->
 

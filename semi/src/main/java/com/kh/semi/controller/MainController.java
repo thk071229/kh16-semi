@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.semi.dao.ClubDao;
 import com.kh.semi.dao.CountDao;
-import com.kh.semi.dao.EventDao;
+import com.kh.semi.dao.MemberCategoryDao;
 import com.kh.semi.dao.MemberRegionDao;
 import com.kh.semi.dao.RegionDao;
+import com.kh.semi.dto.MemberCategoryDto;
 import com.kh.semi.dto.RegionDto;
 import com.kh.semi.vo.ClubCountVO;
-import com.kh.semi.vo.EventListVO;
 import com.kh.semi.vo.MemberRegionListVO;
 import com.kh.semi.vo.PageVO;
 
@@ -37,9 +37,9 @@ public class MainController {
 	@Autowired
 	private ClubDao clubDao;
 	@Autowired
-	private EventDao eventDao;
-	@Autowired
 	private MemberRegionDao memberRegionDao;
+	@Autowired
+	private MemberCategoryDao memberCategoryDao;
 
 	@RequestMapping("/")
 	public String main(Model model,
@@ -47,10 +47,22 @@ public class MainController {
 								@RequestParam(required=false) String regionDepth2,
 								@RequestParam(defaultValue="1") int eventPage,
 								@RequestParam(defaultValue="1") int boardPage,
-								@RequestParam(defaultValue="1") int likePage
-			) {
-	 	
-	 	
+								@RequestParam(defaultValue="1") int likePage,
+								HttpSession session) {
+	 	String loginId = (String) session.getAttribute("loginId");
+	 	if(loginId!=null) {
+	 		MemberRegionListVO memberRegionListVO = memberRegionDao.selectOne(loginId);
+	 		if(memberRegionListVO==null) {
+	 			String memberRegion = "";
+	 			model.addAttribute("memberRegion", memberRegion);
+	 		}
+	 		
+			MemberCategoryDto memberCategoryDto = memberCategoryDao.selectById(loginId);
+			if(memberCategoryDto==null) {
+				String memberCategory = "";
+				model.addAttribute("memberCategory", memberCategory);
+			}
+	 	}
 		//지역 선택을 위해 지역 정보 화면 전달
 		List<RegionDto> allList = regionDao.selectList();
 		
@@ -79,7 +91,6 @@ public class MainController {
 				secondDepthSet.add(depth2);
 			}
 		}
-		
 		
 
 		/// 이벤트count용 PageVO 설정
@@ -118,8 +129,7 @@ public class MainController {
 		
 		model.addAttribute("depth1", regionDepth1);
 		model.addAttribute("depth2", regionDepth2);
-		
-		
+
 		
 		model.addAttribute("firstDepthList", firstDepthList);
 		model.addAttribute("secondDepthList", secondDepthList);
