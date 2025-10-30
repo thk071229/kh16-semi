@@ -16,10 +16,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.semi.dao.ClubDao;
 import com.kh.semi.dao.CountDao;
+import com.kh.semi.dao.EventDao;
+import com.kh.semi.dao.MemberRegionDao;
 import com.kh.semi.dao.RegionDao;
 import com.kh.semi.dto.RegionDto;
 import com.kh.semi.vo.ClubCountVO;
+import com.kh.semi.vo.EventListVO;
+import com.kh.semi.vo.MemberRegionListVO;
 import com.kh.semi.vo.PageVO;
+
+import jakarta.servlet.http.HttpSession;
 
 
 @Controller
@@ -30,6 +36,10 @@ public class MainController {
 	private CountDao countDao;
 	@Autowired
 	private ClubDao clubDao;
+	@Autowired
+	private EventDao eventDao;
+	@Autowired
+	private MemberRegionDao memberRegionDao;
 
 	@RequestMapping("/")
 	public String main(Model model,
@@ -39,6 +49,8 @@ public class MainController {
 								@RequestParam(defaultValue="1") int boardPage,
 								@RequestParam(defaultValue="1") int likePage
 			) {
+	 	
+	 	
 		//지역 선택을 위해 지역 정보 화면 전달
 		List<RegionDto> allList = regionDao.selectList();
 		
@@ -50,6 +62,7 @@ public class MainController {
 		Set<String> firstDepthSet = new HashSet<>();
 		Set<String> secondDepthSet = new HashSet<>();
 		
+	
 		for(RegionDto regionDto : allList) {
 			boolean isValid = regionDto != null;
 			
@@ -75,7 +88,7 @@ public class MainController {
 		eventPageVO.setRegionDepth1(regionDepth1);
 		eventPageVO.setRegionDepth2(regionDepth2);
 		eventPageVO.setDataCount(countDao.eventListCount(eventPageVO));
-
+		
 		/// 게시글count용 PageVO 설정
 		PageVO boardPageVO = new PageVO();
 		boardPageVO.setPage(boardPage);
@@ -102,6 +115,9 @@ public class MainController {
 		model.addAttribute("eventPageVO", eventPageVO);
 		model.addAttribute("boardPageVO", boardPageVO);
 		model.addAttribute("likePageVO", likePageVO);
+		
+		model.addAttribute("depth1", regionDepth1);
+		model.addAttribute("depth2", regionDepth2);
 		
 		
 		
