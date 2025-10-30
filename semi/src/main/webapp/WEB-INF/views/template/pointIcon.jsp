@@ -17,9 +17,10 @@
 		<i class="fa-solid fa-chess-knight blue"></i>
 	</c:when>
 	<c:when test="${sidebarData.memberPoint()>100}">
-		<i class="fa-solid fa-chess-pawn black"></i>
+		<i class="fa-solid fa-chess-bishop purple"></i>
 	</c:when>
 	<c:otherwise>
+		<i class="fa-solid fa-chess-pawn black"></i>
 	</c:otherwise>
 </c:choose>
 </a>
