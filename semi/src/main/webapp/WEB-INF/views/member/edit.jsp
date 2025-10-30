@@ -46,13 +46,12 @@
 		<!-- 이메일 -->
 		<div class="cell center">
 			<label>이메일 <i class="fa-solid fa-asterisk warn"></i></label>
-                <div class="flex-box" style="width:300px; margin: 0 auto; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px;">
+                <div class="flex-box flex-vertical center" >
                     
-                    <input type="text" inputmode="email" name="memberEmail" class="search-input" 
-                    value="${memberDto.memberEmail}"
-                    style="flex-grow: 1; max-width: 250px;" required>
+                    <input type="text" inputmode="email" name="memberEmail" class="search-input w-100" 
+                    value="${memberDto.memberEmail}" required>
                     
-                    <button type="button" class="btn btn-common btn-cert-send" style="margin:0;">
+                    <button type="button" class="btn btn-common btn-cert-send mt-20">
                         <i class="fa-solid fa-paper-plane"></i>
                         <span>인증번호 보내기</span>
                     </button>
@@ -62,7 +61,7 @@
                     <div class="fail2-feedback w-100 mt-10">이메일 인증이 완료되지 않았습니다</div>
                 </div>
 		<!-- 성별 -->
-		<div class="cell center">
+		<div class="cell center mt-10">
             	<label>성별</label>
 				<select name="memberGender" class="search-input w-100">
 					<option value="남">남</option>
@@ -84,7 +83,7 @@
 			<input type="password" name="memberPw" class="search-input w-100" placeholder="password" required>
 		</div>
 		<div>
-			<button type="submit" class="btn btn-accent">
+			<button type="submit" class="btn btn-accent w-100 mt-10">
 				정보 변경
 			</button>
 		</div>

@@ -26,7 +26,7 @@
 	</div>
 	<div class="cell center">
 		<form action="pointUse" method="post">
-		<button type="submit" class="btn btn-accent authority-check" data-authority="${memberDto.memberAuthority}">포인트 교환</button>
+		<button type="submit" class="btn btn-accent">포인트 교환</button>
 		</form>
 	</div>
 	

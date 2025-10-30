@@ -43,12 +43,6 @@
 	  padding: 10px;
 	  text-align: center;
 	}
-	.not-club-member{
-		display:inline-block;
-		text-align: center;
-		width: 100%;
-	}
-
 </style>
 <!-- -------------------------------------- -->	
 <script type="text/javascript">
@@ -222,11 +216,7 @@
 			    </table>
 				<hr>
 			</div>
-			<div class="not-club-member">
-			<c:if test="${!isClubMember && sessionScope.loginId != null}">
-				<button type="button" class="btn btn-primary mt-20 join">모임 가입</button>
-			</c:if>
-			</div>
+
 	<div class="cell">
 		<div class="kakao-map w-100"></div>
 	</div>
@@ -238,17 +228,18 @@
 	
 	<c:if test="${sessionScope.loginId != null}">
 	    <div class="cell center">
-	    	<a class="btn btn-primary w-25" href="add?clubNo=${eventDto.eventClub}">등록</a>
-			
+	    	<c:if test="${!isClubMember && sessionScope.loginId != null}">
+				<button type="button" class="btn btn-common join w-100">모임 가입</button>
+			</c:if>
 			<c:choose>
 				<c:when test="${sessionScope.loginId == eventDto.eventWriter}">
+					<a class="btn btn-primary w-25" href="add?clubNo=${eventDto.eventClub}">신규등록</a>
 		 	   		<a class="btn btn-accent w-25" href="edit?eventNo=${eventDto.eventNo}">수정</a>
 		    		<a class="btn btn-accent w-25" href="delete?eventNo=${eventDto.eventNo}">삭제</a>
 				</c:when>
 				<c:when test = "${sessionScope.loginLevel == '관리자' || sessionScope.loginId eq eventListVO.clubLeader}">
 					<a class="btn btn-accent w-25" href="delete?eventNo=${eventDto.eventNo}">삭제</a>
 				</c:when>
-				
 			</c:choose>
 	    </div>
 	</c:if>
