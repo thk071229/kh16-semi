@@ -133,14 +133,14 @@ $(function () {
         });
     });
     // 모임 생성 시 표시
-//     $(".authority-check").on("click", function(e){
-//     	var authority = $(this).data("authority")
+    $(".authority-check").on("click", function(e){
+    	var authority = $(this).data("authority")
     	
-//     	if(authority == 'n'){
-//     		e.preventDefault();
-//     		window.alert("모임 생성 권한이 없습니다");
-//     	}
-//     });
+    	if(authority == 'n'){
+    		e.preventDefault();
+    		window.alert("모임 생성 권한이 없습니다");
+    	}
+    });
     
 });
 </script>
