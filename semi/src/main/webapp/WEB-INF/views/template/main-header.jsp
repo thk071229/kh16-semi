@@ -344,8 +344,8 @@ $(function(){
         <!-- 로고 이미지 -->
         <div class="logo">SS</div>
         <div class="cell">
-            <div style="font-weight:800">Somoim Spring</div>
-            <div style="font-size:12px;color:var(--subtle)">모임/커뮤니티 플랫폼 예시</div>
+            <div style="font-weight:800">SOSO</div>
+            <div style="font-size:12px;color:var(--subtle)">소소한 만남을 원하는 사람들의 모임</div>
         </div>
         </a>
         <!-- 헤더 내 검색 영역 -->

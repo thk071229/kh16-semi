@@ -62,13 +62,40 @@
 
 <div class = "container">
 
-	<h1>메인 페이지</h1>
-	<h2>소모임 - 우리동네 취미 모임</h2>
-	<h4>소개글</h4>
-<label class="text-wrapper">
-<i class="fa-solid fa-location-dot"></i>
-<span class="location">지역 이름</span> 근처 모임
-</label>
+	
+<!-- 	<h2>소소 - 우리동네 취미 모임</h2> -->
+
+	
+<c:if test="${not empty depth1 || not empty depth2}">
+	<c:choose>
+		<c:when test="${depth2==null}">
+			<label class="text-wrapper">
+			<i class="fa-solid fa-location-dot"></i>
+			<span class="location">${depth1}</span> 근처 모임
+			</label>
+		</c:when>
+		<c:otherwise>
+			<label class="text-wrapper">
+			<i class="fa-solid fa-location-dot"></i>
+			<span class="location">${depth2}</span> 근처 모임
+			</label>
+		</c:otherwise>
+	</c:choose>
+</c:if>	
+
+	<section class="hero card">
+		<div class="flex-box">
+		<div class="flex-vertical">
+			<div class="title">우리 동네 모임을 쉽게, SOSO</div>
+	        <div class="subtitle">따뜻하고 소소한 모임을 찾아보세요.</div>
+			<div style="margin-top:30px; margin-right:300px;">
+				<a href="/member/pointUse" class="btn btn-primary me-10">생성권 구매</a> 
+				<a href="/club/add" class="btn btn-accent">모임 만들기</a>
+			</div>
+		</div>
+		<img src="assets/hero-illus.svg" alt="hero" style="width:220px; "/>
+		</div>
+	</section>
 
 <%-- 찜이 많은 소모임 --%>
 <div class="header"> <%-- 제목과 '더보기' 링크를 위한 레이아웃 --%>
@@ -121,7 +148,7 @@
 		</div>
 		
 <div class="header"> <%-- 제목과 '더보기' 링크를 위한 레이아웃 --%>
-        <h3>⭐ 활동이 활발한 모임 (이벤트) ⭐</h3>
+        <h3>⭐ 만남이 활발한 모임 ⭐</h3>
         <a href="/club/list" class="link">더보기 &gt;</a> <%-- 더보기 링크 --%>
 </div>
 
@@ -173,7 +200,7 @@
 	
 
 <div class="header"> <%-- 제목과 '더보기' 링크를 위한 레이아웃 --%>
-        <h3>⭐ 활동이 활발한 모임 (게시글) ⭐</h3>
+        <h3>⭐ 소통이 활발한 모임 ⭐</h3>
         <a href="/club/list" class="link">더보기 &gt;</a> <%-- 더보기 링크 --%>
 </div>
 	<div class="grid mt-20">
@@ -215,17 +242,20 @@
 		<div class="cell center mt-20 mb-20">
 			<jsp:include page="/WEB-INF/views/template/pagination-num-like.jsp"></jsp:include>	
 		</div>
-<div class="header"> <%-- 제목과 '더보기' 링크를 위한 레이아웃 --%>
+<%-- <div class="header"> 제목과 '더보기' 링크를 위한 레이아웃
         <h3>⭐ 내 근처에서 시작되는 정모 ⭐</h3>
-        <a href="/club/list" class="link">더보기 &gt;</a> <%-- 더보기 링크 --%>
+        <a href="/club/list" class="link">더보기 &gt;</a> 더보기 링크
 </div>
 
-<div class="header"> <%-- 제목과 '더보기' 링크를 위한 레이아웃 --%>
+<div class="header"> 제목과 '더보기' 링크를 위한 레이아웃
         <h3>⭐ 카테고리 별 모임 ⭐</h3>
-        <a href="/club/list" class="link">더보기 &gt;</a> <%-- 더보기 링크 --%>
-</div>
+        <a href="/club/list" class="link">더보기 &gt;</a> 더보기 링크
+</div> --%>
 
 <%-- 구분선 --%>
-<hr>
+<div class="cell center mt-30">
+	<hr>
+
+</div>
 </div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

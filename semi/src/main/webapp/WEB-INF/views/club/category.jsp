@@ -26,7 +26,7 @@
 <div class="container mt-30"> <%-- 전체 컨테이너 --%>
 
     <div class = "header">
-    <h2>${categoryDto.categoryName} 관련 소모임</h2>
+    <h3>⭐ ${categoryDto.categoryName} 관련 소모임 ⭐</h3>
 	</div>
 	
     <div class="grid mt-20"> <%-- 카드 목록 그리드 (CSS에서 4열로 설정 필요) --%>
