@@ -182,15 +182,15 @@ justify-content: flex-end
 	</div>
 
 	<%-- 모임 대표 사진 --%>
-	<div class="cell center">
+	<div class="cell center w-100">
 		<c:choose>
 			<%-- [수정] boardCountVO -> clubDto --%>
 			<c:when test="${not empty clubDto.clubProfile}">
 				<img src="/attachment/download?attachmentNo=${clubDto.clubProfile}"
 					alt="${clubDto.clubName}"
 					onerror="this.onerror=null; this.src='/images/error/no-image.png';"
-					style="width: 100%; max-height: 350px; object-fit: cover; border-radius: var(--radius-sm); box-shadow: var(--shadow);">
-			</c:when>
+					style="width:100%; max-height: 350px; object-fit: contain; border-radius: var(--radius-sm); box-shadow: var(--shadow);">
+				</c:when>
 			<c:otherwise>
 				<img src="/images/error/no-image.png"
 					style="width: 200px; height: auto; opacity: 0.5;" alt="기본 이미지">

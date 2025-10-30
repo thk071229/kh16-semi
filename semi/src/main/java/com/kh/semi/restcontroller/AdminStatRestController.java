@@ -19,6 +19,7 @@ import com.kh.semi.vo.StatVO;
 public class AdminStatRestController {
 	@Autowired
 	private StatDao statDao;
+	//chart1 - 현황
 	
 	//모임 관련 매핑
 	@PostMapping("/club/category")
@@ -180,5 +181,101 @@ public class AdminStatRestController {
 	            .data(data)
 	            .build();
 	}
-
+	//chart2 - 랭킹
+	@PostMapping("/club/ranking")
+	public ChartVO clubRanking() {
+		List<StatVO> list = statDao.clubRanking();
+	    List<String> labels = new ArrayList<>();
+	    List<Double> data = new ArrayList<>();
+	    for(StatVO statVO : list) {
+	        labels.add(statVO.getTitle());
+	        data.add(statVO.getValue());
+	    }
+	    return ChartVO.builder()
+	            .subject("회원이 많은 모임")
+	            .type("bar")
+	            .labels(labels)
+	            .data(data)
+	            .build();
+	}
+	@PostMapping("/event/ranking")
+	public ChartVO eventRanking() {
+		List<StatVO> list = statDao.eventRanking();
+	    List<String> labels = new ArrayList<>();
+	    List<Double> data = new ArrayList<>();
+	    for(StatVO statVO : list) {
+	        labels.add(statVO.getTitle());
+	        data.add(statVO.getValue());
+	    }
+	    return ChartVO.builder()
+	            .subject("정모 활동이 활발한 모임")
+	            .type("bar")
+	            .labels(labels)
+	            .data(data)
+	            .build();
+	}
+	@PostMapping("/board/ranking")
+	public ChartVO boardRanking() {
+		List<StatVO> list = statDao.boardRanking();
+	    List<String> labels = new ArrayList<>();
+	    List<Double> data = new ArrayList<>();
+	    for(StatVO statVO : list) {
+	        labels.add(statVO.getTitle());
+	        data.add(statVO.getValue());
+	    }
+	    return ChartVO.builder()
+	            .subject("게시글 활동이 활발한 모임")
+	            .type("bar")
+	            .labels(labels)
+	            .data(data)
+	            .build();
+	}
+	@PostMapping("/member/ranking")
+	public ChartVO memberRanking() {
+		List<StatVO> list = statDao.memberRanking();
+	    List<String> labels = new ArrayList<>();
+	    List<Double> data = new ArrayList<>();
+	    for(StatVO statVO : list) {
+	        labels.add(statVO.getTitle());
+	        data.add(statVO.getValue());
+	    }
+	    return ChartVO.builder()
+	            .subject("활동이 활발한 회원")
+	            .type("bar")
+	            .labels(labels)
+	            .data(data)
+	            .build();
+	}
+	@PostMapping("/region/ranking")
+	public ChartVO regionRanking() {
+		List<StatVO> list = statDao.regionRanking();
+	    List<String> labels = new ArrayList<>();
+	    List<Double> data = new ArrayList<>();
+	    for(StatVO statVO : list) {
+	        labels.add(statVO.getTitle());
+	        data.add(statVO.getValue());
+	    }
+	    return ChartVO.builder()
+	            .subject("인기 지역 순위")
+	            .type("bar")
+	            .labels(labels)
+	            .data(data)
+	            .build();
+	}
+	@PostMapping("/category/ranking")
+	public ChartVO categoryRanking() {
+		List<StatVO> list = statDao.categoryRanking();
+	    List<String> labels = new ArrayList<>();
+	    List<Double> data = new ArrayList<>();
+	    for(StatVO statVO : list) {
+	        labels.add(statVO.getTitle());
+	        data.add(statVO.getValue());
+	    }
+	    return ChartVO.builder()
+	            .subject("인기 카테고리 순위")
+	            .type("bar")
+	            .labels(labels)
+	            .data(data)
+	            .build();
+	}
 }

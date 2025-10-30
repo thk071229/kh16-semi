@@ -114,6 +114,37 @@
                 <canvas id="member-age-chart"></canvas>
             </div>
 
+            <!-- 랭킹 차트 -->
+            <div class="swiper-slide">
+                <h2>회원 수 많은 모임</h2>
+                <canvas id="club-ranking-chart"></canvas>
+            </div>
+            
+            <div class="swiper-slide">
+                <h2>활동이 활발한 모임(정모 순)</h2>
+                <canvas id="event-ranking-chart"></canvas>
+            </div>
+            
+            <div class="swiper-slide">
+                <h2>활동이 활발한 모임(게시글 순)</h2>
+                <canvas id="board-ranking-chart"></canvas>
+            </div>
+            
+            <div class="swiper-slide">
+                <h2>활동이 활발한 회원</h2>
+                <canvas id="member-ranking-chart"></canvas>
+            </div>
+            
+            <div class="swiper-slide">
+                <h2>인기 지역 순위</h2>
+                <canvas id="region-ranking-chart"></canvas>
+            </div>
+            
+            <div class="swiper-slide">
+                <h2>인기 카테고리 순위</h2>
+                <canvas id="category-ranking-chart"></canvas>
+            </div>
+            
         </div>
 
         <!-- 네비게이션 버튼 -->

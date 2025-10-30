@@ -72,7 +72,7 @@ public class ClubController {
 				model.addAttribute("clubMemberDto", clubMemberDto); 
 			}
 			
-			return "/WEB-INF/views/club/home-more.jsp";
+			return "/WEB-INF/views/club/home.jsp";
 		}
 	//소모임 등록
 	@GetMapping("/add")
