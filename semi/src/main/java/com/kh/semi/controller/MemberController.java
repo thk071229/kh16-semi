@@ -468,7 +468,7 @@ public class MemberController {
 		//이메일 발송
 		emailService.sendEmail(
 				findDto.getMemberEmail(), 
-				"[KH정보교육원] 아이디 찾기 결과", 
+				"[SOSO] 아이디 찾기 결과", 
 				findDto.getMemberNickname()+"님의 아이디는 ["
 				+findDto.getMemberId()+"] 입니다"
 		);

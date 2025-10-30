@@ -50,7 +50,7 @@ public class EmailService {
 		//메세지 생성 및 전송
 		SimpleMailMessage message = new SimpleMailMessage();
 		message.setTo(email);
-		message.setSubject("[KH정보교육원] 인증번호를 확인하세요");
+		message.setSubject("[SOSO] 인증번호를 확인하세요");
 		message.setText("인증번호는 ["+certNumber+"] 입니다");
 		sender.send(message);
 		
@@ -73,7 +73,7 @@ public class EmailService {
 		MimeMessageHelper helper = new MimeMessageHelper(message, false, "UTF-8");
 		
 		helper.setTo(memberDto.getMemberEmail());
-		helper.setSubject("[KH정보교육원] 가입을 환영합니다!");
+		helper.setSubject("[SOSO] 가입을 환영합니다!");
 		
 		//이메일 본문 생성
 		ClassPathResource resource = new ClassPathResource("templates/welcome2.html");
@@ -119,7 +119,7 @@ public class EmailService {
 		
 		//정보 설정
 		helper.setTo(memberDto.getMemberEmail());//수신인 설정
-		helper.setSubject("[KH정보교육원] 비밀번호를 재설정하세요");
+		helper.setSubject("[SOSO] 비밀번호를 재설정하세요");
 		
 		ClassPathResource resource = new ClassPathResource("templates/reset.html");
 		File target = resource.getFile();
