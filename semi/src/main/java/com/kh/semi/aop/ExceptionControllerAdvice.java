@@ -4,6 +4,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.kh.semi.error.NeedClubJoinException;
 import com.kh.semi.error.NeedPermissionException;
 import com.kh.semi.error.TargetNotFoundException;
 import com.kh.semi.error.UnauthorizationException;
@@ -25,6 +26,11 @@ public class ExceptionControllerAdvice {
 	public String needPermission(NeedPermissionException e, Model model) {
 		model.addAttribute("title", e.getMessage());
 		return "/WEB-INF/views/error/needPermission.jsp";
+	}
+	@ExceptionHandler(NeedClubJoinException.class)
+	public String needClubJoin(NeedClubJoinException e, Model model) {
+		model.addAttribute("title", e.getMessage());
+		return "/WEB-INF/views/error/needClubJoin.jsp";
 	}
 	@ExceptionHandler(Exception.class)
 	public String all(Exception e) {

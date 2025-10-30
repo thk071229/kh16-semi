@@ -85,7 +85,6 @@ public class MemberController {
 	@Autowired
 	private PointUseDao pointUseDao;
 	
-	
 	//ava.sql.Date 타입으로 변환할 때 빈 문자열을 허용하고 자동으로 null로 처리 해주는 메소드
     @InitBinder
     public void initBinder(WebDataBinder binder) {
@@ -582,7 +581,9 @@ public class MemberController {
 		MemberDto memberDto = memberDao.selectOne(loginId);
 		if(memberDto.getMemberAuthority().equals("y")) throw new TargetNotFoundException("이미 소모임 생성 권한을 가지고 있습니다");
 		// 500포인트 이상 있는지 검사
-		if(memberDto.getMemberPoint()<500) throw new TargetNotFoundException("보유 포인트가 부족합니다");
+
+		if(memberDto.getMemberPoint() < 500) throw new TargetNotFoundException("보유 포인트가 부족합니다");
+
 		
 		// 포인트 사용 기록
 		PointUseDto pointUseDto = new PointUseDto();
@@ -596,6 +597,7 @@ public class MemberController {
 		
 		//권한 부여
 		memberDao.updateMemberAuthority(loginId);
+		
 		return "redirect:/";
 	}
 	@PostMapping("/purchase")
@@ -610,6 +612,5 @@ public class MemberController {
 		
 		return "redirect:/";
 	}
-	
 	
 }

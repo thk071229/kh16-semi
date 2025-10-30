@@ -8,6 +8,7 @@ import com.kh.semi.dao.ClubMemberDao;
 import com.kh.semi.dao.EventDao;
 import com.kh.semi.dto.ClubMemberDto;
 import com.kh.semi.dto.EventDto;
+import com.kh.semi.error.NeedClubJoinException;
 import com.kh.semi.error.NeedPermissionException;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,7 +34,7 @@ public class ClubJoinCheckInterceptor implements HandlerInterceptor {
 		// 특정 모임에 특정회원이 있는지 확인
 		ClubMemberDto clubMemberDto = clubMemberDao.selectByClubMember(clubNo,loginId);
 		if(clubMemberDto==null) {
-			throw new NeedPermissionException("가입한 소모임만 등록이 가능합니다");
+			throw new NeedClubJoinException("가입한 소모임만 등록이 가능합니다");
 		};
 		
 		// 위에서 차단되지 않았다면 통과
