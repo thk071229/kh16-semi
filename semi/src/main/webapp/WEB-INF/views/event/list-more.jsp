@@ -538,8 +538,8 @@
 		</div>
 
 		<!-- template으로 바뀌는 영역 -->
-		<div class="all-list-wrapper center">
-			<h2>아직 등록된 정모가 없습니다</h2>
+		<div class="all-list-wrapper">
+			<h2 class="center">아직 등록된 정모가 없습니다</h2>
 		</div>
 
 		<div class="button-wrapper center">
@@ -550,5 +550,5 @@
 			</div>
 		</div>
 	</div>
-
+</div>
 	<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
