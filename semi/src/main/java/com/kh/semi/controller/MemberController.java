@@ -583,7 +583,7 @@ public class MemberController {
 		MemberDto memberDto = memberDao.selectOne(loginId);
 		if(memberDto.getMemberAuthority().equals("y")) throw new TargetNotFoundException("이미 소모임 생성 권한을 가지고 있습니다");
 		// 500포인트 이상 있는지 검사
-		if(memberDto.getMemberPoint()<=500) throw new TargetNotFoundException("보유 포인트가 부족합니다");
+		if(memberDto.getMemberPoint()<500) throw new TargetNotFoundException("보유 포인트가 부족합니다");
 		
 		// 포인트 사용 기록
 		PointUseDto pointUseDto = new PointUseDto();
