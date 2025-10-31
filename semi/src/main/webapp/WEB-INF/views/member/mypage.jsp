@@ -219,6 +219,18 @@
     <div class="profile-info">
       <table>
         <tr><th>닉네임</th><td>${memberDto.memberNickname}</td></tr>
+        <tr>
+        <th>소모임 생성권</th>
+        <c:choose>
+        	<c:when test="${memberDto.memberAuthority=='y' }">
+        	<td>o</td>
+        	</c:when>
+        	<c:otherwise>
+        	<td>x</td>
+        	</c:otherwise>
+        </c:choose>
+        
+        </tr>
         <tr><th>이메일</th><td>${memberDto.memberEmail}</td></tr>
         <tr><th>성별</th><td>${memberDto.memberGender}</td></tr>
         <tr><th>생년월일</th><td><fmt:formatDate value="${memberDto.memberBirth}" pattern="yyyy-MM-dd"/></td></tr>
