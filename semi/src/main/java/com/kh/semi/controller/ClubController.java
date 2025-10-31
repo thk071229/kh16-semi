@@ -64,6 +64,8 @@ public class ClubController {
 			if(clubDto == null) throw new TargetNotFoundException("존재하지 않는 소모임");
 			model.addAttribute("clubDto", clubDto);
 			//+추가 클럽멤버 정보 수정
+			
+			
 			List<ClubMemberListVO> memberList = clubMemberDao.selectListWithNickname(clubNo);
 					
 			model.addAttribute("memberList", memberList);
