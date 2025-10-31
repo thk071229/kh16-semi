@@ -239,15 +239,25 @@ public class MemberController {
 		List<MemberRegionListVO>regionList = memberRegionDao.selectVOList(loginId);
 		//회원이 선택한 카테고리 리스트
 		List<MemberCategoryListVO>categoryList = memberCategoryDao.selectVOList(loginId);
-		//회원이 가입한 소모임 리스트
-		List<MemberClubListVO>clubList = clubDao.selectClubList(loginId);
-		
+
 		model.addAttribute("memberDto", memberDto);
 		model.addAttribute("regionList", regionList);
 		model.addAttribute("categoryList", categoryList);
-		model.addAttribute("clubList", clubList);
+
 		return "/WEB-INF/views/member/mypage.jsp";
 	}
+	
+	//회원이 참여한 정모 목록 & 만든 정모 목록
+	@RequestMapping("/memberClub")
+	public String memberClub(Model model, HttpSession session) {
+		String loginId = (String)session.getAttribute("loginId");
+		MemberDto memberDto = memberDao.selectOne(loginId);
+		//회원이 가입한 소모임 리스트
+		List<MemberClubListVO>clubList = clubDao.selectClubList(loginId);
+		model.addAttribute("clubList", clubList);
+		return "/WEB-INF/views/member/memberClub.jsp";
+	}
+	
 	
 	//회원이 참여한 정모 목록 & 만든 정모 목록
 	@RequestMapping("/memberEvent")

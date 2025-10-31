@@ -269,27 +269,10 @@
   </div>
 
   <!-- 가입한 소모임 -->
-  <div class="section-title">${memberDto.memberId}님의 가입 모임</div>
-  <div class="table-wrapper">
-    <table>
-      <thead>
-        <tr><th>소모임 이름</th><th>활동 지역</th><th>카테고리</th></tr>
-      </thead>
-      <tbody>
-        <c:forEach var="club" items="${clubList}">
-          <tr>
-            <td>
-            	<a href="/club/home?clubNo=${club.clubNo}" class="member-link">${club.clubName}</a>
-            </td>
-            <td>${club.regionName}</td>
-            <td>${club.categoryName}</td>
-          </tr>
-        </c:forEach>
-      </tbody>
-    </table>
-  </div>
-  <div class="cell center mt-30">
-  	<a href="memberLikeClub" class="btn btn-primary">찜한 소모임</a>
+  <div class="section-title">${memberDto.memberId}님의 소모임</div>
+   <div class="cell center mt-30">
+  	<a href="memberClub" class="btn btn-primary">가입한 소모임</a>
+  	<a href="memberLikeClub" class="btn btn-primary ms-10">찜한 소모임</a>
   </div>
   
 
