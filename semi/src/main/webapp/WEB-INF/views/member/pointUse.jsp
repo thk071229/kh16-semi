@@ -22,18 +22,22 @@
 <div class="container w-800">
 	<div class="cell center">
 		<h1> 소모임 생성권 구매 </h1>
-		<h5> 500 P 혹은 상품권 구매시 소모임을 생성하실 수 있습니다 </h5>
+		<span> 500 P 혹은 상품권 구매시 소모임을 생성하실 수 있습니다 </span>
 	</div>
-	<div class="cell center">
-		<form action="pointUse" method="post">
-		<button type="submit" class="btn btn-accent">포인트 교환</button>
-		</form>
+	<div class="cell center mt-30">
+		<section class="hero-card">
+			<img src="/assets/hero-illus.svg" alt="hero" style="width:220px; "/>
+		</section>
 	</div>
 	
 	<div class="cell center">
-		<form action="purchase" method="post">
-		<button type="submit" class="btn btn-accent authority-check" data-authority="${memberDto.memberAuthority}">상품권 구매</button>
-		</form>
+			<form action="pointUse" method="post">
+			<button type="submit" class="btn btn-accent w-50">포인트 교환</button>
+			</form>
+		
+			<form action="purchase" method="post">
+			<button type="submit" class="btn btn-accent authority-check w-50" data-authority="${memberDto.memberAuthority}">상품권 구매</button>
+			</form>
 	</div>
 
 
