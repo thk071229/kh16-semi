@@ -73,6 +73,12 @@ $(window).on("load", function(){
 	<div class="cell center">
 		<h1 style="color: var(--subtle);">선호 지역 수정</h1>
 	</div>
+	<!--  추천모임 활성화 오류시 -->
+	<c:if test="${param.error != null}">
+		<div class="cell center">
+			<h4 style="color:#e17055;">추천기능을 활성화하려면 선호지역을 설정해주세요</h4>
+		</div>
+	</c:if>
 	<div class="cell">
 		<label>관심 지역</label><br>
 							<div class="cell flex-box flex-fill">

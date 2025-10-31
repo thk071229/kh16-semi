@@ -182,6 +182,10 @@ public class ClubController {
 		//로그인 아이디로 Depth1,2 들어있는 VO 조회
 		// - 이후, 밑에서 각각에 적용시키기
 		MemberRegionListVO memberRegionListVO = memberRegionDao.selectOne(loginId);
+		
+		if(memberRegionListVO==null) return "redirect:/member/editRegion?error";
+		
+		
 		model.addAttribute("regionDepth1",memberRegionListVO.getRegionDepth1());
 		model.addAttribute("regionDepth2",memberRegionListVO.getRegionDepth2());
 		
