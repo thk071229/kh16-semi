@@ -53,6 +53,7 @@ public class MainController {
 	 	if(loginId!=null) {
 	 		MemberRegionListVO memberRegionListVO = memberRegionDao.selectOne(loginId);
 	 		if(memberRegionListVO==null) {
+
 	 		    model.addAttribute("memberRegion", null);
 	 		} else {
 	 		    model.addAttribute("memberRegion", memberRegionListVO);
@@ -65,6 +66,7 @@ public class MainController {
 	 		    model.addAttribute("memberCategory", memberCategoryDto);
 	 		}
 	 		
+
 
 	 	}
 		//지역 선택을 위해 지역 정보 화면 전달
