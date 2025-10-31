@@ -53,15 +53,19 @@ public class MainController {
 	 	if(loginId!=null) {
 	 		MemberRegionListVO memberRegionListVO = memberRegionDao.selectOne(loginId);
 	 		if(memberRegionListVO==null) {
-	 			String memberRegion = "";
-	 			model.addAttribute("memberRegion", memberRegion);
+	 		    model.addAttribute("memberRegion", null);
+	 		} else {
+	 		    model.addAttribute("memberRegion", memberRegionListVO);
+	 		}
+
+	 		MemberCategoryDto memberCategoryDto = memberCategoryDao.selectById(loginId);
+	 		if(memberCategoryDto==null) {
+	 		    model.addAttribute("memberCategory", null);
+	 		} else {
+	 		    model.addAttribute("memberCategory", memberCategoryDto);
 	 		}
 	 		
-			MemberCategoryDto memberCategoryDto = memberCategoryDao.selectById(loginId);
-			if(memberCategoryDto==null) {
-				String memberCategory = "";
-				model.addAttribute("memberCategory", memberCategory);
-			}
+
 	 	}
 		//지역 선택을 위해 지역 정보 화면 전달
 		List<RegionDto> allList = regionDao.selectList();
