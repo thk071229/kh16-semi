@@ -39,7 +39,10 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 							// 로그인해야 접속 가능
 							"/event/detail/**","/event/add/**","/event/edit/**","/member/**",
 							//좋아요 못누르도록 차단
-							"/rest/image/**", "/rest/board/action", "/rest/reply/**")
+							"/rest/image/**", "/rest/board/action", "/rest/reply/**",
+							"/club/add","club/edit","/club/delete",
+							"/clubMember/**",
+							"rest/club/action", "rest/club/check")
 					.excludePathPatterns("/board/list*",
 										"/rest/reply/list", "/rest/reply/check", 
 										"/member/join", "/member/login", "/member/goodbye", 

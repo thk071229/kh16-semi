@@ -207,19 +207,6 @@ justify-content: flex-end
 			style="white-space: pre-wrap; word-wrap: break-word; font-family: var(--font-sans);">${clubDto.clubIntroduce}</pre>
 	</div>
 
-	<%-- 정모 일정 (간략 표시 영역) --%>
-	<div class="cell mt-30">
-		<div class="header">
-			<%-- commons.css의 .header 스타일 (flex + space-between) --%>
-			<h2 style="margin: 0;">최근 정모 일정</h2>
-			<a href="/event/list?clubNo=${clubDto.clubNo}" class="link">전체 보기
-				&gt;</a>
-		</div>
-		<div class="cell card">
-			<p class="gray">예정된 정모가 없습니다.</p>
-			<%-- 임시 메시지 --%>
-		</div>
-	</div>
 
 	<%-- 회원 목록 --%>
 	<div class="cell mt-30">
