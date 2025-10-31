@@ -269,7 +269,7 @@
   </div>
 
   <!-- 가입한 소모임 -->
-  <div class="section-title">${memberDto.memberId}님의 소모임</div>
+  <div class="section-title">${memberDto.memberNickname}님의 소모임</div>
    <div class="cell center mt-30">
   	<a href="memberClub" class="btn btn-primary">가입한 소모임</a>
   	<a href="memberLikeClub" class="btn btn-primary ms-10">찜한 소모임</a>

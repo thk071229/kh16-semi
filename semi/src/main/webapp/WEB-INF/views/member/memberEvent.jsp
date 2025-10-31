@@ -75,7 +75,7 @@
 
 <div class="container">
 	
-	<div class="section-title">${memberDto.memberId}님의 참여 정모 목록</div>
+	<div class="section-title"> 참여 정모 목록</div>
   	<div class="table-wrapper">
 	<table>
 	      <thead>
@@ -101,7 +101,7 @@
 	    </table>
   </div>
   <!-- 본인이 등록한 정모 -->
-  <div class="section-title">${memberDto.memberId}님이 등록한 정모 목록</div>
+  <div class="section-title">등록한 정모 목록</div>
   <div class="table-wrapper">
   <table>
         <thead>
