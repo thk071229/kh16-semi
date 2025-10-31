@@ -190,7 +190,7 @@ $(function(){
 				<div>
 					<img width="100" class="event-image">
 				</div>
-				<div class="flex-fill ms-20">
+				<div class="flex-fill left ms-20">
 					<div class="mb-10 event-title">
 						<label class="event-title-text">정모 제목</label>
 						<label style="font-size:16px;" class="event-attend">(참여자/정원)</label>
@@ -218,7 +218,7 @@ $(function(){
 
 <!-- --------------------------------------------- -->
 <div class="container center w-1000">
-    <div class="cell center center">
+    <div class="cell center">
 	    <h1>정모 목록</h1>
 	    <label style="color: gray;">종료된 모임은 표시되지 않습니다</label>
 	</div>
