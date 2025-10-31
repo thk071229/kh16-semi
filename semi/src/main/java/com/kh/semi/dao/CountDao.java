@@ -47,7 +47,8 @@ public class CountDao {
 	
 	//pagination 적용 :: 홈화면 조회 : 좋아요 많이 받은 클럽
 	public List<ClubCountVO> selectLikeListWithPaging(PageVO pageVO){
-		if(pageVO.checkRegion()=="empty") { // null null을 받았을때 → 목록 + 페이징
+		System.out.println("checkRegion() 결과 = [" + pageVO.checkRegion() + "]");
+		if(pageVO.checkRegion().equals("empty")) { // null null을 받았을때 → 목록 + 페이징
 			String sql = "select * from ("
 					+ "select rownum rn, TMP.* from ("
 					+ "select * from club_count where club_like > 0 "
@@ -56,7 +57,7 @@ public class CountDao {
 					+ ")where rn between ? and ?";
 			Object[] params = {pageVO.getBegin(), pageVO.getEnd()};
 			return jdbcTemplate.query(sql, clubCountMapper, params);
-		} else if(pageVO.checkRegion()=="Depth1") { // regionDepth1만 설정되어있을때
+		} else if(pageVO.checkRegion().equals("Depth1")) { // regionDepth1만 설정되어있을때
 			String sql = "select * from ("
 					+ "select rownum rn, TMP.* from ("
 					+ "select * from club_count "
@@ -84,7 +85,7 @@ public class CountDao {
 	
 	//pagination 적용 :: 홈화면 조회 : 정모 많이한 클럽
 	public List<ClubCountVO> selectEventListWithPaging(PageVO pageVO){
-		if(pageVO.checkRegion()=="empty") { // null null을 받았을때 → 목록 + 페이징
+		if(pageVO.checkRegion().equals("empty")) { // null null을 받았을때 → 목록 + 페이징
 			String sql = "select * from ("
 					+ "select rownum rn, TMP.* from ("
 					+ "select * from club_count where event_count > 0 "
@@ -93,7 +94,7 @@ public class CountDao {
 					+ ")where rn between ? and ?";
 			Object[] params = {pageVO.getBegin(), pageVO.getEnd()};
 			return jdbcTemplate.query(sql, clubCountMapper, params);
-		} else if(pageVO.checkRegion()=="Depth1") { // regionDepth1만 설정되어있을때
+		} else if(pageVO.checkRegion().equals("Depth1")) { // regionDepth1만 설정되어있을때
 			String sql = "select * from ("
 					+ "select rownum rn, TMP.* from ("
 					+ "select * from club_count "
@@ -121,7 +122,7 @@ public class CountDao {
 	
 	//pagination 적용 :: 홈화면 조회 : 게시글 많이 쓴 클럽
 	public List<ClubCountVO> selectBoardListWithPaging(PageVO pageVO){
-		if(pageVO.checkRegion()=="empty") { // null null을 받았을때 → 목록 + 페이징
+		if(pageVO.checkRegion().equals("empty")) { // null null을 받았을때 → 목록 + 페이징
 			String sql = "select * from ("
 					+ "select rownum rn, TMP.* from ("
 					+ "select * from club_count where board_count > 0 "
@@ -130,7 +131,7 @@ public class CountDao {
 					+ ")where rn between ? and ?";
 			Object[] params = {pageVO.getBegin(), pageVO.getEnd()};
 			return jdbcTemplate.query(sql, clubCountMapper, params);
-		} else if(pageVO.checkRegion()=="Depth1") { // regionDepth1만 설정되어있을때
+		} else if(pageVO.checkRegion().equals("Depth1")) { // regionDepth1만 설정되어있을때
 			String sql = "select * from ("
 					+ "select rownum rn, TMP.* from ("
 					+ "select * from club_count "
