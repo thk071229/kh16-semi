@@ -47,10 +47,13 @@
 
 	<h1>회원별 추천 모임</h1>
 
-<label>
-<i class="fa-solid fa-location-dot"></i>
-${regionDepth1} ${regionDepth2} 근처 모임
-</label>
+	<div class="cell mt-40">
+		<h2 style="color:#e17055">
+			<i class="fa-solid fa-location-dot"></i>
+			<label>${regionDepth1} ${regionDepth2} 근처 모임</label>
+		</h2>
+	</div>
+
 
 <div class="grid mt-20"> <%-- 카드 목록 그리드 (CSS에서 4열로 설정 필요) --%>
         <c:forEach var="likeCountVO" items="${clubLikeCountVO}">
