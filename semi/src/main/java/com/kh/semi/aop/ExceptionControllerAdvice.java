@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.kh.semi.error.NeedClubJoinException;
 import com.kh.semi.error.NeedPermissionException;
+import com.kh.semi.error.NoImageException;
 import com.kh.semi.error.TargetNotFoundException;
 import com.kh.semi.error.UnauthorizationException;
 
@@ -32,9 +33,15 @@ public class ExceptionControllerAdvice {
 		model.addAttribute("title", e.getMessage());
 		return "/WEB-INF/views/error/needClubJoin.jsp";
 	}
+	@ExceptionHandler(NoImageException.class)
+	public String noImage(NoImageException e, Model model) {
+		model.addAttribute("title", e.getMessage());
+		return "/WEB-INF/views/error/noImage.jsp";
+	}
 	@ExceptionHandler(Exception.class)
 	public String all(Exception e) {
 		e.printStackTrace();
 		return "/WEB-INF/views/error/all.jsp";
 	}
+
 }

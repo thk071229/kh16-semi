@@ -153,7 +153,7 @@
         </c:forEach>
         </div>
     	<div class="cell center mt-20 mb-20">
-			<jsp:include page="/WEB-INF/views/template/pagination-num-board.jsp"></jsp:include>	
+			<jsp:include page="/WEB-INF/views/template/pagination-num-like.jsp"></jsp:include>	
 		</div>
 		
 <div class="header"> <%-- 제목과 '더보기' 링크를 위한 레이아웃 --%>
@@ -249,7 +249,7 @@
 		</c:forEach>
 	</div> <%-- grid 닫기 --%>
 		<div class="cell center mt-20 mb-20">
-			<jsp:include page="/WEB-INF/views/template/pagination-num-like.jsp"></jsp:include>	
+			<jsp:include page="/WEB-INF/views/template/pagination-num-board.jsp"></jsp:include>	
 		</div>
 <%-- <div class="header"> 제목과 '더보기' 링크를 위한 레이아웃
         <h3>⭐ 내 근처에서 시작되는 정모 ⭐</h3>
