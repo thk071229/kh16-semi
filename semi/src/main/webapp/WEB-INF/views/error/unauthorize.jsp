@@ -5,10 +5,10 @@
 
 <div class="container">
 	<div class="cell center">
-		<h1 class="warn">${title}</h1>
+		<h2 class="warn">${title}</h2>
 	</div>
-	<div class="cell center mt-30">
-		<h1><a href="/member/login" class="member-link">로그인하기>></a></h1>
+	<div class="cell center ">
+		<h3><a href="/member/login" class="link">로그인</a></h3>
 	</div>
 	<div class="cell center">
 		<img src="/images/error/401.jpg" width="300">
