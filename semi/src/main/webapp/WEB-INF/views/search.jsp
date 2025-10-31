@@ -72,7 +72,7 @@
 	</div>
 	
 	<div class="cell center mt-20 mb-20">
-		<jsp:include page="/WEB-INF/views/template/pagination-num.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/views/template/pagination-num-search.jsp"></jsp:include>
 	</div>
 		
 		</c:otherwise>
