@@ -47,6 +47,7 @@
 
 	<h1>회원별 추천 모임</h1>
 
+
 <label>
 <i class="fa-solid fa-location-dot"></i>
 ${regionDepth1} ${regionDepth2} 근처 모임
@@ -56,6 +57,7 @@ ${regionDepth1} ${regionDepth2} 근처 모임
         <h3>⭐ 찜이 많은 소모임 ⭐</h3>
         <a href="/club/list" class="member-link">더보기 &gt;</a> <%-- 더보기 링크 --%>
 </div>
+
 <div class="grid mt-20"> <%-- 카드 목록 그리드 (CSS에서 4열로 설정 필요) --%>
         <c:forEach var="likeCountVO" items="${clubLikeCountVO}">
             <div class="card"> 
@@ -142,6 +144,7 @@ ${regionDepth1} ${regionDepth2} 근처 모임
 
 	</div> <%-- grid 닫기 --%>
 		<div class="cell center mt-20 mb-20">
+		
 			<jsp:include page="/WEB-INF/views/template/pagination-num-event.jsp"></jsp:include>	
 		</div>
 	
