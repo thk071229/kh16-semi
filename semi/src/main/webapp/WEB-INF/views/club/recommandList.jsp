@@ -141,6 +141,7 @@
 
 	</div> <%-- grid 닫기 --%>
 		<div class="cell center mt-20 mb-20">
+		
 			<jsp:include page="/WEB-INF/views/template/pagination-num-event.jsp"></jsp:include>	
 		</div>
 	
