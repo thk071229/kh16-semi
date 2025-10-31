@@ -92,6 +92,12 @@
     	height: 0.5px;
     	background-color: #ccc;
 	}
+	
+	a {
+	 margin-left:10px;
+	 height:50px;
+	 width:100px;
+	}
 </style>
 
 <!-- 좋아요 ajax js 로드 -->
@@ -205,26 +211,20 @@
 	</c:choose>
 	<!-- 메뉴 영역 -->
 	<!-- 누구에게나 보여줄 버튼 -->
-	<div class="cell">
+	<div class="cell flex-box">
 		<a href="list?clubNo=${boardDto.boardClub}" class="btn btn-common">목록으로</a>
 	<!-- 모임 회원/게시글 작성자/모임장/관리자일때 보여줄 버튼 -->
 	<c:choose>
-	<c:when test="${isClubMember && sessionScope.loginId == boardDto.boardWriter}">
+	<c:when test="${sessionScope.loginId == boardDto.boardWriter 
+	|| sessionScope.loginId == clubLeader 
+	|| sessionScope.loginLevel == '관리자'}">
 			<a href="edit?boardNo=${boardDto.boardNo}" class="btn btn-common">수정하기</a>
 			<a href="delete?boardNo=${boardDto.boardNo}" class="btn btn-common">삭제하기</a>
 			<a href="write?clubNo=${boardDto.boardClub}" class="btn btn-primary">새 글 등록</a>
 	</c:when>
-	<c:when test="${isClubMember}">
-		<div class="cell">
-			<a href="write?clubNo=${boardDto.boardClub}" class="btn btn-primary">새 글 등록</a>
-		</div>
-	</c:when>
-	<c:when test = "${sessionScope.loginId == clubLeader}">
-		<a href="delete?boardNo=${boardDto.boardNo}" class="btn btn-common">삭제하기</a>
-	</c:when>
-	<c:when test = "${sessionScope.loginLevel == '관리자'}">
-		<a href="delete?boardNo=${boardDto.boardNo}" class="btn btn-common">삭제하기</a>
-	</c:when>
+	<c:otherwise>
+		<a href="write?clubNo=${boardDto.boardClub}" class="btn btn-primary">새 글 등록</a>
+	</c:otherwise>
 	</c:choose>
 </div>
 </div>
