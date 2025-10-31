@@ -115,7 +115,7 @@ public class MainController {
 
 		/// 좋아요순용 PageVO 설정
 		PageVO likePageVO = new PageVO();
-		likePageVO.setPage(boardPage);
+		likePageVO.setPage(likePage);
 		likePageVO.setRegionDepth1(regionDepth1);
 		likePageVO.setRegionDepth2(regionDepth2);
 		likePageVO.setDataCount(countDao.clubLikeListCount(likePageVO));
