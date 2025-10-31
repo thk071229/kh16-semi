@@ -7,8 +7,6 @@
 .profile-info {
   flex: 1;
   background: var(--surface);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
   padding: 20px;
 }
 .profile-info table {
