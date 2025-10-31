@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.semi.dao.BoardDao;
+import com.kh.semi.dao.ClubDao;
 import com.kh.semi.dao.ReplyDao;
 import com.kh.semi.dto.BoardDto;
+import com.kh.semi.dto.ClubDto;
 import com.kh.semi.dto.ReplyDto;
 import com.kh.semi.error.NeedPermissionException;
 import com.kh.semi.error.TargetNotFoundException;
@@ -32,6 +34,9 @@ public class ReplyRestController {
 	@Autowired
 	private BoardDao boardDao;
 
+	@Autowired
+	private ClubDao clubDao;
+	
 	@PostMapping("/check")
 	public ReplyVO check(@RequestParam int boardNo) {
 		boolean result = replyDao.check(boardNo);
@@ -48,10 +53,12 @@ public class ReplyRestController {
 	@PostMapping("/list")
 	public List<ReplyListVO> list(@RequestParam int replyTarget, HttpSession session){
 		String loginId = (String)session.getAttribute("loginId");//null일 수 있음(=비회원)
+		String loginLevel = (String) session.getAttribute("loginLevel");
 		
 		BoardDto boardDto = boardDao.selectOne(replyTarget);//게시글 정보 조회
 		if(boardDto == null) throw new TargetNotFoundException("존재하지 않는 글");
-		
+		ClubDto clubDto = clubDao.selectOne(boardDto.getBoardClub());
+		String clubLeader = clubDto.getClubLeader();
 		List<ReplyDto> list = replyDao.selectList(replyTarget);//우선 목록 조회를 하고
 		
 		List<ReplyListVO> result = new ArrayList<>();//비어있는 목록을 만든 뒤
@@ -60,7 +67,9 @@ public class ReplyRestController {
 		for(ReplyDto replyDto : list) {
 			//댓글 작성자인지 확인
 			boolean owner = loginId != null && replyDto.getReplyWriter() != null
-											&& loginId.equals(replyDto.getReplyWriter());
+											&& loginId.equals(replyDto.getReplyWriter()) 
+											|| loginLevel.equals("관리자") 
+											|| loginId.equals(clubLeader);
 			//댓글 작성자가 게시글 작성자인지 확인
 			boolean writer = boardDto.getBoardWriter() != null
 								&& replyDto.getReplyWriter() != null
@@ -106,11 +115,22 @@ public class ReplyRestController {
 	@PostMapping("/edit")
 	public void delete(HttpSession session, @ModelAttribute ReplyDto replyDto) {
 		String loginId = (String)session.getAttribute("loginId");
+		String loginLevel = (String) session.getAttribute("loginLevel");
 		
 		ReplyDto findDto = replyDao.selectOne(replyDto.getReplyNo());
 		if(findDto == null) throw new TargetNotFoundException("존재하지 않는 댓글");
+	
+		BoardDto boardDto = boardDao.selectOne(findDto.getReplyTarget());
+		int clubNo = boardDto.getBoardClub();
 		
-		boolean owner = loginId.equals(findDto.getReplyWriter());//본인인지 확인
+		ClubDto clubDto = clubDao.selectOne(clubNo);
+		
+		String clubLeader = clubDto.getClubLeader();
+		
+		boolean owner = loginId.equals(findDto.getReplyWriter())
+				|| loginLevel.equals("관리자") 
+				|| loginId.equals(clubLeader);//본인인지 확인
+		
 		if(owner == false) throw new NeedPermissionException("본인과 관리자만 삭제할 수 있습니다");
 		
 		
@@ -120,11 +140,21 @@ public class ReplyRestController {
 	@PostMapping("/delete")
 	public void delete(HttpSession session, @RequestParam int replyNo) {
 	String loginId = (String)session.getAttribute("loginId");
-		
+	String loginLevel = (String) session.getAttribute("loginLevel");
+	
 		ReplyDto replyDto = replyDao.selectOne(replyNo);
 		if(replyDto == null) throw new TargetNotFoundException("존재하지 않는 댓글");
 		
-		boolean owner = loginId.equals(replyDto.getReplyWriter());//본인인지 확인
+		BoardDto boardDto = boardDao.selectOne(replyDto.getReplyTarget());
+		int clubNo = boardDto.getBoardClub();
+		
+		ClubDto clubDto = clubDao.selectOne(clubNo);
+		
+		String clubLeader = clubDto.getClubLeader();
+		
+		boolean owner = loginId.equals(replyDto.getReplyWriter())
+				|| loginLevel.equals("관리자") 
+				|| loginId.equals(clubLeader);//본인인지 확인
 		if(owner == false) throw new NeedPermissionException("본인과 관리자만 삭제할 수 있습니다");
 		
 		replyDao.delete(replyNo);
