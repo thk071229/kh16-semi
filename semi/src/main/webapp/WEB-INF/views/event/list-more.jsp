@@ -58,14 +58,13 @@
 						$(html).find(".event-image").prop("src",
 								"/event/image?eventNo=" + eventList.eventNo);
 						$(html).find(".event-title-text").text(
-								eventList.eventName);
+								eventList.eventTitle);
 						$(html).find(".event-attend").text(
 								"(" + eventList.eventAttend + "/"
 										+ eventList.eventMaxPeople + ")")
-
-						var eventDate = moment(eventList.eventDate).format(
-								"y년 M월 d일 H:mm");
-
+						
+										
+ 						var eventDate = moment(eventList.eventDate).format("y년 M월 D일 H:mm");
 						$(html).find(".event-time").text(eventDate);
 
 						$(html).find(".club-name").text(eventList.clubName);
@@ -146,14 +145,11 @@
 						$(html).find(".event-image").prop("src",
 								"/event/image?eventNo=" + eventList.eventNo);
 						$(html).find(".event-title-text").text(
-								eventList.eventName);
+								eventList.eventTitle);
 						$(html).find(".event-attend").text(
 								"(" + eventList.eventAttend + "/"
-										+ eventList.eventMaxPeople + ")")
-
-						var eventDate = moment(eventList.eventDate).format(
-								"y년 M월 d일 H:mm");
-
+										+ eventList.eventMaxPeople + ")");
+ 						var eventDate = moment(eventList.eventDate).format("y년 M월 D일 H:mm");
 						$(html).find(".event-time").text(eventDate);
 
 						$(html).find(".club-name").text(eventList.clubName);
@@ -236,15 +232,12 @@
 						$(html).find(".event-image").prop("src",
 								"/event/image?eventNo=" + eventList.eventNo);
 						$(html).find(".event-title-text").text(
-								eventList.eventName);
+								eventList.eventTitle);
 						$(html).find(".event-attend").text(
 								"(" + eventList.eventAttend + "/"
-										+ eventList.eventMaxPeople + ")")
-
-						var eventDate = moment(eventList.eventDate).format(
-								"y년 M월 d일 H:mm");
-
-						$(html).find(".event-time").text(eventDate);
+										+ eventList.eventMaxPeople + ")");
+ 						var eventDate = moment(eventList.eventDate).format("y년 M월 D일 H:mm");
+						$(html).find(".fmt").val(eventDate);
 
 						$(html).find(".club-name").text(eventList.clubName);
 						$(html).find(".member-nickname").text(
@@ -433,7 +426,7 @@
 						<div class="ms-20">
 							<i class="fa-solid fa-calendar"></i>
 							<label class="event-time">
-										정모 시간
+							 	정모 시간
 							</label>
 						</div>
 						<div class="ms-20">

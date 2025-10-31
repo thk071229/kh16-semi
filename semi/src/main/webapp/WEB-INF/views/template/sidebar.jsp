@@ -125,6 +125,12 @@
 								<hr>
 							</div>
 							<div class="cell ms-30">
+									<a class="sidebar-menu" href="/member/memberClub">
+										<i class="fa-solid fa-house"></i> 
+										<span>가입한 소모임</span>
+									</a>
+								</div>
+							<div class="cell ms-30">
 									<a class="sidebar-menu" href="/member/memberEvent">
 										<i class="fa-solid fa-arrow-right"></i> 
 										<span>참여한 정모 목록</span>
