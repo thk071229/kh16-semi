@@ -158,19 +158,60 @@ public class CountDao {
 	}
 	
 	
+	
+	
 	//dataCount 설정 위한 count
 	public int eventListCount(PageVO pageVO) {
+		if(pageVO.checkRegion().equals("empty")) {
 		String sql = "select count(*) from club_count where event_count > 0";
 		return jdbcTemplate.queryForObject(sql, int.class);
+		}
+		else if(pageVO.checkRegion().equals("Depth1")) { // regionDepth1만 설정되어있을때
+		String sql = "select count(*) from club_count where event_count > 0 and region_depth1 = ?";	
+		Object[] params = { pageVO.getRegionDepth1()};
+		return jdbcTemplate.queryForObject(sql, int.class, params);
+		}
+		else {
+			String sql = "select count(*) from club_count where event_count > 0 and region_depth1 = ? and region_depth2 = ?";	
+			Object[] params = { pageVO.getRegionDepth1(), pageVO.getRegionDepth1()};
+			return jdbcTemplate.queryForObject(sql, int.class, params);
+		}
 	}
+	
 	public int boardListCount(PageVO pageVO) {
+		if(pageVO.checkRegion().equals("empty")) {
 		String sql = "select count(*) from club_count where board_count > 0";
 		return jdbcTemplate.queryForObject(sql, int.class);
+		}
+		else if(pageVO.checkRegion().equals("Depth1")) { // regionDepth1만 설정되어있을때
+		String sql = "select count(*) from club_count where board_count > 0 and region_depth1 = ?";	
+		Object[] params = { pageVO.getRegionDepth1()};
+		return jdbcTemplate.queryForObject(sql, int.class, params);
+		}
+		else {
+			String sql = "select count(*) from club_count where board_count > 0 and region_depth1 = ? and region_depth2 = ?";	
+			Object[] params = { pageVO.getRegionDepth1(), pageVO.getRegionDepth1()};
+			return jdbcTemplate.queryForObject(sql, int.class, params);
+		}
 	}
+	
 	public int clubLikeListCount(PageVO pageVO) {
+		if(pageVO.checkRegion().equals("empty")) {
 		String sql = "select count(*) from club_count where club_like > 0";
 		return jdbcTemplate.queryForObject(sql, int.class);
+		}
+		else if(pageVO.checkRegion().equals("Depth1")) { // regionDepth1만 설정되어있을때
+		String sql = "select count(*) from club_count where club_like > 0 and region_depth1 = ?";	
+		Object[] params = { pageVO.getRegionDepth1()};
+		return jdbcTemplate.queryForObject(sql, int.class, params);
+		}
+		else {
+			String sql = "select count(*) from club_count where club_like > 0 and region_depth1 = ? and region_depth2 = ?";	
+			Object[] params = { pageVO.getRegionDepth1(), pageVO.getRegionDepth2()};
+			return jdbcTemplate.queryForObject(sql, int.class, params);
+		}
 	}
+
 	// 포인트 관련-------------
 	// 포인트 확인
 	public boolean updateMemberPoint(MemberActiveVO memberActiveVO) {
