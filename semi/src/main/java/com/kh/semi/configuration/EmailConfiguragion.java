@@ -18,8 +18,8 @@ public class EmailConfiguragion {
 			//서비스 제공자 정보 설정
 			sender.setHost("smtp.gmail.com");//이용할 업체의 호스트 정보
 			sender.setPort(587);//이용할 업체의 포트 번호
-			sender.setUsername("hwangtest16");//이용할 업체의 사용자 계정이름 (자격이 있는 계정)
-			sender.setPassword("piedeanxaaqnxfsj");//이용할 업체의 사용자 비밀번호 (G메일은 앱 비밀번호)
+			sender.setUsername("sirusiru1209@gmail.com");//이용할 업체의 사용자 계정이름 (자격이 있는 계정)
+			sender.setPassword("kioqhzfpjtgzbmoo");//이용할 업체의 사용자 비밀번호 (G메일은 앱 비밀번호)
 			
 			Properties props = new Properties();//추가 정보를 담을 저장소(String, String 형태의 Map)
 			props.setProperty("mail.smtp.auth", "true");//이메일 발송에 인증을 사용(무조건 true)

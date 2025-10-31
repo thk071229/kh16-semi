@@ -85,7 +85,6 @@ public class MemberController {
 	@Autowired
 	private PointUseDao pointUseDao;
 	
-	
 	//ava.sql.Date 타입으로 변환할 때 빈 문자열을 허용하고 자동으로 null로 처리 해주는 메소드
     @InitBinder
     public void initBinder(WebDataBinder binder) {
@@ -127,22 +126,21 @@ public class MemberController {
 			int attachmentNo = attachmentService.save(attach);
 			memberDao.connect(memberDto.getMemberId(), attachmentNo);
 		}
-		String memberId = memberDto.getMemberId();
 		
 		//가입 환영 메일 발송
 		emailService.sendWelcomeMail(memberDto);
 		
-		return "redirect:fistLogin";
+		return "redirect:firstLogin";
 	}
 	
-	@GetMapping("/fistLogin")
+	@GetMapping("/firstLogin")
 	public String fistLogin() {
 		return "/WEB-INF/views/member/firstLogin.jsp";
 	}
 	@PostMapping("/firstLogin")
 	public String firstLogin(@ModelAttribute MemberDto memberDto, HttpSession session) {
 		MemberDto findDto = memberDao.selectOne(memberDto.getMemberId());
-		if(findDto == null) return "redirect:login?error";
+		if(findDto == null) return "redirect:firstLogin?error";
 		
 		boolean isLogin = findDto.getMemberPw().equals(memberDto.getMemberPw());
 		
@@ -154,7 +152,7 @@ public class MemberController {
 			return "redirect:joinFinish";
 		}
 		else {
-			return "redirect:login?error"; 
+			return "redirect:firstLogin?error"; 
 		}
 	}
 	
@@ -469,7 +467,7 @@ public class MemberController {
 		//이메일 발송
 		emailService.sendEmail(
 				findDto.getMemberEmail(), 
-				"[KH정보교육원] 아이디 찾기 결과", 
+				"[SOSO] 아이디 찾기 결과", 
 				findDto.getMemberNickname()+"님의 아이디는 ["
 				+findDto.getMemberId()+"] 입니다"
 		);
@@ -583,7 +581,9 @@ public class MemberController {
 		MemberDto memberDto = memberDao.selectOne(loginId);
 		if(memberDto.getMemberAuthority().equals("y")) throw new TargetNotFoundException("이미 소모임 생성 권한을 가지고 있습니다");
 		// 500포인트 이상 있는지 검사
-		if(memberDto.getMemberPoint()<500) throw new TargetNotFoundException("보유 포인트가 부족합니다");
+
+		if(memberDto.getMemberPoint() < 500) throw new TargetNotFoundException("보유 포인트가 부족합니다");
+
 		
 		// 포인트 사용 기록
 		PointUseDto pointUseDto = new PointUseDto();
@@ -597,6 +597,7 @@ public class MemberController {
 		
 		//권한 부여
 		memberDao.updateMemberAuthority(loginId);
+		
 		return "redirect:/";
 	}
 	@PostMapping("/purchase")
@@ -611,6 +612,5 @@ public class MemberController {
 		
 		return "redirect:/";
 	}
-	
 	
 }

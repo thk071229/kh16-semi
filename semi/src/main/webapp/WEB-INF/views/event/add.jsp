@@ -57,7 +57,9 @@
             state.bookGenreValid = valid;
         });
         $("[name=eventDate]").on("blur", function () {
-            var valid = $(this).val().length > 0;
+            var today = moment();
+            var selected = moment($(this).val());
+        	var valid = selected.isAfter(today);
             $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
             state.eventDateValid = valid;
         });
@@ -83,6 +85,7 @@
 			var picker1 = new Lightpick({
 				field:document.querySelector("[name=eventDate]"),
 				singleDate:true,
+				minDate: new Date(),
 				format:'YYYY-MM-DD HH:mm:ss',
 				time : true
 			});

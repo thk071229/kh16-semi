@@ -10,8 +10,16 @@ $(function(){
     createChart("/rest/admin/stat/member/region", "#member-region-chart", "doughnut", "회원 수");
     createChart("/rest/admin/stat/member/gender", "#member-gender-chart", "doughnut", "회원 수");
     createChart("/rest/admin/stat/member/age", "#member-age-chart", "doughnut", "회원 수");
-
-    // 공통 차트 생성 함수
+	
+	//랭킹 관련 차트
+	createChart("/rest/admin/stat/club/ranking", "#club-ranking-chart", "bar", "회원 수");
+	createChart("/rest/admin/stat/event/ranking", "#event-ranking-chart", "bar", "정모 수");
+	createChart("/rest/admin/stat/board/ranking", "#board-ranking-chart", "bar", "작성 게시글 수");
+	createChart("/rest/admin/stat/member/ranking", "#member-ranking-chart", "bar", "정모 참여 + 작성 게시글 및 댓글 수");
+	createChart("/rest/admin/stat/region/ranking", "#region-ranking-chart", "bar", "회원 및 모임 수");
+	createChart("/rest/admin/stat/category/ranking", "#category-ranking-chart", "bar", "회원 및 모임 수");
+	
+	// 공통 차트 생성 함수
     function createChart(url, selector, chartType, label){
         $.ajax({
             url: url,
