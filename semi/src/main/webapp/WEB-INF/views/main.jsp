@@ -163,12 +163,12 @@
 
 <div class="grid mt-20"> <%-- 카드 목록 그리드 (CSS에서 4열로 설정 필요) --%>
 
-        <c:forEach var="likeCountVO" items="${clubLikeCountVO}">
+        <c:forEach var="clubEventVO" items="${clubEventCountVO}">
             <div class="card"> 
                 <div> <%-- 이미지 영역 --%>
                     <c:choose>
                         <c:when test="${not empty likeCountVO.clubProfile}">
-   						 	<img src="/attachment/download?attachmentNo=${likeCountVO.clubProfile}" alt="${likeCountVO.clubName}" 
+   						 	<img src="/attachment/download?attachmentNo=${clubEventVO.clubProfile}" alt="${clubEventVO.clubName}" 
     						onerror="this.onerror=null; this.src='/images/error/no-image.png';"
     						style="width:100%; height:auto; aspect-ratio: 4/3; object-fit: contain; border-radius: var(--radius-sm) var(--radius-sm) 0 0;">
 						</c:when>
@@ -183,22 +183,22 @@
                     <h4 style="margin: 4px 0 8px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${likeCountVO.clubName}</h4>
                     <div class="kicker"> <%-- 작은 텍스트 스타일 (지역 | 카테고리) --%>
                         <span class="region-name">
-                        ${likeCountVO.regionName}
+                        ${clubEventVO.regionName}
                         </span>
                     </div>
                     <div class="kicker">
-                    	<span>${likeCountVO.categoryName}</span>
+                    	<span>${clubEventVO.categoryName}</span>
                     </div>
                     <div class="kicker">
-                    	<span>회원수:${likeCountVO.memberCount}</span> | <span>정모 ${likeCountVO.eventCount}</span>
+                    	<span>회원수:${clubEventVO.memberCount}</span> | <span>정모 ${clubEventVO.eventCount}</span>
                     </div>
-                    <div class="h-stack like-area" data-club-no="${likeCountVO.clubNo}">
+                    <div class="h-stack like-area" data-club-no="${clubEventVO.clubNo}">
                         <span class="ms-10 like-count">
                         <i class="fa-regular fa-heart red toggle-like"></i>
-                        <span class="like-count-value">${likeCountVO.clubLike}</span> <%-- '개' 글자 span 안으로 이동 --%>
+                        <span class="like-count-value">${clubEventVO.clubLike}</span> <%-- '개' 글자 span 안으로 이동 --%>
                         </span>
                     </div>
-                    <a href="/club/home?clubNo=${likeCountVO.clubNo}" class="btn btn-ghost mt-10">자세히 보기</a>
+                    <a href="/club/home?clubNo=${clubEventVO.clubNo}" class="btn btn-ghost mt-10">자세히 보기</a>
                 </div>
             </div>
         </c:forEach>
