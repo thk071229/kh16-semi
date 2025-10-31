@@ -36,6 +36,7 @@ import com.kh.semi.dto.MemberCategoryDto;
 import com.kh.semi.dto.MemberDto;
 import com.kh.semi.dto.PointUseDto;
 import com.kh.semi.error.NeedPermissionException;
+import com.kh.semi.error.NoImageException;
 import com.kh.semi.error.TargetNotFoundException;
 import com.kh.semi.error.UnauthorizationException;
 import com.kh.semi.service.AttachmentService;
@@ -589,10 +590,10 @@ public class MemberController {
 		if(loginId==null) throw new TargetNotFoundException("로그인이 필요합니다");
 		// 생성권한 이미 가지고 있는지 검사
 		MemberDto memberDto = memberDao.selectOne(loginId);
-		if(memberDto.getMemberAuthority().equals("y")) throw new TargetNotFoundException("이미 소모임 생성 권한을 가지고 있습니다");
+		if(memberDto.getMemberAuthority().equals("y")) throw new NoImageException("이미 소모임 생성 권한을 가지고 있습니다");
 		// 500포인트 이상 있는지 검사
 
-		if(memberDto.getMemberPoint() < 500) throw new TargetNotFoundException("보유 포인트가 부족합니다");
+		if(memberDto.getMemberPoint() < 500) throw new NoImageException("보유 포인트가 부족합니다");
 
 		
 		// 포인트 사용 기록
