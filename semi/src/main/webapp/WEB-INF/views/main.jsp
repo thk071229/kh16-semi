@@ -91,16 +91,20 @@
 <c:if test="${not empty depth1 || not empty depth2}">
 	<c:choose>
 		<c:when test="${depth2==null}">
-			<label class="text-wrapper">
-			<i class="fa-solid fa-location-dot"></i>
-			<span class="location">${depth1}</span> 근처 모임
-			</label>
+			<div class="cell mt-40">
+				<h2 style="color:#e17055">
+					<i class="fa-solid fa-location-dot"></i>
+					<span class="location">${depth1}</span> 근처 모임
+				</h2>
+			</div>
 		</c:when>
 		<c:otherwise>
-			<label class="text-wrapper">
-			<i class="fa-solid fa-location-dot"></i>
-			<span class="location">${depth2}</span> 근처 모임
-			</label>
+			<div class="cell mt-40">
+			<h2 style="color:#e17055">
+				<i class="fa-solid fa-location-dot"></i>
+				<span class="location">${depth2}</span> 근처 모임
+			</h2>
+			</div>
 		</c:otherwise>
 	</c:choose>
 </c:if>	
