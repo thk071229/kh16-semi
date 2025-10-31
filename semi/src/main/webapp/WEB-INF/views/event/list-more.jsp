@@ -482,13 +482,11 @@
 				등록</a>
 		</c:if>
 	</div>
-	<c:if test="${dataCount != 0}">
 		<div class="cell">
 			<label style="color: gray;">우리 소모임의 정모 History</label>
 			<div class="kakao-map w-100"></div>
 		</div>
-	</c:if>
-	<div class="cell mt-40">
+	<div class="cell mt-10">
 		<div class="flex-box">
 			<!-- 진행중 정모 목록 -->
 			<div class="cell w-50 wrapper" style="display: none; padding: 5px;">
