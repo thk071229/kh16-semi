@@ -54,18 +54,17 @@
                 <a href="#">
                     <h3>소모임</h3>
                 </a>
-                <a href="#"><h5>소모임이란</h5></a>
-                <a href="#"><h5>자주하는 질문</h5></a>
-                <a href="#"><h5>블로그</h5></a>
+                <a href="/etc/mainExplain"><h5>소소란</h5></a>
+                <a href="/etc/query"><h5>자주하는 질문</h5></a>
+                <a href="/icon"><h5>아이콘 설명</h5></a>
             </div>
 
             <div class="cell v-stack left" style="flex: 1;">
                 <a href="#">
                     <h3>서비스 정책</h3>
                 </a>
-                <a href="#"><h5>이용약관</h5></a>
-                <a href="#"><h5>개인정보 처리방침</h5></a>
-                <a href="#"><h5>오픈소스</h5></a>
+                <a href="/etc/serviceAgree"><h5>이용약관</h5></a>
+                <a href="/etc/agree"><h5>개인정보 처리방침</h5></a>
             </div>
 
             <div class="cell v-stack left" style="flex: 2;"> 
