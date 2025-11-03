@@ -27,6 +27,9 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 	
 	@Autowired
 	private AdminInterceptor adminInterceptor;
+	
+	@Autowired
+	private ClubAdminInterceptor clubAdminInterceptor;
 
 	
 	@Override
@@ -81,5 +84,9 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 		registry.addInterceptor(clubJoinCheckInterceptor)
 				.addPathPatterns("/event/add","/board/write");
 		
+		//관리자의 소모임 생성 기능 차단
+		registry.addInterceptor(clubAdminInterceptor)
+		.addPathPatterns("/club/add", "/club/edit", "/member/pointUse")
+		.excludePathPatterns("/club/delete");
 	}
 }
