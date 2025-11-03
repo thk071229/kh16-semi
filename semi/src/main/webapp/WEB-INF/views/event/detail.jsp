@@ -239,7 +239,7 @@
 	<c:if test="${sessionScope.loginId != null}">
 	    <div class="cell center">
 	    	<c:if test="${!isClubMember && sessionScope.loginId != null}">
-				<button type="button" class="btn btn-common join w-100">모임 가입</button>
+				<button type="button" class="btn btn-common join w-100 mb-10">모임 가입</button>
 			</c:if>
 			<c:choose>
 				<c:when test="${sessionScope.loginId == eventDto.eventWriter}">
