@@ -1,13 +1,18 @@
 package com.kh.semi.restcontroller;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.semi.dao.EventAttendeeDao;
 import com.kh.semi.dao.EventDao;
@@ -63,5 +68,20 @@ public class EventRestController {
 		return eventDao.selectList(clubNo);
 	}
 	
+	// 대표이미지 갱신
+	@Transactional
+	@PostMapping("/uploadMainImage")
+	public Map<String, Object> updateMainImage(
+									@RequestParam int eventNo,
+									@RequestParam MultipartFile attach) throws IllegalStateException, IOException {
+		Integer beforeAttachmentNo = eventDao.findAttachment(eventNo);
+		if(beforeAttachmentNo != null) {
+			attachmentService.delete(beforeAttachmentNo);
+		}
+		int newAttachmentNo = attachmentService.save(attach);
+		eventDao.connect(eventNo,newAttachmentNo);
+		
+		return Map.of("eventNo", eventNo, "attachmentNo", newAttachmentNo);
+	}
 
 }

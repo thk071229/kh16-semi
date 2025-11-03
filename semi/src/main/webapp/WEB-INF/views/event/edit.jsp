@@ -77,6 +77,29 @@
             return state.ok();
         });
 
+	// 대표이미지 갱신        
+        $("[name=attach]").on("input",function(){
+        	var list = $("[name=attach]").prop("files");
+        	if(list.length==0) return;
+        	
+        	var form = new FormData();
+        	form.append("attach",list[0]);
+        	form.append("eventNo","${eventDto.eventNo}");
+        	
+        	$.ajax({
+        		processData : false,
+        		contentType : false,
+        		url:"/rest/event/uploadMainImage",
+        		method:"post",
+        		data:form,
+        		success : function(response){
+        			var newOrigin = "/event/image?eventNo="+response.eventNo+"&t="+ new Date().getTime();
+        			$("#event-image").attr("src",newOrigin);
+        		}
+        	})
+        });
+        
+        
 	});
 </script>
 <!-- -------------------------------------- -->	
@@ -245,7 +268,12 @@
 						</div>
 						<div class="cell">
                    			<label>대표 이미지</label>
-                    		<input class="input w-100" type="file" name="attach" accept="image/*">
+                   			<div class="flex-box">
+                    			<input class="input w-100" type="file" name="attach" accept="image/*">
+								<c:if test="${eventDto.eventNo != null }">
+                					<img id="event-image" class="ms-10" src="/event/image?eventNo=${eventDto.eventNo}" width="40">
+                				</c:if>
+                			</div>
                 		</div>
 					</div>
 						<div class="flex-fill ms-20">
