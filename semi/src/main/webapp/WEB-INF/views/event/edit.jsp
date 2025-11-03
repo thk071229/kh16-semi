@@ -245,7 +245,12 @@
 						</div>
 						<div class="cell">
                    			<label>대표 이미지</label>
-                    		<input class="input w-100" type="file" name="attach" accept="image/*">
+                   			<div class="flex-box">
+                    			<input class="input w-100" type="file" name="attach" accept="image/*">
+								<c:if test="${eventDto.eventNo != null }">
+                					<img class="ms-10" src="/event/image?eventNo=${eventDto.eventNo}" width="40">
+                				</c:if>
+                			</div>
                 		</div>
 					</div>
 						<div class="flex-fill ms-20">

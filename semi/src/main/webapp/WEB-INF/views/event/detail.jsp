@@ -180,8 +180,18 @@
 				<hr>
 				<table>
 			      <tbody>
+			      		 <tr>
+						  	<td>
+								<div> 대표이미지 </div>
+						  	</td>
+						    <td>
+									<c:if test="${eventDto.eventNo != null }">
+	                					<img class="ms-10" src="/event/image?eventNo=${eventDto.eventNo}" width="40">
+	                				</c:if>
+						    </td>
+					  </tr>
 			          <tr>
-						<td style="width:80px;">참여인원</td>
+						<td style="width:100px;">참여인원</td>
 			            <td class="flex-box">
 							<c:forEach var="eventAttendee" items="${eventAttendeeListVO}" varStatus="status">
 								<c:choose>
