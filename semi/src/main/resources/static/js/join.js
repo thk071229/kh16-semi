@@ -30,7 +30,7 @@ $(function(){
         //[2] 형식 검사를 통과했다면... (중복 검사)
         var memberId = $("[name=memberId]").val();
         $.ajax({
-            url: "http://localhost:8080/rest/member/checkMemberId?memberId="+memberId,
+            url: "/rest/member/checkMemberId?memberId="+memberId,
             success: function(response) {
                 if(response == true) {
                     $("[name=memberId]").removeClass("success fail fail2").addClass("fail2");
@@ -83,7 +83,7 @@ $(function(){
 
         var memberNickname = $(this).val();
         $.ajax({
-            url:"http://localhost:8080/rest/member/checkMemberNickname?memberNickname="+memberNickname,
+            url:"/rest/member/checkMemberNickname?memberNickname="+memberNickname,
             method:"get",
             success:function(response){
                 if(response) {
@@ -121,7 +121,7 @@ $(function(){
         
         // 인증 이메일 발송 요청 AJAX (이전과 동일)
         $.ajax({
-            url:"http://localhost:8080/rest/member/certSend",
+            url:"/rest/member/certSend",
             method:"post",
             data: { certEmail : email },
             success: function(response) {
@@ -152,7 +152,7 @@ $(function(){
 
         var certEmail = $("[name=memberEmail]").val();
         $.ajax({
-            url:"http://localhost:8080/rest/member/certCheck",
+            url:"/rest/member/certCheck",
             method:"post",
             data: {certEmail : certEmail , certNumber : certNumber},
             success: function(response) {

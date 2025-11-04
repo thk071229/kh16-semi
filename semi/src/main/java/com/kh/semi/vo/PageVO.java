@@ -46,8 +46,6 @@ public class PageVO {
 	};
 
 	
-	
-	
 	//외부에서 호출하기 위한 게터메소드
 	public Map<String, Integer> getParentParams(){
 		if(parentParams == null) {
@@ -77,6 +75,9 @@ public class PageVO {
 	
 	public boolean isList() {
 		return column == null || keyword == null;
+	}
+	public boolean isSearchMain() {
+		return keyword != null;
 	}
 	//더보기 pagination에서 사용할 boolean 메소드
 	public boolean hasMore() {

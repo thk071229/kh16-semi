@@ -153,7 +153,6 @@ public class MainController {
 	public String search(@ModelAttribute(value="pageVO") PageVO pageVO, 
 			@RequestParam(required=false) String keyword, Model model) {
 		int resultCount = clubDao.searchResultCount(keyword);
-		
 		pageVO.setDataCount(resultCount);
 		List<ClubCountVO> clubList = clubDao.selectListByResultWithPaging(pageVO, keyword);
 		

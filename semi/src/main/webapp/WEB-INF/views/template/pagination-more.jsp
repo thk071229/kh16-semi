@@ -21,7 +21,7 @@
 <c:if test="${pageVO != null && pageVO.dataCount > 0}">
     <div class="pagination-more">
         <button type="button" class="btn btn-common btn-more"
-            data-query="${pageVO.searchParamsInMore}${pageVO.parentParamsToString}" 
+            data-query="${pageVO. searchDepthInMore}" 
             data-count="${pageVO.dataCount}">
             더보기
         </button>
