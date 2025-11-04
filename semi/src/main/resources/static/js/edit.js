@@ -40,7 +40,7 @@ $(function(){
 
         // 3. 중복 검사 (AJAX)
         $.ajax({
-            url:"http://localhost:8080/rest/member/checkMemberNickname?memberNickname="+nickname,
+            url:"/rest/member/checkMemberNickname?memberNickname="+nickname,
             method:"get",
             success:function(response){
                 if(response) { 

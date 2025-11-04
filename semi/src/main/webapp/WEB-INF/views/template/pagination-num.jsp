@@ -58,7 +58,7 @@
 						<%-- 현재 페이지일 경우 클릭하여 이동할 수 없도록 처리 --%>
 						<c:otherwise>
 						<%-- 현재 페이지가 아닐 경우 클릭하여 이동할 수 있도록 처리 --%>
-							<a href = "list?page=${i}${pageVO.searchParams}${pageVO.parentParamsToString}">${i}</a>
+							<a href = "search?page=${i}${pageVO.searchParams}${pageVO.parentParamsToString}">${i}</a>
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>
@@ -69,10 +69,10 @@
 					<%-- 현재 페이지의 끝 값(finish) = 40 < 전체 페이지 수 (totalPages = 45) 이므로 다음 표시--%>
 					<%-- 현재 페이지 : 42일 때 --%>
 					<%-- 현재 페이지의 끝 값(finish) = 50 > 전체 페이지 수 (totalPages = 45) 이므로 다음 표시 x --%>
-						<a href = "list?page=${pageVO.nextPage}${pageVO.searchParams}${pageVO.parentParamsToString}">&gt;</a>
+						<a href = "search?page=${pageVO.nextPage}${pageVO.searchParams}${pageVO.parentParamsToString}">&gt;</a>
 						<%-- ${finish + 1} = 다음 페이지 --%>
 						<%-- 인덱스의 끝 경계인 finish(ex:20(11-20블럭))에서 +1을 해줘야 다음 페이지(ex:21-30블럭))로 넘어감--%>
-						<a href = "list?page=${pageVO.totalPage}${pageVO.searchParams}${pageVO.parentParamsToString}">&gt;&gt;</a>
+						<a href = "search?page=${pageVO.totalPage}${pageVO.searchParams}${pageVO.parentParamsToString}">&gt;&gt;</a>
 				</c:if>
 			</div>
 		</div>
