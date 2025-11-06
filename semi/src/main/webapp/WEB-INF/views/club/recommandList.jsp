@@ -55,7 +55,7 @@ ${regionDepth1} ${regionDepth2} 근처 모임
 <%-- 찜이 많은 소모임 --%>
 <div class="header"> <%-- 제목과 '더보기' 링크를 위한 레이아웃 --%>
         <h3>⭐ 찜이 많은 소모임 ⭐</h3>
-        <a href="/club/list" class="member-link">더보기 &gt;</a> <%-- 더보기 링크 --%>
+        <a href="${pageContext.request.contextPath}/club/list" class="member-link">더보기 &gt;</a> <%-- 더보기 링크 --%>
 </div>
 
 <div class="grid mt-20"> <%-- 카드 목록 그리드 (CSS에서 4열로 설정 필요) --%>
@@ -93,7 +93,7 @@ ${regionDepth1} ${regionDepth2} 근처 모임
                         <span class="like-count-value">${likeCountVO.clubLike}</span> <%-- '개' 글자 span 안으로 이동 --%>
                         </span>
                     </div>
-                    <a href="/club/home?clubNo=${likeCountVO.clubNo}" class="btn btn-ghost mt-10">자세히 보기</a>
+                    <a href="${pageContext.request.contextPath}/club/home?clubNo=${likeCountVO.clubNo}" class="btn btn-ghost mt-10">자세히 보기</a>
                 </div>
             </div>
         </c:forEach>
@@ -103,7 +103,7 @@ ${regionDepth1} ${regionDepth2} 근처 모임
 		</div>
 <div class="header"> <%-- 제목과 '더보기' 링크를 위한 레이아웃 --%>
         <h3>⭐ 활동이 활발한 모임 (이벤트) ⭐</h3>
-        <a href="/club/list" class="link">더보기 &gt;</a> <%-- 더보기 링크 --%>
+        <a href="${pageContext.request.contextPath}/club/list" class="link">더보기 &gt;</a> <%-- 더보기 링크 --%>
 </div>
 	<div class="grid mt-20">
 	
@@ -137,7 +137,7 @@ ${regionDepth1} ${regionDepth2} 근처 모임
                         <span class="like-count-value">${eventCountVO.clubLike}</span> <%-- '개' 글자 span 안으로 이동 --%>
                         </span>
                     </div>
-                    <a href="/club/home?clubNo=${eventCountVO.clubNo}" class="btn btn-ghost mt-10">자세히 보기</a>
+                    <a href="${pageContext.request.contextPath}/club/home?clubNo=${eventCountVO.clubNo}" class="btn btn-ghost mt-10">자세히 보기</a>
                 </div>
             </div> <%-- card 닫기 --%>
 		</c:forEach>
@@ -151,7 +151,7 @@ ${regionDepth1} ${regionDepth2} 근처 모임
 
 <div class="header"> <%-- 제목과 '더보기' 링크를 위한 레이아웃 --%>
         <h3>⭐ 활동이 활발한 모임 (게시글) ⭐</h3>
-        <a href="/club/list" class="link">더보기 &gt;</a> <%-- 더보기 링크 --%>
+        <a href="${pageContext.request.contextPath}/club/list" class="link">더보기 &gt;</a> <%-- 더보기 링크 --%>
 </div>
 	<div class="grid mt-20">
 	<c:forEach var="boardCountVO" items="${clubBoardCountVO}" varStatus="status">
@@ -184,7 +184,7 @@ ${regionDepth1} ${regionDepth2} 근처 모임
                         <span class="like-count-value">${boardCountVO.clubLike}</span>개 <%-- '개' 글자 span 안으로 이동 --%>
                         </span>
                     </div>
-                    <a href="/club/home?clubNo=${boardCountVO.clubNo}" class="btn btn-ghost mt-10">자세히 보기</a>
+                    <a href="${pageContext.request.contextPath}/club/home?clubNo=${boardCountVO.clubNo}" class="btn btn-ghost mt-10">자세히 보기</a>
                 </div>
             </div> <%-- card 닫기 --%>
 		</c:forEach>
@@ -194,12 +194,12 @@ ${regionDepth1} ${regionDepth2} 근처 모임
 		</div>
 <div class="header"> <%-- 제목과 '더보기' 링크를 위한 레이아웃 --%>
         <h3>⭐ 내 근처에서 시작되는 정모 ⭐</h3>
-        <a href="/club/list" class="link">더보기 &gt;</a> <%-- 더보기 링크 --%>
+        <a href="${pageContext.request.contextPath}/club/list" class="link">더보기 &gt;</a> <%-- 더보기 링크 --%>
 </div>
 
 <div class="header"> <%-- 제목과 '더보기' 링크를 위한 레이아웃 --%>
         <h3>⭐ 카테고리 별 모임 ⭐</h3>
-        <a href="/club/list" class="link">더보기 &gt;</a> <%-- 더보기 링크 --%>
+        <a href="${pageContext.request.contextPath}/club/list" class="link">더보기 &gt;</a> <%-- 더보기 링크 --%>
 </div>
 
 <%-- 구분선 --%>

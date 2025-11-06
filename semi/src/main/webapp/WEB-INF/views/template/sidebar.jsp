@@ -96,11 +96,11 @@
 						</div>
 						<div class="sidebar-in">
 							<div class="cell center">
-								<a class="btn btn-primary w-100" href="/member/login" style="box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+								<a class="btn btn-primary w-100" href="${pageContext.request.contextPath}/member/login" style="box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
 								<i class="fa-solid fa-right-to-bracket"></i> <span>로그인</span></a>
 							</div>
 							<div class="cell center">
-									<a class="btn btn-common w-100" href="/member/join" style="box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+									<a class="btn btn-common w-100" href="${pageContext.request.contextPath}/member/join" style="box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
 									<i class="fa-solid fa-user-plus"></i> <span>회원가입</span></a>
 							</div>
 						</div>
@@ -125,38 +125,38 @@
 								<hr>
 							</div>
 							<div class="cell ms-30">
-									<a class="sidebar-menu" href="/member/memberClub">
+									<a class="sidebar-menu" href="${pageContext.request.contextPath}/member/memberClub">
 										<i class="fa-solid fa-house"></i> 
 										<span>가입한 소모임</span>
 									</a>
 								</div>
 							<div class="cell ms-30">
-									<a class="sidebar-menu" href="/member/memberEvent">
+									<a class="sidebar-menu" href="${pageContext.request.contextPath}/member/memberEvent">
 										<i class="fa-solid fa-arrow-right"></i> 
 										<span>참여한 정모 목록</span>
 									</a>
 								</div>
 								<div class="cell ms-30">
-									<a class="sidebar-menu" href="/member/memberBoard">
+									<a class="sidebar-menu" href="${pageContext.request.contextPath}/member/memberBoard">
 										<i class="fa-solid fa-arrow-right"></i>
 										<span>작성한 게시글</span>
 									</a>
 								</div>
 							<div class="cell ms-30">
-								<a class="sidebar-menu" href="/member/memberLike">
+								<a class="sidebar-menu" href="${pageContext.request.contextPath}/member/memberLike">
 									<i class="fa-solid fa-arrow-right"></i>
 									<span>좋아요한 게시글</span>
 								</a>
 							</div>
 							<div class="cell center">
-								<a class="sidebar-menu" href="/member/mypage">
+								<a class="sidebar-menu" href="${pageContext.request.contextPath}/member/mypage">
 								<i class="fa-solid fa-gear"></i>
 									<span>내 정보 보기</span>
 								</a>
 							</div>
 							<hr>
 							<div class="cell center">
-								<a class="btn btn-accent w-100" href="/member/logout"> <i class="fa-solid fa-user"></i>
+								<a class="btn btn-accent w-100" href="${pageContext.request.contextPath}/member/logout"> <i class="fa-solid fa-user"></i>
 									<span>로그아웃</span>
 								</a>
 							</div>

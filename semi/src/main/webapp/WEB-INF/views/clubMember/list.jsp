@@ -89,7 +89,7 @@
     </ul>
 
 	<div class="cell mt-30">
-		<a href="/club/home?clubNo=${clubDto.clubNo}" class="btn btn-ghost">모임 홈으로 돌아가기</a>
+		<a href="${pageContext.request.contextPath}/club/home?clubNo=${clubDto.clubNo}" class="btn btn-ghost">모임 홈으로 돌아가기</a>
 	</div>
 
 </div> <%-- container 끝 --%>

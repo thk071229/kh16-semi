@@ -108,7 +108,7 @@
 					<td>
 						${memberClubListVO.clubName}
 						<%-- 
-						<a href="/club/detail?clubNo=${memberClubListVO.clubNo}">
+						<a href="${pageContext.request.contextPath}/club/detail?clubNo=${memberClubListVO.clubNo}">
 							${memberClubListVO.clubName}
 						</a>
 						--%>

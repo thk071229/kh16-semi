@@ -63,12 +63,12 @@
 
 	<c:if test="${not empty sessionScope.loginId and empty memberRegion}">
 		<div class="cell">
-			<a href="/member/editRegion" class="member-link">관심 지역 설정하러가기 >></a>
+			<a href="${pageContext.request.contextPath}/member/editRegion" class="member-link">관심 지역 설정하러가기 >></a>
 		</div>
 	</c:if>
 	<c:if test="${not empty sessionScope.loginId and empty memberCategory}">
 		<div class="cell mb-30">
-			<a href="/member/editCategory" class="member-link">관심 카테고리 설정하러가기 >></a>
+			<a href="${pageContext.request.contextPath}/member/editCategory" class="member-link">관심 카테고리 설정하러가기 >></a>
 		</div>
 	</c:if>
 	
@@ -80,8 +80,8 @@
 			<div class="title">우리 동네 모임을 쉽게, SOSO</div>
 	        <div class="subtitle">따뜻하고 소소한 모임을 찾아보세요.</div>
 			<div style="margin-top:30px; margin-right:300px;">
-				<a href="/member/pointUse" class="btn btn-primary me-10">생성권 구매</a> 
-				<a href="/club/add" class="btn btn-accent">모임 만들기</a>
+				<a href="${pageContext.request.contextPath}/member/pointUse" class="btn btn-primary me-10">생성권 구매</a> 
+				<a href="${pageContext.request.contextPath}/club/add" class="btn btn-accent">모임 만들기</a>
 			</div>
 		</div>
 		<img src="assets/hero-illus.svg" alt="hero" style="width:220px; "/>
@@ -113,7 +113,7 @@
 <%-- 찜이 많은 소모임 --%>
 <div class="header"> <%-- 제목과 '더보기' 링크를 위한 레이아웃 --%>
         <h3>⭐ 찜이 많은 소모임 ⭐</h3>
-        <a href="/club/list" class="member-link">더보기 &gt;</a> <%-- 더보기 링크 --%>
+        <a href="${pageContext.request.contextPath}/club/list" class="member-link">더보기 &gt;</a> <%-- 더보기 링크 --%>
 </div>
 <div class="grid mt-20"> <%-- 카드 목록 그리드 (CSS에서 4열로 설정 필요) --%>
         <c:forEach var="likeCountVO" items="${clubLikeCountVO}">
@@ -151,7 +151,7 @@
                         <span class="like-count-value">${likeCountVO.clubLike}</span> <%-- '개' 글자 span 안으로 이동 --%>
                         </span>
                     </div>
-                    <a href="/club/home?clubNo=${likeCountVO.clubNo}" class="btn btn-ghost mt-10">자세히 보기</a>
+                    <a href="${pageContext.request.contextPath}/club/home?clubNo=${likeCountVO.clubNo}" class="btn btn-ghost mt-10">자세히 보기</a>
                 </div>
             </div>
         </c:forEach>
@@ -162,7 +162,7 @@
 		
 <div class="header"> <%-- 제목과 '더보기' 링크를 위한 레이아웃 --%>
         <h3>⭐ 만남이 활발한 모임 ⭐</h3>
-        <a href="/club/list" class="member-link">더보기 &gt;</a> <%-- 더보기 링크 --%>
+        <a href="${pageContext.request.contextPath}/club/list" class="member-link">더보기 &gt;</a> <%-- 더보기 링크 --%>
 </div>
 
 <div class="grid mt-20"> <%-- 카드 목록 그리드 (CSS에서 4열로 설정 필요) --%>
@@ -202,7 +202,7 @@
                         <span class="like-count-value">${clubEventVO.clubLike}</span> <%-- '개' 글자 span 안으로 이동 --%>
                         </span>
                     </div>
-                    <a href="/club/home?clubNo=${clubEventVO.clubNo}" class="btn btn-ghost mt-10">자세히 보기</a>
+                    <a href="${pageContext.request.contextPath}/club/home?clubNo=${clubEventVO.clubNo}" class="btn btn-ghost mt-10">자세히 보기</a>
                 </div>
             </div>
         </c:forEach>
@@ -214,7 +214,7 @@
 
 <div class="header"> <%-- 제목과 '더보기' 링크를 위한 레이아웃 --%>
         <h3>⭐ 소통이 활발한 모임 ⭐</h3>
-        <a href="/club/list" class="member-link">더보기 &gt;</a> <%-- 더보기 링크 --%>
+        <a href="${pageContext.request.contextPath}/club/list" class="member-link">더보기 &gt;</a> <%-- 더보기 링크 --%>
 </div>
 	<div class="grid mt-20">
 	<c:forEach var="boardCountVO" items="${clubBoardCountVO}" varStatus="status">
@@ -247,7 +247,7 @@
                         <span class="like-count-value">${boardCountVO.clubLike}</span> <%-- '개' 글자 span 안으로 이동 --%>
                         </span>
                     </div>
-                    <a href="/club/home?clubNo=${boardCountVO.clubNo}" class="btn btn-ghost mt-10">자세히 보기</a>
+                    <a href="${pageContext.request.contextPath}/club/home?clubNo=${boardCountVO.clubNo}" class="btn btn-ghost mt-10">자세히 보기</a>
                 </div>
             </div> <%-- card 닫기 --%>
 		</c:forEach>
@@ -257,12 +257,12 @@
 		</div>
 <%-- <div class="header"> 제목과 '더보기' 링크를 위한 레이아웃
         <h3>⭐ 내 근처에서 시작되는 정모 ⭐</h3>
-        <a href="/club/list" class="link">더보기 &gt;</a> 더보기 링크
+        <a href="${pageContext.request.contextPath}/club/list" class="link">더보기 &gt;</a> 더보기 링크
 </div>
 
 <div class="header"> 제목과 '더보기' 링크를 위한 레이아웃
         <h3>⭐ 카테고리 별 모임 ⭐</h3>
-        <a href="/club/list" class="link">더보기 &gt;</a> 더보기 링크
+        <a href="${pageContext.request.contextPath}/club/list" class="link">더보기 &gt;</a> 더보기 링크
 </div> --%>
 
 <%-- 구분선 --%>

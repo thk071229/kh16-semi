@@ -51,15 +51,15 @@
             
             <div class="cell v-stack left" style="flex: 1;">
                     <h3>소모임</h3>
-                <a href="/etc/mainExplain"><h5>소소란</h5></a>
-                <a href="/etc/query"><h5>자주하는 질문</h5></a>
-                <a href="/icon"><h5>아이콘 설명</h5></a>
+                <a href="${pageContext.request.contextPath}/etc/mainExplain"><h5>소소란</h5></a>
+                <a href="${pageContext.request.contextPath}/etc/query"><h5>자주하는 질문</h5></a>
+                <a href="${pageContext.request.contextPath}/icon"><h5>아이콘 설명</h5></a>
             </div>
 
             <div class="cell v-stack left" style="flex: 1;">
                     <h3>서비스 정책</h3>
-                <a href="/etc/serviceAgree"><h5>이용약관</h5></a>
-                <a href="/etc/agree"><h5>개인정보 처리방침</h5></a>
+                <a href="${pageContext.request.contextPath}/etc/serviceAgree"><h5>이용약관</h5></a>
+                <a href="${pageContext.request.contextPath}/etc/agree"><h5>개인정보 처리방침</h5></a>
             </div>
 
             <div class="cell v-stack left" style="flex: 2;"> 

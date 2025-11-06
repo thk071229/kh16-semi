@@ -66,7 +66,7 @@
                         <span class="like-count-value">${clubCountVO.clubLike}</span> <%-- '개' 글자 span 안으로 이동 --%>
                         </span>
                     </div>
-                    <a href="/club/home?clubNo=${clubCountVO.clubNo}" class="btn btn-ghost mt-10">자세히 보기</a>
+                    <a href="${pageContext.request.contextPath}/club/home?clubNo=${clubCountVO.clubNo}" class="btn btn-ghost mt-10">자세히 보기</a>
                 </div>
             </div>
         </c:forEach>
