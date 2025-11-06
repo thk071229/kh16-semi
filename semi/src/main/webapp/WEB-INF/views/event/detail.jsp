@@ -16,7 +16,7 @@
 		     if (confirm("모임에 가입하시고 정모에 참여해보세요!")) {
 		            var clubNo = "${eventDto.eventClub}";
 		            console.log("${eventDto.eventClub}");
-		            window.location.href="${pageContext.request.contextPath}/club/home?clubNo=" + clubNo;
+		            window.location.href=contextPath+"/club/home?clubNo=" + clubNo;
 		        }
 		});
 	});

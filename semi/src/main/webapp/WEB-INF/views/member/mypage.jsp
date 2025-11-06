@@ -165,7 +165,7 @@
 			$.ajax({
 				processData : false,//multipart로 보내기 위해 미리 정의된 전처리 제거
 				contentType : false,//multipart로 보내기 위해 미리 정의된 MIME 타입을 제거
-				url:"/rest/member/profile",
+				url:contextPath+"/rest/member/profile",
 				method:"post",
 				data: form,
 				success:function(response){

@@ -64,7 +64,7 @@ $(function(){
 	function loadList() {
 		
 		$.ajax({
-			url:"/rest/more/homeEvent",
+			url:contextPath+"/rest/more/homeEvent",
 			method:"POST",
 			data:{
 				page:1,

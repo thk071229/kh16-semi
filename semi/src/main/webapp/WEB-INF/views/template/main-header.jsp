@@ -171,6 +171,7 @@
 
 
 <script type="text/javascript">
+var contextPath = "${pageContext.request.contextPath}"; // 어쩔 수 없는 코드
 $("#searchBtn").on("click", function() {
     const keyword = $("#searchInput").val().trim();
     if (keyword) {
