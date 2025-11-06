@@ -16,7 +16,7 @@
 		     if (confirm("모임에 가입하시고 정모에 참여해보세요!")) {
 		            var clubNo = "${eventDto.eventClub}";
 		            console.log("${eventDto.eventClub}");
-		            window.location.href = "/club/home?clubNo=" + clubNo;
+		            window.location.href=contextPath+"/club/home?clubNo=" + clubNo;
 		        }
 		});
 	});
@@ -72,17 +72,15 @@
 		var params = new URLSearchParams(location.search);
 		var eventNo = params.get("eventNo");
 		$.ajax({
-			url:"/rest/event/check?eventNo="+eventNo,
+			url:contextPath+"/rest/event/check?eventNo="+eventNo,
 			method:"get",
 			success : function(response) {
 				if (response.attend) {
 					$("#event-attendee").removeClass("fa-square fa-square-check").addClass("fa-square-check");
 					$("#event-attendee-count").text(response.count);
-					console.log(response);
 				} else {
 					$("#event-attendee").removeClass("fa-square fa-square-check").addClass("fa-square");
 					$("#event-attendee-count").text(response.count);
-					console.log(response);
 					}
 				}
 			})
@@ -118,7 +116,7 @@
 						var params = new URLSearchParams(location.search);
 						var eventNo = params.get("eventNo");
 						$.ajax({
-							url : "/rest/event/action?eventNo="+ eventNo,
+							url : contextPath+"/rest/event/action?eventNo="+ eventNo,
 							method : "get",
 							success : function(response) {
 								if (response.attend) {
@@ -186,7 +184,7 @@
 						  	</td>
 						    <td>
 									<c:if test="${eventDto.eventNo != null }">
-	                					<img class="ms-10" src="/event/image?eventNo=${eventDto.eventNo}" width="40">
+	                					<img class="ms-10" src="${pageContext.request.contextPath}/event/image?eventNo=${eventDto.eventNo}" width="40">
 	                				</c:if>
 						    </td>
 					  </tr>
@@ -196,11 +194,11 @@
 							<c:forEach var="eventAttendee" items="${eventAttendeeListVO}" varStatus="status">
 								<c:choose>
 									<c:when test = "${not empty eventAttendee.memberId}">
-										<a href = "/member/detail?memberId=${eventAttendee.memberId}" style="text-decoration: none; color:black; font-weight:600">
+										<a href="${pageContext.request.contextPath}/member/detail?memberId=${eventAttendee.memberId}" style="text-decoration: none; color:black; font-weight:600">
 											<div class="member-card flex-box" style="align-items: center; background-color: var(--surface); border-radius: 20px; padding: 5px 15px 5px 5px; box-shadow: var(--shadow); border: 1px solid #eee;">
 				        					<%-- 프로필 사진 (회원 ID 사용) --%>
 					        					<div style="width: 40px; height: 40px; border-radius: 50%; overflow: hidden; margin-right: 10px;">
-													<img src="/member/profile?memberId=${eventAttendee.memberId}"  style="width: 100%; height: 100%; object-fit: cover;"
+													<img src="${pageContext.request.contextPath}/member/profile?memberId=${eventAttendee.memberId}"  style="width: 100%; height: 100%; object-fit: cover;"
 										     		onerror="this.onerror=null; this.src='/images/error/no-image.png';"> <%-- 이미지 로드 실패 시 기본 이미지 --%>
 												</div>
 												<label>${eventAttendee.attendMemberNickname}</label>

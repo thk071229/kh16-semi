@@ -139,7 +139,7 @@ window.addEventListener('pageshow', function(event) {
 	<div>
 		<div class= "writer-profile-wrapper flex-box flex-center">
 			<div class="writer-profile">
-				<img src = "/member/profile?memberId=${boardDto.boardWriter}" class="member-profile">
+				<img src = "${pageContext.request.contextPath}/member/profile?memberId=${boardDto.boardWriter}" class="member-profile">
 			</div>
 			<div class="board-info-wrapper flex-box flex-vertical flex-fill">
 				<div class="board-writer-nickname flex-box">
@@ -205,7 +205,7 @@ window.addEventListener('pageshow', function(event) {
 	<c:if test = "${sessionScope.loginId != null && isClubMember}">
 	<a href = "write?clubNo=${clubNo}" class="btn btn-accent">새 글 등록</a>
 	</c:if>
-	<a href = "/club/home?clubNo=${clubNo}" class="btn btn-accent">모임 화면으로</a>
+	<a href="${pageContext.request.contextPath}/club/home?clubNo=${clubNo}" class="btn btn-accent">모임 화면으로</a>
 </div>
 
 </div>

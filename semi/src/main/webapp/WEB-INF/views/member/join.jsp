@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-<script src="/js/multipage.js"></script>
-<script src="/js/join.js"></script> </head>
+<script src="${pageContext.request.contextPath}/js/multipage.js"></script>
+<script src="${pageContext.request.contextPath}/js/join.js"></script> </head>
 
 <!-- lightpick cdn -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightpick@1.6.2/css/lightpick.min.css">
@@ -235,7 +235,7 @@
                 <input type="file" name="attach" class="search-input w-100" accept="image/*">
             </div>
             <div class="cell center">
-                <img class="img-preview" src="/images/error/no-image.png" width="200">
+                <img class="img-preview" src="${pageContext.request.contextPath}/images/error/no-image.png" width="200">
             </div>
             </div>
 	</div>

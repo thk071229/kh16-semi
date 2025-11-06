@@ -11,7 +11,7 @@
 		<h1><a href="${pageContext.request.contextPath}/member/login" class="member-link">로그인하기>></a></h1>
 	</div>
 	<div class="cell center">
-		<img src="/images/error/401.jpg" width="300">
+		<img src="${pageContext.request.contextPath}/images/error/401.jpg" width="300">
 	</div>
 </div>
 

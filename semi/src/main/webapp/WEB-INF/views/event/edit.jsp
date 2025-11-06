@@ -89,11 +89,11 @@
         	$.ajax({
         		processData : false,
         		contentType : false,
-        		url:"/rest/event/uploadMainImage",
+        		url:contextPath+"/rest/event/uploadMainImage",
         		method:"post",
         		data:form,
         		success : function(response){
-        			var newOrigin = "/event/image?eventNo="+response.eventNo+"&t="+ new Date().getTime();
+        			var newOrigin = contextPath+"/event/image?eventNo="+response.eventNo+"&t="+ new Date().getTime();
         			$("#event-image").attr("src",newOrigin);
         		}
         	})
@@ -271,7 +271,7 @@
                    			<div class="flex-box">
                     			<input class="input w-100" type="file" name="attach" accept="image/*">
 								<c:if test="${eventDto.eventNo != null }">
-                					<img id="event-image" class="ms-10" src="/event/image?eventNo=${eventDto.eventNo}" width="40">
+                					<img id="event-image" class="ms-10" src="${pageContext.request.contextPath}/event/image?eventNo=${eventDto.eventNo}" width="40">
                 				</c:if>
                 			</div>
                 		</div>

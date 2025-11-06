@@ -16,7 +16,7 @@ $(function(){
 		if(!clubNo) return; 
 
 		$.ajax({
-			url:"/rest/club/check", // 상태 확인
+			url:contextPath+"/rest/club/check", // 상태 확인
 			method:"post",
 			data:{clubNo : clubNo},
 			success: function(response){

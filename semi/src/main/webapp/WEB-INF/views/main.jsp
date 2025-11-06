@@ -26,7 +26,7 @@
 <jsp:include page="/WEB-INF/views/template/main-header.jsp"></jsp:include>
 <%-- js 파일을 불러와 소모임에 토글 기능 추가 --%>
 <c:if test="${sessionScope.loginId != null && sessionScope.loginLevel != '관리자'}">
-<script type="text/javascript" src="/js/club-like.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/club-like.js"></script>
 </c:if>	
 <%-- clubLikeList-ajax 코드가 들어갈 js --%>
 <script type="text/javascript">
@@ -121,12 +121,12 @@
                 <div> <%-- 이미지 영역 --%>
                     <c:choose>
                         <c:when test="${not empty likeCountVO.clubProfile}">
-   						 	<img src="/attachment/download?attachmentNo=${likeCountVO.clubProfile}" alt="${likeCountVO.clubName}" 
-    						onerror="this.onerror=null; this.src='/images/error/no-image.png';"
+   						 	<img src="${pageContext.request.contextPath}/attachment/download?attachmentNo=${likeCountVO.clubProfile}" alt="${likeCountVO.clubName}" 
+    						onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/images/error/no-image.png';"
     						style="width:100%; height:auto; aspect-ratio: 4/3; object-fit: contain; border-radius: var(--radius-sm) var(--radius-sm) 0 0;">
 						</c:when>
                         <c:otherwise>
-                            <img src="/images/error/no-image.png" alt="기본 이미지" 
+                            <img src="${pageContext.request.contextPath}/images/error/no-image.png" alt="기본 이미지" 
                             style="width:100%; height:auto; aspect-ratio: 4/3; object-fit: contain; border-radius: var(--radius-sm) var(--radius-sm) 0 0;">
                         </c:otherwise>
                     </c:choose>
@@ -172,12 +172,12 @@
                 <div> <%-- 이미지 영역 --%>
                     <c:choose>
                         <c:when test="${not empty likeCountVO.clubProfile}">
-   						 	<img src="/attachment/download?attachmentNo=${clubEventVO.clubProfile}" alt="${clubEventVO.clubName}" 
-    						onerror="this.onerror=null; this.src='/images/error/no-image.png';"
+   						 	<img src="${pageContext.request.contextPath}/attachment/download?attachmentNo=${clubEventVO.clubProfile}" alt="${clubEventVO.clubName}" 
+    						onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/images/error/no-image.png';"
     						style="width:100%; height:auto; aspect-ratio: 4/3; object-fit: contain; border-radius: var(--radius-sm) var(--radius-sm) 0 0;">
 						</c:when>
                         <c:otherwise>
-                            <img src="/images/error/no-image.png" alt="기본 이미지" 
+                            <img src="${pageContext.request.contextPath}/images/error/no-image.png" alt="기본 이미지" 
                             style="width:100%; height:auto; aspect-ratio: 4/3; object-fit: contain; border-radius: var(--radius-sm) var(--radius-sm) 0 0;">
                         </c:otherwise>
                     </c:choose>
@@ -222,11 +222,11 @@
 				<div class="card-image-container"> <%-- 이미지 영역 --%>
                     <c:choose>
                         <c:when test="${not empty boardCountVO.clubProfile}">
-                            <img src="/attachment/download?attachmentNo=${boardCountVO.clubProfile}" alt="${boardCountVO.clubName}" 
-                            onerror="this.onerror=null; this.src='/images/error/no-image.png';" style="width:100%; height:auto; aspect-ratio: 4/3; object-fit: contain; border-radius: var(--radius-sm) var(--radius-sm) 0 0;">
+                            <img src="${pageContext.request.contextPath}/attachment/download?attachmentNo=${boardCountVO.clubProfile}" alt="${boardCountVO.clubName}" 
+                            onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/images/error/no-image.png';" style="width:100%; height:auto; aspect-ratio: 4/3; object-fit: contain; border-radius: var(--radius-sm) var(--radius-sm) 0 0;">
                         </c:when>
                         <c:otherwise>
-                            <img src="/images/error/no-image.png" alt="기본 이미지" style="width:100%; height:auto; aspect-ratio: 4/3; object-fit: contain; border-radius: var(--radius-sm) var(--radius-sm) 0 0;">
+                            <img src="${pageContext.request.contextPath}/images/error/no-image.png" alt="기본 이미지" style="width:100%; height:auto; aspect-ratio: 4/3; object-fit: contain; border-radius: var(--radius-sm) var(--radius-sm) 0 0;">
                         </c:otherwise>
                     </c:choose>
                 </div>

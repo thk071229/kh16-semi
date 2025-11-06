@@ -5,7 +5,7 @@
 		var boardNo = params.get("boardNo");
 		
 		$.ajax({
-			url:"/rest/board/check?boardNo="+boardNo,
+			url:contextPath+"/rest/board/check?boardNo="+boardNo,
 			method:"get",
 			success:function(response){
 				$("#board-like-count").text(response.count);
@@ -27,7 +27,7 @@
 			//하트에 클릭이벤트를 걸어서 /action 으로 신호 전송
 			$("#board-like").on("click", function(){
 				$.ajax({
-					url:"/rest/board/action?boardNo="+boardNo,
+					url:contextPath+"/rest/board/action?boardNo="+boardNo,
 					method:"post",
 					success:function(response){
 						$("#board-like-count").text(response.count);

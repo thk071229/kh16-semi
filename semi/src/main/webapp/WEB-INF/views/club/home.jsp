@@ -34,8 +34,8 @@ justify-content: flex-end
 }
 </style>
 <!-- 좋아요 js 분리 -->
-<script src="/js/club-home-check.js"></script>
-<script src="/js/club-home-like.js"></script>
+<script src="${pageContext.request.contextPath}/js/club-home-check.js"></script>
+<script src="${pageContext.request.contextPath}/js/club-home-like.js"></script>
 
 <!-- more-button js -->
 <script type="text/javascript">
@@ -60,7 +60,7 @@ justify-content: flex-end
 
 			$
 					.ajax({
-						url : "/rest/more/clubMember",
+						url : contextPath+"/rest/more/clubMember",
 						method : "POST",
 						data : {
 							page : 1,
@@ -86,7 +86,7 @@ justify-content: flex-end
 								var html = $.parseHTML(origin);
 
 								$(html).find(".member-image").attr(
-										"src",
+										"src",contextPath+
 										"/member/profile?memberId="
 												+ member.clubMember).attr(
 										"alt", member.memberNickname + " 프로필");
@@ -186,13 +186,13 @@ justify-content: flex-end
 		<c:choose>
 			<%-- [수정] boardCountVO -> clubDto --%>
 			<c:when test="${not empty clubDto.clubProfile}">
-				<img src="/attachment/download?attachmentNo=${clubDto.clubProfile}"
+				<img src="${pageContext.request.contextPath}/attachment/download?attachmentNo=${clubDto.clubProfile}"
 					alt="${clubDto.clubName}"
-					onerror="this.onerror=null; this.src='/images/error/no-image.png';"
+					onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/images/error/no-image.png';"
 					style="width:100%; max-height: 350px; object-fit: contain; border-radius: var(--radius-sm); box-shadow: var(--shadow);">
 				</c:when>
 			<c:otherwise>
-				<img src="/images/error/no-image.png"
+				<img src="${pageContext.request.contextPath}/images/error/no-image.png"
 					style="width: 200px; height: auto; opacity: 0.5;" alt="기본 이미지">
 			</c:otherwise>
 		</c:choose>
@@ -237,7 +237,7 @@ justify-content: flex-end
 
 	<%-- 가입/탈퇴 버튼 --%>
 	<c:if test="${loginId != null && clubMemberDto == null}">
-		<form action="/clubMember/join" method="post" autocomplete="off">
+		<form action="${pageContext.request.contextPath}/clubMember/join" method="post" autocomplete="off">
 			<div class="cell">
 				<input type="hidden" name="clubNo" value="${clubDto.clubNo}">
 				<button type="submit" class="btn btn-primary w-100">이 모임
@@ -247,7 +247,7 @@ justify-content: flex-end
 	</c:if>
 	<c:if test="${clubMemberDto != null}">
 		<c:if test="${loginId != clubDto.clubLeader}">
-			<form action="/clubMember/drop" method="post" autocomplete="off">
+			<form action="${pageContext.request.contextPath}/clubMember/drop" method="post" autocomplete="off">
 				<div class="cell">
 					<input type="hidden" name="clubNo" value="${clubDto.clubNo}">
 					<button type="submit" class="btn btn-ghost w-100 red">모임

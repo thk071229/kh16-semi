@@ -60,7 +60,7 @@
 	</div>
 	
 	<div class="cell center">
-		<img src="/member/profile?memberId=${memberDto.memberId}" width="200" height="200">
+		<img src="${pageContext.request.contextPath}/member/profile?memberId=${memberDto.memberId}" width="200" height="200">
 	</div>
 	
 	<div class="profile-info mt-50">

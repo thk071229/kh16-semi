@@ -9,19 +9,7 @@
 <link rel ="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
 <%-- jQuery cdn --%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<!-- 모든 jquery ajax의 전송 시 주소 앞에 절대경로를 추가 -->
-<script>
-	var contextPath = "${pageContext.request.contextPath}";//어쩔 수 없는 코드
-	$.ajaxSetup({
-		beforeSend: function(xhr, settings) {
-			//xhr = 요청객체 / settiongs = 요청옵션
-			//$.ajax({}) > 요청객체 / 괄호 안에 들어가는 것: 요청옵션
-			if(settings.url.startsWith("/")){ //주소가 절대경로라면
-				settings.url = contextPath + settings.url;
-			}
-		}
-	});
-</script>
+
 <%-- momentjs cdn --%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/locale/ko.min.js"></script>
@@ -185,6 +173,7 @@
 
 
 <script type="text/javascript">
+var contextPath = "${pageContext.request.contextPath}"; // 어쩔 수 없는 코드
 $("#searchBtn").on("click", function() {
     const keyword = $("#searchInput").val().trim();
     if (keyword) {
@@ -222,10 +211,11 @@ $(function(){
     // --- 1단계 지역 목록 로드 함수 ---
     function loadRegionLevel1(){
         $.ajax({
-            url:"/rest/region/depth1List", // RestController 경로 확인
+            url:contextPath+"/rest/region/depth1List", // RestController 경로 확인
             method:"GET",
+            dataType : "json",
             success:function(depth1List){ // depth1List는 ["경기", "서울", ...] 형태의 문자열 배열
-                const $regionUl = $("#region-submenu-level1");
+            	const $regionUl = $("#region-submenu-level1");
                 $regionUl.empty(); // 기존 내용 비우기
 
                 depth1List.forEach(function(depth1) {
@@ -240,9 +230,8 @@ $(function(){
                     $regionUl.append($newHtml);
                 });
             },
-            error: function() {
+            error: function(error) {
                 console.error("1단계 지역 목록 로드 실패");
-                $("#region-submenu-level1").append("<li><a>로드 실패</a></li>");
             }
         });
     }
@@ -256,7 +245,7 @@ $(function(){
 
         $.ajax({
             // regionDepth1 파라미터로 depth1 값 전달 (URL 인코딩)
-            url: `/rest/region/depth2List?regionDepth1=`+depth1, // RestController 경로 확인
+            url: contextPath+`/rest/region/depth2List?regionDepth1=`+depth1, // RestController 경로 확인
             method: "GET",
             success: function(depth2List) { // depth2List는 ["고양시", "수원시", ...] 형태의 문자열 배열
                 $targetUl.empty(); // 로딩 아이콘 제거

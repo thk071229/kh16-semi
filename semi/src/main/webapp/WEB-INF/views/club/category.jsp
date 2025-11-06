@@ -20,7 +20,7 @@
 
 <%-- club-like.js 불러오기 --%>
 <c:if test="${sessionScope.loginId != null && sessionScope.loginLevel != '관리자'}">
-	<script src="/js/club-like.js"></script>
+	<script src="${pageContext.request.contextPath}/js/club-like.js"></script>
 </c:if>
 
 <div class="container mt-30"> <%-- 전체 컨테이너 --%>
@@ -36,12 +36,12 @@
                 <div> <%-- 이미지 영역 --%>
                     <c:choose>
                         <c:when test="${not empty clubCountVO.clubProfile}">
-   						 	<img src="/attachment/download?attachmentNo=${clubCountVO.clubProfile}" alt="${clubCountVO.clubName}" 
+   						 	<img src="${pageContext.request.contextPath}/attachment/download?attachmentNo=${clubCountVO.clubProfile}" alt="${clubCountVO.clubName}" 
     						onerror="this.onerror=null; this.src='/images/error/no-image.png';"
     						style="width:100%; height:auto; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--radius-sm) var(--radius-sm) 0 0;">
 						</c:when>
                         <c:otherwise>
-                            <img src="/images/error/no-image.png" alt="기본 이미지" 
+                            <img src="${pageContext.request.contextPath}/images/error/no-image.png" alt="기본 이미지" 
                             style="width:100%; height:auto; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--radius-sm) var(--radius-sm) 0 0;">
                         </c:otherwise>
                     </c:choose>

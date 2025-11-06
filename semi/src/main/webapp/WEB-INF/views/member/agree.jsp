@@ -19,7 +19,7 @@
     }
 </style>
 
-<script src="/js/agree.js"></script>
+<script src="${pageContext.request.contextPath}/js/agree.js"></script>
 
 <div class="container">
 	

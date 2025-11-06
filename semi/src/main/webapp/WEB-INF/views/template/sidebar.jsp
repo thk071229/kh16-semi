@@ -109,7 +109,7 @@
 					<c:otherwise>
 						<div class="sidebar-in">
 							<div class="cell center">
-								<img src="/member/profile?memberId=${sessionScope.loginId}" width="150" height="150" class="image-profile">
+								<img src="${pageContext.request.contextPath}/member/profile?memberId=${sessionScope.loginId}" width="150" height="150" class="image-profile">
 							</div>
 							<div class="cell center">
 								<h3 class="mb-0">

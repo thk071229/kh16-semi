@@ -60,7 +60,7 @@
 		<h1 style="color: var(--subtle);">${memberDto.memberId}님의 정보</h1>
 	</div>
 	<div class="cell center mt-50">
-		<img src="/member/profile?memberId=${memberDto.memberId}" width="200" height="200">
+		<img src="${pageContext.request.contextPath}/member/profile?memberId=${memberDto.memberId}" width="200" height="200">
 	</div>
 	<div class="profile-info mt-50">
 		<table>

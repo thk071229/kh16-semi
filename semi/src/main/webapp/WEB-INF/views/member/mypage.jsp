@@ -165,7 +165,7 @@
 			$.ajax({
 				processData : false,//multipart로 보내기 위해 미리 정의된 전처리 제거
 				contentType : false,//multipart로 보내기 위해 미리 정의된 MIME 타입을 제거
-				url:"/rest/member/profile",
+				url:contextPath+"/rest/member/profile",
 				method:"post",
 				data: form,
 				success:function(response){
@@ -173,7 +173,7 @@
 					//(중요) 브라우저의 캐싱을 우회하기 위하여 시간을 파라미터로 첨부
 					//var newOrigin = origin + "&t=" + new Date().getTime();
 					//$(".image-profile").attr("src", newOrigin);
-					var newOrigin = "/member/profile?memberId=${memberDto.memberId}&t=" + new Date().getTime();
+					var newOrigin = contextPath+"/member/profile?memberId=${memberDto.memberId}&t=" + new Date().getTime();
     				$(".image-profile").attr("src", newOrigin);
    					origin = newOrigin; // origin도 갱신
 				}
@@ -186,7 +186,7 @@
 			if(choice == false) return;
 			
 			$.ajax({
-				url:"/rest/member/delete",
+				url:contextPath+"/rest/member/delete",
 				method:"post",
 				success:function(){
 					var newOrigin = origin + "&t=" + new Date().getTime();
@@ -206,7 +206,7 @@
     <!-- 프로필 -->
     <div class="profile-card">
       <div class="profile-wrapper">
-        <img src="/member/profile?memberId=${memberDto.memberId}" alt="프로필 이미지"  class="image-profile">
+        <img src="${pageContext.request.contextPath}/member/profile?memberId=${memberDto.memberId}" alt="프로필 이미지"  class="image-profile">
         <label for="profile-input">변경</label>
         <input type="file" id="profile-input" style="display:none">
       </div>

@@ -50,7 +50,7 @@
             <li class="member-manage-item">
                 <%-- 프로필 사진 --%>
                 <div class="member-profile-pic">
-                     <img src="/member/profile?memberId=${member.clubMember}"
+                     <img src="${pageContext.request.contextPath}/member/profile?memberId=${member.clubMember}"
                           onerror="this.onerror=null; this.src='/images/error/no-image.png';"
                           alt="${member.memberNickname} 프로필">
                 </div>
@@ -71,13 +71,13 @@
                 <c:if test="${loginId == clubDto.clubLeader && loginId != member.clubMember}">
                     <div class="member-actions">
                         <%-- 제명 버튼 폼 --%>
-                        <form action="/clubMember/delete" method="post" onsubmit="return confirm('${member.memberNickname}님을 정말 제명하시겠습니까?');" style="display:inline;">
+                        <form action="${pageContext.request.contextPath}/clubMember/delete" method="post" onsubmit="return confirm('${member.memberNickname}님을 정말 제명하시겠습니까?');" style="display:inline;">
                             <input type="hidden" name="clubNo" value="${clubDto.clubNo}">
                             <input type="hidden" name="memberId" value="${member.clubMember}">
                             <button type="submit" class="btn btn-ghost btn-sm red">제명</button> <%-- 빨간색 + 작은 버튼 --%>
                         </form>
                         <%-- 모임장 위임 버튼 폼 --%>
-                        <form action="/clubMember/changeLeader" method="post" onsubmit="return confirm('${member.memberNickname}님에게 모임장을 위임하시겠습니까?\n(회원님은 일반회원이 됩니다)');" style="display:inline;">
+                        <form action="${pageContext.request.contextPath}/clubMember/changeLeader" method="post" onsubmit="return confirm('${member.memberNickname}님에게 모임장을 위임하시겠습니까?\n(회원님은 일반회원이 됩니다)');" style="display:inline;">
                              <input type="hidden" name="clubNo" value="${clubDto.clubNo}">
                              <input type="hidden" name="newLeader" value="${member.clubMember}">
                             <button type="submit" class="btn btn-ghost btn-sm orange ms-5">모임장 위임</button> <%-- 주황색 + 작은 버튼 --%>
