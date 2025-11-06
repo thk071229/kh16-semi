@@ -130,7 +130,7 @@
 	</div>
 	<div class="cell">
 		<button class="btn btn-primary w-100" type="submit">저장</button>
-		<a href="/" class="btn btn-post w-100 center">다음에 설정</a>
+		<a href="${pageContext.request.contextPath}/" class="btn btn-post w-100 center">다음에 설정</a>
 	</div>
 </div>
 </form>

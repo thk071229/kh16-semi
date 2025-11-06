@@ -138,16 +138,16 @@ justify-content: flex-end
 	<div class="cell">
 		<div class="flex-box">
 			<h2>
-				<a href="/club/home?clubNo=${clubDto.clubNo}"
+				<a href="${pageContext.request.contextPath}/club/home?clubNo=${clubDto.clubNo}"
 					class="btn btn-primary">홈</a>
 			</h2>
 			<%-- 현재 페이지 강조 --%>
 			<h2>
-				<a href="/board/list?clubNo=${clubDto.clubNo}"
+				<a href="${pageContext.request.contextPath}/board/list?clubNo=${clubDto.clubNo}"
 					class="btn btn-ghost ms-20">게시판</a>
 			</h2>
 			<h2>
-				<a href="/event/list?clubNo=${clubDto.clubNo}"
+				<a href="${pageContext.request.contextPath}/event/list?clubNo=${clubDto.clubNo}"
 					class="btn btn-ghost ms-20">정모</a>
 			</h2>
 		</div>
@@ -170,10 +170,10 @@ justify-content: flex-end
 
 			<%-- 모임장 관리 영역 --%>
 			<c:if test="${loginId == clubDto.clubLeader}">
-				<a href="/club/edit?clubNo=${clubDto.clubNo}" title="모임 정보 수정"
+				<a href="${pageContext.request.contextPath}/club/edit?clubNo=${clubDto.clubNo}" title="모임 정보 수정"
 					class="ms-20"> <i class="fa-solid fa-pen-to-square fa-lg gray"></i>
 				</a>
-				<a href="/club/delete?clubNo=${clubDto.clubNo}"
+				<a href="${pageContext.request.contextPath}/club/delete?clubNo=${clubDto.clubNo}"
 					class="check-club-delete ms-10" title="모임 삭제"> <i
 					class="fa-solid fa-trash-can fa-lg gray"></i>
 				</a>
@@ -215,7 +215,7 @@ justify-content: flex-end
 			<h2 class="flex-fill" style="margin: 0;">모인 멤버
 				(${memberList.size()}명)</h2>
 			<c:if test="${loginId == clubDto.clubLeader}">
-				<a href="/clubMember/list?clubNo=${clubDto.clubNo}" class="link">
+				<a href="${pageContext.request.contextPath}/clubMember/list?clubNo=${clubDto.clubNo}" class="link">
 					<i class="fa-solid fa-users me-5"></i> 멤버관리
 				</a>
 			</c:if>
@@ -259,7 +259,7 @@ justify-content: flex-end
 	<c:if test="${loginId == null}">
 		<div class="cell center">
 			<p class="gray">
-				모임에 참여하려면 <a href="/member/login" class="link">로그인</a>해주세요.
+				모임에 참여하려면 <a href="${pageContext.request.contextPath}/member/login" class="link">로그인</a>해주세요.
 			</p>
 		</div>
 	</c:if>

@@ -89,7 +89,7 @@
   			<c:forEach var="clubListVO" items="${clubList}" varStatus="status">
   				<tr>
   					<td>
-	  					 <a href="/club/detail?clubNo=${clubListVO.clubNo}" class="member-link">
+	  					 <a href="${pageContext.request.contextPath}/club/detail?clubNo=${clubListVO.clubNo}" class="member-link">
 	                    ${clubListVO.clubName}
 	                  	</a>
                   	</td>

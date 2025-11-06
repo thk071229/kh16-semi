@@ -64,7 +64,7 @@
                         <span class="like-count-value">${clubCountVO.clubLike}</span>
                         </span> <%-- 빨간색 하트 + 좋아요 수 --%>
                     </div>
-                    <a href="/club/home?clubNo=${clubCountVO.clubNo}" class="btn btn-ghost mt-10 club-number">자세히 보기</a> <%-- 고스트 버튼 + 상단 여백 --%>
+                    <a href="${pageContext.request.contextPath}/club/home?clubNo=${clubCountVO.clubNo}" class="btn btn-ghost mt-10 club-number">자세히 보기</a> <%-- 고스트 버튼 + 상단 여백 --%>
                 </div>
             </div>
         </c:forEach>
