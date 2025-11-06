@@ -40,7 +40,7 @@
 			
 		
 		$.ajax({
-			url:"/rest/more/club",
+			url:contextPath+"/rest/more/club",
 			method:"POST",
 			data:{
 				page:1,

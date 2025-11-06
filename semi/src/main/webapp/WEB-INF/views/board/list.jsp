@@ -139,7 +139,7 @@ window.addEventListener('pageshow', function(event) {
 	<div>
 		<div class= "writer-profile-wrapper flex-box flex-center">
 			<div class="writer-profile">
-				<img src = "/member/profile?memberId=${boardDto.boardWriter}" class="member-profile">
+				<img src = "${pageContext.request.contextPath}/member/profile?memberId=${boardDto.boardWriter}" class="member-profile">
 			</div>
 			<div class="board-info-wrapper flex-box flex-vertical flex-fill">
 				<div class="board-writer-nickname flex-box">

@@ -60,7 +60,7 @@ justify-content: flex-end
 
 			$
 					.ajax({
-						url : "/rest/more/clubMember",
+						url : contextPath+"/rest/more/clubMember",
 						method : "POST",
 						data : {
 							page : 1,
@@ -86,7 +86,7 @@ justify-content: flex-end
 								var html = $.parseHTML(origin);
 
 								$(html).find(".member-image").attr(
-										"src",
+										"src",contextPath+
 										"/member/profile?memberId="
 												+ member.clubMember).attr(
 										"alt", member.memberNickname + " 프로필");

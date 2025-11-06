@@ -173,7 +173,7 @@
 					//(중요) 브라우저의 캐싱을 우회하기 위하여 시간을 파라미터로 첨부
 					//var newOrigin = origin + "&t=" + new Date().getTime();
 					//$(".image-profile").attr("src", newOrigin);
-					var newOrigin = "/member/profile?memberId=${memberDto.memberId}&t=" + new Date().getTime();
+					var newOrigin = contextPath+"/member/profile?memberId=${memberDto.memberId}&t=" + new Date().getTime();
     				$(".image-profile").attr("src", newOrigin);
    					origin = newOrigin; // origin도 갱신
 				}
@@ -186,7 +186,7 @@
 			if(choice == false) return;
 			
 			$.ajax({
-				url:"/rest/member/delete",
+				url:contextPath+"/rest/member/delete",
 				method:"post",
 				success:function(){
 					var newOrigin = origin + "&t=" + new Date().getTime();

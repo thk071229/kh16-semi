@@ -72,17 +72,15 @@
 		var params = new URLSearchParams(location.search);
 		var eventNo = params.get("eventNo");
 		$.ajax({
-			url:"/rest/event/check?eventNo="+eventNo,
+			url:contextPath+"/rest/event/check?eventNo="+eventNo,
 			method:"get",
 			success : function(response) {
 				if (response.attend) {
 					$("#event-attendee").removeClass("fa-square fa-square-check").addClass("fa-square-check");
 					$("#event-attendee-count").text(response.count);
-					console.log(response);
 				} else {
 					$("#event-attendee").removeClass("fa-square fa-square-check").addClass("fa-square");
 					$("#event-attendee-count").text(response.count);
-					console.log(response);
 					}
 				}
 			})
@@ -118,7 +116,7 @@
 						var params = new URLSearchParams(location.search);
 						var eventNo = params.get("eventNo");
 						$.ajax({
-							url : "/rest/event/action?eventNo="+ eventNo,
+							url : contextPath+"/rest/event/action?eventNo="+ eventNo,
 							method : "get",
 							success : function(response) {
 								if (response.attend) {

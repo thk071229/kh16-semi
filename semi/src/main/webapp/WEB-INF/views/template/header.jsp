@@ -10,18 +10,7 @@
 <%-- jQuery cdn --%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <!-- 모든 jquery ajax의 전송 시 주소 앞에 절대경로를 추가 -->
-<script>
-	var contextPath = "${pageContext.request.contextPath}";//어쩔 수 없는 코드
-	$.ajaxSetup({
-		beforeSend: function(xhr, settings) {
-			//xhr = 요청객체 / settiongs = 요청옵션
-			//$.ajax({}) > 요청객체 / 괄호 안에 들어가는 것: 요청옵션
-			if(settings.url.startsWith("/")){ //주소가 절대경로라면
-				settings.url = contextPath + settings.url;
-			}
-		}
-	});
-</script>
+
 <%-- momentjs cdn --%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/locale/ko.min.js"></script>
@@ -67,7 +56,7 @@ $("#searchBtn").on("click", function() {
     const keyword = $("#searchInput").val().trim();
     if (keyword) {
         // keyword를 URL에 담아서 페이지 이동
-        location.href = contextPath+`/search?keyword=`+keyword;
+        location.href = contextPath+"/search?keyword="+keyword;
     }
 });
 </script>

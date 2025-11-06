@@ -89,11 +89,11 @@
         	$.ajax({
         		processData : false,
         		contentType : false,
-        		url:"/rest/event/uploadMainImage",
+        		url:contextPath+"/rest/event/uploadMainImage",
         		method:"post",
         		data:form,
         		success : function(response){
-        			var newOrigin = "/event/image?eventNo="+response.eventNo+"&t="+ new Date().getTime();
+        			var newOrigin = contextPath+"/event/image?eventNo="+response.eventNo+"&t="+ new Date().getTime();
         			$("#event-image").attr("src",newOrigin);
         		}
         	})

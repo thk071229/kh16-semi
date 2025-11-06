@@ -31,7 +31,7 @@
 		//진행 중 정모 목록 불러오는 함수
 		function loadListBefore() {
 			$.ajax({
-				url : "/rest/more/beforeEvent",
+				url : contextPath+"/rest/more/beforeEvent",
 				method : "POST",
 				data : {
 					page : 1,
@@ -50,12 +50,11 @@
 					$(".wrapper").show();
 					for (var i = 0; i < list.length; i++) {
 						var eventList = list[i];
-
 						var origin = $("#before-list-template").text();
 						var html = $.parseHTML(origin);
-						$(html).find(".event-link").prop("href",
+						$(html).find(".event-link").prop("href",contextPath+
 								"detail?eventNo=" + eventList.eventNo);
-						$(html).find(".event-image").prop("src",
+						$(html).find(".event-image").prop("src",contextPath+
 								"/event/image?eventNo=" + eventList.eventNo);
 						$(html).find(".event-title-text").text(
 								eventList.eventTitle);
@@ -116,7 +115,7 @@
 
 		function loadListAfter() {
 			$.ajax({
-				url : "/rest/more/afterEvent",
+				url : contextPath+"/rest/more/afterEvent",
 				method : "POST",
 				data : {
 					page : 1,
@@ -140,9 +139,9 @@
 						var origin = $("#after-list-template").text();
 						var html = $.parseHTML(origin);
 
-						$(html).find(".event-link").prop("href",
+						$(html).find(".event-link").prop("href",contextPath+
 								"detail?eventNo=" + eventList.eventNo);
-						$(html).find(".event-image").prop("src",
+						$(html).find(".event-image").prop("src",contextPath+
 								"/event/image?eventNo=" + eventList.eventNo);
 						$(html).find(".event-title-text").text(
 								eventList.eventTitle);
