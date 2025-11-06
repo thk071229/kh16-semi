@@ -223,7 +223,7 @@ $(function(){
     // --- 1단계 지역 목록 로드 함수 ---
     function loadRegionLevel1(){
         $.ajax({
-            url:"/rest/region/depth1List", // RestController 경로 확인
+            url:contextPath+"/rest/region/depth1List", // RestController 경로 확인
             method:"GET",
             success:function(depth1List){ // depth1List는 ["경기", "서울", ...] 형태의 문자열 배열
                 const $regionUl = $("#region-submenu-level1");
@@ -257,7 +257,7 @@ $(function(){
 
         $.ajax({
             // regionDepth1 파라미터로 depth1 값 전달 (URL 인코딩)
-            url: `/rest/region/depth2List?regionDepth1=`+depth1, // RestController 경로 확인
+            url: contextPath+`/rest/region/depth2List?regionDepth1=`+depth1, // RestController 경로 확인
             method: "GET",
             success: function(depth2List) { // depth2List는 ["고양시", "수원시", ...] 형태의 문자열 배열
                 $targetUl.empty(); // 로딩 아이콘 제거
