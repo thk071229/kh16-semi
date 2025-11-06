@@ -41,7 +41,7 @@ $(function(){ // HTML 문서가 로드되면 실행
 
 		// --- 5. AJAX 요청 ---
 		$.ajax({
-			url: "/rest/more/recommendClub", // 찜 목록용 REST 컨트롤러
+			url: contextPath+"/rest/more/recommendClub", // 찜 목록용 REST 컨트롤러
 			method: "post", // 컨트롤러가 POST를 받으므로
 			data: {
 				page: currentPage,
@@ -57,7 +57,7 @@ $(function(){ // HTML 문서가 로드되면 실행
 						// 데이터 채우기
 						if(club.clubProfile) {
 							$newCard.find(".card-image-placeholder")
-								.attr("src", "/attachment/download?attachmentNo=" + club.clubProfile)
+								.attr("src", contextPath+"/attachment/download?attachmentNo=" + club.clubProfile)
 								.attr("alt", club.clubName)
 								.on("error", function() { $(this).attr("src", "/images/error/no-image.png"); });
 						}

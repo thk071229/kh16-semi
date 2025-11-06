@@ -9,7 +9,7 @@
 		//댓글이 없어도 확인 가능해야하니까 data로 boardNo 값을 받는다
 		function stateCheck(){
 			$.ajax({
-				url:"/rest/reply/check",
+				url:contextPath+"/rest/reply/check",
 				method:"POST",
 				data:{boardNo : boardNo},
 				success:function(response){
@@ -22,7 +22,7 @@
 		function loadList(){
 			//목록 조회 ajax
 			$.ajax({
-				url:"/rest/reply/list",
+				url:contextPath+"/rest/reply/list",
 				method:"POST",
 				data:{replyTarget : boardNo},
 				success:function(response){
@@ -40,7 +40,7 @@
 						var origin = $("#reply-view-template").text();
 						//html로 재해석
 						var html = $.parseHTML(origin);//HTML로 재해석
-						$(html).find(".reply-writer-profile").prop("src", "/member/profile?memberId="+reply.replyWriter);
+						$(html).find(".reply-writer-profile").prop("src", contextPath+"/member/profile?memberId="+reply.replyWriter);
 						$(html).find(".reply-writer").text(reply.replyWriter);//작성자 교체
 						
 						//작성자가 게시글 작성자 본인이라면
@@ -83,7 +83,7 @@
 			var replyNo = $(this).data("pk");
 			
 			$.ajax({
-				url:"/rest/reply/delete",
+				url:contextPath+"/rest/reply/delete",
 				method:"POST",
 				data:{ replyNo : replyNo },
 				success:function(response){
@@ -121,7 +121,7 @@
 								.find(".reply-editor").val();//reply-editor에 적혀있는 값을 content로 저장
 			
 			$.ajax({
-				url:"/rest/reply/edit",
+				url:contextPath+"/rest/reply/edit",
 				method:"POST",
 				data:{replyNo : replyNo, replyContent : replyContent},
 				success:function(response){
@@ -137,7 +137,7 @@
 			if(content.trim().length == 0) return;
 			
 			$.ajax({
-				url:"/rest/reply/write",
+				url:contextPath+"/rest/reply/write",
 				method:"POST",
 				data:{replyTarget:boardNo, replyContent:content},
 				success:function(response){

@@ -65,11 +65,11 @@
 					var html = $.parseHTML(origin);
 					
 					if(clubList.clubProfile != null){
-					$(html).find(".club-image").attr("src", "/attachment/download?attachmentNo=" + clubList.clubProfile)
+					$(html).find(".club-image").attr("src", contextPath+"/attachment/download?attachmentNo=" + clubList.clubProfile)
 											   .attr("alt", clubList.clubName);
 					}
 					else{
-						$(html).find(".club-image").attr("src", "/images/error/no-image.png")
+						$(html).find(".club-image").attr("src",  contextPath+"/images/error/no-image.png")
 						   						   .attr("alt", "기본 이미지");
 					}
 					$(html).find(".club-region").text(clubList.regionName);
@@ -78,7 +78,7 @@
 					$(html).find(".club-name").text(clubList.clubName);
 					$(html).find(".like-area").attr("data-club-no", clubList.clubNo);
 					$(html).find(".like-count-value").text(clubList.clubLike);
-					$(html).find(".club-number").attr("href", "/club/home?clubNo=" + clubList.clubNo);
+					$(html).find(".club-number").attr("href",  contextPath+"/club/home?clubNo=" + clubList.clubNo);
 					
 					$(".club-list-wrapper").append(html);
 					

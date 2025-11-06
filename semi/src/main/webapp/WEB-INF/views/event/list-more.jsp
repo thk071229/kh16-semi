@@ -201,7 +201,7 @@
 		function loadList() {
 
 			$.ajax({
-				url : "/rest/more/event",
+				url : contextPath+"/rest/more/event",
 				method : "POST",
 				data : {
 					page : 1,
@@ -289,7 +289,7 @@
 		var geocoder = new kakao.maps.services.Geocoder();
 
 		$.ajax({
-			url : "/rest/event/locations",
+			url : contextPath+"/rest/event/locations",
 			method : "get",
 			data : {
 				clubNo : clubNo

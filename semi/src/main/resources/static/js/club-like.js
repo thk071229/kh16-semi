@@ -15,7 +15,7 @@ $(function() {
 		if (!clubNo) return;
 
 		$.ajax({
-			url: "/rest/club/action",
+			url: contextPath+"/rest/club/action",
 			method: "post",
 			data: { clubNo: clubNo },
 			success: function(response) {
@@ -36,7 +36,7 @@ $(function() {
 		if (!clubNo) return;
 
 		$.ajax({
-			url: "/rest/club/check",
+			url: contextPath+"/rest/club/check",
 			method: "post",
 			data: { clubNo: clubNo },
 			success: function(response) {

@@ -18,7 +18,7 @@
 		function loadList(){
 
 			$.ajax({
-				url:"/rest/more/board",
+				url:contextPath+"/rest/more/board",
 				method:"POST",
 				data:{
 					page: 1,
@@ -48,7 +48,7 @@
 						if(i < response.noticeCount){
 							$(html).find(".board-list").addClass("notice");
 						}
-						$(html).find(".member-profile").prop("src", "/member/profile?memberId="+boardList.boardWriter);
+						$(html).find(".member-profile").prop("src", contextPath+"/member/profile?memberId="+boardList.boardWriter);
 						$(html).find(".board-writer-nickname").text(boardList.boardWriter);
 						
 						//작성자가 모임장이라면

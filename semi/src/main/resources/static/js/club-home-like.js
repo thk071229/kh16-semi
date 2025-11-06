@@ -4,7 +4,7 @@ $(function(){
 	
 	$("#club-like").on("click", function(){ // ID로 클릭 이벤트
 		$.ajax({
-			url:"/rest/club/action", // 상태 변경
+			url:contextPath+"/rest/club/action", // 상태 변경
 			method:"post",
 			data:{clubNo : clubNo},
 			success: function(response){
