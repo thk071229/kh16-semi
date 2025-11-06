@@ -201,10 +201,10 @@ $(function () {
                 <div style="margin-top: 10px;">
                     <c:choose>
                         <c:when test="${clubDto.clubProfile != null}">
-                            <img src="/attachment/download?attachmentNo=${clubDto.clubProfile}" width="300">
+                            <img src="${pageContext.request.contextPath}/attachment/download?attachmentNo=${clubDto.clubProfile}" width="300">
                         </c:when>
                         <c:otherwise>
-                            <img src="/images/error/no-image.png" width="300">
+                            <img src="${pageContext.request.contextPath}/images/error/no-image.png" width="300">
                         </c:otherwise>
                     </c:choose>
                 </div>

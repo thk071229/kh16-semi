@@ -26,7 +26,7 @@
 	</div>
 	<div class="cell center mt-30">
 		<section class="hero-card">
-			<img src="/assets/hero-illus.svg" alt="hero" style="width:220px; "/>
+			<img src="${pageContext.request.contextPath}/assets/hero-illus.svg" alt="hero" style="width:220px; "/>
 		</section>
 	</div>
 	

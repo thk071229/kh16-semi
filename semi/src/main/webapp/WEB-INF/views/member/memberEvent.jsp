@@ -88,10 +88,10 @@
 					<fmt:formatDate value="${event.eventDate}" pattern="M월 d일 H:mm" ></fmt:formatDate>
 				</td>
 	            <td>
-	            	<a href="/club/home?clubNo=${event.eventClub}" class="member-link">${event.clubName}</a>
+	            	<a href="${pageContext.request.contextPath}/club/home?clubNo=${event.eventClub}" class="member-link">${event.clubName}</a>
 	            </td>
 				<td>
-					<a href="/event/detail?eventNo=${event.eventNo}" class="member-link">${event.eventTitle}</a>
+					<a href="${pageContext.request.contextPath}/event/detail?eventNo=${event.eventNo}" class="member-link">${event.eventTitle}</a>
 				</td>
 	            <td>${event.eventAddress}</td>
 	            <td>${event.eventAttend}/${event.eventMaxPeople}</td>
@@ -114,10 +114,10 @@
   				<fmt:formatDate value="${event.eventDate}" pattern="M월 d일 H:mm" ></fmt:formatDate>
   			</td>
               <td>
-              	<a href="/club/home?clubNo=${event.eventClub}" class="member-link">${event.clubName}</a>
+              	<a href="${pageContext.request.contextPath}/club/home?clubNo=${event.eventClub}" class="member-link">${event.clubName}</a>
               </td>
   			<td>
-  				<a href="/event/detail?eventNo=${event.eventNo}" class="member-link">${event.eventTitle}</a>
+  				<a href="${pageContext.request.contextPath}/event/detail?eventNo=${event.eventNo}" class="member-link">${event.eventTitle}</a>
   			</td>
               <td>${event.eventAddress}</td>
               <td>${event.eventAttend}/${event.eventMaxPeople}</td>

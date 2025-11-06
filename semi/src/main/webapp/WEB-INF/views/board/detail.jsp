@@ -100,9 +100,9 @@
 </style>
 
 <!-- 좋아요 ajax js 로드 -->
-<script src="/js/board-like.js"></script>
+<script src="${pageContext.request.contextPath}/js/board-like.js"></script>
 <!-- 댓글 ajax js 로드 -->
-<script src="/js/board-reply.js"></script>
+<script src="${pageContext.request.contextPath}/js/board-reply.js"></script>
 
 <!-- 댓글 표시용 템플릿 -->
 <script type="text/template" id = "reply-view-template">
@@ -147,7 +147,7 @@
 	<hr>
 	<div class="board-info-wrapper">
 	
-	<a href = "/member/detail?memberId=${boardDto.boardWriter}" class="member-link">
+	<a href = "${pageContext.request.contextPath}/member/detail?memberId=${boardDto.boardWriter}" class="member-link">
 	<span class="board-writer-nickname me-10">
 	<i class="fa-solid fa-pen"></i>
 	${memberDto.memberNickname}

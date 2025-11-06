@@ -54,10 +54,10 @@
         
         <%-- 버튼 영역 --%>
         <div class="finish-buttons">
-            <a href="/" class="btn btn-ghost">메인으로 가기</a>
+            <a href="${pageContext.request.contextPath}/" class="btn btn-ghost">메인으로 가기</a>
             
             <c:if test="${clubDto.clubNo != null}">
-                <a href="/club/home?clubNo=${clubDto.clubNo}" class="btn btn-primary">개설한 모임 홈 가기</a>
+                <a href="${pageContext.request.contextPath}/club/home?clubNo=${clubDto.clubNo}" class="btn btn-primary">개설한 모임 홈 가기</a>
             </c:if>
         </div>
 

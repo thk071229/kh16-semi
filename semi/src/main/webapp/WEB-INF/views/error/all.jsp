@@ -10,7 +10,7 @@
 		<p>잠시 후에도 같은 증상이 발생하면 관리자에게 문의하세요</p>
 	</div>
 	<div class="cell center">
-		<img src="/images/error/500.jpg" width="300">
+		<img src="${pageContext.request.contextPath}/images/error/500.jpg" width="300">
 	</div>
 </div>
 

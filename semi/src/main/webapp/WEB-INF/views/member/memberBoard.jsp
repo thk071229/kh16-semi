@@ -87,7 +87,7 @@
   			<c:forEach var="boardListVO" items="${boardList}" varStatus="status">
   				<tr>
   					<td>
-	  					 <a href="/board/detail?boardNo=${boardListVO.boardNo}" class="member-link">
+	  					 <a href="${pageContext.request.contextPath}/board/detail?boardNo=${boardListVO.boardNo}" class="member-link">
 	                    ${boardListVO.boardTitle}
 	                  	</a>
                   	</td>

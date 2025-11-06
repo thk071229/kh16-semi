@@ -7,7 +7,7 @@
 		<h1 class="warn">${title}</h1>
 	</div>
 	<div class="cell center">
-		<img src="/images/error/403.jpg" width="300">
+		<img src="${pageContext.request.contextPath}/images/error/403.jpg" width="300">
 	</div>
 </div>
 

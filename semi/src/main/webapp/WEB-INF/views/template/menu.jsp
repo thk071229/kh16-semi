@@ -85,7 +85,7 @@ $(function(){
     
 	function loadCategoryList(){
 		$.ajax({
-			url:"/rest/category/list", 
+			url: contextPath+"/rest/category/list", 
 			method:"GET", 
 			success:function(response){
 				const $categoryUl = $("#category-submenu");
@@ -124,13 +124,13 @@ $(function(){
 </script>
 <!-- 로그인 여부에 따라 다른 메뉴들을 표시 -->
 <nav class="nav">	
-    <a href="/">
+    <a href="${pageContext.request.contextPath}/">
 	<i class="fa-solid fa-house"></i>
 	<span>홈</span>
 	</a>
 	<ul class="dropdown-menu">
        <li>
-           <a href="/club/list">
+           <a href="${pageContext.request.contextPath}/club/list">
            <i class="fa-solid fa-list"></i>
            <span>카테고리</span>
            </a>
@@ -138,51 +138,51 @@ $(function(){
            </ul>
        </li>
    </ul>
-	<a href="/club/recommandList">
+	<a href="${pageContext.request.contextPath}/club/recommandList">
 	<i class="fa-solid fa-star"></i>
 	<span>추천 모임</span>
 	</a>
-	<a href="/event/home">
+	<a href="${pageContext.request.contextPath}/event/home">
 	<i class="fa-solid fa-calendar-days"></i>
 	<span>정모 일정</span>
 	</a>
 	<c:if test = "${sessionScope.loginId != null}">
-	<a href="/member/pointUse">
+	<a href="${pageContext.request.contextPath}/member/pointUse">
 	<i class="fa-solid fa-address-card"></i>
 	<span>소모임생성권</span>
 	</a>
 	</c:if>
 	<c:if test="${sessionScope.loginId == null}">
-	<a href="/member/agree">
+	<a href="${pageContext.request.contextPath}/member/agree">
 	<i class="fa-solid fa-user-plus"></i>
 	<span>회원 가입</span>
 	</a>
 	</c:if>
 	<c:if test="${sessionScope.loginId == null}">
-	<a href="/member/login">
+	<a href="${pageContext.request.contextPath}/member/login">
 	<i class="fa-solid fa-right-to-bracket"></i>
 	<span>로그인</span>
 	</a>
 	</c:if>
 	
 	<c:if test = "${sessionScope.loginId != null}">
-	<a href="/member/logout">
+	<a href="${pageContext.request.contextPath}/member/logout">
 	<i class="fa-solid fa-right-from-bracket"></i>
 	<span>로그아웃</span>
 	</a>
-	<a href="/member/mypage">
+	<a href="${pageContext.request.contextPath}/member/mypage">
 	<i class="fa-solid fa-user"></i>
 	<span>마이페이지</span>
 	</a>
 	</c:if>
 	<c:if test="${sessionScope.loginId != null && loginLevel != '관리자'}">
-	<a href="/club/add">
+	<a href="${pageContext.request.contextPath}/club/add">
 	<i class="fa-solid fa-plus"></i>
 	<span>모임 만들기</span>
 	</a>
 	</c:if>
 	<c:if test = "${sessionScope.loginId != null && loginLevel == '관리자'}">
-	<a href="/admin/home">
+	<a href="${pageContext.request.contextPath}/admin/home">
 	<i class="fa-solid fa-user-tie"></i>
 	<span>관리자페이지</span>
 	</a>

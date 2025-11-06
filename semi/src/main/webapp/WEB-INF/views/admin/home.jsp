@@ -79,15 +79,15 @@
 			<tbody>
 				<tr>
 					<td>회원</td>
-					<td><a href="/admin/member/list" class="member-link">회원 검색</a></td>
+					<td><a href="${pageContext.request.contextPath}/admin/member/list" class="member-link">회원 검색</a></td>
 				</tr>
 				<tr>
 					<td>모임</td>
-					<td><a href="/admin/club/list" class="member-link">소모임 목록</a></td>
+					<td><a href="${pageContext.request.contextPath}/admin/club/list" class="member-link">소모임 목록</a></td>
 				</tr>
 				<tr>
 					<td>카테고리</td>
-					<td><a href="/admin/category/list" class="member-link">카테고리 목록</a></td>
+					<td><a href="${pageContext.request.contextPath}/admin/category/list" class="member-link">카테고리 목록</a></td>
 				</tr>
 			</tbody>
 		</table>

@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<a href="/icon" style="text-decoration: none;">
+<a href="${pageContext.request.contextPath}/icon" style="text-decoration: none;">
 <c:choose>
 	<c:when test="${sidebarData.memberPoint()>2000}">
 		<i class="fa-solid fa-chess-king red"></i>

@@ -3,7 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%-- 모든 jsp에서 사용 가능한 css파일과 cdn 파일을 header에 등록 --%>
 <%-- 디자인 파일 추가 --%>
-<link rel ="stylesheet" type="text/css" href="/css/common.css">
+<link rel ="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/common.css">
 <%-- font-awesome css --%>
 <link rel ="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
 <%-- jQuery cdn --%>
@@ -59,7 +59,7 @@ $("#searchBtn").on("click", function() {
 
 <div class="container">
     <header class="header">
-        <a class="brand" href="/">
+        <a class="brand" href="${pageContext.request.contextPath}/">
         <!-- 로고 이미지 -->
         <div class="logo">SS</div>
         <div class="cell">
@@ -70,7 +70,7 @@ $("#searchBtn").on("click", function() {
         <!-- 헤더 내 검색 영역 -->
 		<div class="header-search">
 			<div class="keyword-search">
-		  <form action="/search" method="get" id="searchForm" autocomplete="off">
+		  <form action="${pageContext.request.contextPath}/search" method="get" id="searchForm" autocomplete="off">
 		    <input
 		      type="text"
 		      name="keyword"

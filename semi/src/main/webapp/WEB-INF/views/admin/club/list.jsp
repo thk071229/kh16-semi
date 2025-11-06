@@ -162,7 +162,7 @@
               <tr style="${status.count % 2 == 0 ? 'background-color:#f8f9fa;' : ''}">
                 <td>${clubListVO.clubNo}</td>
                 <td>
-                	<a href="/club/home?clubNo=${clubListVO.clubNo}" class="member-link">
+                	<a href="${pageContext.request.contextPath}/club/home?clubNo=${clubListVO.clubNo}" class="member-link">
                		 ${clubListVO.clubName}
                 	</a>
                 </td>

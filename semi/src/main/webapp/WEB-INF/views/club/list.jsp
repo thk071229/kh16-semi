@@ -19,7 +19,7 @@
 
 <%-- club-like.js 불러오기 --%>
 <c:if test="${sessionScope.loginId != null && sessionScope.loginLevel != '관리자'}">
-	<script src="/js/club-like.js"></script>
+	<script src="${pageContext.request.contextPath}/js/club-like.js"></script>
 </c:if>
 <!-- ajax 코드 -->
 <script type="text/javascript">

@@ -84,7 +84,7 @@
         <c:forEach var="club" items="${clubList}">
           <tr>
             <td>
-            	<a href="/club/home?clubNo=${club.clubNo}" class="member-link">${club.clubName}</a>
+            	<a href="${pageContext.request.contextPath}/club/home?clubNo=${club.clubNo}" class="member-link">${club.clubName}</a>
             </td>
             <td>${club.regionName}</td>
             <td>${club.categoryName}</td>

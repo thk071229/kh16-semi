@@ -39,11 +39,11 @@
                     <c:choose>
                         <c:when test="${clubCountVO.clubProfile != null}">
                         	<%-- 액박을 해결하는 onerror 추가 --%>
-                            <img src="/attachment/download?attachmentNo=${clubCountVO.clubProfile}" alt="${clubCountVO.clubName}" 
+                            <img src="${pageContext.request.contextPath}/attachment/download?attachmentNo=${clubCountVO.clubProfile}" alt="${clubCountVO.clubName}" 
                             onerror="this.onerror=null; this.src='/images/error/no-image.png';" style="width:100%; height:auto; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--radius-sm) var(--radius-sm) 0 0;">
                         </c:when>
                         <c:otherwise>
-                            <img src="/images/error/no-image.png" alt="기본 이미지" style="width:100%; height:auto; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--radius-sm) var(--radius-sm) 0 0;">
+                            <img src="${pageContext.request.contextPath}/images/error/no-image.png" alt="기본 이미지" style="width:100%; height:auto; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--radius-sm) var(--radius-sm) 0 0;">
                         </c:otherwise>
                     </c:choose>
                 </div>
@@ -64,7 +64,7 @@
                         <span class="like-count-value">${clubCountVO.clubLike}</span>
                         </span> <%-- 빨간색 하트 + 좋아요 수 --%>
                     </div>
-                    <a href="/club/home?clubNo=${clubCountVO.clubNo}" class="btn btn-ghost mt-10 club-number">자세히 보기</a> <%-- 고스트 버튼 + 상단 여백 --%>
+                    <a href="${pageContext.request.contextPath}/club/home?clubNo=${clubCountVO.clubNo}" class="btn btn-ghost mt-10 club-number">자세히 보기</a> <%-- 고스트 버튼 + 상단 여백 --%>
                 </div>
             </div>
         </c:forEach>

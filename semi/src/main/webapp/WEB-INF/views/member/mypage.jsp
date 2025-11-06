@@ -206,7 +206,7 @@
     <!-- 프로필 -->
     <div class="profile-card">
       <div class="profile-wrapper">
-        <img src="/member/profile?memberId=${memberDto.memberId}" alt="프로필 이미지"  class="image-profile">
+        <img src="${pageContext.request.contextPath}/member/profile?memberId=${memberDto.memberId}" alt="프로필 이미지"  class="image-profile">
         <label for="profile-input">변경</label>
         <input type="file" id="profile-input" style="display:none">
       </div>

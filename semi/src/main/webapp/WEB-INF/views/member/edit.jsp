@@ -14,7 +14,7 @@
     const ORIGINAL_EMAIL = "${memberDto.memberEmail}";
 </script>
 
-<script src="/js/edit.js"></script>
+<script src="${pageContext.request.contextPath}/js/edit.js"></script>
 
 <script type="text/javascript">
 	$(function(){

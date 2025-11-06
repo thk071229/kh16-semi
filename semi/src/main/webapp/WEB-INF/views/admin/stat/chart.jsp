@@ -6,8 +6,8 @@
 <!-- Swiper CDN -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"/>
 <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
-<script src="/js/chart.js"></script>
-<script src="/js/swiper.js"></script>
+<script src="${pageContext.request.contextPath}/js/chart.js"></script>
+<script src="${pageContext.request.contextPath}/js/swiper.js"></script>
 
 <style>
 	.swiper {

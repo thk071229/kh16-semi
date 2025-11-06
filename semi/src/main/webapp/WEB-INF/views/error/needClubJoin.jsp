@@ -6,7 +6,7 @@
 		var params = new URLSearchParams(location.search);
 		var clubNo = params.get("clubNo");
 		$(".btn-join").on("click", function() {
-			window.location.href = "/club/home?clubNo=" + clubNo;
+			window.location.href="${pageContext.request.contextPath}/club/home?clubNo=" + clubNo;
 		});
 	});
 </script>
@@ -22,7 +22,7 @@
 		<h1 class="warn">${title}</h1>
 	</div>
 	<div class="cell center">
-		<img src="/images/error/403.jpg" width="300">
+		<img src="${pageContext.request.contextPath}/images/error/403.jpg" width="300">
 	</div>
 	
 	<div class="cell center mt-30 mb-30">

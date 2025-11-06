@@ -198,7 +198,7 @@
 	<c:if test = "${sessionScope.loginId != null && isClubMember}">
 	<a href = "write?clubNo=${clubNo}" class="btn btn-accent">새 글 등록</a>
 	</c:if>
-	<a href = "/club/home?clubNo=${clubNo}" class="btn btn-accent">모임 화면으로</a>
+	<a href="${pageContext.request.contextPath}/club/home?clubNo=${clubNo}" class="btn btn-accent">모임 화면으로</a>
 </div>
 
 </div>
