@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <%-- 모든 jsp에서 사용 가능한 css파일과 cdn 파일을 header에 등록 --%>
 <%-- 디자인 파일 추가 --%>
 <link rel ="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/common.css">
@@ -8,6 +9,19 @@
 <link rel ="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
 <%-- jQuery cdn --%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<!-- 모든 jquery ajax의 전송 시 주소 앞에 절대경로를 추가 -->
+<script>
+	var contextPath = "${pageContext.request.contextPath}";//어쩔 수 없는 코드
+	$.ajaxSetup({
+		beforeSend: function(xhr, settings) {
+			//xhr = 요청객체 / settiongs = 요청옵션
+			//$.ajax({}) > 요청객체 / 괄호 안에 들어가는 것: 요청옵션
+			if(settings.url.startsWith("/")){ //주소가 절대경로라면
+				settings.url = contextPath + settings.url;
+			}
+		}
+	});
+</script>
 <%-- momentjs cdn --%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/locale/ko.min.js"></script>
@@ -176,7 +190,7 @@ $("#searchBtn").on("click", function() {
     const keyword = $("#searchInput").val().trim();
     if (keyword) {
         // keyword를 URL에 담아서 페이지 이동
-        location.href = `/search?keyword=`+keyword;
+        location.href = contextPath+`/search?keyword=`+keyword;
     }
 });
 </script>
@@ -317,7 +331,7 @@ $(function(){
         const depth1 = $(this).data("depth1");
         if (depth1) {
             // URL 생성 및 페이지 이동
-            location.href = `/?regionDepth1=`+depth1;
+            location.href = contextPath+`/?regionDepth1=`+depth1;
         }
     });
 
@@ -329,7 +343,7 @@ $(function(){
         const depth2 = $(this).data("depth2");
         if (depth1 && depth2) {
             // URL 생성 및 페이지 이동
-            location.href = `/?regionDepth1=`+depth1+`&regionDepth2=`+depth2;
+            location.href = contextPath+`/?regionDepth1=`+depth1+`&regionDepth2=`+depth2;
         }
     });
 

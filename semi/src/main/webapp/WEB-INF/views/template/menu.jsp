@@ -3,6 +3,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
+<script>
+	var contextPath = "${pageContext.request.contextPath}";//어쩔 수 없는 코드
+	$.ajaxSetup({
+		beforeSend: function(xhr, settings) {
+			//xhr = 요청객체 / settiongs = 요청옵션
+			//$.ajax({}) > 요청객체 / 괄호 안에 들어가는 것: 요청옵션
+			if(settings.url.startsWith("/")){ //주소가 절대경로라면
+				settings.url = contextPath + settings.url;
+			}
+		}
+	});
+</script>
+
 <style>
 .dropdown-menu {
   position: relative;
@@ -98,7 +111,7 @@ $(function(){
 					const $newHtml = $($.parseHTML(templateText));
                     
                     // 3. 내용 변경 (데이터 바인딩)
-                    const link = `/club/category?categoryNo=`;
+                    const link = contextPath+`/club/category?categoryNo=`;
                     
                     // 링크 (<a>) 요소 찾기
                     $newHtml.find(".category-link")
