@@ -188,7 +188,7 @@ justify-content: flex-end
 			<c:when test="${not empty clubDto.clubProfile}">
 				<img src="${pageContext.request.contextPath}/attachment/download?attachmentNo=${clubDto.clubProfile}"
 					alt="${clubDto.clubName}"
-					onerror="this.onerror=null; this.src='/images/error/no-image.png';"
+					onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/images/error/no-image.png';"
 					style="width:100%; max-height: 350px; object-fit: contain; border-radius: var(--radius-sm); box-shadow: var(--shadow);">
 				</c:when>
 			<c:otherwise>
