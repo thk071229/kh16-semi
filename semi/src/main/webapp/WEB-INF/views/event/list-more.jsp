@@ -52,7 +52,7 @@
 						var eventList = list[i];
 						var origin = $("#before-list-template").text();
 						var html = $.parseHTML(origin);
-						$(html).find(".event-link").prop("href",contextPath+
+						$(html).find(".event-link").prop("href",
 								"detail?eventNo=" + eventList.eventNo);
 						$(html).find(".event-image").prop("src",contextPath+
 								"/event/image?eventNo=" + eventList.eventNo);
@@ -139,7 +139,7 @@
 						var origin = $("#after-list-template").text();
 						var html = $.parseHTML(origin);
 
-						$(html).find(".event-link").prop("href",contextPath+
+						$(html).find(".event-link").prop("href",
 								"detail?eventNo=" + eventList.eventNo);
 						$(html).find(".event-image").prop("src",contextPath+
 								"/event/image?eventNo=" + eventList.eventNo);
@@ -228,7 +228,7 @@
 
 						$(html).find(".event-link").prop("href",
 								"detail?eventNo=" + eventList.eventNo);
-						$(html).find(".event-image").prop("src",
+						$(html).find(".event-image").prop("src",contextPath+
 								"/event/image?eventNo=" + eventList.eventNo);
 						$(html).find(".event-title-text").text(
 								eventList.eventTitle);

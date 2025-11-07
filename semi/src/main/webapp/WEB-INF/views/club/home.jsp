@@ -123,7 +123,7 @@ justify-content: flex-end
 	      <div class="member-card flex-box">
 		      <div style="width: 40px; height: 40px; border-radius: 50%; overflow: hidden; margin-right: 10px;">
 				<img class="member-image" style="width: 100%; height: 100%; object-fit: cover;"
-					onerror="this.onerror=null; this.src='/images/error/no-image.png';">
+					onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/images/error/no-image.png';">
 			  </div>
 			<div style="font-weight: 600; font-size: 15px;">
 				<span class="member-nickname">회원 닉네임</span>

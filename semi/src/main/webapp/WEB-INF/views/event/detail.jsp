@@ -199,7 +199,7 @@
 				        					<%-- 프로필 사진 (회원 ID 사용) --%>
 					        					<div style="width: 40px; height: 40px; border-radius: 50%; overflow: hidden; margin-right: 10px;">
 													<img src="${pageContext.request.contextPath}/member/profile?memberId=${eventAttendee.memberId}"  style="width: 100%; height: 100%; object-fit: cover;"
-										     		onerror="this.onerror=null; this.src='/images/error/no-image.png';"> <%-- 이미지 로드 실패 시 기본 이미지 --%>
+										     		onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/images/error/no-image.png';"> <%-- 이미지 로드 실패 시 기본 이미지 --%>
 												</div>
 												<label>${eventAttendee.attendMemberNickname}</label>
 											</div>

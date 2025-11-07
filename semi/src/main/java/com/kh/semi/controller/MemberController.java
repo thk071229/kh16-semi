@@ -52,6 +52,7 @@ import com.kh.semi.vo.MemberRegionListVO;
 import com.kh.semi.vo.PageVO;
 
 import jakarta.mail.MessagingException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller

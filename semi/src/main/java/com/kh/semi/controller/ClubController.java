@@ -3,8 +3,6 @@ package com.kh.semi.controller;
 import java.io.IOException;
 import java.util.List;
 
-import javax.security.sasl.AuthenticationException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +32,7 @@ import com.kh.semi.vo.ClubMemberListVO;
 import com.kh.semi.vo.MemberRegionListVO;
 import com.kh.semi.vo.PageVO;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
