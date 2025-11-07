@@ -52,6 +52,7 @@ import com.kh.semi.vo.MemberRegionListVO;
 import com.kh.semi.vo.PageVO;
 
 import jakarta.mail.MessagingException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -119,8 +120,7 @@ public class MemberController {
 	@PostMapping("/join")
 	public String join(
 			@ModelAttribute MemberDto memberDto, 
-			HttpSession session,
-			@RequestParam MultipartFile attach) throws IllegalStateException, IOException, MessagingException {
+			HttpSession session, @RequestParam MultipartFile attach) throws IllegalStateException, IOException, MessagingException {
 		
 		memberDao.insert(memberDto);
 		if(attach.isEmpty() == false) {//첨부파일이 비어있지 않다면(=있으면)
@@ -131,7 +131,7 @@ public class MemberController {
 		//가입 환영 메일 발송
 		emailService.sendWelcomeMail(memberDto);
 		
-		return "redirect:firstLogin";
+		return "redirect:/firstLogin";
 	}
 	
 	@GetMapping("/firstLogin")
@@ -141,7 +141,7 @@ public class MemberController {
 	@PostMapping("/firstLogin")
 	public String firstLogin(@ModelAttribute MemberDto memberDto, HttpSession session) {
 		MemberDto findDto = memberDao.selectOne(memberDto.getMemberId());
-		if(findDto == null) return "redirect:firstLogin?error";
+		if(findDto == null) return "redirect:/firstLogin?error";
 		
 		boolean isLogin = findDto.getMemberPw().equals(memberDto.getMemberPw());
 		
@@ -150,10 +150,10 @@ public class MemberController {
 			session.setAttribute("loginId", findDto.getMemberId());
 			session.setAttribute("loginLevel", findDto.getMemberLevel());
 			
-			return "redirect:joinFinish";
+			return "redirect:/joinFinish";
 		}
 		else {
-			return "redirect:firstLogin?error"; 
+			return "redirect:/firstLogin?error"; 
 		}
 	}
 	
@@ -176,7 +176,8 @@ public class MemberController {
 			@RequestParam String regionType,
 			@RequestParam(required = false) String regionDepth1,
 			@RequestParam(required = false) String regionDepth2,
-			@ModelAttribute MemberCategoryDto memberCategoryDto) {
+			@ModelAttribute MemberCategoryDto memberCategoryDto,
+			HttpServletRequest request) {
 				
 		//관심 지역 & 카테고리 등록 처리
 		
@@ -184,6 +185,7 @@ public class MemberController {
 		memberCategoryDao.insert(memberCategoryDto);
 		
 		memberService.addMemberRegion(memberId, regionName, regionDepth1, regionDepth2, regionType);
+		
 		
 		return "redirect:/";
 	}
@@ -209,7 +211,7 @@ public class MemberController {
 			return "redirect:/";
 		}
 		else {
-			return "redirect:login?error"; 
+			return "redirect:/login?error"; 
 		}
 	}
 	
@@ -218,6 +220,7 @@ public class MemberController {
 	public String logout(HttpSession session) {
 		session.removeAttribute("loginId");
 		session.removeAttribute("loginLevel");
+		
 		return "redirect:/";
 	}
 	
@@ -336,10 +339,10 @@ public class MemberController {
 		if(result) {
 			session.removeAttribute("loginId");
 			session.removeAttribute("loginLevel");
-			return "redirect:goodbye";
+			return "redirect:/goodbye";
 		}
 		else {
-			return "redirect:drop?error";
+			return "redirect:/drop?error";
 		}
 	}
 	@RequestMapping("/goodbye")
@@ -361,14 +364,15 @@ public class MemberController {
 		String loginId = (String) session.getAttribute("loginId");
 		MemberDto findDto= memberDao.selectOne(loginId);
 		boolean isValid = memberDto.getMemberPw().equals(findDto.getMemberPw());
+		
 		if(!isValid) {//비밀번호 불일치
-			return "redirect:edit?error";
+			return "redirect:/edit?error";
 		}
 		
 		memberDto.setMemberId(loginId);
 		memberDao.updateMember(memberDto);
 		
-		return "redirect:mypage";
+		return "redirect:/mypage";
 	}
 	
 	//선호하는 지역 수정
@@ -389,7 +393,7 @@ public class MemberController {
 		
 		memberService.editMemberRegion(memberId, regionName, regionDepth1, regionDepth2, regionType);
 		
-		return "redirect:mypage";
+		return "redirect:/mypage";
 	}
 	
 	//선호하는 카테고리 수정
@@ -427,7 +431,7 @@ public class MemberController {
 			memberCategoryDao.update(memberCategoryDto, oldCategoryNo);
 		}
 		
-		return "redirect:mypage";
+		return "redirect:/mypage";
 	}
 	
 	
@@ -437,7 +441,7 @@ public class MemberController {
 		return "/WEB-INF/views/member/password.jsp";
 	}
 	@PostMapping("/password")
-	public String password(HttpSession session, 
+	public String password(HttpSession session,
 			@RequestParam String currentPw, @RequestParam String memberPw) {
 		String loginId = (String) session.getAttribute("loginId");
 		MemberDto memberDto = memberDao.selectOne(loginId);
@@ -446,18 +450,21 @@ public class MemberController {
 		
 		memberDao.updateMemberPw(loginId, memberPw);
 		
-		return "redirect:mypage";
+		
+		return "redirect:/mypage";
 	}
 	
 	//첨부파일을 반환하는 매핑
 	@GetMapping("/profile")
-	public String profile(@RequestParam String memberId) {
+	public String profile(@RequestParam String memberId, HttpServletRequest request) {
+		String contextPath = request.getContextPath();
+		
 		try {
 			int attachmentNo = memberDao.findAttachment(memberId);
-			return "redirect:/attachment/download?attachmentNo="+attachmentNo;
+			return "redirect:"+contextPath+"/attachment/download?attachmentNo="+attachmentNo;
 		}
 		catch(Exception e) {
-			return "redirect:/images/error/no-image.png";
+			return "redirect:"+contextPath+"/images/error/no-image.png";
 		}
 	}
 	
@@ -471,9 +478,9 @@ public class MemberController {
 	public String findMemberId(@ModelAttribute MemberDto memberDto) {
 		//수신한 닉네임으로 사용자 정보를 조회 및 비교하고 존재한다면 이메일 발송
 		MemberDto findDto = memberDao.selectOneByNickname(memberDto.getMemberNickname());
-		if(findDto == null) return "redirect:findMemberId?error";
+		if(findDto == null) return "redirect:/findMemberId?error";
 		boolean emailValid = memberDto.getMemberEmail().equals(findDto.getMemberEmail());
-		if(emailValid == false) return "redirect:findMembrId?error";
+		if(emailValid == false) return "redirect:/findMembrId?error";
 		
 		//이메일 발송
 		emailService.sendEmail(
@@ -483,7 +490,8 @@ public class MemberController {
 				+findDto.getMemberId()+"] 입니다"
 		);
 		
-		return "redirect:findMemberIdFinish";
+		
+		return "redirect:/findMemberIdFinish";
 	}
 	@RequestMapping("/findMemberIdFinish")
 	public String findMemberIdFinish() {
@@ -520,8 +528,7 @@ public class MemberController {
 		return "/WEB-INF/views/member/changeMemberPw.jsp";
 	}
 	@PostMapping("/changeMemberPw")
-	public String changeMemberPw(
-			@ModelAttribute MemberDto memberDto, 
+	public String changeMemberPw( @ModelAttribute MemberDto memberDto, 
 			@RequestParam String certNumber) {
 		MemberDto findDto = memberDao.selectOne(memberDto.getMemberId());
 		if(findDto == null) return "redirect:changeMemberPw?error";
@@ -542,7 +549,7 @@ public class MemberController {
 		memberDao.updateMemberPw(memberDto);//비밀번호 변경
 		certDao.delete(findDto.getMemberEmail());//인증정보 재사용 금지(삭제)
 		
-		return "redirect:changeMemberPwFinish";
+		return "redirect:/changeMemberPwFinish";
 	}
 	@RequestMapping("/changeMemberPwFinish")
 	public String changeMemberPwFinish() {
@@ -565,7 +572,8 @@ public class MemberController {
 
 		emailService.sendResetPassword(findDto);//비밀번호 재설정 메일 발송
 		
-		return "redirect:findMemberPwFinish";
+		
+		return "redirect:/findMemberPwFinish";
 	}
 	@RequestMapping("/findMemberPwFinish")
 	public String findMemberPwFinish() {
